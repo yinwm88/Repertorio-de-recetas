@@ -4,7 +4,7 @@ El documento debe tener su información básica (nombre del sistema, integrantes
 
 # **REPERTORIO DE RECETAS**
   
-Wong Mestas A. Yin Len - Javier Emilio Bazan Sanchez - Nombre  - Nombre  - Nombre 
+Wong Mestas A. Yin Len - Javier Emilio Bazan Sanchez - Aguilar Uribe J. David  - Nombre  - Nombre 
 
 
 </div>
