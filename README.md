@@ -15,7 +15,14 @@ Wong Mestas A. Yin Len - Nombre - Nombre  - Nombre  - Nombre
 
 <div>
   
-> Problem statement: Se desperdician ingredientes por nunca utilizarse, No tener una dieta controlada, Quedarse sin ideas de que preparar de comer ...  
+> <b>PROBLEM STATEMENTS</b>
+    <div>
+> - Se desperdician ingredientes por nunca utilizarse.
+> - No tener una dieta controlada (padecimeintos, alergias, calorías, ...).
+> - Quedarse sin ideas de que preparar de comer.
+> - ...
+   </div>
+
 
   
 # ESPECIFICACIONES TÉCNICAS
