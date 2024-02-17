@@ -1,6 +1,6 @@
 <div align="center">
 
-# **Repertorio de recetas**
+# **REPERTORIO DE RECETAS**
   
 Wong Mestas A. Yin Len - Nombre - Nombre  - Nombre  - Nombre 
 
