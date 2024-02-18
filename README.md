@@ -89,7 +89,7 @@ De no encontrarse al menos  una  receta:
 		
 ### ACTIVIDADES QUE EL USUARIO PUEDE HACER
 
-Se tiene una cocina con los siguientes productos:
+ej. Se tiene una cocina con los siguientes productos:
 
 <div style="margin: 0 auto;">
 	
