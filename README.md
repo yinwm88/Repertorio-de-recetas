@@ -134,7 +134,7 @@ Se tiene una cocina con los siguientes productos:
  	Tengo una receta para cocinar brownie de chocolate sin usar harina y usa una cantidad minima de chocolate y una cantidad excesiva de crema de mani, además de que me gusta agregar maracuya, y me gustaría incluirla al repertorio de recetas del sistema para que la tome en cuenta. Entonces es ahí cuando la función de escribir tus propias recetas es muy útil.
  	
 
-7. **Buscar una receta.**
+8. **Buscar una receta.**
 
  	Planee cocinar Pollo Kung Pao un fin de semana, pero entre tanta receta que ocupa pollo no encuntro el Pollo Kung Pao, entonces se puede buscar desde la aplicación la receta de Pollo Kung Pao.
 
