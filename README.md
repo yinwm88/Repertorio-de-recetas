@@ -35,6 +35,7 @@ El software tiene el objetivo de:
   <div>
     
 - Registrar cada ingrediente de la cocina, los cuales fueron ingresados manualmente, al igual que los electrodomésticos disponibles.
+- Registrar datos del usuario los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio; estos datos serán: peso, talla, actividad fisica, enfermedades y/o  alergias.
 
 - Proporcionar al menos una o más recetas que se pueden realizar en esa cocina.
 
