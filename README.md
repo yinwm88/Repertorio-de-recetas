@@ -1,7 +1,5 @@
 <div align="center">
-
-Correo Canek:El documento debe tener su información básica (nombre del sistema, integrantes del equipo, enunciado del problema (problem statement)
-
+	
 # **REPERTORIO DE RECETAS**
   
 Wong Mestas A. Yin Len - Javier Emilio Bazan Sanchez - Aguilar Uribe J. David  - Nombre  - Nombre 
@@ -17,41 +15,57 @@ Wong Mestas A. Yin Len - Javier Emilio Bazan Sanchez - Aguilar Uribe J. David  -
   
 > <b>PROBLEM STATEMENTS</b>
     <div>
-> - Desperdiciar ingredientes por nunca utilizarse.
-> - No tener una dieta controlada (padecimeintos, alergias, calorías, ...).
-> - Quedarse sin ideas de que preparar de comer.
-> - ...
+>  - Desperdiciar ingredientes por nunca utilizarse.
+>  - No tener una dieta controlada (padecimeintos, alergias, calorías, ...).
+>  - Quedarse sin ideas de que preparar de comer.
+>  - ...
    </div>
 
 
   
-# ESPECIFICACIONES TÉCNICAS
+## ESPECIFICACIONES TÉCNICAS
 
 Correo Canek: unos cuantos párrafos que describan en español coloquial qué debe hacer el sistema con tal vez un par de ejemplos concretos de las actividades más importantes que un usuario puede hacer;
 
 <div>
-El software tiene el objetivo de:
+El software tiene la capacidad de:
 </div>
 
  <div>
     
-1. Registrar cada ingrediente de la cocina, los cuales fueron ingresados manualmente, al igual que los electrodomésticos disponibles, los cuales fueron, de ser el caso, deseleccionados di no se cuenta con alguno de ellos que por default se tiene que si estan disponibles en la cocina del usuario.
+1. Registrar cada ingrediente de la cocina.
+   > Estos serán registrados manualmente.
+   
+2. Registrar los electrodomésticos disponibles.
+   > Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de ser el caso, 	el usuario deseleccionará aquellos con los       que no disponga en la cocina.
 
-2. Registrar datos del usuario los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio; estos datos serán: peso, talla, actividad fisica, enfermedades y/o  alergias.
+4. Registrar datos del usuario.
+   > Los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio.
+   	Estos datos serán:
+   > 	- *peso*
+   >	- *talla*
+   >	- *actividad fisica*
+   >	- *enfermedades*
+   >	- *alergias*
 
-3. Proporcionar <b> al menos  </b> una o más recetas que se pueden realizar en esa cocina.
-</div>
+5. Proporcionar <b> al menos  </b> una o más recetas que se pueden realizar en esa cocina.
+	> Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir, como aquellas que no cumplan con su objetivo alimenticio.
 
-<div>
-De no encontrarse al menos  una  receta:
-</div>
+6. De no encontrarse al menos  una  receta, se dará la receta que contenga los ingredientes disponibles en su cocina más el **mínimo número** de ingredientes con los que no se cuenta.
 
-<div>
-	
-4. Se dará la receta que contenga los ingredientes disponibles más el mínimo de ingredientes con los que no se cuenta, y para los ingredientes con los que no se cuenta, se le mostraran opciones con los puede sustituirse.(también se considerará no mostrar/omitir las recetas que contengan algún alimento que el usuario no pueda ingerir)
-	
-4. O se le darán recetas que contengan los ingredientes disponibles en su cocina, más aparte se le hará una lista de compras en Walmart Express de los ingredientes que le falten
+   	Para los ingredientes con los que no se cuenta:
+   
+   	1. Se le mostrarán opciones con los que se pueden sustituir.
+   	2. Ó de plano se le hará una lista de compras en Walmart Express, o alguna tienda en linea, de los ingredientes que le falten.
 
+7. Filtrar recetar por tipo de comida.
+    > Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredeintes el ingrediente especifico a utilizar.
+
+8. Marcar como favorito alguna receta.
+   > Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas favoritas antes de las demás posibles opciones de recetas.
+
+10. Agregar una receta del usuario.
+    > Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que se puedan tomar en cuenta al momento de proporcionar recetas. 
 </div>
 
 
