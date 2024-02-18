@@ -109,7 +109,7 @@ Se tiene una cocina con los siguientes productos:
 
 1. **Agregar manualmente ingredientes.**
 
-	Cada uno de los **ingredientes** anteriores se tendrán que registrar manualmente en el sistema, es decir, se tendrá que escribir el nombre de cada uno, así como selecionar la cantidad con la que se dispone.
+	Cada uno de los **ingredientes** anteriores se tendrán que registrar manualmente en el sistema, es decir, se tendrá que escribir el **nombre** de cada uno, así como selecionar la **cantidad** con la que se dispone.
 
 2. **Activar o desactivar electrodomesticos.**
 
@@ -117,13 +117,13 @@ Se tiene una cocina con los siguientes productos:
     
 3. **Filtrar recetas con base a sus gustos.**
 
-	Tenemos los ingredientes necesarios para hacer nuggets de pollo, pero también queremos usar el tocino, entonces basta con filtrar la receta por ingrediente y seleccionar el tocino como ingrediente para ahora tener nuggets de pollo y tocino.
+	Tenemos los ingredientes necesarios para hacer nuggets de pollo, pero también queremos **usar el tocino**, entonces basta con **filtrar la receta por ingrediente** y seleccionar el tocino como ingrediente para ahora tener nuggets de pollo y tocino.
 
- 	O si lo que queremos es que los nuggets sean veganos, entonces en de vez de filtrar por ingrediente, filtramos  por tipo de comida y de esa manera obtenemos la receta de nuggets de garbanzo.
+ 	O si lo que queremos es que **los nuggets sean veganos**, entonces en de vez de filtrar por ingrediente, **filtramos  por tipo de comida** y de esa manera obtenemos la receta de nuggets de garbanzo.
    
 4. **Comprar en linea la lista de ingredientes generada.**
 
- 	Resulta que nos inscribimos a un gimnasio y para cocinar nuggets de pollo fit, nos piden harina de avena y avena, pero nosotros tenemos harina normal y pan para empanizar (nada Fit que digamos), en este caso el sistema nos creara una lista de compras donde incluya harina de avena y avena, y fácilmene con esta lista generada automaticamente por el sistema, podremos comprar todos los ingredientes necesaros sin olvidar ninguno.
+ 	Resulta que nos inscribimos a un gimnasio y para cocinar nuggets de pollo fit, nos piden harina de avena y avena, pero nosotros tenemos harina normal y pan para empanizar (nada Fit que digamos), en este caso el sistema nos creara una lista de compras donde incluya harina de avena y avena, y fácilmene con esta lista generada automaticamente por el sistema, podremos **comprar todos los ingredientes necesaros** sin olvidar ninguno.
    
 5. **Marcar como favorito alguna receta de su gusto.**
 
@@ -131,8 +131,7 @@ Se tiene una cocina con los siguientes productos:
     
 6. **Escribir recetas propias.**
 
- 
-	
+ 	Tengo una receta para cocinar brownie de chocolate sin usar harina y usa una cantidad minima de chocolate y una cantidad excesiva de crema de mani y me gustaría incluirla al repertorio de recetas del sistema para que la tome en cuenta.
  	
 
 7. **Buscar una receta.**
