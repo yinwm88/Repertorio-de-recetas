@@ -129,7 +129,7 @@ Se tiene una cocina con los siguientes productos:
     
 6. **Escribir recetas propias.**
 
- 	Tengo una receta para cocinar brownie de chocolate sin usar harina y usa una cantidad minima de chocolate y una cantidad excesiva de crema de mani, además de que me gusta agregarle maracuya; Pero el el repertorio no encuentro una receta igual. Es ahí cuando la función de escribir tus propias recetas es muy útil.
+ 	Tengo una receta para cocinar brownie de chocolate sin usar harina y usa una cantidad minima de chocolate y una cantidad excesiva de crema de mani, además de que me gusta agregarle maracuya; pero en el repertorio no encuentro una receta igual. Es ahí cuando la función de escribir tus propias recetas es muy útil.
  	
 
 8. **Buscar una receta.**
