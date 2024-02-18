@@ -60,10 +60,10 @@ El software tiene la capacidad de:
 	
 6. Filtrar recetar por  ingrediente o tipo de comida.
  	 > Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredientes el ingrediente especifico a utilizar. O centrarse en aquellas 	   recetas que sean del tipo de comida seleccionado.
-   	 > Los tipos pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 		   alguna caracteristica en especifico; como pueden ser comida picosas, saldas, dulces, comidas KETO, veganas, etc.
+   	 > Los tipos pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 		   alguna caracteristica en especifico; como pueden ser comida picosa, salada, dulce, KETO, vegana, etc.
 	
 7. Marcar como favorito alguna receta.
- 	 > Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas 	   favoritas antes de las demás posibles opciones de recetas.
+	> Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas 	   favoritas antes de las demás posibles opciones de recetas.
 	
 8. Registrar una receta del usuario.
 	> Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que estas se puedan tomar en cuenta al momento de proporcionarle recetas. 
@@ -80,12 +80,13 @@ El software tiene la capacidad de:
 
 Actividades:
 1. Agregar manualmente ingredientes.
-2. Deseleccionar o reseleccionar electrodomesticos de la cocina.
-3. Filtrar recetas con base a sus gustos.
-4. Comprar en linea la lista de ingredientes generada.
-5. Marcar como favorito alguna receta de su gusto o interés.
-6. Escribir recetas propias.
-7. Buscar una receta.
+	
+3. Deseleccionar o reseleccionar electrodomesticos de la cocina.
+4. Filtrar recetas con base a sus gustos.
+5. Comprar en linea la lista de ingredientes generada.
+6. Marcar como favorito alguna receta de su gusto o interés.
+7. Escribir recetas propias.
+8. Buscar una receta.
 
 </div>
 	
