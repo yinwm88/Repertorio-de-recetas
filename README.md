@@ -40,7 +40,7 @@ El software tiene la capacidad de:
 	> Estos serán registrados manualmente.
 	   
 2. Registrar los electrodomésticos disponibles.
-	> Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de ser el caso, 	el usuario deseleccionará aquellos 	     con los que no disponga en la cocina.
+	> Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de ser el caso, el usuario deseleccionará aquellos 	     con los que no disponga en la cocina.
 	
 3. Registrar datos del usuario.
 	> Los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio.Estos datos serán:
@@ -61,7 +61,9 @@ El software tiene la capacidad de:
    	2. Ó de plano se le hará una lista de compras en Walmart Express, o alguna tienda en línea, de los ingredientes que le falten.
 	
 6. Filtrar recetar por  ingrediente o tipo de comida.
- 	 > Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredientes el ingrediente especifico a utilizar. O centrarse en aquellas recetas que sean del tipo de comida seleccionado; los tipos pueden ser desde comidas de distintas nacionalidades (la aplicacion daría la ventaja de cocinar recetas de otros paises) o comidas con alguna caracteristica en especifico como pueden ser comida picosas, saldas, dulces, comidas keto, veganas, etc.
+ 	 > Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredientes el ingrediente especifico a utilizar. O centrarse en aquellas recetas que sean del tipo de comida seleccionado.
+   
+  	 > Los tipos pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con alguna caracteristica en especifico; como pueden ser comida picosas, saldas, dulces, comidas KETO, veganas, etc.
 	
 7. Marcar como favorito alguna receta.
  	 > Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas favoritas antes de las demás posibles opciones de recetas.
@@ -69,7 +71,6 @@ El software tiene la capacidad de:
 8. Agregar una receta del usuario.
  	 > Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que estas se puedan tomar en cuenta al momento de proporcionarle recetas. 
 
-	
 </div>
 </div>
 
@@ -78,10 +79,15 @@ El software tiene la capacidad de:
 		
 ### EJEMPLOS DE LAS ACTIVIDADES QUE EL USUARIO PUEDE HACER
 
-<div>
-	
+Actividades:
+1. Agregar manualmente ingredientes.
+2. Deseleccionar o reseleccionar electrodomesticos de la cocina.
+3. Filtrar recetas con base a sus gustos.
+4. Marcar como favorito alguna receta de su gusto o interés.
+5. Escribir recetas propias.
+6. Comprar en linea la lista de ingredientes generada.
  
-</div>
+
 </div>
 	
 Correo Canek:contornos reticulares[1]  (wireframes) de la vista que tendrá el sistema; y casos de uso también en español coloquial, pero que cubran la mayor cantidad posible de actividades realizables. Apreciaremos que sean concisos."
