@@ -111,7 +111,7 @@ Se tiene una cocina con los siguientes productos:
 
 	Cada uno de los **ingredientes** anteriores se tendrán que registrar manualmente en el sistema, es decir, se tendrá que escribir el nombre de cada uno, así como selecionar la cantidad con la que se dispone.
 
-2. **Activar o desactivar electrodomesticos de la cocina.**
+2. **Activar o desactivar electrodomesticos.**
 
    	El sistema por default dirá que la cocina esta perfectamente equipada. En este caso, digamos que se selecciona la receta para preparar nuggets de pollo la cual requiere del **uso de una freidora de aire**, pero en nuestra cocina **no disponemos de una**, entonces deberemos ir al la sección de configuración y **desactivar la opción de Freidora de aire**, de modo que ahora se omitirán las recetas que utilicen freidora de aire, o en su caso se te recomendará sustituir la freidora de aire por el horno del cual si disponemos.
     
