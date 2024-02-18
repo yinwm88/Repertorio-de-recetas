@@ -92,7 +92,7 @@ De no encontrarse al menos  una  receta:
 
 Se tiene una cocina con los siguientes productos:
 
-<div aling="center">
+<div style="margin: 0 auto;">
 	
 | Ingredientes | Electrodomesticos |
 |:-----------:|:-----------:|
@@ -104,7 +104,6 @@ Se tiene una cocina con los siguientes productos:
 | 200 gr Harina  |   |
 | 5 pz Platano  |   |
 | 250 gr Queso Panela  |   |
-
 </div>
 
 1. **Agregar manualmente ingredientes.**
