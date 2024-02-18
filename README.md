@@ -16,9 +16,8 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
 > <b>PROBLEM STATEMENTS</b>
     <div>
 >  - Desperdiciar ingredientes por nunca utilizarse.
->  - No tener una dieta controlada (padecimeintos, alergias, calorías, ...).
->  - Quedarse sin ideas de que preparar de comer.
->  - ...
+>  - No tener una dieta controlada (padecimeintos, alergias, calorías).
+>  - Bloqueo culinario: No saber que cocinar.
    </div>
 
 
