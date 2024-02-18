@@ -24,13 +24,11 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
 
 <div>
 	
-# ESPECIFICACIONES TÉCNICAS
-Correo Canek: unos cuantos párrafos que describan en español coloquial qué debe hacer el sistema con tal vez un par de ejemplos concretos de las 		actividades más importantes que un usuario puede hacer;
+## ESPECIFICACIONES TÉCNICAS
 	
  <div>
 	
  ### DESCRIPCIÓN DEL SISTEMA
-
 	
 <div>	
 
@@ -40,7 +38,7 @@ El software tiene la capacidad de:
 	> Estos serán registrados manualmente.
 	   
 2. Registrar los electrodomésticos disponibles.
-	> Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de ser el caso, el usuario deseleccionará aquellos 	     con los que no disponga en la cocina.
+	> Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de ser el caso, el usuario deseleccionará aquellos 	     	  con los que no disponga en la cocina.
 	
 3. Registrar datos del usuario.
 	> Los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio.Estos datos serán:
@@ -61,32 +59,33 @@ El software tiene la capacidad de:
    	2. Ó de plano se le hará una lista de compras en Walmart Express, o alguna tienda en línea, de los ingredientes que le falten.
 	
 6. Filtrar recetar por  ingrediente o tipo de comida.
- 	 > Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredientes el ingrediente especifico a utilizar. O centrarse en aquellas recetas que sean del tipo de comida seleccionado.
-   
-  	 > Los tipos pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con alguna caracteristica en especifico; como pueden ser comida picosas, saldas, dulces, comidas KETO, veganas, etc.
+ 	 > Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredientes el ingrediente especifico a utilizar. O centrarse en aquellas 	   recetas que sean del tipo de comida seleccionado.
+   	 > Los tipos pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 		   alguna caracteristica en especifico; como pueden ser comida picosas, saldas, dulces, comidas KETO, veganas, etc.
 	
 7. Marcar como favorito alguna receta.
- 	 > Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas favoritas antes de las demás posibles opciones de recetas.
+ 	 > Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas 	   favoritas antes de las demás posibles opciones de recetas.
 	
-8. Agregar una receta del usuario.
- 	 > Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que estas se puedan tomar en cuenta al momento de proporcionarle recetas. 
-
+8. Registrar una receta del usuario.
+	> Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que estas se puedan tomar en cuenta al momento de proporcionarle recetas. 
+   
+9. Dar acceso a algun buscador para que el usuario pueda buscar una receta específica.
+	> El buscador (por ejemplo Google) estara enlazado a la aplicacion, de manera que si no se cuentan con todos los ingredientes, entonces se generará una 	  lista de compras o se le proporcionara los ingredientes disponibles con los que se pueden sustituir. 
 </div>
 </div>
 
 
 <div>
 		
-### EJEMPLOS DE LAS ACTIVIDADES QUE EL USUARIO PUEDE HACER
+### ACTIVIDADES QUE EL USUARIO PUEDE HACER
 
 Actividades:
 1. Agregar manualmente ingredientes.
 2. Deseleccionar o reseleccionar electrodomesticos de la cocina.
 3. Filtrar recetas con base a sus gustos.
-4. Marcar como favorito alguna receta de su gusto o interés.
-5. Escribir recetas propias.
-6. Comprar en linea la lista de ingredientes generada.
- 
+4. Comprar en linea la lista de ingredientes generada.
+5. Marcar como favorito alguna receta de su gusto o interés.
+6. Escribir recetas propias.
+7. Buscar una receta.
 
 </div>
 	
