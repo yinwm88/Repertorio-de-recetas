@@ -2,7 +2,7 @@
 	
 # **REPERTORIO DE RECETAS**
   
-Wong Mestas A. Yin Len - Javier Emilio Bazan Sanchez - Aguilar Uribe J. David  - Nombre  - Nombre 
+Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  - Nombre  - Nombre 
 
 
 </div>
