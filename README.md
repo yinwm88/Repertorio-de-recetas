@@ -61,7 +61,7 @@ De no encontrarse al menos  una  receta:
    Para los ingredientes con los que no se cuenta:
    
    	1. Se le mostrarán opciones con los que se pueden sustituir.
-   	2. Ó de plano se le hará una lista de compras en Walmart Express, o alguna tienda en línea, de los ingredientes que le falten.
+   	2. Se le hará una lista de compras en Walmart Express, o alguna tienda en línea, de los ingredientes que le falten.
 	
 6. **Filtrar recetar por  ingrediente o tipo de comida.**
    
