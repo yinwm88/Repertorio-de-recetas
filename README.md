@@ -134,9 +134,9 @@ ej. Se tiene una cocina con los siguientes productos:
 
 8. **Buscar una receta.**
 
- 	Planee cocinar Pollo Kung Pao un fin de semana, pero entre tanta receta que ocupa pollo no encuntro el Pollo Kung Pao, entonces se puede buscar desde la aplicación la receta de Pollo Kung Pao.
+ 	Planee cocinar Pollo Kung Pao un fin de semana, pero entre tanta receta que ocupa pollo no encuntro el Pollo Kung Pao, entonces se puede buscar desde la aplicación la receta de Pollo Kung Pao, siempre y cuando esta este en el repertorio de recetas.
 
-	La diferencia con buscarlo directamente desde el navegador radica en que si se te olvidó algún ingrediente la aplicación te recomienda sustituirlo con alguno disponible en tu cocina o te hace una lista de compras sin olvidar agregar ningún ingrediente faltante. 
+
     
 
 </div>
