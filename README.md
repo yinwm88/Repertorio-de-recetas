@@ -2,7 +2,7 @@
 	
 # **REPERTORIO DE RECETAS**
   
-Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  - García Velasco Erick Iram - Nombre 
+Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  - García Velasco Erick Iram - José Luis López Bautista 
 
 
 </div>
