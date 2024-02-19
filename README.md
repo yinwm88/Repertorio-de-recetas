@@ -2,7 +2,7 @@
 	
 # **REPERTORIO DE RECETAS**
   
-Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  - Nombre  - Nombre 
+Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  - García Velasco Erick Iram - Nombre 
 
 
 </div>
@@ -35,26 +35,26 @@ El software tiene la capacidad de:
 		    
 1. **Registrar cada ingrediente de la cocina.**
    
-	Estos serán registrados manualmente.
+	Los ingredientes se agregarán a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con ingredientes contemplados en la aplicación.
 	   
 2. **Registrar los electrodomésticos disponibles.**
    
-	Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de ser el caso, el usuario deseleccionará aquellos 	     	con los que no disponga en la cocina.
+	Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario; de no ser el caso, el usuario deseleccionará aquellos con los que no disponga en la cocina.
 	
 3. **Registrar datos del usuario.**
    
-	Los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio.Estos datos serán:
+	Los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio y son opcionales. Estos datos serán:
 	- *peso*
 	- *talla*
 	- *actividad fisica*
 	- *enfermedades*
 	- *alergias*
 		
-4. **Proporcionar ***al menos*** una o más recetas que se pueden realizar en esa cocina.**
+4. **Proporcionar ***al menos*** una receta que se pueda realizar con los ingredientes y electrodomésticos.**
 
 	Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir, como aquellas que no cumplan con su objetivo alimenticio.
 
-De no encontrarse al menos  una  receta:
+De no encontrarse al menos una receta, o si el usuario así lo decide:
 
 5. **Se dará la receta que contenga los ingredientes disponibles en su cocina más el ***mínimo número*** de ingredientes con los que no se cuenta.**
    
@@ -65,9 +65,9 @@ De no encontrarse al menos  una  receta:
 	
 6. **Filtrar recetar por  ingrediente o tipo de comida.**
    
- 	 Esto permitira centrarse nada más en aquellas recetas que tengan entre sus ingredientes el ingrediente especifico a utilizar. O centrarse en aquellas 	   recetas que sean del tipo de comida seleccionado.
+ 	 Esto permite que el usuario obtenga una receta donde se utilice algún ingrediente en específico.
    
-  	 Los tipos pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 		   alguna caracteristica en especifico; como pueden ser comida picosa, salada, dulce, KETO, vegana, etc.
+  	 Los tipos de comida pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 	alguna caracteristica en especifico; como pueden ser comida picosa, salada, dulce, KETO, vegana, etc.
 	
 7. **Marcar como favorito alguna receta.**
 	
@@ -77,9 +77,9 @@ De no encontrarse al menos  una  receta:
     
 	Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que estas se puedan tomar en cuenta al momento de proporcionarle recetas. 
    
-9. **Dar acceso a algun buscador para que el usuario pueda buscar una receta específica.**
+9. **Buscar entre todas las recetas disponibles.**
     
-	El buscador (por ejemplo Google) estara enlazado a la aplicacion, de manera que si se desea cocinar una receta en especifico, entonces el sistema ser'- capaz de proporcionar dicha de manera directa.
+	Si el usuario decide no registrar sus ingredientes, puede utilizar un buscador que puede mostrar todas las recetas disponibles en la aplicación. 
 
 </div>
 </div>
@@ -117,7 +117,7 @@ ej. Se tiene una cocina con los siguientes productos:
 
 	Tenemos los ingredientes necesarios para hacer nuggets de pollo, pero también queremos **usar el tocino**, entonces basta con **filtrar la receta por ingrediente** y seleccionar el tocino como ingrediente para ahora tener nuggets de pollo y tocino.
 
- 	O si lo que queremos es que **los nuggets sean veganos**, entonces en de vez de filtrar por ingrediente, **filtramos  por tipo de comida** y de esa manera obtenemos la receta de nuggets de garbanzo.
+ 	O si lo que queremos es que **los nuggets sean veganos**, entonces en de vez de filtrar por ingrediente, **filtramos por tipo de comida** y de esa manera obtenemos la receta de nuggets de garbanzo.
    
 4. **Comprar en linea la lista de ingredientes generada.**
 
@@ -140,9 +140,6 @@ ej. Se tiene una cocina con los siguientes productos:
     
 
 </div>
-	
-Correo Canek:contornos reticulares[1]  (wireframes) de la vista que tendrá el sistema; y casos de uso también en español coloquial, pero que cubran la mayor cantidad posible de actividades realizables. Apreciaremos que sean concisos."
-	
 	
 
 </div>  
