@@ -79,7 +79,7 @@ De no encontrarse al menos  una  receta:
    
 9. **Dar acceso a algun buscador para que el usuario pueda buscar una receta específica.**
     
-	El buscador (por ejemplo Google) estara enlazado a la aplicacion, de manera que si no se cuentan con todos los ingredientes, entonces se generará una 	  lista de compras o se le proporcionaran los ingredientes disponibles con los que se pueden sustituir.
+	El buscador (por ejemplo Google) estara enlazado a la aplicacion, de manera que si se desea cocinar una receta en especifico, entonces el sistema ser'- capaz de proporcionar dicha de manera directa.
 
 </div>
 </div>
