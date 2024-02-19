@@ -15,7 +15,7 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
   
 > <b>PROBLEM STATEMENTS</b>
     <div>
->  - DDejar dsperdiciar ingredientes por nunca utilizarse.
+>  - Dejar dsperdiciar ingredientes por nunca utilizarlos.
 >  - No tener una dieta controlada (padecimeintos, alergias, calorías).
 >  - Bloqueo culinario: No saber que cocinar.
    </div>
@@ -100,11 +100,11 @@ ej. Se tiene una cocina con los siguientes productos:
 | 250 gr Queso Panela  |   |
 </div>
 
-1. **Agregar manualmente ingredientes.**
+1. **Agregar manualmente ingredientes.** ***IMPORTANTE***
 
-	Cada uno de los **ingredientes** anteriores se tendrán que registrar manualmente en el sistema, es decir, se tendrá que escribir el **nombre** de cada uno y selecionar la **cantidad** con la que se dispone.
+	Cada uno de los **ingredientes** anteriores se tendrán que registrar  en el sistema, es decir, se tendrá que escribir el **nombre** de cada uno y selecionar la **cantidad** con la que se dispone.
 
-2. **Activar o desactivar electrodomesticos.**
+2. **Activar o desactivar electrodomesticos.** ***IMPORTANTE***
 
    	El sistema por default dirá que la cocina esta perfectamente equipada. En este caso, digamos que se selecciona la receta para preparar nuggets de pollo la cual requiere del **uso de una freidora de aire**, pero en nuestra cocina **no disponemos de una**, entonces deberemos ir al la sección de configuración y **desactivar la opción de freidora de aire**, de modo que ahora se omitirán las recetas que utilicen freidora de aire, o en su caso se te recomendará sustituir la freidora de aire por el horno del cual si disponemos.
     
