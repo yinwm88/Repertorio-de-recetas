@@ -35,7 +35,7 @@ El software tiene la capacidad de:
 		    
 1. **Registrar cada ingrediente de la cocina.**
    
-	Los ingredientes se agregarán a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con ingredientes contemplados en la aplicación.
+	Los ingredientes se agregarán a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con ingredientes contemplados en la aplicación. Dependiendo del alimento, la cantidad se representará en piezas, gramos o mililitros. 
 	   
 2. **Registrar los electrodomésticos disponibles.**
    
@@ -52,7 +52,7 @@ El software tiene la capacidad de:
 		
 4. **Proporcionar ***al menos*** una receta que se pueda realizar con los ingredientes y electrodomésticos.**
 
-	Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir, como aquellas que no cumplan con su objetivo alimenticio.
+	Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir o aquellas que no cumplan con su objetivo alimenticio. Para eso son los datos del punto anterior.
 
 De no encontrarse al menos una receta, o si el usuario así lo decide:
 
@@ -65,7 +65,7 @@ De no encontrarse al menos una receta, o si el usuario así lo decide:
 	
 6. **Filtrar recetar por  ingrediente o tipo de comida.**
    
- 	 Esto permite que el usuario obtenga una receta donde se utilice algún ingrediente en específico.
+ 	 Esto permite que el usuario obtenga una receta donde se utilice algún ingrediente en específico o el tipo de comida que prefiera.
    
   	 Los tipos de comida pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 	alguna caracteristica en especifico; como pueden ser comida picosa, salada, dulce, KETO, vegana, etc.
 	
@@ -79,7 +79,7 @@ De no encontrarse al menos una receta, o si el usuario así lo decide:
    
 9. **Buscar entre todas las recetas disponibles.**
     
-	Si el usuario decide no registrar sus ingredientes, puede utilizar un buscador que puede mostrar todas las recetas disponibles en la aplicación. 
+	Si el usuario decide no registrar sus ingredientes, tiene la opción de utilizar un buscador que puede mostrar todas las recetas disponibles en la aplicación. Si la receta que está buscando no se encuentra, la aplicación sugiere otras opciones.
 
 </div>
 </div>
@@ -107,7 +107,7 @@ ej. Se tiene una cocina con los siguientes productos:
 
 1. **Agregar manualmente ingredientes.**
 
-	Cada uno de los **ingredientes** anteriores se tendrán que registrar manualmente en el sistema, es decir, se tendrá que escribir el **nombre** de cada uno, así como selecionar la **cantidad** con la que se dispone.
+	Cada uno de los **ingredientes** anteriores se tendrán que registrar manualmente en el sistema, es decir, se tendrá que escribir el **nombre** de cada uno y selecionar la **cantidad** con la que se dispone.
 
 2. **Activar o desactivar electrodomesticos.**
 
@@ -115,17 +115,20 @@ ej. Se tiene una cocina con los siguientes productos:
     
 3. **Filtrar recetas con base a sus gustos.**
 
-	Tenemos los ingredientes necesarios para hacer nuggets de pollo, pero también queremos **usar el tocino**, entonces basta con **filtrar la receta por ingrediente** y seleccionar el tocino como ingrediente para ahora tener nuggets de pollo y tocino.
+	El usuario despertó con el antojo de comida tailandesa. En este caso, podría usar los filtros que ofrece la aplicación para que, tomando en cuenta los ingredientes de los que dispone, la aplicación muestre sugerencias de comida de este tipo. Si está pensando en hacer el super, podría simplemente usar el buscador de recetas para que muestre todos los platillos tailandeses que están disponibles en la aplicación, usar la función de lista de compras para guardar los ingredientes necesarios y tomar esto como referencia en el super. 
 
- 	O si lo que queremos es que **los nuggets sean veganos**, entonces en de vez de filtrar por ingrediente, **filtramos por tipo de comida** y de esa manera obtenemos la receta de nuggets de garbanzo.
+	Si el usuario tiene tocino desde hace 5 días en el refrigerador y quiere una receta que utilice tocino, nuevamente podría utilizar los filtros para mostrar sólo recetas que lleven tocino. 
+
+	Y si el usuario quiere platillos tailandeses que lleven tocino, también puede usar los filtros para obtener recetas con estas características.
+
    
-4. **Comprar en linea la lista de ingredientes generada.**
+4. **Generar una lista de ingredientes**
 
- 	Resulta que nos inscribimos a un gimnasio y para cocinar nuggets de pollo fit, nos piden harina de avena y avena, pero nosotros tenemos harina normal y pan para empanizar (nada Fit que digamos), en este caso el sistema nos creara una lista de compras donde incluya harina de avena y avena, y fácilmene con esta lista generada automaticamente por el sistema, podremos **comprar todos los ingredientes necesaros** sin olvidar ninguno.
+ 	Resulta que nos inscribimos a un gimnasio y queremos cocinar platillos que sean bajos en grasas o calorías. Entonces encontramos en la aplicación la receta para cocinar nuggets de pollo fit, nos piden harina de avena y avena, pero nosotros tenemos harina normal y pan para empanizar (nada Fit que digamos), en este caso el sistema nos creara una lista de compras donde incluya harina de avena y avena, y fácilmene con esta lista generada automaticamente por el sistema, podremos **ir a comprar todos los ingredientes necesaros** sin olvidar ninguno.
    
 5. **Marcar como favorito alguna receta de su gusto.**
 
-   	La receta de nuggets de garbanzo fue mejor de lo que esperamos y queremos volver a cocinarla nuevamente en un futuro, entonces para no perder la receta se podrá **marcar como receta favorita** y asi cuando se tengan nuevamente todos los ingredientes  para los nuggets de garbanzo el sistema nos la  proporcionará como una de las primeras opciones para cocinar.
+   	La receta de chimichangas fue mejor de lo que esperamos y queremos volver a cocinarla nuevamente en un futuro, entonces para no perder la receta se podrá **marcar como receta favorita** y asi cuando se tengan nuevamente todos los ingredientes para este platillo, el sistema nos la proporcionará como una de las primeras opciones para cocinar.
     
 6. **Escribir recetas propias.**
 
