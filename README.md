@@ -15,15 +15,13 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
   
 > <b>PROBLEM STATEMENTS</b>
     <div>
->  - Desperdiciar ingredientes por nunca utilizarse.
+>  - DDejar dsperdiciar ingredientes por nunca utilizarse.
 >  - No tener una dieta controlada (padecimeintos, alergias, calorías).
 >  - Bloqueo culinario: No saber que cocinar.
    </div>
 
 
 <div>
-	
-## ESPECIFICACIONES TÉCNICAS
 	
  <div>
 	
@@ -35,7 +33,7 @@ El software tiene la capacidad de:
 		    
 1. **Registrar cada ingrediente de la cocina.**
    
-	Los ingredientes se agregarán a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con ingredientes contemplados en la aplicación. Dependiendo del alimento, la cantidad se representará en piezas, gramos o mililitros. 
+	Los ingredientes se agregarán a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con ingredientes contemplados en la aplicación. Dependiendo del alimento, la cantidad se representará en piezas, gramos o mililitros, información que también se le solicitará al usuario.
 	   
 2. **Registrar los electrodomésticos disponibles.**
    
@@ -52,16 +50,13 @@ El software tiene la capacidad de:
 		
 4. **Proporcionar ***al menos*** una receta que se pueda realizar con los ingredientes y electrodomésticos.**
 
-	Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir o aquellas que no cumplan con su objetivo alimenticio. Para eso son los datos del punto anterior.
+	Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir o aquellas que no cumplan con su objetivo alimenticio. Para eso son los datos del punto anterior. Si se prepara la receta, se eliminarán los ingredientes del registro del usuario.
 
 De no encontrarse al menos una receta, o si el usuario así lo decide:
 
 5. **Se dará la receta que contenga los ingredientes disponibles en su cocina más el ***mínimo número*** de ingredientes con los que no se cuenta.**
    
-   Para los ingredientes con los que no se cuenta:
-   
-   	1. Se le mostrarán opciones con los que se pueden sustituir.
-   	2. Se le hará una lista de compras en Walmart Express, o alguna tienda en línea, de los ingredientes que le falten.
+   Para los ingredientes con los que no se cuenta, la aplicación puede generar una lista de compras para que el usuario no olvide lo que necesita.
 	
 6. **Filtrar recetar por  ingrediente o tipo de comida.**
    
