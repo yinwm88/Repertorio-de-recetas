@@ -7,11 +7,6 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
 
 </div>
 
-<div align="center">
-  
-![Ratatouille](GIF/a6ebc357ef9823560fdd0500f2ebff1b.gif)</div>
-
-<div>
   
 > <b>PROBLEM STATEMENTS</b>
     <div>
