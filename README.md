@@ -4,19 +4,12 @@
   
 Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  - García Velasco Erick Iram - José Luis López Bautista 
 
-
 </div>
-
   
 > <b>PROBLEM STATEMENTS</b>
-    <div>
->  - Dejar dsperdiciar ingredientes por nunca utilizarlos.
->  - No tener una dieta controlada (padecimeintos, alergias, calorías).
->  - Bloqueo culinario: No saber que cocinar.
-   </div>
-
-
-<div>
+	<div>
+	Un recetario que le dé al usuario opciones de platillos tomando en cuenta en los ingredientes disponibles en su cocina, sus gustos, alergias y estado de salud. Solucionando problemas típicos en la cocina como el desperdicio de ingredientes, no lograr controlar la dieta y no saber qué cocinar. 
+	<div>
 	
  <div>
 	
