@@ -71,16 +71,14 @@ ej. Se tiene una cocina con los siguientes productos:
 
 <div style="margin: 0 auto;">
 	
-| Ingredientes | Electrodomesticos |
-|:-----------:|:-----------:|
-| 1 kg Pan para empanizar   | Refrigerador   |
-| 10 pz Huevo   | Estufa   |
-| 500 gr Pechuga de pollo   | Horno   |
-| 500 gr Garbanzo   | Licuadora   |
-| 200 gr Tocino    |   |
-| 200 gr Harina  |   |
-| 5 pz Platano  |   |
-| 250 gr Queso Panela  |   |
+<b>Ingredientes:</b>  
+
+1 kg Pan para empanizar, 10 pz Huevo, 500 gr Pechuga de pollo, 200 gr Tocino, 200 gr Harina,  5 pz Platano, 250 gr Queso Panela.  
+
+**Electrodomesticos:** 
+
+Refrigerador, estufa, horno, licuadora 
+
 </div>
 
 1. **Agregar manualmente ingredientes.** ***IMPORTANTE***
