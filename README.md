@@ -6,7 +6,7 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
 
 </div>
   
-> <b>PROBLEM STATEMENTS</b>
+> <b>PROBLEM STATEMENT</b>
 	<div>
 	Un recetario que le dé al usuario opciones de platillos tomando en cuenta en los ingredientes disponibles en su cocina, sus gustos, alergias y estado de salud. Solucionando problemas típicos en la cocina como el desperdicio de ingredientes, no lograr controlar la dieta y no saber qué cocinar. 
 	<div>
