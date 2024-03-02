@@ -99,25 +99,34 @@ Refrigerador, estufa, horno, licuadora
 
 
 #### Inicio de sesión: 
-![Inicio de sesión](/Wireframe/WF-InicioSesion.png)
+![Inicio de sesión](/Wireframe/WF-VistaSeparada/WF-InicioSesion.png)
 
 #### Añadir ingredientes:
-![Ingredientes](/Wireframe/WF-AñadirIngredientes.png)
+![Ingredientes](/Wireframe/WF-VistaSeparada/WF-PaginaPrincipal.png)
 
 #### Repertorio de recetas:
-![Repertorio de recetas](/Wireframe/WF-Repertorio.png)
+![Repertorio de recetas](/Wireframe/WF-VistaSeparada/WF-Repertorio.png)
+
+#### Filtar recetas:
+![Repertorio de recetas](/Wireframe/WF-VistaSeparada/WF-Filtrar.png)
 
 #### Características de una receta: 
-![Receta](/Wireframe/WF-Receta.png)
+![Receta](/Wireframe/WF-VistaSeparada/WF-Receta.png)
+
+####  Generar lista: 
+![Receta](/Wireframe/WF-VistaSeparada/WF-GenerarLista.png)
 
 #### Configuración general:
-![Configuración](/Wireframe/WF-Configuracion.png)
+![Configuración](/Wireframe/WF-VistaSeparada/WF-Perfil.png)
 
 #### Configuración de los electrodomésticos:
-![Electrodomésticos](/Wireframe/WF-Electrodomesticos.png)
+![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-Electrodomestico.png)
+
+#### Configuración de los datos:
+![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-Datos.png)
 
 #### Flujo entre vistas:
-![Flujo](/Wireframe/WF-Conjunto.png)
+![Flujo](/Wireframe/WF-FlujoVistas.png)
 
 </div>  
 
