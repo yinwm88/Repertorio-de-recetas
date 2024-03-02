@@ -125,6 +125,9 @@ Refrigerador, estufa, horno, licuadora
 #### Configuración de los datos:
 ![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-Datos.png)
 
+#### Crear receta:
+![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-CrearReceta.png)
+
 #### Flujo entre vistas:
 ![Flujo](/Wireframe/WF-FlujoVistas.png)
 
