@@ -17,47 +17,22 @@ Wong Mestas A. Yin Len -  Bazan Sanchez Javier Emilio - Aguilar Uribe J. David  
 	
 <div>	
 
-El software tiene la capacidad de:
 		    
-1. **Registrar cada ingrediente de la cocina.**
-   
-	Los ingredientes se agregarán a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con ingredientes contemplados en la aplicación. Dependiendo del alimento, la cantidad se representará en piezas, gramos o mililitros, información que también se le solicitará al usuario.
-	   
-2. **Registrar los electrodomésticos disponibles.**
-   
-	Por default se tiene que todos los electrodomesticos están disponibles en la cocina del usuario, de no ser el caso, el usuario deseleccionará aquellos con los que no disponga en la cocina.
-	
-3. **Registrar datos del usuario.**
-   
-	Los cuales serán usados para filtrar las recetas respecto a su objetivo alimenticio y son opcionales. Estos datos serán: peso, talla, actividad física, enfermedades y alergias.
+En la aplicación, los ingredientes se agregan a la cocina mediante un buscador que muestra coincidencias de lo que escribe el usuario con los alimentos contemplados. El usuario especifica la cantidad, ya sea en piezas, gramos o mililitros, según corresponda. Esta información se solicita al usuario durante el proceso de registro de ingredientes.
 
-4. **Proporcionar ***al menos*** una receta que se pueda realizar con los ingredientes y electrodomésticos.**
+Por defecto, todos los electrodomésticos se consideran disponibles en la cocina del usuario. Sin embargo, el usuario puede deseleccionar aquellos electrodomésticos que no posea.
 
-	Se omitirán aquellas recetas que contengan algún alimento que el usuario no pueda ingerir o aquellas que no cumplan con su objetivo alimenticio. Para eso son los datos del punto anterior. Si se prepara la receta, se eliminarán los ingredientes del registro del usuario.
+Los datos del usuario son opcionales y se utilizan para filtrar las recetas según sus objetivos alimenticios. Estos datos incluyen peso, altura, nivel de actividad física, así como información sobre enfermedades y alergias alimentarias.
 
-De no encontrarse al menos una receta, o si el usuario así lo decide:
+La aplicación proporciona al menos una receta que se pueda realizar con los ingredientes y electrodomésticos disponibles en la cocina del usuario. Se omiten aquellas recetas que contienen alimentos no aptos para el usuario o que no cumplen con sus objetivos alimenticios. Una vez que se prepara la receta, los ingredientes utilizados se eliminan del registro del usuario.
 
-5. **Se dará la receta que contenga los ingredientes disponibles en su cocina más el ***mínimo número*** de ingredientes con los que no se cuenta.**
-   
-   Para los ingredientes con los que no se cuenta, la aplicación puede generar una lista de compras para que el usuario no olvide lo que necesita.
-	
-6. **Filtrar recetar por  ingrediente o tipo de comida.**
-   
- 	 Esto permite que el usuario obtenga una receta donde se utilice algún ingrediente en específico o el tipo de comida que prefiera.
-   
-  	 Los tipos de comida pueden ser desde comidas de alguna nacionalidad (la aplicacion daría la ventaja de cocinar recetas de otros paises) hasta comidas con 	alguna caracteristica en especifico; como pueden ser comida picosa, salada, dulce, KETO, vegana, etc.
-	
-7. **Marcar como favorito alguna receta.**
-	
- 	Esto para encontrar con mayor facilidad alguna receta en el repertorio y de contar con los ingredientes necesarios mostrarla en un apartado de recetas 	   favoritas antes de las demás posibles opciones de recetas.
-	
-8. **Registrar una receta del usuario.**
-    
-	Esto permitirá al usuario incluir sus recetas familiares en el repertorio para que estas se puedan tomar en cuenta al momento de proporcionarle recetas. 
-   
-9. **Buscar entre todas las recetas disponibles.**
-    
-	Si el usuario decide no registrar sus ingredientes, tiene la opción de utilizar un buscador que puede mostrar todas las recetas disponibles en la aplicación. Si la receta que está buscando no se encuentra, la aplicación sugiere otras opciones.
+Si no se encuentra al menos una receta que cumpla con los criterios mencionados, la aplicación ofrece una receta que incluya los ingredientes disponibles en la cocina del usuario y el mínimo número de ingredientes faltantes. Además, la aplicación puede generar una lista de compras para los ingredientes que falten, facilitando al usuario conseguirlos sin que se olvide de alguno.
+
+Los usuarios pueden filtrar las recetas por ingrediente o tipo de comida, lo que les permite encontrar recetas que utilicen ingredientes específicos o que correspondan a ciertos tipos de cocina, como comidas de distintas nacionalidades o con características específicas, por ejemplo, picante, salado, dulce, KETO, vegano, etc.
+
+Además, los usuarios tienen la opción de marcar recetas como favoritas, lo que facilita su búsqueda en el futuro. Estas recetas marcadas como favoritas se muestran primero antes que otras opciones al usuario. También pueden registrar sus propias recetas en la aplicación, que se incluyen en el repertorio de la aplicación y se tienen en cuenta al proporcionar recetas al usuario.
+
+Si el usuario decide no registrar sus ingredientes, tiene la opción de utilizar un buscador que muestra todas las recetas disponibles en la aplicación. Si la receta buscada no se encuentra, la aplicación sugiere otras opciones al usuario.
 
 </div>
 </div>
@@ -65,7 +40,7 @@ De no encontrarse al menos una receta, o si el usuario así lo decide:
 
 <div>
 		
-### ACTIVIDADES QUE EL USUARIO PUEDE HACER
+### Casos de uso
 
 ej. Se tiene una cocina con los siguientes productos:
 
@@ -116,10 +91,33 @@ Refrigerador, estufa, horno, licuadora
  	La receta de Pollo Kung Pao le resulta muy buena al usuario para un fin de semana en familia, pero entre tanta receta que ocupa pollo no encuntra el Pollo Kung Pao, entonces puede buscar desde la aplicación la receta de Pollo Kung Pao, siempre y cuando esta este en el repertorio de recetas.
 
 
-    
+
 
 </div>
-	
+
+### Wireframes
+
+
+#### Inicio de sesión: 
+![Inicio de sesión](/Wireframe/WF-InicioSesion.png)
+
+#### Añadir ingredientes:
+![Ingredientes](/Wireframe/WF-AñadirIngredientes.png)
+
+#### Repertorio de recetas:
+![Repertorio de recetas](/Wireframe/WF-Repertorio.png)
+
+#### Características de una receta: 
+![Receta](/Wireframe/WF-Receta.png)
+
+#### Configuración general:
+![Configuración](/Wireframe/WF-Configuracion.png)
+
+#### Configuración de los electrodomésticos:
+![Electrodomésticos](/Wireframe/WF-Electrodomesticos.png)
+
+#### Flujo entre vistas:
+![Flujo](/Wireframe/WF-Conjunto.png)
 
 </div>  
 
