@@ -1,4 +1,7 @@
---!Tabla Usuario
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA public;
+
+
 create type objetivos as enum ('');  
 create table Usuario (
 	correo Varchar(70),	
@@ -107,7 +110,7 @@ create table Necesitar (
     idReceta int
 );
 alter table Necesitar alter column idElectro set not null;
-alter table Necesitar alter column correo set not null;
+alter table Necesitar alter column idReceta set not null;
 
 alter table Necesitar add constraint fkNecesitarReceta foreign key(idReceta) references Receta(idReceta)
 on update cascade on delete cascade;
@@ -128,7 +131,7 @@ alter table CaracteristicasReceta add constraint fkCaracteristica foreign key(id
 on update cascade on delete cascade;
 
 
-create type tipos as enum ('mexicana', 'china', 'vegana', 'rapida', 'saludable', 'postre', 'bebida', 'snack', 'ensalada', 'vegetariana', 'vegana', 'general');  
+create type tipos as enum ('mexicana', 'china', 'vegana', 'rapida', 'saludable', 'postre', 'bebida', 'snack', 'ensalada', 'vegetariana', 'general');  
 create table TipoReceta (
     idReceta int,
     tipo tipos
@@ -149,46 +152,46 @@ create table Recomendar (
 alter table Recomendar alter column idReceta set not null;
 alter table Recomendar alter column correo set not null;
 
-alter table Recomendar add constraint fkRecomendar foreign key(idReceta) references Receta(idReceta)
+alter table Recomendar add constraint fkRecomendarC1 foreign key(idReceta) references Receta(idReceta)
 on update cascade on delete cascade;
-alter table Recomendar add constraint fkRecomendar foreign key(correo) references Usuario(correo)
+alter table Recomendar add constraint fkRecomendarC2 foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
 
 
 
 create table serAlergicoProcesado(
 	correo varchar(70),
-	idIngrediente int,
+	idIngrediente int
 );
 
-alter table serAlergico alter column correo set not null;
-alter table serAlergico alter column idIngrediente set not null;
+alter table serAlergicoProcesado alter column correo set not null;
+alter table serAlergicoProcesado alter column idIngrediente set not null;
 
-alter table serAlergico add constraint fkSerAlergico1 foreign key(correo) references Usuario(correo)
+alter table serAlergicoProcesado add constraint fkSerAlergico1 foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
-alter table serAlergico add constraint fkSerAlergico2 foreign key(idIngrediente) references Procesado(idIngrediente)
+alter table serAlergicoProcesado add constraint fkSerAlergico2 foreign key(idIngrediente) references Procesado(idIngrediente)
 on update cascade on delete cascade;
 
 
 
 create table serAlergicoNoProcesado(
 	correo varchar(70),
-	idIngrediente int,
+	idIngrediente int
 );
 
-alter table serAlergico alter column correo set not null;
-alter table serAlergico alter column idIngrediente set not null;
+alter table serAlergicoNoProcesado alter column correo set not null;
+alter table serAlergicoNoProcesado alter column idIngrediente set not null;
 
-alter table serAlergico add constraint fkSerAlergico3 foreign key(correo) references Usuario(correo)
+alter table serAlergicoNoProcesado add constraint fkSerAlergico3 foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
-alter table serAlergico add constraint fkSerAlergico4 foreign key(idIngrediente) references NoProcesado(idIngrediente)
+alter table serAlergicoNoProcesado add constraint fkSerAlergico4 foreign key(idIngrediente) references NoProcesado(idIngrediente)
 on update cascade on delete cascade;
 
 
 
 create table haberProcesado(
 	correo varchar(70),
-	idIngrediente int,
+	idIngrediente int
 );	
 
 alter table haberProcesado alter column correo set not null;
@@ -203,7 +206,7 @@ on update cascade on delete cascade;
 
 create table haberNoProcesado(
 	correo varchar(70),
-	idIngrediente int,
+	idIngrediente int
 );
 alter table haberNoProcesado alter column correo set not null;
 alter table haberNoProcesado alter column idIngrediente set not null;
@@ -244,3 +247,4 @@ alter table tenerNoProcesado add constraint fkTenerNoProcesado1 foreign key(corr
 on update cascade on delete cascade;
 alter table tenerNoProcesado add constraint fkTenerNoProcesado2 foreign key(idIngrediente) references NoProcesado(idIngrediente)
 on update cascade on delete cascade;
+
