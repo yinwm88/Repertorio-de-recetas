@@ -1,29 +1,20 @@
-# Use an official Node.js runtime as a parent image
-FROM node:latest AS build
+# Utilizamos la imagen de Node.js como base.
+FROM node:14-alpine
 
-# Set the working directory in the container
+# Copiamos los archivos del frontend al directorio de trabajo del contenedor.
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY frontend/package*.json ./
+# opiamos package.json y package-lock.json al directorio de trabajo.
+COPY package*.json ./
 
-# Install dependencies
+# Instalamos las dependencias del frontend.
 RUN npm install
 
-# Copy the entire frontend directory contents into the container
-COPY frontend/ ./
+# Copiamos todo el contenido del directorio frontend al contenedor.
+COPY . .
 
-# Build the React app
-RUN npm run build
+# Exponemos el puerto 3000 para que el servidor frontend esté accesible desde fuera del contenedor.
+EXPOSE 3000
 
-# Stage 2: Serve frontend with nginx server
-FROM nginx:alpine
-
-# Copy the build output from the previous stage to the nginx html directory
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80 to the outside world
-EXPOSE 80
-
-# Command to run the nginx server
-CMD ["nginx", "-g", "daemon off;"]
+#  Usamos el comando npm start como comando de inicio para iniciar el servidor frontend.
+CMD ["npm", "start"]

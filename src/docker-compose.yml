@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
