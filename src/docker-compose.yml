@@ -19,7 +19,7 @@ services:
 
   postgres:
     build:
-      context: ./postgres
+      context: ./DB
       dockerfile: Dockerfile
     environment:
       POSTGRES_PASSWORD: mypassword
