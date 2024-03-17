@@ -17,10 +17,10 @@ const Ingreso = () => {
     };
 
     const mostrarFormularioRegistro = () => {
-        setMostrarRegistro(true); // Cuando se hace clic en el botón "No tengo cuenta", se cambia el estado para mostrar el formulario de registro
+        setMostrarRegistro(true); 
     };
 
-    const [mostrarRegistro, setMostrarRegistro] = useState(false); // Estado para controlar si se muestra el formulario de registro
+    const [mostrarRegistro, setMostrarRegistro] = useState(false); 
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
 
