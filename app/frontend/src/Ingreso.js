@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, TextField } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import theme from './Theme/theme';
 
 const Ingreso = () => {
 
@@ -38,14 +39,6 @@ const Ingreso = () => {
     return (
         <div>
             <Button 
-                sx={{
-                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                    color: 'white',
-                    transition: 'background-color 0.3s', 
-                    '&:hover': {
-                        backgroundColor: 'rgb(300, 100, 0)', 
-                    },
-                }}
                 startIcon={<AccountCircleIcon/>} 
                 onClick={() => setOpen(true)}
             > 
@@ -86,17 +79,6 @@ const Ingreso = () => {
 
                              <Button 
                                     className='boton-crear-cuenta' 
-                                    sx={{
-                                        backgroundColor:'rgba(0,0,0,0.5 )' ,
-                                        color: 'white',
-                                        transition: 'background-color 0.3s', 
-                                        width:'140px',
-                                        height:'45px',
-                                        borderRadius:'20px',
-                                        '&:hover':{
-                                            backgroundColor:'rgba(252, 75, 8, 0.7)' , 
-                                        },
-                                    }} 
                                     onClick={secondHandleSubmit}
                                 > 
                                     Registrar
@@ -127,34 +109,14 @@ const Ingreso = () => {
                             <div>
                                 <Button 
                                     className='boton-iniciar-sesion' 
-                                    sx={{
-                                        backgroundColor:'#67bc57' ,
-                                        color: 'white',
-                                        transition: 'background-color 0.3s', 
-                                        width:'180px',
-                                        height:'45px',
-                                        borderRadius:'20px',
-                                        '&:hover':{
-                                            backgroundColor:'rgba(252, 75, 8, 0.7)' , 
-                                        },
-                                    }} 
+                                    sx={{...theme.components.MuiButton.styleOverrides.root,backgroundColor:'#67bc57',width:"150px"}} 
                                     onClick={firstHandleSubmit}
                                 > 
                                     Iniciar Sesión
                                 </Button>
                                 <Button 
                                     className='boton-registrar'
-                                    sx={{
-                                        backgroundColor: 'rgba(1, 1, 4,0.7)',
-                                        color: 'white',
-                                        transition: 'background-color 0.3s', 
-                                        width:'220px',
-                                        height:'45px',
-                                        borderRadius:'20px',
-                                        '&:hover': {
-                                            backgroundColor: 'rgba(252, 75, 8, 0.7)', 
-                                        },
-                                    }} 
+                                     sx={{...theme.components.MuiButton.styleOverrides.root,width:"180px"}} 
                                     onClick={mostrarFormularioRegistro}
                                 > 
                                     No tengo cuenta
