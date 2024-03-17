@@ -10,7 +10,7 @@ const App = () => {
   return (
     <Router>
       <TopBar />
-      <Container maxWidth="xl" style={{ marginTop: '64px' }}>
+      <Container maxWidth="xl" style={{ marginTop: '34px' }}>
         
         <Routes>
           <Route path="/" element={<Contenido />} />

@@ -36,6 +36,7 @@ function CustomList() {
       quantity: 1,
       icon: 'food',
     },
+    // Considera agregar más ítems para probar el desplazamiento
   ]);
 
   const [open, setOpen] = useState(false);
@@ -67,10 +68,16 @@ function CustomList() {
     item.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  // Estilo para el contenedor de la lista
+  const listContainerStyle = {
+    maxHeight: '400px', // Ajusta esta altura según tus necesidades
+    overflowY: 'auto'
+  };
+
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper square sx={{ p: 2, minHeight: '40vh' }}>
+      <Paper square sx={{ p: 2, minHeight: '40vh', display: 'flex', flexDirection: 'column' }}>
         <Typography variant="h5" gutterBottom component="div">
           Ingredientes
         </Typography>
@@ -87,16 +94,18 @@ function CustomList() {
             <SearchIcon />
           </IconButton>
         </Box>
-        <List sx={{ mb: 2 }}>
-          {filteredItems.map(({ id, name, quantity, icon }) => (
-            <ListItemButton key={id}>
-              <ListItemAvatar>
-                <Avatar>{itemIcons[icon]}</Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={name} secondary={`Cantidad: ${quantity}`} />
-            </ListItemButton>
-          ))}
-        </List>
+        <Box sx={listContainerStyle}>
+          <List sx={{ width: '100%' }}>
+            {filteredItems.map(({ id, name, quantity, icon }) => (
+              <ListItemButton key={id}>
+                <ListItemAvatar>
+                  <Avatar>{itemIcons[icon]}</Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={name} secondary={`Cantidad: ${quantity}`} />
+              </ListItemButton>
+            ))}
+          </List>
+        </Box>
         <StyledFab color="primary" aria-label="add" onClick={handleClickOpen}>
           <AddIcon />
         </StyledFab>

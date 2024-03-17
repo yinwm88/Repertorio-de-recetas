@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
 import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
-
+import FiltroRecetas from './Filtros';
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,6 +59,7 @@ function Contenido() {
           <IngredientesBar />
         </Grid>
         <Grid item sm={12} md={8}>
+          <FiltroRecetas />
           <div style={scrollableContainerStyle}>
 
             <Grid container spacing={4}>
