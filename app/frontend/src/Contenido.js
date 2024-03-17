@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
 import { db } from './firebaseConfig';
+import IngredientesBar from './IngredientesBar';
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
@@ -45,44 +46,59 @@ function Contenido() {
   // Ajustar la lógica para mostrar las recetas actuales basadas en la paginación
   const currentRecipes = recipes.slice(0, currentPage * recipesPerPage);
 
+  // Estilo para el contenedor desplazable
+  const scrollableContainerStyle = {
+    maxHeight: '600px', // Ajusta esta altura a tus necesidades
+    overflowY: 'auto'
+  };
+
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="false">
       <Grid container spacing={4}>
-        {currentRecipes.map((recipe) => (
-          <Grid item key={recipe.id} xs={12} sm={6} md={4}>
-            <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={recipe.imageUrl || 'https://via.placeholder.com/150'}
-                  alt={recipe.title}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {recipe.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {recipe.tags?.join(', ')}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {recipe.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Seleccionar
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+        <Grid item sm={12} md={4}>
+          <IngredientesBar />
+        </Grid>
+        <Grid item sm={12} md={8}>
+          <div style={scrollableContainerStyle}>
+
+            <Grid container spacing={4}>
+              {currentRecipes.map((recipe) => (
+                <Grid item key={recipe.id} xs={12} sm={6} md={4}>
+                  <Card>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={recipe.imageUrl || 'https://via.placeholder.com/150'}
+                        alt={recipe.title}
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {recipe.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {recipe.tags?.join(', ')}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {recipe.description}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Button size="small" color="primary">
+                        Seleccionar
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            <div>
+              <button onClick={() => paginate(currentPage + 1)}>Cargar más</button>
+            </div>
+          </div>
+        </Grid>
       </Grid>
-      <div>
-        {/* Botones de paginación para cargar más datos */}
-        <button onClick={() => paginate(currentPage + 1)}>Cargar más</button>
-      </div>
     </Container>
   );
 }
