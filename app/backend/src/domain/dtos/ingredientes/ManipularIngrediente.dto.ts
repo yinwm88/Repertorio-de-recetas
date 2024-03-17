@@ -1,5 +1,5 @@
 
-export class ManipularIngrediente {
+export class ManipularIngredienteDto {
 
     private constructor(
         public readonly idIngrediente: number,
@@ -9,11 +9,11 @@ export class ManipularIngrediente {
         // public readonly fecha: Date,
     ) {}
 
-    static crearInstancia( objeto: { [key: string]: any }): [string?, ManipularIngrediente?] {
+    static crearInstancia( objeto: { [key: string]: any }): [string?, ManipularIngredienteDto?] {
         const {idIngrediente, cantidad = 1 } = objeto;
         if (!idIngrediente) {
             return ['Falta el id del ingrediente'];   
         }
-        return [, new ManipularIngrediente(+idIngrediente, cantidad)];
+        return [, new ManipularIngredienteDto(+idIngrediente, cantidad)];
     }
 }

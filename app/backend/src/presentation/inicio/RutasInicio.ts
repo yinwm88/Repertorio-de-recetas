@@ -11,7 +11,7 @@ export class RutasInicio {
         const controlador = new ControladorInicio(ingredienteService);
 
         //TODO: Agregar ingrediente
-        router.post('/', controlador.agregarIngrediente ); 
+        router.post('/agregarIngrediente', controlador.agregarIngrediente ); 
         //TODO: Eliminar ingrediente
         // router.delete('/', );
         //TODO: Obtener ingrediente de la BD

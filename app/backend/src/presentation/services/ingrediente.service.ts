@@ -1,12 +1,12 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, ManipularIngrediente } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, ManipularIngredienteDto } from "../../domain";
 
 
 export class IngredienteService {
 
     constructor() {}
 
-    async agregarIngrediente(manipularIngredienteDto: ManipularIngrediente, user: EntidadUsuario) {
+    async agregarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, user: EntidadUsuario) {
         
         const ingredienteExiste = await prisma.ingrediente.findFirst({
             where: { idingrediente: manipularIngredienteDto.idIngrediente }

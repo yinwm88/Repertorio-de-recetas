@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado, ManipularIngrediente } from "../../domain";
+import { ErrorCustomizado, ManipularIngredienteDto } from "../../domain";
 import { IngredienteService } from "../services/ingrediente.service";
 
 export class ControladorInicio {
@@ -17,7 +17,7 @@ export class ControladorInicio {
     }
 
     public agregarIngrediente = ( req:Request, res: Response ) => {
-        const [error, manipularIngredienteDto ] = ManipularIngrediente.crearInstancia( req.body );
+        const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
         if (error) {
             return res.status(400).json(error);
         }
