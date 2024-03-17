@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado, IngresarUsuarioDto } from "../../domain";
+import { ErrorCustomizado, IngresarUsuarioDto, RegistrarUsuarioDto } from "../../domain";
 import { UsuarioService } from "../services/usuario.service";
 
 export class ControladorJoin {
@@ -26,14 +26,14 @@ export class ControladorJoin {
         .catch( error => this.manejarError( error, res ));
     }   
 
-    // public registrarUsuario = ( req:Request, res: Response ) => { 
-    //     const [error, registrarUsuarioDto ] = IngresarUsuarioDto.crearInstancia( req.body );
-    //     if (error) {
-    //         return res.status(400).json(error);
-    //     }
-    //     this.usuarioService.ingresarUsuario( registrarUsuarioDto! )
-    //     .then( usuario => res.status(201).json( usuario ))
-    //     .catch( error => this.manejarError( error, res ));
-    // }
+    public registrarUsuario = ( req:Request, res: Response ) => { 
+        const [error, registrarUsuarioDto ] = RegistrarUsuarioDto.crearInstancia( req.body );
+        if (error) {
+            return res.status(400).json(error);
+        }
+        this.usuarioService.registrarUsuario( registrarUsuarioDto! )
+        .then( usuario => res.status(201).json( usuario ))
+        .catch( error => this.manejarError( error, res ));
+    }
 
 }

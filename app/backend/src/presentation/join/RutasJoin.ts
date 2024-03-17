@@ -13,7 +13,7 @@ export class RutasJoin {
         //TODO: Iniciar sesion
         router.post('/ingresar', controlador.ingresarUsuario ); 
         //TODO: Registrar un nuevo usuario
-        router.post('/registrarse', ); 
+        router.post('/registrarse', controlador.registrarUsuario ); 
         
         return router;
     }
