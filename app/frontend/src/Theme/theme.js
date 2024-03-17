@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material';
 
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -9,6 +10,17 @@ const theme = createTheme({
       main: 'rgb(300, 100, 0)',
     },
   },
+
+  typography: {
+    body1: {
+      fontSize: '18px',
+      lineHeight: 1.5,
+      marginTop: '2px',
+      marginBottom: '2px',
+      fontFamily:['Roboto'],
+    },
+  },
+  
   components: {
     MuiButton: {
       styleOverrides: {
@@ -19,9 +31,12 @@ const theme = createTheme({
           '&:hover': {
             backgroundColor: 'rgb(300, 100, 0)', 
           },
-          width: '120px',
+          width: '110px',
           height: '40px',
           borderRadius:'30px',
+          fontFamily:  'serif', 
+          fontSize: '15px', 
+          fontWeight:'bold',
         },
       },
     },

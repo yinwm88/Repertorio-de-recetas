@@ -24,6 +24,7 @@
   color: white;
 }
 
+
 .App-link {
   color: #61dafb;
 }
@@ -35,4 +36,48 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.interior{
+    position:absolute; 
+    top: 50%; 
+    left: 50%;
+    height: 250px;
+    width: 450px;
+    border-radius: 35px;
+    transform: translate(-50%, -50%);
+    background-color:rgb(53, 52, 51);
+    padding: 20px ;
+}
+
+.boton-iniciar-sesion{
+    top: 40px; 
+    left:110px;
+    transform: translate(-50%, -50%);
+}
+.boton-registrar{
+    top: 40px; 
+    left: 190px;
+    transform: translate(-50%, -50%);
+}
+
+
+.boton-crear-cuenta{
+    top: 30px; 
+    left:430px;
+    transform: translate(-50%, -50%);
+}
+
+.nueva-cuenta{
+    position:absolute; 
+    top: 50%; 
+    left: 50%;
+    width: 500px;
+    height: 320px;
+    border-radius: 35px;
+    transform: translate(-50%, -50%);
+    background-color:rgb(53, 52, 51);
+    padding: 20px ;
 }
