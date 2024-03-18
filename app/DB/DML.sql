@@ -52,6 +52,15 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Rábano pican
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Rabanos', 'pz', true, 20); 
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Apio', 'gr', true, 9);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Eneldo', 'gr', true, 43);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Sal kosher', 'gr', false, 0);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Mostaza en polvo', 'gr', false, 60);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Salsa Tabasco', 'ml', false, 10);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Berenjena', 'pz', true, 50);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Chile verde', 'gr', true, 18);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Azucar', 'gr', false, 400); 
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Albahaca', 'mjo', true, 22);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Oregano seco', 'gr', true, 40);
+
 
 insert into Electrodomestico (nombre) values ('Refrigerador');
 insert into Electrodomestico (nombre) values ('Horno');
@@ -124,6 +133,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 25, 1
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 10, 3);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 26, 4);
 
+
 insert into Receta(nombre, proceso) values ('Cacio e Pepe', 'Comienza cocinando la cantidad deseada de espaguetis durante 3-4 minutos menos que el tiempo indicado en el paquete, siguiendo las instrucciones del paquete o según tu método habitual. Mientras tanto, coloca los granos de pimienta en una tabla de cortar y máchalos con un mortero. Luego, coloca la mitad de los granos de pimienta en una sartén y tuéstalos a fuego medio. Una vez cocida la pasta, escúrrela y colócala en la sartén, reservando un poco del agua de cocción. Añade la pasta con la pimienta y 2 cucharadas del agua reservada. Prepara el Pecorino colocando la mitad en un bol con una cucharada del agua de la pasta; continúa mezclando el queso con el agua hasta que se forme una crema. Cuando la pasta esté casi cocida, añade la crema de queso y mezcla (puedes agregar más agua si la pasta está muy seca). Sirve en un plato con el Pecorino restante por encima.');
 insert into necesitar(idReceta, idElectro) values (6, 5);
 insert into necesitar(idReceta, idElectro) values (6, 12);
@@ -132,6 +142,7 @@ insert into tipoReceta(idReceta, tipo) values (6, 'Italiana');
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 27, 100);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 28, 50);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 29, 10);
+
 
 insert into Receta (nombre, proceso) values ('Jitomates rellenos', ' Comienza precalentando el horno a 200°C. Luego, corta la parte superior de los tomates y colócalos en una bandeja para hornear. Vacía el interior de los tomates con una cuchara y reserva la pulpa en un bol. Mezcla la pulpa de los tomates con el resto de los ingredientes. Rellena nuevamente los tomates con esta mezcla. Opcionalmente, añade una fina capa de mantequilla sobre los tomates y coloca la "tapa" de los tomates. Hornea durante 40 minutos en el horno. Espera unos minutos antes de servir.');
 insert into necesitar(idReceta, idElectro) values (7, 2);
@@ -144,6 +155,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 19, 0
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 17, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 31, 200);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 20, 50);
+
 
 insert into Receta (nombre, proceso) values ('Ramen', 'Prepara el caldo añadiendo 700 ml de caldo de pollo a una olla grande con ajo, jengibre rallado, salsa de soja, especias chinas de cinco sabores, chile rojo reabanado y sin semillas, y 300 ml de agua. Lleva esto a ebullición, luego reduce el fuego y deja cocinar a fuego lento durante unos 5 minutos. Agrega una pizca de azúcar y más salsa de soja al gusto. Mientras tanto, fríe las chuletas de cerdo hasta que estén cocidas y hierve los huevos. Cocina los fideos ramen según las indicaciones del paquete. Cuela el caldo en otra olla y recalienta. Divide los fideos ramen entre 4 tazones, luego coloca encima una chuleta de cerdo en rodajas, espinacas, maíz dulce y un huevo duro cortado por la mitad. Vierte el caldo en los tazones, luego espolvorea semillas de sésamo, alga nori rallada y cebolla de verdeo picada. Y listo');
 insert into necesitar(idReceta, idElectro) values (8, 5);
@@ -164,6 +176,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 41, 1
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 42, 4);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 43, 1);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 32, 1);
+
 
 insert into Receta (nombre, proceso) values ('Pavo ahumado', 'Primero, mezcla el polvo de ajo en la mantequilla batida. Luego, retira las menudencias y otros materiales del interior del pavo. Enjuaga el pavo y sécalo con una toalla. Cubre generosamente el pavo con la mezcla de mantequilla batida, asegurándote de cubrir toda la superficie. Coloca el pavo en una bandeja para hornear con papel de aluminio junto con las verduras mixtas. Si está disponible, usa una rejilla para elevar el pavo del fondo de la bandeja. Agrega caldo de pollo hasta que cubra el fondo de la bandeja y cubre la bandeja con papel de aluminio. Luego, enciende la parrilla de carbón y organiza las brasas para cocinar indirectamente, tratando de mantener una temperatura de 300-400°F. Coloca el pavo en la bandeja sobre la parrilla y cocina indirectamente durante 1 hora. Retira el papel de aluminio y continúa cocinando a fuego indirecto. Periódicamente (cada 15-30 minutos), baña el pavo con sus propios jugos. Si el fondo de la bandeja está seco, agrega caldo de pollo y reduce el fuego. Retira cuando el pavo alcance una temperatura interna de 160°F en el pecho. Permite que repose durante 10 minutos antes de cortar. Finalmente, puedes servir con las verduras y el caldo de la bandeja.');
 insert into necesitar(idReceta, idElectro) values (9, 11);
@@ -189,3 +202,27 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 53, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 32, 2);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 15, 0.5);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 54, 1);
+
+
+insert into Receta (nombre, proceso) values ('Filete al infierno', 'rimero, frota una generosa cantidad de sal kosher por toda la pieza de carne, luego cúbrela completamente con el polvo de mostaza y vierte la salsa Tabasco en ambos lados de la carne. No temas añadir más salsa de lo habitual, ya que la sal contrarrestará parte del picante durante la parrillada. Después, asa la carne a fuego lento en la parrilla hasta que esté cocida según tu preferencia, lo que tomará aproximadamente 10 minutos. Eso es todo, ¡disfruta!');
+insert into necesitar(idReceta, idElectro) values (11, 11);
+insert into tipoReceta(idReceta, tipo) values (11, 'Rápida');
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 26, 200);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 55, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 56, 15);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 57, 45);
+
+
+insert into Receta (nombre, proceso) values ('Pasta Alla Norma', 'Precalienta el horno, corta las berenjenas en rodajas, y hornéalas por un tiempo de preparación de 5 minutos. Luego, en una sartén, calienta el aceite de oliva y saltea el ajo y el chile hasta que estén dorados. Añade los tomates, el orégano y el azúcar, y cocina a fuego lento durante 30 minutos en el horno, utilizando papel de hornear. Mientras tanto, cocina los espaguetis según las instrucciones del paquete en una olla aparte. Finalmente, sirve la salsa sobre los espaguetis cocidos y decora con hojas de albahaca fresca si lo deseas.')
+insert into necesitar(idReceta, idElectro) values (12, 2);
+insert into necesitar(idReceta, idElectro) values (12, 5);
+insert into tipoReceta(idReceta, tipo) values (12, 'Italiana');
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 58, 3);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 26,3);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 17, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 10, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 59, 1);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12,3, 4);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 60, 15);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 62, 15);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 61, 1);
