@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, TextField } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginIcon from '@mui/icons-material/Login';
 import theme from './Theme/theme';
+import './App.css';
 
 const Ingreso = () => {
 
@@ -17,13 +18,13 @@ const Ingreso = () => {
         setPassword(''); 
     };
 
-    const mostrarFormularioRegistro = () => {
-        setMostrarRegistro(true); 
-    };
-
     const [mostrarRegistro, setMostrarRegistro] = useState(false); 
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
+
+    const mostrarFormularioRegistro = () => {
+        setMostrarRegistro(true); 
+    };
 
     const secondHandleSubmit = () => {
         console.log('Nombre:', nombre);
@@ -39,8 +40,9 @@ const Ingreso = () => {
     return (
         <div>
             <Button 
-                startIcon={<AccountCircleIcon/>} 
+                startIcon={<LoginIcon />} 
                 onClick={() => setOpen(true)}
+                sx={{margin:'10px'}}
             > 
                 Ingreso
             </Button>

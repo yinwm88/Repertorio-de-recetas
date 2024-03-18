@@ -3,15 +3,16 @@ import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typograp
 import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
+
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recipesPerPage] = useState(20); // Puedes ajustar este valor según tus necesidades
+  const [recipesPerPage] = useState(20);
   const [lastKey, setLastKey] = useState('');
 
   useEffect(() => {
     fetchRecipes();
-  }, [currentPage]); // Dependencia actualizada a currentPage
+  }, [currentPage]); 
 
   const fetchRecipes = () => {
     console.log("Intentando recuperar recetas...");
@@ -48,7 +49,7 @@ function Contenido() {
 
   // Estilo para el contenedor desplazable
   const scrollableContainerStyle = {
-    maxHeight: '600px', // Ajusta esta altura a tus necesidades
+    maxHeight: '600px', 
     overflowY: 'auto'
   };
 

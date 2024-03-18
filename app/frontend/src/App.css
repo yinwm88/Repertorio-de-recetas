@@ -44,8 +44,8 @@
     position:absolute; 
     top: 50%; 
     left: 50%;
-    height: 250px;
-    width: 450px;
+    height: 300px;
+    width: 500px;
     border-radius: 35px;
     transform: translate(-50%, -50%);
     background-color:rgb(53, 52, 51);
@@ -54,19 +54,19 @@
 
 .boton-iniciar-sesion{
     top: 40px; 
-    left:110px;
+    left:90px;
     transform: translate(-50%, -50%);
 }
 .boton-registrar{
     top: 40px; 
-    left: 190px;
+    left: 200px;
     transform: translate(-50%, -50%);
 }
 
 
 .boton-crear-cuenta{
-    top: 30px; 
-    left:430px;
+    top: 40px; 
+    left:390px;
     transform: translate(-50%, -50%);
 }
 
@@ -75,7 +75,7 @@
     top: 50%; 
     left: 50%;
     width: 500px;
-    height: 320px;
+    height: 370px;
     border-radius: 35px;
     transform: translate(-50%, -50%);
     background-color:rgb(53, 52, 51);
