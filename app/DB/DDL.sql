@@ -62,7 +62,8 @@ create table Ingrediente (
 	idIngrediente serial,
 	nombre Varchar(50),
 	unidad Varchar(5),
-	caduca boolean
+	caduca boolean,
+	calorias int
 );
 
 
@@ -70,6 +71,7 @@ alter table Ingrediente alter column idIngrediente set not null;
 alter table Ingrediente alter column nombre set not null;
 alter table Ingrediente alter column unidad set not null;
 alter table Ingrediente alter column caduca set not null;
+alter table Ingrediente alter column calorias set not null;
 
 alter table Ingrediente add constraint pkIngrediente primary key(idIngrediente);
 
@@ -116,7 +118,7 @@ alter table CaracteristicasReceta add constraint fkCaracteristica foreign key(id
 on update cascade on delete cascade;
 
 
-create type tipos as enum ('Mexicana', 'China', 'Vegana', 'Rapida', 'Saludable', 'Postre', 'Bebida', 'Snack', 'Ensalada', 'Vegetariana', 'General');  
+create type tipos as enum ('Mexicana', 'Japonesa', 'China', 'Vegana', 'Rápida', 'Saludable', 'Postre', 'Francesa', 'Bebida', 'Snack', 'Ensalada', 'Vegetariana', 'General', 'Filipina', 'Árabe', 'Italiana');  
 create table TipoReceta (
     idReceta int,
     tipo tipos
