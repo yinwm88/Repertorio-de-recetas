@@ -60,7 +60,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Chile verde',
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Azucar', 'gr', false, 400); 
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Albahaca', 'mjo', true, 22);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Oregano seco', 'gr', true, 40);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Azúcar glass', gr, false, 400);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Azúcar glass', 'gr', false, 400);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Yema de huevo', 'pz', true, 55);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Mermelada de naranja', 'gr', true, 250);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Nueces', 'gr', true, 650);
@@ -214,7 +214,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 15, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 54, 1);
 
 
-insert into Receta (nombre, proceso) values ('Filete al infierno', 15, 'rimero, frota una generosa cantidad de sal kosher por toda la pieza de carne, luego cúbrela completamente con el polvo de mostaza y vierte la salsa Tabasco en ambos lados de la carne. No temas añadir más salsa de lo habitual, ya que la sal contrarrestará parte del picante durante la parrillada. Después, asa la carne a fuego lento en la parrilla hasta que esté cocida según tu preferencia, lo que tomará aproximadamente 10 minutos. Eso es todo, ¡disfruta!');
+insert into Receta (nombre,tiempo, proceso) values ('Filete al infierno', 15, 'rimero, frota una generosa cantidad de sal kosher por toda la pieza de carne, luego cúbrela completamente con el polvo de mostaza y vierte la salsa Tabasco en ambos lados de la carne. No temas añadir más salsa de lo habitual, ya que la sal contrarrestará parte del picante durante la parrillada. Después, asa la carne a fuego lento en la parrilla hasta que esté cocida según tu preferencia, lo que tomará aproximadamente 10 minutos. Eso es todo, ¡disfruta!');
 insert into necesitar(idReceta, idElectro) values (11, 11);
 insert into tipoReceta(idReceta, tipo) values (11, 'Rápida');
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 26, 200);
@@ -223,7 +223,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 56, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 57, 45);
 
 
-insert into Receta (nombre, proceso) values ('Pasta Alla Norma', 30 'Precalienta el horno, corta las berenjenas en rodajas, y hornéalas por 5 minutos. Luego, en una sartén, calienta el aceite de oliva y saltea el ajo y el chile hasta que estén dorados. Añade los tomates, el orégano y el azúcar, y cocina a fuego lento durante 30 minutos en el horno, utilizando papel de hornear. Mientras tanto, cocina los espaguetis según las instrucciones del paquete en una olla aparte. Finalmente, sirve la salsa sobre los espaguetis cocidos y decora con hojas de albahaca fresca si lo deseas.')
+insert into Receta (nombre, tiempo, proceso) values ('Pasta Alla Norma', 30, 'Precalienta el horno, corta las berenjenas en rodajas, y hornéalas por 5 minutos. Luego, en una sartén, calienta el aceite de oliva y saltea el ajo y el chile hasta que estén dorados. Añade los tomates, el orégano y el azúcar, y cocina a fuego lento durante 30 minutos en el horno, utilizando papel de hornear. Mientras tanto, cocina los espaguetis según las instrucciones del paquete en una olla aparte. Finalmente, sirve la salsa sobre los espaguetis cocidos y decora con hojas de albahaca fresca si lo deseas.');
 insert into necesitar(idReceta, idElectro) values (12, 2);
 insert into necesitar(idReceta, idElectro) values (12, 5);
 insert into tipoReceta(idReceta, tipo) values (12, 'Italiana');
@@ -238,7 +238,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 62, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 61, 1);
 
 
-insert into Receta (nombre, tiempo, proceso) values ('Mazurek', 145, 'En un tazón, coloca 2.5 tazas de harina y 200 g de mantequilla, cortada en trozos pequeños, mezclándola hasta formar migas. Agrega 1/4 de taza de azúcar glas, 1 cucharada de crema agria al 18%, 2 yemas de huevo y una pizca de sal, mezclando hasta obtener una masa homogénea. Forma una bola con la masa, envuélvela en papel film y déjala reposar en el refrigerador durante aproximadamente una hora. Precalienta el horno a 200°C (395°F). Estira la masa con un rodillo y colócala en una bandeja de horno forrada con papel de hornear, haciendo pequeños agujeros con un tenedor. Hornea durante 15-20 minutos hasta que esté dorada. Deja enfriar antes de extender mermelada de naranja (hecha con el contenido de 4 naranjas). Decora con nueces, pecanas, pasas y almendras al gusto.')
+insert into Receta (nombre, tiempo, proceso) values ('Mazurek', 145, 'En un tazón, coloca 2.5 tazas de harina y 200 g de mantequilla, cortada en trozos pequeños, mezclándola hasta formar migas. Agrega 1/4 de taza de azúcar glas, 1 cucharada de crema agria al 18%, 2 yemas de huevo y una pizca de sal, mezclando hasta obtener una masa homogénea. Forma una bola con la masa, envuélvela en papel film y déjala reposar en el refrigerador durante aproximadamente una hora. Precalienta el horno a 200°C (395°F). Estira la masa con un rodillo y colócala en una bandeja de horno forrada con papel de hornear, haciendo pequeños agujeros con un tenedor. Hornea durante 15-20 minutos hasta que esté dorada. Deja enfriar antes de extender mermelada de naranja (hecha con el contenido de 4 naranjas). Decora con nueces, pecanas, pasas y almendras al gusto.');
 insert into tipoReceta(idReceta, tipo) values (13, 'Polaca');
 insert into tipoReceta(idReceta, tipo) values (13, 'Postre');
 insert into necesitar(idReceta, idElectro) values (13, 2);
@@ -253,7 +253,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 67, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 68, 50);
 
 
-insert into Receta (nombre, tiempo, proceso) values ('Arroz Chaufa', 50, 'Corta la pechuga de pollo en trozos y fríela en una sartén con un poco de sal hasta que esté cocida, mientras en otra sartén cocinas los huevos revueltos también con un poco de sal. Cocina el arroz en una arrocera o en una olla, preferiblemente sin sal si es de días anteriores. Luego, corta el pimiento rojo y la cebolla china en pequeños cuadrados. En una sartén a fuego lento, mezcla el pollo, los huevos, el arroz, el pimiento rojo y la cebolla china, añadiendo salsa de soja. Opcionalmente, puedes agregar tocino y aceite de sésamo. Si encuentras que todo está demasiado salado, puedes reducirlo añadiendo solo una cucharadita de azúcar, especialmente si cocinaste el arroz con sal.')
+insert into Receta (nombre, tiempo, proceso) values ('Arroz Chaufa', 50, 'Corta la pechuga de pollo en trozos y fríela en una sartén con un poco de sal hasta que esté cocida, mientras en otra sartén cocinas los huevos revueltos también con un poco de sal. Cocina el arroz en una arrocera o en una olla, preferiblemente sin sal si es de días anteriores. Luego, corta el pimiento rojo y la cebolla china en pequeños cuadrados. En una sartén a fuego lento, mezcla el pollo, los huevos, el arroz, el pimiento rojo y la cebolla china, añadiendo salsa de soja. Opcionalmente, puedes agregar tocino y aceite de sésamo. Si encuentras que todo está demasiado salado, puedes reducirlo añadiendo solo una cucharadita de azúcar, especialmente si cocinaste el arroz con sal.');
 insert into tipoReceta(idReceta, tipo) values (14, 'China');
 insert into necesitar(idReceta, idElectro) values (14, 5);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 69, 480);
@@ -265,7 +265,7 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 23, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 32, 2);
 
 
-insert into Receta (nombre, tiempo, proceso) values ('Zarangollo', 10, 'Para preparar Zarangollo, un plato vegetariano simple de la región de Murcia en el sureste de España, primero corta la cebolla en juliana y la berenjena en rodajas o trozos que quepan en una cucharadita. Añade aceite de oliva a una sartén hasta que apenas cubra las verduras, y cocina a fuego medio hasta que estén tiernas, caramelizadas y translúcidas, lo que tomará unos 10 minutos. Luego, aumenta el fuego brevemente para darles un toque crujiente, pero no por mucho tiempo, alrededor de 2 minutos. Opcionalmente, puedes apagar el fuego y romper un huevo encima, dejando que el calor residual cocine el huevo. Si se rompe, simplemente revuélvelo. Puedes servir el plato con el aceite de cocción (si no está quemado) o guardarlo para cocinar otras cosas.')
+insert into Receta (nombre, tiempo, proceso) values ('Zarangollo', 10, 'Para preparar Zarangollo, un plato vegetariano simple de la región de Murcia en el sureste de España, primero corta la cebolla en juliana y la berenjena en rodajas o trozos que quepan en una cucharadita. Añade aceite de oliva a una sartén hasta que apenas cubra las verduras, y cocina a fuego medio hasta que estén tiernas, caramelizadas y translúcidas, lo que tomará unos 10 minutos. Luego, aumenta el fuego brevemente para darles un toque crujiente, pero no por mucho tiempo, alrededor de 2 minutos. Opcionalmente, puedes apagar el fuego y romper un huevo encima, dejando que el calor residual cocine el huevo. Si se rompe, simplemente revuélvelo. Puedes servir el plato con el aceite de cocción (si no está quemado) o guardarlo para cocinar otras cosas.');
 insert into tipoReceta(idReceta, tipo) values (15, 'Española');
 insert into tipoReceta(idReceta, tipo) values (15, 'Vegetariana');
 insert into tipoReceta(idReceta, tipo) values (15, 'Rápida');
