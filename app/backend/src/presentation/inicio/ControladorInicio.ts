@@ -31,8 +31,18 @@ export class ControladorInicio {
         if (error) {
             return res.status(400).json(error);
         }
-
+        
         this.ingredienteService.obtenerIngredientesUsuario( ingredientesRecetasDto! )
+        .then( ingredientes => res.status(201).json( ingredientes ))
+        .catch( error => this.manejarError( error, res ));
+    }
+    public buscarIngrediente = ( req:Request, res: Response ) => {
+        const { ingrediente } = req.body;
+        if (!ingrediente) {
+            return res.status(400).json('Hace falta el ingrediente');
+        }
+
+        this.ingredienteService.buscarIngrediente( req.body.ingrediente )
         .then( ingredientes => res.status(201).json( ingredientes ))
         .catch( error => this.manejarError( error, res ));
     }
@@ -47,6 +57,4 @@ export class ControladorInicio {
         // .catch( error => this.manejarError( error, res ));
     }
 
-    
-    
 }

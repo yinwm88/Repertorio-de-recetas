@@ -54,14 +54,37 @@ export class IngredienteService {
             let ingredientes: IngredienteUsuario[] = [];
             ingredientesUsuario.map( ingrediente => 
                 ingredientes.push(IngredienteUsuario.crearInstancia(ingrediente)) 
-                );
-                
+                );                
             return {
                 ingredientes: ingredientes
             } 
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
+    }
+    
+    async buscarIngrediente(ingrediente: string) {
+        try {
+            const ingredientes = await prisma.ingrediente.findMany({
+                take:10,
+                where:{ 
+                    nombre: {
+                        startsWith: `${ingrediente}_`,
+                        mode: 'insensitive'
+                    }
+                },
+                select: {
+                    nombre: true 
+                }
+            });
+            if (ingredientes.length === 0 ) {
+                return {ingredientes: 'No hay ingredientes'};
+            }
+            return {ingredientes: ingredientes};
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+
     }
 
     async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto) {
