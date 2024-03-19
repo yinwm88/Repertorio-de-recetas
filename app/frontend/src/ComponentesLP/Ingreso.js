@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, TextField } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import theme from './Theme/theme';
+import theme from '../Theme/theme';
 
 const Ingreso = () => {
 

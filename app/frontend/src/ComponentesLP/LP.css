@@ -1,0 +1,23 @@
+
+body{
+    background: linear-gradient(to left, rgb(235, 158, 13), rgb(233, 55, 11));
+    color: white;
+}
+
+.header-box {
+    margin-top: 6rem; 
+    padding: 1rem; 
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.text-font{
+    font-size: 3rem;;
+    text-align: center;   
+}
+
+.img{
+    width: auto;
+    height: auto;
+    position: relative;
+}
