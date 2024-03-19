@@ -52,9 +52,9 @@ export class IngredienteService {
             })
 
             let ingredientes: IngredienteUsuario[] = [];
-            ingredientesUsuario.map( ingrediente => 
-                ingredientes.push(IngredienteUsuario.crearInstancia(ingrediente)) 
-                );                
+            ingredientesUsuario.map((ingrediente: any) => 
+                ingredientes.push(IngredienteUsuario.crearInstancia(ingrediente))
+            );                
             return {
                 ingredientes: ingredientes
             } 
@@ -120,7 +120,7 @@ export class IngredienteService {
         }
     }
 
-    async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto) {
+    async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto, user : EntidadUsuario) {
 
     }
 }
