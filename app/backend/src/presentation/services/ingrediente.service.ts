@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, ManipularIngredienteDto } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, IngredienteUsuario, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 
 
 export class IngredienteService {
@@ -38,4 +38,33 @@ export class IngredienteService {
         }
     }
 
+    async obtenerIngredientesUsuario(ingredientesRecetaDto: IngredientesRecetasDto) {
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where: { correo: ingredientesRecetaDto.correo }
+        });       
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );       
+        try {
+            const ingredientesUsuario = await prisma.teneringrediente.findMany({
+                include:{
+                    ingrediente: true
+                },
+                where: { correo: ingredientesRecetaDto.correo }
+            })
+
+            let ingredientes: IngredienteUsuario[] = [];
+            ingredientesUsuario.map( ingrediente => 
+                ingredientes.push(IngredienteUsuario.crearInstancia(ingrediente)) 
+                );
+                
+            return {
+                ingredientes: ingredientes
+            } 
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto) {
+
+    }
 }

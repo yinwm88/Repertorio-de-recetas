@@ -14,10 +14,12 @@ export class RutasInicio {
         router.post('/agregarIngrediente', controlador.agregarIngrediente ); 
         //TODO: Eliminar ingrediente
         // router.delete('/', );
-        //TODO: Obtener ingrediente de la BD
+        //TODO: Obtener ingredientes de la BD
         // router.get('/', );
-        //TODO: Obtener ingrediente del usuario
-        // router.get('/:id', );
+        //TODO: Obtener ingredientes del usuario
+        router.get('/ingredientesUsuario', controlador.obtenerIngredientesUsuario );
+        //TODO: Generar recetas del usuario
+        router.get('/generarRecetas', );
         
         return router;
     }
