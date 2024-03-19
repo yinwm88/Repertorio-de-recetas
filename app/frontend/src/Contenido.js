@@ -21,24 +21,30 @@ function Contenido() {
       query = query.startAt(lastKey);
     }
 
-    query.once('value', snapshot => {
+    query.once('value', async (snapshot) => {
       console.log("Datos recibidos de Firebase:", snapshot.val());
       const recipesData = snapshot.val();
       if (!recipesData) {
         return;
       }
-      const recipesList = Object.keys(recipesData).map(key => ({
-        id: key,
-        ...recipesData[key],
+
+      const recipesList = await Promise.all(Object.keys(recipesData).map(async (key) => {
+        const imageUrl = await fetchImageForRecipe(recipesData[key].title); // Buscar la imagen basada en el título de la receta
+        return {
+          id: key,
+          ...recipesData[key],
+          imageUrl, // Agregar la URL de la imagen a la receta
+        };
       }));
 
-      // Actualizar el último elemento recuperado si hay más datos
+      // Actualizar el estado con las nuevas recetas, incluidas las imágenes
       if (recipesList.length > 0) {
         setLastKey(recipesList[recipesList.length - 1].id);
-        setRecipes(recipes.concat(recipesList)); // Concatenar con los ya cargados
+        setRecipes(recipes.concat(recipesList));
       }
     });
   };
+
 
   // Cambiar página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -51,6 +57,23 @@ function Contenido() {
     maxHeight: '600px', // Ajusta esta altura a tus necesidades
     overflowY: 'auto'
   };
+
+  const fetchImageForRecipe = async (recipeName) => {
+    const apiKey = 'b_AdzULWC-uN9c6WbeuSD0wN7kSgl0FT1ir-vpelHD8';
+    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${apiKey}`;
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.results.length > 0) {
+        return data.results[0].urls.small; // Retorna la URL de la primera imagen encontrada
+      }
+      return 'https://via.placeholder.com/150'; // Una imagen por defecto si no se encuentran resultados
+    } catch (error) {
+      console.error('Error fetching image:', error);
+      return 'https://via.placeholder.com/150'; // Retorna una imagen por defecto en caso de error
+    }
+  };
+
 
   return (
     <Container maxWidth="false">
