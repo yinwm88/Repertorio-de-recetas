@@ -12,14 +12,14 @@ import Ingreso from './Ingreso';
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+
       <Router>
         <TopBar />
-¿        <Container maxWidth="xl" style={{ marginTop: '36px' }}>
+        <Container maxWidth="xl" style={{ marginTop: '34px' }}>
           <Routes>
 
             <Route path="/" element={<Contenido />} />
             <Route path="/about" element={<Inicio />} />
-
 
           </Routes>
         </Container>

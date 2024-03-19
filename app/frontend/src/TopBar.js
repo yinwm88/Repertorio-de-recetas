@@ -3,7 +3,6 @@ import { AppBar, Toolbar, Typography, IconButton, Button, Menu, MenuItem } from 
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle'; // Importa el icono de perfil
 import { Link } from 'react-router-dom';
-import Ingreso from './Ingreso.js'
 
 function TopBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -34,8 +33,9 @@ function TopBar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Nombre de la App
         </Typography>
-        <Button color="inherit" component={Link} to="/about" sx={{margin:'10px'}}>Acerca de</Button>
         <Button color="inherit" component={Link} to="/">Inicio</Button>
+        <Button color="inherit" component={Link} to="/about">Acerca de</Button>
+
         {/* Icono de perfil y menú desplegable */}
         <IconButton
           edge="end"
@@ -47,7 +47,6 @@ function TopBar() {
         >
           <AccountCircle />
         </IconButton>
-        <Ingreso/>
         <Menu
           id="menu-appbar"
           anchorEl={profileMenuAnchorEl}
