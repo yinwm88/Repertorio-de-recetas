@@ -15,6 +15,7 @@ const theme = createTheme({
     body1: {
       fontSize: '18px',
       lineHeight: 1.5,
+      marginTop: '2px',
       marginBottom: '2px',
       fontFamily:['Roboto'],
     },
