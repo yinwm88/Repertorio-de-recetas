@@ -1,43 +1,23 @@
 import { createTheme } from '@mui/material';
 
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FF5A5F', // Rojo suave característico de Airbnb
+      main: 'rgba(0, 0, 0, 0.8)',
     },
     secondary: {
-      main: '#008489', // Turquesa, usado en el sitio de Airbnb para contrastes
-    },
-    error: {
-      main: '#E41E26', // Rojo error, más intenso
-    },
-    background: {
-      default: '#fff', // Fondo blanco para mantener el diseño limpio y brillante
-    },
-    text: {
-      primary: '#484848', // Gris oscuro para textos, proporciona suficiente contraste sin ser duro
-      secondary: '#767676', // Gris más claro para subtextos o elementos menos importantes
+      main: 'rgb(300, 100, 0)',
     },
   },
 
   typography: {
-    fontFamily: '"Roboto", "Arial", sans-serif',
-    fontSize: 14,
-    h1: {
-      fontSize: '2.125rem', // Títulos grandes
-      fontWeight: 400,
-    },
-    h2: {
-      fontSize: '1.5rem', // Subtítulos
-      fontWeight: 400,
-    },
     body1: {
-      fontSize: '1rem', // Texto estándar
-      fontWeight: 400,
-    },
-    button: {
-      textTransform: 'none', // Los botones no deberían tener texto en mayúsculas automáticamente
-      fontWeight: 500,
+      fontSize: '18px',
+      lineHeight: 1.5,
+      marginTop: '2px',
+      marginBottom: '2px',
+      fontFamily:['Roboto'],
     },
   },
   
@@ -45,14 +25,18 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 20, // Bordes más redondeados para los botones
-          padding: '8px 15px', // Padding ajustado para los botones
-          fontSize: '0.875rem', // Tamaño de letra para los botones
-          color: '#fff', // Texto blanco para mayor legibilidad sobre colores de fondo
-          backgroundColor: '#FF5A5F', // Fondo rojo suave característico para los botones
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          color: 'white',
+          transition: 'background-color 0.3s', 
           '&:hover': {
-            backgroundColor: '#E57373', // Un rojo más claro para el estado hover
+            backgroundColor: 'rgb(300, 100, 0)', 
           },
+          width: '110px',
+          height: '40px',
+          borderRadius:'30px',
+          fontFamily:  'serif', 
+          fontSize: '15px', 
+          fontWeight:'bold',
         },
       },
     },

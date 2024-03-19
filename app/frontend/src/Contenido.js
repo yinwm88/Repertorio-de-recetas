@@ -3,6 +3,7 @@ import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typograp
 import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
+
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
