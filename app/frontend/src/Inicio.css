@@ -1,13 +1,35 @@
+
+
+/* Estilos para el texto dentro de las cartas */
+.MuiCardContent-root {
+  font-family: 'Roboto', sans-serif;
+  color: rgb(300,100,0); 
+    }
+
 .expanded {
   height: auto !important;
 }
-/* Inicio.css */
+
 .feature-card {
   background-color: black;
-  color: white;
+   height: 50px; 
+  transition: height 0.3s; 
+  overflow: hidden; 
 
 }
 
 .feature-card:hover {
-  transform: translateY(-5px); /* Eleva la carta ligeramente al colocar el cursor sobre ella */
+  transform: translateY(-5px); 
 }
+
+.card_text{
+    font-size: 4px;
+    text-align: center;
+    font-family: 'Roboto';
+    
+}
+
+.feature-card.expanded {
+  height: auto; 
+}
+

@@ -1,19 +1,16 @@
 // Inicio.js
+
 import React, { useState } from 'react';
 import { Container, Typography, Box, Grid, Card, CardContent } from '@mui/material';
-import './Inicio.css'; // Importa el archivo de estilos CSS
+import './Inicio.css';
 
 function Inicio() {
-  // Define el estado local para controlar la expansión de la información de cada carta
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
 
-  // Función para manejar el clic en una carta
   const handleCardClick = (index) => {
     if (expandedCardIndex === index) {
-      // Si la misma carta está expandida, ciérrala
       setExpandedCardIndex(null);
     } else {
-      // De lo contrario, expande la nueva carta
       setExpandedCardIndex(index);
     }
   };
@@ -68,30 +65,29 @@ function Inicio() {
   );
 }
 
-// Array de funcionalidades con título y descripción
 const features = [
   {
-    title: 'Recetas inteligentes',
+    title: 'RECETAS IDEALES',
     description: 'Encuentra recetas adaptadas a tus preferencias y los ingredientes que tienes en tu cocina.',
   },
   {
-    title: 'Filtrar recetas',
+    title: 'FILTRAR RECETAS',
     description: 'Encuentra fácilmente recetas por nombre, ingredientes o tipo de cocina.',
   },
   {
-    title: 'Generar lista de ingredientes',
+    title: 'GENERAR LISTA DE INGREDIENTES',
     description: 'Genera automáticamente una lista de compras basada en la receta que has seleccionado.',
   },
   {
-    title: 'Buscar recetas',
+    title: 'BUSCAR RECETAS',
     description: 'Explora el repertorio de recetas generado para ti.',
   },
   {
-    title: 'Marcar recetas favoritas',
+    title: 'MARCAR RECETAS FAVORITAS',
     description: 'Guarda tus recetas favoritas para acceder rápidamente a ellas en el futuro.',
   },
   {
-    title: 'Añadir recetas propias',
+    title: 'AÑADIR RECETAS',
     description: 'Crea y guarda tus propias recetas.',
   },
 ];
