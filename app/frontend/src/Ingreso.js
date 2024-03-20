@@ -1,48 +1,69 @@
 import React, { useState } from 'react';
 import { Button, Modal, TextField } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginIcon from '@mui/icons-material/Login';
 import theme from './Theme/theme';
+import './App.css';
+import { useNavigate } from 'react-router-dom'; 
 
 const Ingreso = () => {
+    const navigate = useNavigate(); 
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [open, setOpen] = useState(false);
 
     const firstHandleSubmit = () => {
-        console.log('Usuario:', username);
-        console.log('Contraseña:', password);
+        // Verificae si la cuenta existe 
+        const cuentaExiste = true; // esto hay que cambiarlo conforme la data de la BD
+
+        if (cuentaExiste) {
+            // Si la cuenta existe, navega a la página de Contenido
+            navigate('/contenido');
+        } else {
+            // Si la cuenta no existe, muestra un mensaje o acción
+            alert('La cuenta no existe. Por favor regístrate.');
+        }
+        
         setOpen(false);
         setUsername(''); 
         setPassword(''); 
     };
 
+    const [mostrarRegistro, setMostrarRegistro] = useState(false); 
+    const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
+    const [correo, setCorreo] = useState('');
+
+
     const mostrarFormularioRegistro = () => {
         setMostrarRegistro(true); 
     };
 
-    const [mostrarRegistro, setMostrarRegistro] = useState(false); 
-    const [nombre, setNombre] = useState('');
-    const [correo, setCorreo] = useState('');
-
     const secondHandleSubmit = () => {
         console.log('Nombre:', nombre);
+        console.log('Apellido:', apellido);
         console.log('e-mail:', correo);
         console.log('Contraseña:', password);
         setOpen(false);
         setNombre(''); 
+        setApellido(''); 
         setCorreo(''); 
         setPassword(''); 
         setMostrarRegistro(false); 
     };
 
+
     return (
         <div>
             <Button 
-                startIcon={<AccountCircleIcon/>} 
+                endIcon={<LoginIcon />} 
                 onClick={() => setOpen(true)}
+                sx={{margin:'15px', width:'190px', height:'90px', borderRadius:'40px', backgroundColor:'#67bc57'}}
+            
             > 
-                Ingreso
+                <div className = 'empezar'>
+                    comenzar
+                </div>
             </Button>
 
             <Modal open={open} onClose={() => setOpen(false)}>
@@ -57,7 +78,16 @@ const Ingreso = () => {
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
                             />
-                            <TextField
+                             <TextField
+                                label="Apellido"
+                                InputLabelProps={{ style: { color: 'white' } }} 
+                                InputProps={{ style: { color: 'white' } }} 
+                                margin="normal"
+                                fullWidth
+                                value={apellido}
+                                onChange={(e) => setApellido(e.target.value)}
+                            />
+                             <TextField
                                 label="e-mail"
                                 InputLabelProps={{ style: { color: 'white' } }} 
                                 InputProps={{ style: { color: 'white' } }} 
@@ -66,6 +96,9 @@ const Ingreso = () => {
                                 value={correo}
                                 onChange={(e) => setCorreo(e.target.value)}
                             />
+                            
+
+
                             <TextField
                                 label="Contraseña"
                                 InputLabelProps={{ style: { color: 'white' } }} 
@@ -107,11 +140,13 @@ const Ingreso = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <div>
-                                <Button 
+
+                                <Button variant="contained" 
+                                    color="primary" 
                                     className='boton-iniciar-sesion' 
                                     sx={{...theme.components.MuiButton.styleOverrides.root,backgroundColor:'#67bc57',width:"150px"}} 
-                                    onClick={firstHandleSubmit}
-                                > 
+                                    onClick={firstHandleSubmit}>
+
                                     Iniciar Sesión
                                 </Button>
                                 <Button 
@@ -129,6 +164,5 @@ const Ingreso = () => {
         </div>
     );
 };
-
 
 export default Ingreso;

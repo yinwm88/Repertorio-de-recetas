@@ -1,0 +1,40 @@
+
+
+.expanded {
+  height: auto !important;
+}
+
+.feature-card {
+   height: 90px; 
+  transition: transform 0.3s ease; 
+}
+
+.feature-card:hover {
+  transform: translateY(-5px); 
+}
+
+.feature-card .MuiCardContent-root {
+  font-size: medium;
+  background-color: rgb(0, 0, 0);
+  text-wrap:wrap;
+  width: 250px;
+}
+
+.feature-card .MuiTypography-h6 {
+  color: white;
+  font-size: 19px; 
+  font-style:normal;
+  font-family:Roboto;
+  
+}
+
+.feature-card .MuiTypography-body2 {
+  font-size: 17px; 
+  color:white;
+  font-family:Segoe UI;
+}
+
+.feature-card.expanded {
+  transform: translateY(-10px); 
+}
+

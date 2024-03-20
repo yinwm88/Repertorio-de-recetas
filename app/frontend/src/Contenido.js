@@ -79,12 +79,15 @@ function Contenido() {
 
   return (
     <Container maxWidth="false">
+
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
           <IngredientesBar />
         </Grid>
         <Grid item sm={12} md={8}>
+
           <FiltroRecetas />
+
           <div style={scrollableContainerStyle}>
             {/* Cambio importante aquí: Usamos el componente Pin en lugar de Card */}
             <div className='gridPinterest'>

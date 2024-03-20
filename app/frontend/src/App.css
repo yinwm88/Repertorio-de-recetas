@@ -38,59 +38,12 @@
   }
 }
 
-
-
-.interior{
-    position:absolute; 
-    top: 50%; 
-    left: 50%;
-    height: 250px;
-    width: 450px;
-    border-radius: 35px;
-    transform: translate(-50%, -50%);
-    background-color:rgb(53, 52, 51);
-    padding: 20px ;
-}
-
-.boton-iniciar-sesion{
-    top: 40px; 
-    left:110px;
-    transform: translate(-50%, -50%);
-}
-.boton-registrar{
-    top: 40px; 
-    left: 190px;
-    transform: translate(-50%, -50%);
-}
-
-
-.boton-crear-cuenta{
-    top: 30px; 
-    left:430px;
-    transform: translate(-50%, -50%);
-}
-
-.nueva-cuenta{
-    position:absolute; 
-    top: 50%; 
-    left: 50%;
-    width: 500px;
-    height: 320px;
-    border-radius: 35px;
-    transform: translate(-50%, -50%);
-    background-color:rgb(53, 52, 51);
-    padding: 20px ;
-}
-
-
-
-
 .gridPinterest{
     flex: 1;
     height: auto;
     margin-top: 15px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
+    grid-template-columns: repeat(auto-fill, 250px);
     grid-auto-rows: 10px;
     justify-content: center;
 }
@@ -151,3 +104,7 @@
     grid-row-end: span 45;
 }
 
+.empezar{
+  text-align: center;
+  font-size: 23px;
+}
