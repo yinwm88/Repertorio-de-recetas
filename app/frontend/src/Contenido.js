@@ -3,6 +3,8 @@ import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typograp
 import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
+import Data from './Data';
+import Pin from './Pin';
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
@@ -55,12 +57,25 @@ function Contenido() {
 
   return (
     <Container maxWidth="false">
+
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
           <IngredientesBar />
         </Grid>
         <Grid item sm={12} md={8}>
+
           <FiltroRecetas />
+           <div className='gridPinterest'>
+         {Data &&  Data.map((data) => 
+          <Pin 
+            key={data.id} 
+            pinSize={data.size} 
+            imgSrc={data.imgSrc} 
+            name={data.name} 
+            link={data.link}
+          />)}
+          </div>
+                          {/* 
           <div style={scrollableContainerStyle}>
 
             <Grid container spacing={4}>
@@ -78,9 +93,10 @@ function Contenido() {
                         <Typography gutterBottom variant="h5" component="div">
                           {recipe.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                          <Typography variant="body2" color="text.secondary">
+                         
                           {recipe.tags?.join(', ')}
-                        </Typography>
+                        </Typography> 
                         <Typography variant="body2" color="text.secondary">
                           {recipe.description}
                         </Typography>
@@ -99,6 +115,7 @@ function Contenido() {
               <button onClick={() => paginate(currentPage + 1)}>Cargar más</button>
             </div>
           </div>
+                        */}
         </Grid>
       </Grid>
     </Container>

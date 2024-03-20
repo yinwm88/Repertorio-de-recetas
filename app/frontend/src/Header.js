@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography } from '@mui/material';
-import '../LP.css';
-import Ingreso from '../Ingreso';
+import { Box, Typography, Button } from '@mui/material';
+import './LP.css';
+import Ingreso from './Ingreso';
 import foodimg1 from './imagesLP/dessert03.jpg'; 
 import foodimg2 from './imagesLP/food9.jpg';
 import foodimg3 from './imagesLP/veganfood.jpg';
@@ -37,6 +37,7 @@ const Header = () => {
                 alignItems: 'center',
             }}
         >
+
             <Box sx={{ flex: 1, marginTop: { xs: '20px', md: '80px' }, marginLeft: { xs: '0', md: '10px' }, textAlign: { xs: 'center', md: 'left' } }}>
                 <Typography sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, textAlign: 'center' }}>
                     Recetas Ideales para tu Cocina
