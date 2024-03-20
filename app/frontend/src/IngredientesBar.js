@@ -77,7 +77,7 @@ function CustomList() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper square sx={{ p: 2, minHeight: '40vh', display: 'flex', flexDirection: 'column' }}>
+      <Paper square sx={{ p: 2, minHeight: '40vh', display: 'flex', flexDirection: 'column' , marginTop:'40px'}}>
         <Typography variant="h5" gutterBottom component="div">
           Ingredientes
         </Typography>

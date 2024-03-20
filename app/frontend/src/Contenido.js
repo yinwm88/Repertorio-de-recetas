@@ -3,6 +3,8 @@ import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typograp
 import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
+import Masonry from '@mui/lab/Masonry';
+
 import Pin from './Pin';
 import './App.css';
 function Contenido() {
@@ -79,33 +81,25 @@ function Contenido() {
 
   return (
     <Container maxWidth="false" className='contenido'>
-
       <Grid container spacing={4}>
-        <Grid item sm={12} md={4}>
+        <Grid item sm={12} md={4} >
           <IngredientesBar />
         </Grid>
         <Grid item sm={12} md={8}>
-
           <FiltroRecetas />
-
-          <div style={scrollableContainerStyle}>
-            {/* Cambio importante aquí: Usamos el componente Pin en lugar de Card */}
-            <div className='gridPinterest'>
+          <Container maxWidth="false" className="contenido">
+            <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
               {currentRecipes.map((recipe) => (
                 <Pin
                   key={recipe.id}
-                  pinSize="medium" // Ejemplo de cómo asignar un tamaño. Ajusta según sea necesario.
+                  pinSize={recipe.pinSize || "medium"} // Asegúrate de definir el tamaño en tu componente Pin si es necesario
                   imgSrc={recipe.imageUrl || 'https://via.placeholder.com/150'}
                   name={recipe.title}
-                  // Suponiendo que cada receta tiene un campo 'link'. Si no es así, omite o ajusta.
                   link={recipe.link || '#'}
                 />
               ))}
-            </div>
-            <div>
-              <button onClick={() => paginate(currentPage + 1)}>Cargar más</button>
-            </div>
-          </div>
+            </Masonry>
+          </Container>
         </Grid>
       </Grid>
     </Container>
