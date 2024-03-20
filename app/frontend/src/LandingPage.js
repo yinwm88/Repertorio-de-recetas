@@ -11,14 +11,14 @@ const LandingPage = () => {
   return (
     <Router>
       <TopBarLP />
-      <Container maxWidth="xl" style={{ marginTop: '34px' }}>
+      <Container maxWidth="xl" >
         <Routes>
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
           <Route path="/contenido" element={<Contenido />} /> 
         </Routes>
       </Container>
-      <Footer/>
+      {/* <Footer/> */}
     </Router>
   );
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import './LP.css';
 import Ingreso from './Ingreso';
-import foodimg1 from './imagesLP/dessert03.jpg'; 
+import foodimg1 from './imagesLP/dessert03.jpg';
 import foodimg2 from './imagesLP/food9.jpg';
 import foodimg3 from './imagesLP/veganfood.jpg';
 import foodimg5 from './imagesLP/food1.jpg'
@@ -13,7 +13,7 @@ import foodimg8 from './imagesLP/food5.jpg'
 
 
 const Header = () => {
-    const [currentImage, setCurrentImage] = useState(foodimg1); 
+    const [currentImage, setCurrentImage] = useState(foodimg1);
 
     const images = [foodimg1, foodimg2, foodimg3, foodimg4, foodimg5, foodimg6, foodimg7, foodimg8];
 
@@ -31,11 +31,19 @@ const Header = () => {
     return (
         <Box
             sx={{
+                position: 'absolute', // Posicionamiento absoluto
+                top: 0,
+                left: 0,
+                width: '100%', // 100% del ancho del contenedor
+                height: '100%', // 100% del alto del contenedor
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 justifyContent: 'center',
                 alignItems: 'center',
+                margin: '0 auto',
+                overflow: 'hidden',
             }}
+            className="header"
         >
 
             <Box sx={{ flex: 1, marginTop: { xs: '20px', md: '80px' }, marginLeft: { xs: '0', md: '10px' }, textAlign: { xs: 'center', md: 'left' } }}>
@@ -52,13 +60,13 @@ const Header = () => {
                     <Ingreso />
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: { xs: '30px', md: '100px' }, marginRight:{ xs: '20px', md: '160px' } }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: { xs: '30px', md: '100px' }, marginRight: { xs: '20px', md: '160px' } }}>
                 <img
-                    src={currentImage} 
+                    src={currentImage}
                     style={{
-                        width: '350px', 
-                        height: '350px', 
-                        objectFit: 'cover', 
+                        width: '350px',
+                        height: '350px',
+                        objectFit: 'cover',
                         borderRadius: '40px',
                         marginRight: { xs: '0', md: '20px' },
                         marginTop: { xs: '20px', md: '0' },

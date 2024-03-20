@@ -78,7 +78,7 @@ function Contenido() {
 
 
   return (
-    <Container maxWidth="false">
+    <Container maxWidth="false" className='contenido'>
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
