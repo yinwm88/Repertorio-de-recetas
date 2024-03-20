@@ -120,10 +120,10 @@ export class IngredienteService {
         }
     }
 
-    async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto) {
-        const recetas =  await prisma.recetas.findMany({
+    // async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto) {
+    //     const recetas =  await prisma.recetas.findMany({
             
-        });
+    //     });
 
-    }
+    // }
 }

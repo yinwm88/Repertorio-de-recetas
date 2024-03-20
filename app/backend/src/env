@@ -1,0 +1,12 @@
+
+PORT=3000
+PUBLIC_PATH=public
+
+POSTGRES_URL=postgresql://postgres:mypassword@localhost:5432/RECETAS
+
+POSTGRES_USER=postgres
+POSTGRES_DB=RECETAS
+POSTGRES_PORT=5432
+POSTGRES_PASSWORD=mypassword
+
+NODE_ENV=development

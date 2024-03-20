@@ -47,15 +47,15 @@ export class ControladorInicio {
         .catch( error => this.manejarError( error, res ));
     }
 
-    public generarRecetas = ( req:Request, res: Response ) => {
-        const [error, ingredientesRecetasDto ] = IngredientesRecetasDto.crearInstancia( req.body );
-        if (error) {
-            return res.status(400).json(error);
-        }
-        this.ingredienteService.generarRecetas( ingredientesRecetasDto! );
-        // .then( recetas => res.status(201).json( recetas ))
-        // .catch( error => this.manejarError( error, res ));
-    }
+    // public generarRecetas = ( req:Request, res: Response ) => {
+    //     const [error, ingredientesRecetasDto ] = IngredientesRecetasDto.crearInstancia( req.body );
+    //     if (error) {
+    //         return res.status(400).json(error);
+    //     }
+    //     this.ingredienteService.generarRecetas( ingredientesRecetasDto! );
+    //     // .then( recetas => res.status(201).json( recetas ))
+    //     // .catch( error => this.manejarError( error, res ));
+    // }
     
     public eliminarIngrediente = ( req:Request, res: Response ) => {
         const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
