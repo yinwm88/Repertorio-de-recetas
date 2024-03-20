@@ -3,7 +3,8 @@ import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typograp
 import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
-
+import Pin from './Pin';
+import './App.css';
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,39 +86,19 @@ function Contenido() {
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
           <div style={scrollableContainerStyle}>
-
-            <Grid container spacing={4}>
+            {/* Cambio importante aquí: Usamos el componente Pin en lugar de Card */}
+            <div className='gridPinterest'>
               {currentRecipes.map((recipe) => (
-                <Grid item key={recipe.id} xs={12} sm={6} md={4}>
-                  <Card>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="140"
-                        image={recipe.imageUrl || 'https://via.placeholder.com/150'}
-                        alt={recipe.title}
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          {recipe.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {recipe.tags?.join(', ')}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          {recipe.description}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Button size="small" color="primary">
-                        Seleccionar
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
+                <Pin
+                  key={recipe.id}
+                  pinSize="medium" // Ejemplo de cómo asignar un tamaño. Ajusta según sea necesario.
+                  imgSrc={recipe.imageUrl || 'https://via.placeholder.com/150'}
+                  name={recipe.title}
+                  // Suponiendo que cada receta tiene un campo 'link'. Si no es así, omite o ajusta.
+                  link={recipe.link || '#'}
+                />
               ))}
-            </Grid>
+            </div>
             <div>
               <button onClick={() => paginate(currentPage + 1)}>Cargar más</button>
             </div>
@@ -126,6 +107,7 @@ function Contenido() {
       </Grid>
     </Container>
   );
+
 }
 
 export default Contenido;
