@@ -1,0 +1,158 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model caracteristicasreceta {
+  idreceta       Int
+  caracteristica caracteristicas
+  receta         receta          @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkcaracteristica")
+
+  @@id([idreceta, caracteristica], map: "pkcaracteristica")
+}
+
+model electrodomestico {
+  idelectro Int         @id(map: "pkelectro") @default(autoincrement())
+  nombre    String      @unique(map: "nombreelectro") @db.VarChar(50)
+  sustituto Int?
+  necesitar necesitar[]
+  poseer    poseer[]
+}
+
+model haberingrediente {
+  idreceta      Int         @default(autoincrement())
+  idingrediente Int         @default(autoincrement())
+  cantidad      Int
+  receta        receta      @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkhaberingrediente1")
+  ingrediente   ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkhaberingrediente2")
+
+  @@unique([idreceta, idingrediente], map: "uniquehaberingrediente1")
+}
+
+model ingrediente {
+  idingrediente    Int                @id(map: "pkingrediente") @default(autoincrement())
+  nombre           String             @db.VarChar(50)
+  unidad           String             @db.VarChar(5)
+  caduca           Boolean
+  haberingrediente haberingrediente[]
+  seralergico      seralergico[]
+  teneringrediente teneringrediente[]
+}
+
+model necesitar {
+  idelectro        Int
+  idreceta         Int
+  electrodomestico electrodomestico @relation(fields: [idelectro], references: [idelectro], onDelete: Cascade, map: "fknecesitarelect")
+  receta           receta           @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fknecesitarreceta")
+
+  @@unique([idelectro, idreceta], map: "uniquenecesitar")
+}
+
+model poseer {
+  idelectro        Int
+  correo           String           @db.VarChar(70)
+  electrodomestico electrodomestico @relation(fields: [idelectro], references: [idelectro], onDelete: Cascade, map: "fkposeerelect")
+  usuario          usuario          @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkposeerusua")
+
+  @@unique([idelectro, correo], map: "uniqueposeer")
+}
+
+model preferir {
+  correo   String  @db.VarChar(70)
+  idreceta Int
+  receta   receta  @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkpreferirc1")
+  usuario  usuario @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkpreferirc2")
+
+  @@unique([correo, idreceta], map: "uniquepreferir")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model receta {
+  idreceta              Int                     @id(map: "pkreceta") @default(autoincrement())
+  nombre                String                  @db.VarChar(50)
+  proceso               String
+  caracteristicasreceta caracteristicasreceta[]
+  haberingrediente      haberingrediente[]
+  necesitar             necesitar[]
+  preferir              preferir[]
+  tiporeceta            tiporeceta[]
+}
+
+model seralergico {
+  correo        String      @db.VarChar(70)
+  idingrediente Int
+  usuario       usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkseralergico1")
+  ingrediente   ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkseralergico2")
+
+  @@unique([correo, idingrediente], map: "uniqueseralergico")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model teneringrediente {
+  correo         String      @db.VarChar(70)
+  idingrediente  Int
+  cantidad       Decimal     @db.Decimal(5, 2)
+  fecha          DateTime?   @db.Date
+  fechacaducidad DateTime?   @db.Date
+  usuario        usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkteneringrediente1")
+  ingrediente    ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkteneringrediente2")
+
+  @@unique([correo, idingrediente], map: "uniqueteneringrediente")
+}
+
+model tiporeceta {
+  idreceta Int
+  tipo     tipos
+  receta   receta @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fktipo")
+
+  @@id([idreceta, tipo], map: "pktipo")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model usuario {
+  correo           String             @id(map: "pkusuario") @db.VarChar(70)
+  nombre           String             @db.VarChar(50)
+  apellido         String             @db.VarChar(50)
+  peso             Decimal?           @db.Decimal(5, 2)
+  talla            Decimal?           @db.Decimal(5, 2)
+  actividad        String?
+  objetivo         objetivos?
+  contrasena       String             @db.VarChar(100)
+  poseer           poseer[]
+  preferir         preferir[]
+  seralergico      seralergico[]
+  teneringrediente teneringrediente[]
+}
+
+enum caracteristicas {
+  baja_en_azucar @map("baja en azucar")
+  alta_en_azucar @map("alta en azucar")
+  sin_gluten     @map("sin gluten")
+  alta_en_grasas @map("alta en grasas")
+  baja_en_grasas @map("baja en grasas")
+}
+
+enum objetivos {
+  bajar_de_peso @map("bajar de peso")
+  mantener_peso @map("mantener peso")
+  subir_de_peso @map("subir de peso")
+  no_comer      @map("no comer")
+}
+
+enum tipos {
+  Mexicana
+  China
+  Vegana
+  Rapida
+  Saludable
+  Postre
+  Bebida
+  Snack
+  Ensalada
+  Vegetariana
+  General
+}

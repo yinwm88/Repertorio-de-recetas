@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+/postgres
+
+# testing
+/coverage
+
+# production
+/build
+/dist
+/public
+# misc
+.env
+
+docker-compose.yml
