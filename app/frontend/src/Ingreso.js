@@ -31,7 +31,9 @@ const Ingreso = () => {
 
     const [mostrarRegistro, setMostrarRegistro] = useState(false); 
     const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
     const [correo, setCorreo] = useState('');
+
 
     const mostrarFormularioRegistro = () => {
         setMostrarRegistro(true); 
@@ -39,23 +41,27 @@ const Ingreso = () => {
 
     const secondHandleSubmit = () => {
         console.log('Nombre:', nombre);
+        console.log('Apellido:', apellido);
         console.log('e-mail:', correo);
         console.log('Contraseña:', password);
         setOpen(false);
         setNombre(''); 
+        setApellido(''); 
         setCorreo(''); 
         setPassword(''); 
         setMostrarRegistro(false); 
     };
+
 
     return (
         <div>
             <Button 
                 endIcon={<LoginIcon />} 
                 onClick={() => setOpen(true)}
-                sx={{margin:'10px', width:'170px', height:'80px', borderRadius:'50px'}}
+                sx={{margin:'15px', width:'190px', height:'90px', borderRadius:'40px', backgroundColor:'#67bc57'}}
+            
             > 
-                <div className ='empezar'>
+                <div className = 'empezar'>
                     comenzar
                 </div>
             </Button>
@@ -72,7 +78,16 @@ const Ingreso = () => {
                                 value={nombre}
                                 onChange={(e) => setNombre(e.target.value)}
                             />
-                            <TextField
+                             <TextField
+                                label="Apellido"
+                                InputLabelProps={{ style: { color: 'white' } }} 
+                                InputProps={{ style: { color: 'white' } }} 
+                                margin="normal"
+                                fullWidth
+                                value={apellido}
+                                onChange={(e) => setApellido(e.target.value)}
+                            />
+                             <TextField
                                 label="e-mail"
                                 InputLabelProps={{ style: { color: 'white' } }} 
                                 InputProps={{ style: { color: 'white' } }} 
@@ -81,6 +96,9 @@ const Ingreso = () => {
                                 value={correo}
                                 onChange={(e) => setCorreo(e.target.value)}
                             />
+                            
+
+
                             <TextField
                                 label="Contraseña"
                                 InputLabelProps={{ style: { color: 'white' } }} 

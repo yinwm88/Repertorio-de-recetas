@@ -5,6 +5,7 @@ import TopBarLP from './TopBarLP';
 import { ThemeProvider, Container } from '@mui/material';
 import Header from './Header';
 import Contenido from './Contenido'; 
+import Footer from './Footer';
 
 const LandingPage = () => {
   return (
@@ -17,6 +18,7 @@ const LandingPage = () => {
           <Route path="/contenido" element={<Contenido />} /> 
         </Routes>
       </Container>
+      <Footer/>
     </Router>
   );
 };

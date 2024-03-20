@@ -56,11 +56,11 @@ const Header = () => {
                 <img
                     src={currentImage} 
                     style={{
-                        width: '300px', 
-                        height: '300px', 
+                        width: '350px', 
+                        height: '350px', 
                         objectFit: 'cover', 
                         borderRadius: '40px',
-                        marginRight: { xs: '0', md: '30px' },
+                        marginRight: { xs: '0', md: '20px' },
                         marginTop: { xs: '20px', md: '0' },
                     }}
                 />

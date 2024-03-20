@@ -1,8 +1,7 @@
-// Inicio.js
-
 import React, { useState } from 'react';
 import { Container, Typography, Box, Grid, Card, CardContent } from '@mui/material';
 import './Inicio.css';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Inicio() {
   const [expandedCardIndex, setExpandedCardIndex] = useState(null);
@@ -18,7 +17,7 @@ function Inicio() {
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
-        <Typography variant="h2" component="h1" gutterBottom>
+        <Typography variant="h2" component="h1" gutterBottom sx={{ flexGrow: 1, fontFamily: 'sans-serif', fontSize: '65px' }}>
           Kitchenify
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
@@ -35,26 +34,29 @@ function Inicio() {
         </Typography>
 
         <Box sx={{ mt: 4 }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography sx={{ fontFamily: 'Roboto' }} variant="h4" gutterBottom>
             Funcionalidades destacadas
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={4}>
             {features.map((feature, index) => (
               <Grid item xs={12} md={4} key={index}>
                 <Card
-                  className={`feature-card ${expandedCardIndex === index ? 'expanded' : ''}`} 
-                  onClick={() => handleCardClick(index)} 
+                  className={`feature-card ${expandedCardIndex === index ? 'expanded' : ''}`}
+                  onClick={() => handleCardClick(index)}
                 >
-                  <CardContent>
+                  <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Typography variant="h6" component="h2" gutterBottom>
                       {feature.title}
+                    <ExpandMoreIcon style={{ marginRight: '90px' }}/>
                     </Typography>
-                    {expandedCardIndex === index && (
+                  </CardContent>
+                  {expandedCardIndex === index && (
+                    <CardContent>
                       <Typography variant="body2">
                         {feature.description}
                       </Typography>
-                    )}
-                  </CardContent>
+                    </CardContent>
+                  )}
                 </Card>
               </Grid>
             ))}
