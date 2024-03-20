@@ -111,11 +111,14 @@ const Ingreso = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <div>
-                                <Button 
+
+                                <Button variant="contained" 
+                                    color="primary" 
                                     className='boton-iniciar-sesion' 
                                     sx={{...theme.components.MuiButton.styleOverrides.root,backgroundColor:'#67bc57',width:"150px"}} 
-                                    onClick={firstHandleSubmit}
-                                > 
+                                    href="/otra-pagina" 
+                                    onClick={firstHandleSubmit}>
+
                                     Iniciar Sesión
                                 </Button>
                                 <Button 

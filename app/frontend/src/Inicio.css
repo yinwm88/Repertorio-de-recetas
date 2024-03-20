@@ -1,0 +1,13 @@
+.expanded {
+  height: auto !important;
+}
+/* Inicio.css */
+.feature-card {
+  background-color: black;
+  color: white;
+
+}
+
+.feature-card:hover {
+  transform: translateY(-5px); /* Eleva la carta ligeramente al colocar el cursor sobre ella */
+}
