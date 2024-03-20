@@ -107,7 +107,7 @@ function CustomList() {
             ))}
           </List>
         </Box>
-        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} className='botonIngredientesBar'>
+        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{margin:15}}>
           <AddIcon />
         </StyledFab>
         <Dialog open={open} onClose={handleClose}>
