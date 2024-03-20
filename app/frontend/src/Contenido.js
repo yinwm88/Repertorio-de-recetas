@@ -99,6 +99,7 @@ function Contenido() {
                 />
               ))}
             </Masonry>
+            <button onClick={() => paginate(currentPage + 1)}>Cargar más</button>
           </Container>
         </Grid>
       </Grid>
