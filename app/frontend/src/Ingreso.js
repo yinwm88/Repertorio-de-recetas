@@ -99,7 +99,7 @@ const Ingreso = () => {
 
             >
                 <div className='empezar'>
-                    comenzar
+                    Comenzar
                 </div>
             </Button>
 
