@@ -12,7 +12,15 @@ function Contenido() {
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(20); // Puedes ajustar este valor según tus necesidades
   const [lastKey, setLastKey] = useState('');
-
+  const [searchText, setSearchText] = useState('');
+  // Añadir una función para manejar cambios en la búsqueda
+  const handleSearchChange = (text) => {
+    setSearchText(text.toLowerCase());
+  };
+  // Filtrar recetas basadas en el texto de búsqueda antes de renderizarlas
+  const filteredRecipes = recipes.filter(recipe =>
+    recipe.title.toLowerCase().includes(searchText)
+  );
   useEffect(() => {
     fetchRecipes();
   }, [currentPage]); // Dependencia actualizada a currentPage
@@ -86,10 +94,10 @@ function Contenido() {
           <IngredientesBar />
         </Grid>
         <Grid item sm={12} md={8}>
-          <FiltroRecetas />
+          <FiltroRecetas onSearchChange={handleSearchChange} />
           <Container maxWidth="false" className="contenido">
             <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
-              {currentRecipes.map((recipe) => (
+              {filteredRecipes.map((recipe) => (
                 <Pin
                   key={recipe.id}
                   pinSize={recipe.pinSize || "medium"} // Asegúrate de definir el tamaño en tu componente Pin si es necesario

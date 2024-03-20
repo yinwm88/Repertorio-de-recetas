@@ -6,7 +6,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 const tags = ['Mexicana', 'Italiana', 'Vegana', 'Sin gluten'];
 const dietas = ['Vegetariano', 'Keto', 'Paleo', 'Vegano'];
 
-function FiltroRecetas() {
+function FiltroRecetas({ onSearchChange }) {
   const [busqueda, setBusqueda] = useState('');
   const [tagsSeleccionados, setTagsSeleccionados] = useState([]);
   const [dietaSeleccionada, setDietaSeleccionada] = useState('');
@@ -49,7 +49,10 @@ function FiltroRecetas() {
             endAdornment: <SearchIcon />,
           }}
           value={busqueda}
-          onChange={(e) => setBusqueda(e.target.value)}
+          onChange={(e) => {
+            setBusqueda(e.target.value);
+            onSearchChange(e.target.value); // Llamar a onSearchChange cada vez que el valor de búsqueda cambie
+          }}
         />
         <Button variant="outlined" onClick={toggleFiltros} startIcon={<FilterListIcon />}>
           Filtros
