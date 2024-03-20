@@ -10,6 +10,7 @@ import foodimg4 from './imagesLP/veganfood01.webp'
 import foodimg6 from './imagesLP/food3.jpg'
 import foodimg7 from './imagesLP/food10.jpg'
 import foodimg8 from './imagesLP/food5.jpg'
+import zIndex from '@mui/material/styles/zIndex';
 
 
 const Header = () => {
@@ -46,7 +47,15 @@ const Header = () => {
             className="header"
         >
 
-            <Box sx={{ flex: 1, marginTop: { xs: '20px', md: '80px' }, marginLeft: { xs: '0', md: '10px' }, textAlign: { xs: 'center', md: 'left' } }}>
+            <Box sx={{
+                zIndex: 1,
+                flex: 1,
+                marginTop: { xs: '200px', md: '0px' },
+                paddingTop: { xs: '20px', md: '50px' },
+                marginLeft: { xs: '0', md: '10px' },
+                textAlign: { xs: 'center', md: 'left' },
+                
+            }}>
                 <Typography sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, textAlign: 'center' }}>
                     Recetas Ideales para tu Cocina
                 </Typography>
@@ -60,19 +69,31 @@ const Header = () => {
                     <Ingreso />
                 </Box>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: { xs: '30px', md: '100px' }, marginRight: { xs: '20px', md: '160px' } }}>
-                <img
-                    src={currentImage}
-                    style={{
-                        width: '350px',
-                        height: '350px',
-                        objectFit: 'cover',
-                        borderRadius: '40px',
-                        marginRight: { xs: '0', md: '20px' },
-                        marginTop: { xs: '20px', md: '0' },
-                    }}
-                />
+            <Box
+                className="marquee-container"
+                sx={{
+                    flexDirection: 'row',
+                    width: 'max-content',
+                    bottom: -150,
+                    filter: 'blur(5px)',
+                }}
+            >
+                {images.concat(images).map((image, index) => ( // Duplica las imágenes para la animación continua
+                    <img
+                        key={index}
+                        src={image}
+                        alt={`Food ${index}`}
+                        style={{
+                            width: '300px',
+                            height: '300px',
+                            objectFit: 'cover',
+                            borderRadius: '20px',
+                            marginRight: '10px',
+                        }}
+                    />
+                ))}
             </Box>
+
         </Box>
     );
 };

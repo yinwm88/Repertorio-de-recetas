@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Button, Menu, MenuItem } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 
 function TopBar() {
  
+  const locationName = useLocation().pathname;
+  
+  //cambiar el estilo de appbar si el locationName es Header
+  const [style, setStyle] = useState(null);
+
+  useEffect(() => {
+    if(locationName === '/'){
+      setStyle({backgroundColor: 'transparent', boxShadow: 'none'})
+    }else{
+      setStyle({boxShadow: '0px 0px 10px 0px #0000001f'})
+    }
+  }, [locationName])
+
+
   return (
-    <AppBar position="sticky">  
+    <AppBar position="sticky" style={style}>  
 
       <Toolbar >
         <Typography variant="h6" component="div" sx={{ flexGrow: 1,fontFamily:'Poppins', fontSize:'31px' }}>
