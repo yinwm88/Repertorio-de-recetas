@@ -1,79 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 
-.contenido{
+.contenido {
   background-color: white;
-  
+
 }
 
 
 
-.gridPinterest{
-    flex: 1;
-    height: auto;
-    margin-top: 15px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 250px);
-    grid-auto-rows: 10px;
-    justify-content: center;
+.gridPinterest {
+  flex: 1;
+  height: auto;
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-auto-rows: 10px;
+  justify-content: center;
 }
 
-.pin{
-    border-radius: 16px;
-    background: #444;
-    margin:5px;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-}
-.pin .mainPic{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;   
+.pin {
+  border-radius: 16px;
+  background: #444;
+  margin: 5px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
-.pin .contenido{
-    width: 100%;
-    height: 50px;   
-    background-color:rgba(300, 100, 0, 0.7);
-    position: absolute;
-    bottom: -55px;
-    backdrop-filter: blur(2px);
-    display: flex;
-    justify-content:space-between;
-    align-items: center;
-    padding: 0 px 15px;
+.pin .mainPic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.pin:hover .contenido{
-    bottom:0;
-    transition: bottom 0.3s;;
+.pin .contenido {
+  width: 100%;
+  height: 50px;
+  background-color: rgba(300, 100, 0, 0.7);
+  position: absolute;
+  bottom: -55px;
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 px 15px;
 }
 
-.pin .fav{
-    top: 5%;
-    right: 15px;
-    color: greenyellow;
-    margin: 5px;
+.pin:hover .contenido {
+  bottom: 0;
+  transition: bottom 0.3s;
+  ;
 }
 
-.pin .nombreReceta{
-    color: whitesmoke;
-    font-size: 20px;
-    margin: 20px;
+.pin .fav {
+  top: 5%;
+  right: 15px;
+  color: greenyellow;
+  margin: 5px;
 }
 
-.pin.small{
-    grid-row-end: span 26;
-}   
-
-.pin.medium{
-    grid-row-end: span 33;
-}
-.pin.large{
-    grid-row-end: span 45;
+.pin .nombreReceta {
+  color: whitesmoke;
+  font-size: 20px;
+  margin: 20px;
 }
 
-.empezar{
+.pin.small {
+  grid-row-end: span 26;
+}
+
+.pin.medium {
+  grid-row-end: span 33;
+}
+
+.pin.large {
+  grid-row-end: span 45;
+}
+
+.empezar {
   text-align: center;
   font-size: 23px;
 }

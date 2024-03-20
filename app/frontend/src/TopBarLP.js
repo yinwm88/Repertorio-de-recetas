@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 function TopBar() {
  
   return (
-    <AppBar position="sticky">
+    <AppBar position="sticky">  
+
       <Toolbar >
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1,fontFamily:'sans-serif', fontSize:'31px' }}>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1,fontFamily:'Poppins', fontSize:'31px' }}>
           Kitchenify
         </Typography>
         <Button color="inherit" component={Link} to="/">Inicio</Button>

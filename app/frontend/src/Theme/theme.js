@@ -22,7 +22,7 @@ const theme = createTheme({
   },
 
   typography: {
-    fontFamily: '"Roboto", "Arial", sans-serif',
+    fontFamily: 'poppins',
     fontSize: 14,
     h1: {
       fontSize: '2.125rem', // Títulos grandes

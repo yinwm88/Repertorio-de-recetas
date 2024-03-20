@@ -58,7 +58,7 @@ const Ingreso = () => {
             <Button 
                 endIcon={<LoginIcon />} 
                 onClick={() => setOpen(true)}
-                sx={{margin:'15px', width:'190px', height:'90px', borderRadius:'40px', backgroundColor:'#67bc57'}}
+                sx={{marginTop:'55px'}}
             
             > 
                 <div className = 'empezar'>
@@ -144,7 +144,7 @@ const Ingreso = () => {
                                 <Button variant="contained" 
                                     color="primary" 
                                     className='boton-iniciar-sesion' 
-                                    sx={{...theme.components.MuiButton.styleOverrides.root,backgroundColor:'#67bc57',width:"150px"}} 
+                                    sx={{...theme.components.MuiButton.styleOverrides.root,backgroundColor:'#00A86B ',width:"150px"}} 
                                     onClick={firstHandleSubmit}>
 
                                     Iniciar Sesión

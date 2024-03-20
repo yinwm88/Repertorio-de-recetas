@@ -1,79 +1,80 @@
-
-.header{
-    background: linear-gradient(to left, rgb(235, 158, 13), rgb(233, 55, 11));
+.header {
+    background: linear-gradient(to left, #FF5A5F, #FF9276);
     color: white;
-    font-style:unset;
-    
+    font-style: unset;
+
 }
 
 .header-box {
-    margin-top: 6rem; 
-    padding: 1rem; 
+    margin-top: 6rem;
+    padding: 1rem;
     max-width: 100%;
     overflow: hidden;
 }
 
-.text-font{
-    font-size: 3rem;;
-    text-align: center;   
+.text-font {
+    font-size: 3rem;
+    ;
+    text-align: center;
 }
 
-.img{
+.img {
     width: auto;
     height: auto;
     position: relative;
 }
 
-.interior{
-    position:absolute; 
-    top: 50%; 
+.interior {
+    position: absolute;
+    top: 50%;
     left: 50%;
     height: 250px;
     width: 450px;
     border-radius: 35px;
     transform: translate(-50%, -50%);
-    background-color:rgb(300, 100, 0);
-    padding: 20px ;
+    background-color: rgb(300, 100, 0);
+    padding: 20px;
 }
 
-.boton-iniciar-sesion{
-    top: 40px; 
-    left:110px;
+.boton-iniciar-sesion {
+    top: 40px;
+    left: 110px;
     transform: translate(-50%, -50%);
 }
-.boton-registrar{
-    top: 40px; 
+
+.boton-registrar {
+    top: 40px;
     left: 180px;
     transform: translate(-50%, -50%);
 }
 
 
-.boton-crear-cuenta{
-    top: 30px; 
-    left:430px;
+.boton-crear-cuenta {
+    top: 30px;
+    left: 430px;
     transform: translate(-50%, -50%);
 }
 
-.nueva-cuenta{
-    position:absolute; 
-    top: 50%; 
+.nueva-cuenta {
+    position: absolute;
+    top: 50%;
     left: 50%;
     width: 500px;
     height: 400px;
     border-radius: 35px;
     transform: translate(-50%, -50%);
-    background-color:rgb(300, 100, 0);
-    padding: 20px ;
+    background-color: rgb(300, 100, 0);
+    padding: 20px;
 }
 
-.footer{
+.footer {
     background-color: linear-gradient(to left, rgb(253, 170, 16), rgb(249, 51, 1));
     margin-top: 80px;
     height: 40px;
 }
 
-.text-footer{
+.text-footer {
     color: white;
     margin-left: 30px;
-    text-align: 'center'; 
+    text-align: 'center';
 }
