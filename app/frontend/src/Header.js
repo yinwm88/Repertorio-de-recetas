@@ -60,7 +60,7 @@ const Header = () => {
                     Recetas Ideales para tu Cocina
                 </Typography>
                 <Typography sx={{ fontSize: { xs: '3rem', md: '4rem' }, textAlign: 'center' }}>
-                    Se tu propio Chef
+                    Sé tu propio Chef
                 </Typography>
                 <Typography sx={{ fontSize: { xs: '1.7rem', md: '2.1rem' }, textAlign: 'center' }}>
                     ¿Quieres recetas ya?
