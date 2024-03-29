@@ -32,11 +32,11 @@ const Header = () => {
     return (
         <Box
             sx={{
-                position: 'absolute', // Posicionamiento absoluto
+                position: 'absolute',
                 top: 0,
                 left: 0,
-                width: '100%', // 100% del ancho del contenedor
-                height: '100%', // 100% del alto del contenedor
+                width: '100%', 
+                height: '100%',
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
                 justifyContent: 'center',
@@ -51,7 +51,7 @@ const Header = () => {
                 zIndex: 1,
                 flex: 1,
                 marginTop: { xs: '200px', md: '0px' },
-                paddingTop: { xs: '20px', md: '50px' },
+                paddingTop: { xs: '20px', md: '10px' },
                 marginLeft: { xs: '0', md: '10px' },
                 textAlign: { xs: 'center', md: 'left' },
                 
