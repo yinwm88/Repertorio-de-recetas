@@ -1,16 +1,16 @@
 import { Container, Typography, Box} from '@mui/material';
-import './Inicio.css';
 import TFuncionalidad from './TFuncionalidad';
+import './Inicio.css'
 
 function Inicio() {
 
   return (
     <Container maxWidth="md">
       <Box sx={{ my: 4 }}>
-        <Typography sx={{ fontFamily: 'Poppins' }} variant="h2" component="h1" gutterBottom sx={{ flexGrow: 1, fontFamily: 'sans-serif', fontSize: '65px' }}>
+        <Typography sx={{ fontFamily: 'Poppins', flexGrow: '1', fontSize:'60px' }} variant="h2" component="h1" gutterBottom >
           Kitchenify
         </Typography>
-        <Typography sx={{ fontFamily: 'Poppins' }} variant="h5" component="h2" gutterBottom>
+        <Typography sx={{ fontFamily: 'Poppins', fontSize:'30px' }} variant="h5" component="h2" gutterBottom>
           ¿De qué se trata?
         </Typography>
         <Typography sx={{ fontFamily: 'Poppins' }} variant="body1">
