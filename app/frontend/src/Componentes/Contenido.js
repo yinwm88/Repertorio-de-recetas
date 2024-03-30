@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Card, Container, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
-import { db } from './firebaseConfig';
+import { Grid, Container} from '@mui/material';
+import { db } from '../firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
-
 import Pin from './Pin';
-import './App.css';
+
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [recipesPerPage] = useState(20); // Puedes ajustar este valor según tus necesidades
+  const [recipesPerPage] = useState(20); 
   const [lastKey, setLastKey] = useState('');
   const [searchText, setSearchText] = useState('');
   // Añadir una función para manejar cambios en la búsqueda
@@ -100,7 +99,7 @@ function Contenido() {
               {filteredRecipes.map((recipe) => (
                 <Pin
                   key={recipe.id}
-                  pinSize={recipe.pinSize || "medium"} // Asegúrate de definir el tamaño en tu componente Pin si es necesario
+                  pinSize={recipe.pinSize || "medium"} 
                   imgSrc={recipe.imageUrl || 'https://via.placeholder.com/150'}
                   name={recipe.title}
                   link={recipe.link || '#'}

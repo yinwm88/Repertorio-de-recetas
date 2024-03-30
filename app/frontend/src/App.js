@@ -1,15 +1,8 @@
 // En src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Inicio from './Inicio';
-import Contenido from './Contenido';
-import TopBar from './TopBar';
-import TopBarLP from './TopBarLP';
-import { ThemeProvider, Container } from '@mui/material';
-import theme from './Theme/theme';
-import LandingPage from './LandingPage';
-
-
+import { ThemeProvider} from '@mui/material';
+import theme from './Tema/tema';
+import LandingPage from './Componentes/LP//LandingPage';
 
 const App = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import theme from './Theme/theme';
+import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
 
 const Ingreso = () => {

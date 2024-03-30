@@ -4,7 +4,7 @@ import Inicio from './Inicio';
 import TopBarLP from './TopBarLP';
 import { ThemeProvider, Container } from '@mui/material';
 import Header from './Header';
-import Contenido from './Contenido';
+import Contenido from '../Contenido';
 import Footer from './Footer';
 
 const LandingPage = () => {
