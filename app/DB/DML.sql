@@ -82,7 +82,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Jugo de naran
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Agua', 'ml', false, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Champaña', 'ml', false, 85);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Tiras de pollo', 'gr', true, 300);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Huevo batido', 'pz', true, 65)
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Huevo batido', 'pz', true, 65);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pan rallado', 'gr', true, 400);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Paprika', 'gr', true, 290);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pimienta de cayena', 'gr', true, 300);
