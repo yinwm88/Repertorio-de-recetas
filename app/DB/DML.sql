@@ -70,7 +70,23 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Arroz prepara
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pimiento rojo', 'pz', true, 24);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pechuga de pollo', 'gr', true, 200);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Huevo', 'pz', true, 65);
-
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Masa para pizza', 'gr', true, 300);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Tocino', 'gr', true, 540);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Muslo de pollo', 'pz', true, 110);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Chalota', 'pz', true, 25);
+insert into Inrgediente(nombre, unidad, caduca, calorias) values ('Hojas de orégano', 'gr', true, 300);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Vino blanco', 'ml', true, 80);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Nectar de durazno', 'ml', false, 40);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Nectar de mango', 'ml', true, 40);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Jugo de naranja', 'ml', true, 45);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Agua', 'ml', false, 0);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Champaña', 'ml', false, 85);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Tiras de pollo', 'gr', true, 300);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Huevo batido', 'pz', true, 65)
+insert into Ingredientes(nombre, unidad, caduca, calorias) values ('Pan rallado', 'gr', true, 400);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Paprika', 'gr', true, 290);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pimienta de cayena', 'gr', true, 300);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Panceta ahumada', 'gr', true, 400);
 
 insert into Electrodomestico (nombre) values ('Refrigerador');
 insert into Electrodomestico (nombre) values ('Horno');
@@ -274,3 +290,59 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 2, 1
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 58, 1);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 17, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 72, 1);
+
+
+insert into Receta (nombre, tiempo, proceso) values ('Flammkuchen', 35, 'Para preparar Flammkuchen, comienza aplanando la masa de pizza entre dos trozos de papel pergamino hasta que tenga un grosor de 1-2 mm, luego colócala en una bandeja para hornear y precalienta el horno. Distribuye la crema agria uniformemente sobre la masa, luego corta la cebolla y el bacon en trozos pequeños y distribúyelos uniformemente sobre la crema. Hornea en el horno precalentado durante 10 minutos hasta que esté ligeramente dorado. Finalmente, sazona con sal y pimienta al gusto.');
+insert into tipoReceta(idReceta, tipo) values (16, 'Francesa');
+insert into necesitar(idReceta, idElectro) values (16, 2);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 73, 400);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 74, 150);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 2, 1);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 6, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 18, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 19, 0);
+
+
+insert into Receta(nombre, tiempo, proceso) values ('Pollo traybake con limón y orégano', 60, 'Primero precalienta el horno a 220°C con ventilador/200°C. Mientras tanto, corta las patatas nuevas en rodajas de 0.5 cm - 1 cm y colócalas en una bandeja para hornear. Rocía 1 cucharada de aceite de oliva sobre las patatas, sazona bien y mézclalas para asegurar que estén bien cubiertas. Luego, coloca la bandeja para hornear en el horno durante 20 minutos, o hasta que las patatas comiencen a dorarse. En una bandeja separada temporalmente, coloca los muslos de pollo y sazónalos. Corta las chalotas en octavos y los limones en cuartos. Una vez hecho esto, saca la bandeja del horno y transfiere el pollo, las chalotas, los limones y los lardones de tocino a ella, con un último chorrito de 1 cucharada de aceite de oliva sobre los ingredientes de la bandeja. Cocina durante otros 20 minutos. Prepara el caldo de pollo y el vino para sacar la bandeja del horno por última vez antes de servir. Vierte 200ml de caldo de pollo y 100ml de vino blanco sobre el contenido de la bandeja y vuelve a colocarla en el horno para otros 20 minutos finales de cocción.');
+insert into tipoReceta(idReceta, tipo) values (17, 'Mediterránea');
+insert into necesitar(idReceta, idElectro) values (17, 2);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 75, 8);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 48, 3);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 74, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 76, 8);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 77, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 17, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 25, 2);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 33, 200);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 78, 100);
+
+
+insert into Receta(nombre, tiempo, proceso) values ('Party Mimosa',5, 'Solo mezcla el néctar de durazno y mango, el jugo de piña, el agua y el concentrado de jugo de naranja en una jarra grande hasta que estén bien combinados. Vierte la botella de champán justo antes de servir.');
+insert into tipoReceta(idReceta, tipo) values (18, 'Bebida');
+insert into tipoReceta(idReceta, tipo) values (18, 'Rápida');
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 79, 350);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 80, 350);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 81, 200);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 82, 750);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 83, 750);
+
+insert into Receta(nombre, tiempo, proceso) values ('Tiras de pollo fritas', 30, 'En primer lugar, en un plato, mezcla un poco más de una cucharada con las especias en tu harina. Luego, sumerge el pollo en la harina, una tira a la vez, cubriendo toda la superficie. Después, pasa el pollo enharinado por el huevo batido y luego presiónalo en las migas de pan tratando de recoger la mayor cantidad posible. Repite hasta que todas las tiras hayan sido enharinadas y empanizadas. Luego, cubre ambos lados de las tiras con una cantidad ligera de aceite de oliva. Coloca las tiras en tu freidora de aire, sin colocarlos uno encima del otro. Ajusta tu freidora de aire al modo de pollo y cocina durante 20 minutos a 360 grados Fahrenheit. Puedes servir con mostaza y miel para obtener el máximo sabor.');
+insert into necesitar(idReceta, idElectro) values (19, 5);
+insert into tipoReceta(idReceta, tipo) values (19, 'Rápida');
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 84, 500);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 85, 2);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 86, 150);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 17, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 18, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 19, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 87, 0);
+
+
+insert into Receta(nombre, tiempo, proceso) values ('Carbonara', 45, 'Para preparar la carbonara, primero rompe los huevos en un tazón pero solo agrega las yemas. Añade aproximadamente 35 g de queso rallado. Luego, llena una olla con agua y agrégale sal, cocina la pasta un minuto menos de lo recomendado. Mientras tanto, fríe la panceta ahumada hasta que estén crujientes en una sartén de hierro o antiadherente. Bate los huevos manualmente con un tenedor hasta que estén completamente líquidos. Combina la pasta con los huevos, luego agrega el guanciale y las grasas restantes en la sartén. Finalmente, sirve en platos y opcionalmente decora con queso rallado y pimienta negra.');
+insert into tipoReceta(idReceta, tipo) values (20, 'Italiana');
+insert into necesitar(idReceta, idElectro) values (20, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 27, 320);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 72, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 88, 2);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 89, 150);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 28, 35);
