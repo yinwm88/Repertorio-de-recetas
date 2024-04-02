@@ -74,7 +74,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Masa para piz
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Tocino', 'gr', true, 540);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Muslo de pollo', 'pz', true, 110);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Chalota', 'pz', true, 25);
-insert into Inrgediente(nombre, unidad, caduca, calorias) values ('Hojas de orégano', 'gr', true, 300);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Hojas de orégano', 'gr', true, 300);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Vino blanco', 'ml', true, 80);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Nectar de durazno', 'ml', false, 40);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Nectar de mango', 'ml', true, 40);
@@ -83,10 +83,11 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Agua', 'ml', 
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Champaña', 'ml', false, 85);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Tiras de pollo', 'gr', true, 300);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Huevo batido', 'pz', true, 65)
-insert into Ingredientes(nombre, unidad, caduca, calorias) values ('Pan rallado', 'gr', true, 400);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pan rallado', 'gr', true, 400);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Paprika', 'gr', true, 290);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pimienta de cayena', 'gr', true, 300);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Panceta ahumada', 'gr', true, 400);
+
 
 insert into Electrodomestico (nombre) values ('Refrigerador');
 insert into Electrodomestico (nombre) values ('Horno');
