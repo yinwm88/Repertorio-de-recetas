@@ -91,46 +91,49 @@ Refrigerador, estufa, horno, licuadora
  	La receta de Pollo Kung Pao le resulta muy buena al usuario para un fin de semana en familia, pero entre tanta receta que ocupa pollo no encuntra el Pollo Kung Pao, entonces puede buscar desde la aplicación la receta de Pollo Kung Pao, siempre y cuando esta este en el repertorio de recetas.
 
 
-
-
 </div>
 
-### Wireframes
+### Diagramas
 
 
-#### Inicio de sesión: 
-![Inicio de sesión](/Wireframe/WF-VistaSeparada/WF-InicioSesion.png)
+#### Entidad Relacion: 
+![Entidad Relacion](/Diagramas/ModeloE_R.jpg)
 
-#### Añadir ingredientes:
-![Ingredientes](/Wireframe/WF-VistaSeparada/WF-PaginaPrincipal.png)
+#### Relacional:
+![Relacional](/Diagramas/Relacional.jpg)
 
-#### Repertorio de recetas:
-![Repertorio de recetas](/Wireframe/WF-VistaSeparada/WF-Repertorio.png)
+#### UML:
+![UML](/Diagramas/UML.jpg)
 
+</div>  
+
+<div>
+### Mockups
+
+</div>
 #### Filtar recetas:
 ![Repertorio de recetas](/Wireframe/WF-VistaSeparada/WF-Filtrar.png)
 
-#### Características de una receta: 
-![Receta](/Wireframe/WF-VistaSeparada/WF-Receta.png)
+#### Kitchenify:
+![Kitchenify](/Mockup/Kitchenify.png)
 
-####  Generar lista: 
-![Receta](/Wireframe/WF-VistaSeparada/WF-GenerarLista.png)
+#### Landing page: 
+![Landingpage](/Mockup/LandingPage.png)
 
-#### Configuración general:
-![Configuración](/Wireframe/WF-VistaSeparada/WF-Perfil.png)
+#### Configuración, perfil y estadisticas:
+![Configuración](/Mockup/Perfil.png)
+
+#### Configuración de los datos del usuario:
+![Electrodomésticos](/Mockup/Configuracion.png)
 
 #### Configuración de los electrodomésticos:
-![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-Electrodomestico.png)
+![Electrodomésticos](/Mockup/Utensilios.png)
 
-#### Configuración de los datos:
-![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-Datos.png)
+#### Estadisticas:
+![estadisticas](/Mockup/Estadisticas.png)
 
-#### Crear receta:
-![Electrodomésticos](/Wireframe/WF-VistaSeparada/WF-CrearReceta.png)
+#### Receta:
+![Receta](/Mockup/Recetas.png)
 
-#### Flujo entre vistas:
-![Flujo](/Wireframe/WF-FlujoVistas.png)
-
-</div>  
 
   
