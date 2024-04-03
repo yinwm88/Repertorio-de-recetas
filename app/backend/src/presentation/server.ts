@@ -21,18 +21,11 @@ export class Server {
         this.puerto = puerto;
         this.rutas = rutas;
         this.rutaPublica = rutaPublica;
-
-        // CORS aquí
-        this.configurarCORS();
-    }
-
-    private configurarCORS() {
-        // Aquí se permite el acceso desde cualquier origen
-        // En producción, podrías querer restringir esto a dominios específicos
-        this.app.use(cors());
     }
 
     public async iniciar() {
+        this.app.use(cors());
+        
         //* Middlewares
         this.app.use(express.json()); // raw
         this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded

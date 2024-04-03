@@ -16,7 +16,7 @@ export class RutasInicio {
         //TODO: Generar recetas del usuario
         router.get('/generarRecetas', );
         //TODO: Eliminar ingrediente
-        // router.delete('/', );
+        router.delete('/eliminarIngrediente/:id', controlador.eliminarIngrediente );
         
         return router;
     }

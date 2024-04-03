@@ -72,9 +72,6 @@ export class IngredienteService {
                         startsWith: `${ingrediente}_`,
                         mode: 'insensitive'
                     }
-                },
-                select: {
-                    nombre: true 
                 }
             });
             if (ingredientes.length === 0 ) {
@@ -101,11 +98,11 @@ export class IngredienteService {
         
         try {
             const ingrediente = await prisma.teneringrediente.delete({
-                where: {
-                    correo_idingrediente: {
-                    correo: user.correo,
-                    idingrediente: manipularIngredienteDto.idIngrediente
-                    }
+                where: {    
+                    AND:[
+                        { correo: user.correo},
+                        { idingrediente: manipularIngredienteDto.idIngrediente}
+                    ]     
                 }
             });
             return {
