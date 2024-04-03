@@ -97,10 +97,10 @@ Refrigerador, estufa, horno, licuadora
 
 
 #### Entidad Relacion: 
-![Entidad Relacion](/Diagramas/ModeloE_R.jpg)
+![Entidad Relacion](/Diagramas/ModeloE_R.png)
 
 #### Relacional:
-![Relacional](/Diagramas/Relacional.jpg)
+![Relacional](/Diagramas/Relacional.png)
 
 #### UML:
 ![UML](/Diagramas/UML.jpg)
