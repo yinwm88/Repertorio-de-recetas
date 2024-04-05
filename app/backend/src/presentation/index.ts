@@ -7,3 +7,5 @@ export * from './join/ControladorJoin';
 export * from './join/RutasJoin';
 export * from './ingrediente/ControladorIngrediente';
 export * from './ingrediente/RutasIngrediente';
+export * from './usuario/ControladorUsuario';
+export * from './usuario/RutasUsuario';
