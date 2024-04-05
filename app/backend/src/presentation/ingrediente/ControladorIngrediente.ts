@@ -26,16 +26,16 @@ export class ControladorIngrediente {
         .catch( error => this.manejarError( error, res ));
     }   
     
-    public buscarIngrediente = ( req:Request, res: Response ) => {
-        const { ingrediente } = req.body;
-        if (!ingrediente) {
-            return res.status(400).json('Hace falta el ingrediente');
+    public editarIngrediente = ( req:Request, res: Response ) => {
+        const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
+        if (error) {
+            return res.status(400).json(error);
         }
-
-        this.ingredienteService.buscarIngrediente( req.body.ingrediente )
-        .then( ingredientes => res.status(201).json( ingredientes ))
+        this.ingredienteService.editarIngrediente(manipularIngredienteDto!, req.body.usuario)
+        .then( ingrediente => res.status(201).json( ingrediente ))
         .catch( error => this.manejarError( error, res ));
-    }
+    }   
+    
     
     public eliminarIngrediente = ( req:Request, res: Response ) => {
         const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
@@ -43,7 +43,18 @@ export class ControladorIngrediente {
             return res.status(400).json(error);
         }
         this.ingredienteService.eliminarIngrediente(manipularIngredienteDto!, req.body.usuario)
-            .then( ingrediente => res.status(201).json( ingrediente ))
+            .then( ingrediente => res.status(200).json( ingrediente ))
             .catch( error => this.manejarError( error, res ));
     }   
+    
+    public buscarIngrediente = ( req:Request, res: Response ) => {
+        const { ingrediente } = req.body;
+        if (!ingrediente) {
+            return res.status(400).json('Hace falta el ingrediente');
+        }
+
+        this.ingredienteService.buscarIngrediente( req.body.ingrediente )
+        .then( ingredientes => res.status(200).json( ingredientes ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }

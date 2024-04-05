@@ -23,7 +23,7 @@ export class ControladorInicio {
         }
         
         this.ingredienteService.obtenerIngredientesUsuario( ingredientesRecetasDto! )
-        .then( ingredientes => res.status(201).json( ingredientes ))
+        .then( ingredientes => res.status(200).json( ingredientes ))
         .catch( error => this.manejarError( error, res ));
     }
 

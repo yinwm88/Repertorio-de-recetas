@@ -22,7 +22,7 @@ export class ControladorJoin {
             return res.status(400).json(error);
         }
         this.usuarioService.ingresarUsuario( ingresarUsuarioDto! )
-        .then( usuario => res.status(201).json( usuario ))
+        .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }   
 
