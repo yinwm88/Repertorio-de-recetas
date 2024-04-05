@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Button, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle'; // Importa el icono de perfil
+import AccountCircle from '@mui/icons-material/AccountCircle'; 
 import { Link } from 'react-router-dom';
 
 function TopBar() {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null); // Estado para el menú del perfil
+  const [profileMenuAnchorEl, setProfileMenuAnchorEl] = useState(null); 
   const open = Boolean(anchorEl);
   const isProfileMenuOpen = Boolean(profileMenuAnchorEl); // Booleano para saber si el menú del perfil está abierto
 

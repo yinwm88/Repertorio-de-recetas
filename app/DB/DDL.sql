@@ -119,7 +119,7 @@ alter table CaracteristicasReceta add constraint fkCaracteristica foreign key(id
 on update cascade on delete cascade;
 
 
-create type tipos as enum ('Mexicana', 'Española', 'Japonesa', 'China', 'Vegana', 'Rápida', 'Saludable', 'Postre', 'Francesa', 'Bebida', 'Snack', 'Ensalada', 'Vegetariana', 'General', 'Filipina', 'Árabe', 'Italiana', 'Polaca');  
+create type tipos as enum ('Mexicana', 'Española', 'Japonesa', 'China', 'Vegana', 'Rápida', 'Saludable', 'Postre', 'Francesa', 'Bebida', 'Snack', 'Ensalada', 'Vegetariana', 'General', 'Filipina', 'Árabe', 'Italiana', 'Polaca', 'Mediterránea');  
 create table TipoReceta (
     idReceta int,
     tipo tipos

@@ -22,14 +22,17 @@ const theme = createTheme({
   },
 
   typography: {
-    fontFamily: 'poppins',
-    fontSize: 14,
+    fontFamily: 'Poppins',
     h1: {
       fontSize: '2.125rem', // Títulos grandes
       fontWeight: 400,
     },
     h2: {
       fontSize: '1.5rem', // Subtítulos
+      fontWeight: 400,
+    },
+     h5: {
+      fontSize: '1.1rem', // Subtítulos
       fontWeight: 400,
     },
     body1: {
@@ -54,12 +57,6 @@ const theme = createTheme({
           '&:hover': {
             backgroundColor: '#E57373', // Un rojo más claro para el estado hover
           },
-
-
-
-
-
-
         },
       },
     },

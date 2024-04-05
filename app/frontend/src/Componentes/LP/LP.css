@@ -32,7 +32,7 @@
     width: 450px;
     border-radius: 35px;
     transform: translate(-50%, -50%);
-    background-color: rgb(300, 100, 0);
+    background: linear-gradient(to left,#FF9276, #FF5A5F);
     padding: 20px;
 }
 
@@ -58,12 +58,13 @@
 .nueva-cuenta {
     position: absolute;
     top: 50%;
+    background: linear-gradient(to left,#FF9276, #FF5A5F);
     left: 50%;
     width: 500px;
     height: 400px;
     border-radius: 35px;
     transform: translate(-50%, -50%);
-    background-color: rgb(300, 100, 0);
+    background-color: linear-gradient(to left, #FF5A5F, #FF9276);
     padding: 20px;
 }
 
@@ -78,3 +79,22 @@
     margin-left: 30px;
     text-align: 'center';
 }
+
+@keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .marquee-container {
+    display: flex;
+    animation: scroll 100s linear infinite;
+    z-index: 0;
+    position: absolute;
+  }
+  
+  
+  

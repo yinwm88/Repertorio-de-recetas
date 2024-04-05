@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import theme from './Theme/theme';
-import './App.css';
+import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
 
 const Ingreso = () => {
@@ -99,7 +98,7 @@ const Ingreso = () => {
 
             >
                 <div className='empezar'>
-                    comenzar
+                    Comenzar
                 </div>
             </Button>
 
@@ -150,6 +149,7 @@ const Ingreso = () => {
                         <Button
                             className='boton-crear-cuenta'
                             onClick={secondHandleSubmit}
+                            sx={{ ...theme.components.MuiButton.styleOverrides.root,backgroundColor: '#FF6347', width: "130px" }}
                         >
                             Registrar
                         </Button>
@@ -181,14 +181,14 @@ const Ingreso = () => {
                                 <Button variant="contained"
                                     color="primary"
                                     className='boton-iniciar-sesion'
-                                    sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#00A86B ', width: "150px" }}
+                                    sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#2E8B57', width: "150px" }}
                                     onClick={firstHandleSubmit}>
 
                                     Iniciar Sesión
                                 </Button>
                                 <Button
                                     className='boton-registrar'
-                                    sx={{ ...theme.components.MuiButton.styleOverrides.root, width: "180px" }}
+                                    sx={{ ...theme.components.MuiButton.styleOverrides.root,backgroundColor: '#FF6347', width: "180px" }}
                                     onClick={mostrarFormularioRegistro}
                                 >
                                     No tengo cuenta

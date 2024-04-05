@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { AppBar, Box, CssBaseline, Toolbar, Typography, IconButton, Paper, Fab, List, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import {Box, CssBaseline,Typography, IconButton, Paper, Fab, List, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import BookIcon from '@mui/icons-material/Book';
 import SearchIcon from '@mui/icons-material/Search';
+import  './IngredientesBar.css';
 
 const itemIcons = {
   shopping: <ShoppingCartIcon />,
@@ -32,7 +33,7 @@ function CustomList() {
     },
     {
       id: 2,
-      name: 'Hamburguesa',
+      name: 'Cebolla',
       quantity: 1,
       icon: 'food',
     },
@@ -106,7 +107,7 @@ function CustomList() {
             ))}
           </List>
         </Box>
-        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen}>
+        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{margin:15}}>
           <AddIcon />
         </StyledFab>
         <Dialog open={open} onClose={handleClose}>
