@@ -10,13 +10,9 @@ export class RutasInicio {
         const ingredienteService = new IngredienteService();
         const controlador = new ControladorInicio(ingredienteService);
 
-        router.post('/agregarIngrediente', controlador.agregarIngrediente ); 
-        router.post('/buscarIngrediente', controlador.buscarIngrediente );
         router.get('/ingredientesUsuario', controlador.obtenerIngredientesUsuario );
         //TODO: Generar recetas del usuario
         router.get('/generarRecetas', );
-        //TODO: Eliminar ingrediente
-        router.delete('/eliminarIngrediente/:id', controlador.eliminarIngrediente );
         
         return router;
     }

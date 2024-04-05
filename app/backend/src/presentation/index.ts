@@ -5,3 +5,5 @@ export * from './inicio/RutasInicio';
 export * from './services/ingrediente.service';
 export * from './join/ControladorJoin';
 export * from './join/RutasJoin';
+export * from './ingrediente/ControladorIngrediente';
+export * from './ingrediente/RutasIngrediente';

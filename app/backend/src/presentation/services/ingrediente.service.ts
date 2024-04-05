@@ -99,10 +99,10 @@ export class IngredienteService {
         try {
             const ingrediente = await prisma.teneringrediente.delete({
                 where: {    
-                    AND:[
-                        { correo: user.correo},
-                        { idingrediente: manipularIngredienteDto.idIngrediente}
-                    ]     
+                    tenerId:{
+                        correo: user.correo,
+                        idingrediente: manipularIngredienteDto.idIngrediente
+                    }
                 }
             });
             return {

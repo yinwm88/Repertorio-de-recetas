@@ -101,7 +101,7 @@ model teneringrediente {
   usuario        usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkteneringrediente1")
   ingrediente    ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkteneringrediente2")
 
-  @@unique([correo, idingrediente], map: "uniqueteneringrediente")
+  @@unique(name: "tenerId",[correo, idingrediente], map: "uniqueteneringrediente")
 }
 
 model tiporeceta {
