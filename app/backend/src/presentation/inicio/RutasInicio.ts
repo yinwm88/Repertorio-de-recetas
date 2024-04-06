@@ -12,7 +12,7 @@ export class RutasInicio {
 
         router.get('/ingredientesUsuario', controlador.obtenerIngredientesUsuario );
         //TODO: Generar recetas del usuario
-        router.get('/generarRecetas', );
+        router.get('/generarRecetas',controlador.generarRecetas );
         
         return router;
     }
