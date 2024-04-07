@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { IngredienteService } from "../services/ingrediente.service";
+import { RecetaService } from "../services/receta.service";
 import { ControladorInicio } from "./ControladorInicio";
 
 export class RutasInicio {
@@ -8,7 +9,8 @@ export class RutasInicio {
         
         const router = Router();
         const ingredienteService = new IngredienteService();
-        const controlador = new ControladorInicio(ingredienteService);
+        const recetaService = new RecetaService();
+        const controlador = new ControladorInicio(ingredienteService, recetaService);
 
         router.get('/ingredientesUsuario', controlador.obtenerIngredientesUsuario );
         //TODO: Generar recetas del usuario

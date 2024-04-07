@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { ErrorCustomizado, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 import { IngredienteService } from "../services/ingrediente.service";
+import { RecetaService } from "../services/receta.service";
 
 export class ControladorInicio {
     
     constructor(
-        private readonly ingredienteService: IngredienteService
+        private readonly ingredienteService: IngredienteService,
+        private readonly recetaService: RecetaService
     ) {}
 
     private manejarError = ( error:unknown, res: Response ) => {
@@ -33,7 +35,7 @@ export class ControladorInicio {
          return res.status(400).json(error);
          }
 
-         this.ingredienteService.generarRecetas( ingredientesRecetasDto! )
+         this.recetaService.generarRecetas( ingredientesRecetasDto! )
          .then( recetas => res.status(201).json( recetas ))
          .catch( error => this.manejarError( error, res ));
      }
