@@ -11,8 +11,9 @@ create table Usuario (
 	talla numeric(5,2),
 	actividad text,
     objetivo objetivos,
-    contrasena varchar(100),
-	salt varchar(100) 
+    contrasena varchar(200),
+    salt varchar(200),
+    verificado bool
 );
  
 
@@ -120,7 +121,7 @@ alter table CaracteristicasReceta add constraint fkCaracteristica foreign key(id
 on update cascade on delete cascade;
 
 
-create type tipos as enum ('Mexicana', 'Española', 'Japonesa', 'China', 'Vegana', 'Rápida', 'Saludable', 'Postre', 'Francesa', 'Bebida', 'Snack', 'Ensalada', 'Vegetariana', 'General', 'Filipina', 'Árabe', 'Italiana', 'Polaca', 'Mediterránea');  
+create type tipos as enum ('Mexicana', 'Española', 'Japonesa', 'China', 'Vegana', 'Rápida', 'Saludable', 'Postre', 'Francesa', 'Bebida', 'Snack', 'Ensalada', 'Vegetariana', 'General', 'Filipina', 'Árabe', 'Italiana', 'Polaca','Mediterránea');  
 create table TipoReceta (
     idReceta int,
     tipo tipos

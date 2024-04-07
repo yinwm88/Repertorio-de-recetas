@@ -371,7 +371,7 @@ insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gma
 
 
 
-select *
+select nombre -- al final usaremos idReceta en lugar de nombre
 from Receta 
 where not exists (
     select idIngrediente 
@@ -384,8 +384,6 @@ where not exists (
         where correo = 'erick@gmail.com'
     )
 )
-
-select * from usuario 
 
 
 
