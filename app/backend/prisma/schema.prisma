@@ -38,6 +38,7 @@ model ingrediente {
   nombre           String             @db.VarChar(50)
   unidad           String             @db.VarChar(5)
   caduca           Boolean
+  calorias         Int
   haberingrediente haberingrediente[]
   seralergico      seralergico[]
   teneringrediente teneringrediente[]
@@ -74,6 +75,7 @@ model preferir {
 model receta {
   idreceta              Int                     @id(map: "pkreceta") @default(autoincrement())
   nombre                String                  @db.VarChar(50)
+  tiempo                Int?
   proceso               String
   caracteristicasreceta caracteristicasreceta[]
   haberingrediente      haberingrediente[]
@@ -121,7 +123,9 @@ model usuario {
   talla            Decimal?           @db.Decimal(5, 2)
   actividad        String?
   objetivo         objetivos?
-  contrasena       String             @db.VarChar(100)
+  contrasena       String             @db.VarChar(200)
+  salt             String?            @db.VarChar(200)
+  verificado       Boolean?
   poseer           poseer[]
   preferir         preferir[]
   seralergico      seralergico[]
@@ -145,14 +149,22 @@ enum objetivos {
 
 enum tipos {
   Mexicana
+  Espa_ola     @map("Española")
+  Japonesa
   China
   Vegana
-  Rapida
+  R_pida       @map("Rápida")
   Saludable
   Postre
+  Francesa
   Bebida
   Snack
   Ensalada
   Vegetariana
   General
+  Filipina
+  rabe         @map("Árabe")
+  Italiana
+  Polaca
+  Mediterr_nea @map("Mediterránea")
 }

@@ -11,7 +11,8 @@ create table Usuario (
 	talla numeric(5,2),
 	actividad text,
     objetivo objetivos,
-    contrasena varchar(100) 
+    contrasena varchar(100),
+	salt varchar(100) 
 );
  
 

@@ -1,5 +1,4 @@
 import { envs } from '../src/config';
-import { prisma } from '../src/data/postgres';
 import { Server } from '../src/presentation/server';
 
 jest.mock('../src/presentation/server');
