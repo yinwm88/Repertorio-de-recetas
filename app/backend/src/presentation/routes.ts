@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { RutasInicio, RutasJoin, RutasIngrediente, RutasUsuario } from "./index";
+import { RutasInicio, RutasJoin, RutasIngrediente, RutasUsuario, RutasReceta } from "./index";
 
 export class Routes {
 
@@ -11,6 +11,7 @@ export class Routes {
         router.use('/join', RutasJoin.rutas );
         router.use('/ingrediente', RutasIngrediente.rutas );
         router.use('/usuario', RutasUsuario.rutas );
+        router.use('/receta', RutasReceta.rutas );
 
         return router;
     }

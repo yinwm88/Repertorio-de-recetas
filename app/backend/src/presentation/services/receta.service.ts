@@ -33,23 +33,23 @@ export class RecetaService {
         }
     }
 
-    async marcarFavorita(ingredientesRecetaDto:IngredientesRecetasDto, recetaDto: RecetaDto){
+    async marcarFavorita(idReceta:number, correo: string) {
 
         const correoExiste = await prisma.usuario.findFirst({
-            where : { correo: ingredientesRecetaDto.correo }
+            where : { correo: correo }
         })
         if( !correoExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' )
 
         const recetaExiste = await prisma.receta.findFirst({
-            where : {idreceta : recetaDto.idReceta}
+            where : {idreceta: idReceta}
         })
         if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' )
 
         try {
             const favorita = await prisma.preferir.create({
                 data: {
-                    idreceta: recetaDto.idReceta,
-                    correo: ingredientesRecetaDto.correo
+                    idreceta: idReceta,
+                    correo: correo
                 }
             });
             return {
