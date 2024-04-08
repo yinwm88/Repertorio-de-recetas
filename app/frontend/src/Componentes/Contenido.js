@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Container} from '@mui/material';
-import { db } from '../firebaseConfig';
+import React, { useState, useEffect } from 'react';
+import { Grid, Container } from '@mui/material';
+import { db } from './firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
+import FormOpcional from './FormOpcional';
 import Pin from './Pin';
-import './Contenido.css';
+import './App.css';
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(20); 
   const [lastKey, setLastKey] = useState('');
-  const [searchText, setSearchText] = useState('');
-  // Añadir una función para manejar cambios en la búsqueda
-  const handleSearchChange = (text) => {
-    setSearchText(text.toLowerCase());
-  };
-  // Filtrar recetas basadas en el texto de búsqueda antes de renderizarlas
-  const filteredRecipes = recipes.filter(recipe =>
-    recipe.title.toLowerCase().includes(searchText)
-  );
+  const [showForm, setShowForm] = useState(false); 
+
+  useEffect(() => {
+    // ira la lógica para verificar si el usuario ha iniciado sesión y si es la primera vez
+    // Si es la primera vez, mostrar el formulario emergente
+    // Por ahora, se mostrara el formulario siempre 
+    setShowForm(true);
+  }, []); // Se ejecuta solo una vez al cargar el componente
+
   useEffect(() => {
     fetchRecipes();
-  }, [currentPage]); // Dependencia actualizada a currentPage
+  }, [currentPage]); 
 
   const fetchRecipes = () => {
     console.log("Intentando recuperar recetas...");
@@ -41,7 +42,7 @@ function Contenido() {
       }
 
       const recipesList = await Promise.all(Object.keys(recipesData).map(async (key) => {
-        const imageUrl = await fetchImageForRecipe(recipesData[key].title); // Buscar la imagen basada en el título de la receta
+        const imageUrl = await fetchImageForRecipe(recipesData[key].title); 
         return {
           id: key,
           ...recipesData[key],
@@ -57,6 +58,10 @@ function Contenido() {
     });
   };
 
+  // Función para manejar el cierre del formulario
+  const handleFormClose = () => {
+    setShowForm(false);
+  };
 
   // Cambiar página
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -66,7 +71,7 @@ function Contenido() {
 
   // Estilo para el contenedor desplazable
   const scrollableContainerStyle = {
-    maxHeight: '600px', // Ajusta esta altura a tus necesidades
+    maxHeight: '600px', 
     overflowY: 'auto'
   };
 
@@ -77,27 +82,30 @@ function Contenido() {
       const response = await fetch(url);
       const data = await response.json();
       if (data.results.length > 0) {
-        return data.results[0].urls.small; // Retorna la URL de la primera imagen encontrada
+        return data.results[0].urls.small; 
       }
-      return 'https://via.placeholder.com/150'; // Una imagen por defecto si no se encuentran resultados
+      return 'https://via.placeholder.com/150'; 
     } catch (error) {
       console.error('Error fetching image:', error);
-      return 'https://via.placeholder.com/150'; // Retorna una imagen por defecto en caso de error
+      return 'https://via.placeholder.com/150'; 
     }
   };
 
-
   return (
     <Container maxWidth="false" className='contenido'>
+      
+      {/* Mostrar el formulario si showForm es verdadero */}
+      {showForm && <FormOpcional onClose={handleFormClose} />} 
+      
       <Grid container spacing={4}>
-        <Grid item sm={12} md={4} >
+        <Grid item sm={12} md={4}>
           <IngredientesBar />
         </Grid>
         <Grid item sm={12} md={8}>
-          <FiltroRecetas onSearchChange={handleSearchChange} />
+          <FiltroRecetas />
           <Container maxWidth="false" className="contenido">
             <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
-              {filteredRecipes.map((recipe) => (
+              {currentRecipes.map((recipe) => (
                 <Pin
                   key={recipe.id}
                   pinSize={recipe.pinSize || "medium"} 
@@ -113,7 +121,6 @@ function Contenido() {
       </Grid>
     </Container>
   );
-
 }
 
 export default Contenido;
