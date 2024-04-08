@@ -1,5 +1,5 @@
 # Utilizamos la imagen de Node.js como base.
-FROM node:14-alpine
+FROM node:18-alpine
 
 # Copiamos los archivos del frontend al directorio de trabajo del contenedor.
 WORKDIR /app
