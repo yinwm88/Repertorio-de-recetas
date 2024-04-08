@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { ErrorCustomizado, IngredientesRecetasDto } from "../../domain";
+import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto } from "../../domain";
 
 export class RecetaService {
 
@@ -33,7 +33,51 @@ export class RecetaService {
         }
     }
 
-    async marcarFavorita(){
+    async marcarFavorita(ingredientesRecetaDto:IngredientesRecetasDto, recetaDto: RecetaDto){
 
+        const correoExiste = await prisma.usuario.findFirst({
+            where : { correo: ingredientesRecetaDto.correo }
+        })
+        if( !correoExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' )
+
+        const recetaExiste = await prisma.receta.findFirst({
+            where : {idreceta : recetaDto.idReceta}
+        })
+        if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' )
+
+        try {
+            const favorita = await prisma.preferir.create({
+                data: {
+                    idreceta: recetaDto.idReceta,
+                    correo: ingredientesRecetaDto.correo
+                }
+            });
+            return {
+                correo: favorita.correo,
+                idreceta: favorita.idreceta
+            };
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async datosReceta(datosReceta: RecetaDto){
+        const recetaExiste = await prisma.receta.findFirst({
+            where : {idreceta : datosReceta.idReceta}
+        });
+        if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'No existe la receta' )
+        
+        try {
+            const receta = await prisma.receta.findUnique({
+                where: {idreceta : datosReceta.idReceta}
+            });
+            return {
+                nombre: receta?.nombre,
+                tiempo: receta?.tiempo,
+                proceso: receta?.proceso
+            }
+        }catch (error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
     }
 }
