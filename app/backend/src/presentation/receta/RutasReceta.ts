@@ -10,7 +10,7 @@ export class RutasReceta{
         const recetaService = new RecetaService();
         const controlador = new ControladorRecetas(recetaService);
 
-        router.get('/datosReceta/:id', controlador.datosReceta);
+        router.post('/datosReceta/:id', controlador.datosReceta);
         router.post('/marcarFavorita', controlador.marcarFavorita);
         
         return router;

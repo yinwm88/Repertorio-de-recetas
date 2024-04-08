@@ -9,7 +9,7 @@ class RutasReceta {
         const router = (0, express_1.Router)();
         const recetaService = new receta_service_1.RecetaService();
         const controlador = new ControladorReceta_1.ControladorRecetas(recetaService);
-        router.get('/datosReceta/:id', controlador.datosReceta);
+        router.post('/datosReceta/:id', controlador.datosReceta);
         router.post('/marcarFavorita', controlador.marcarFavorita);
         return router;
     }

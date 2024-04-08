@@ -26,7 +26,7 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-function CustomList() {
+function CustomList({lastUpdate, setLastUpdate}) {
 
   const { currentUser } = useAuth();
   console.log('Usuario actual:', currentUser)
@@ -54,7 +54,6 @@ function CustomList() {
   const [searchText, setSearchText] = useState('');
 
   const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
-  const [lastUpdate, setLastUpdate] = useState(Date.now());
 
   const fetchIngredientesUsuario = async () => {
     // Asegúrate de reemplazar currentUser con el correo real del usuario
@@ -212,7 +211,6 @@ function CustomList() {
   };
 
   const handleDelete = async (selectedIngredient) => {
-    console.log('Trying to delete', selectedIngredient)
     try {
       const response = await fetch(`http://localhost:3030/ingrediente/eliminar/${selectedIngredient.idingrediente}`, {
         method: 'POST',
@@ -233,6 +231,7 @@ function CustomList() {
       }
 
       // Recargar la lista de ingredientes del usuario tras la eliminación exitosa
+      setLastUpdate(Date.now());
       fetchIngredientesUsuario();
     } catch (error) {
       console.error(error);
