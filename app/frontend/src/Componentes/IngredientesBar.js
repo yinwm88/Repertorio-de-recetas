@@ -9,7 +9,7 @@ import BookIcon from '@mui/icons-material/Book';
 import SearchIcon from '@mui/icons-material/Search';
 import './IngredientesBar.css';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { useAuth } from '../AuthContext';
 
 const itemIcons = {
   shopping: <ShoppingCartIcon />,
@@ -27,6 +27,10 @@ const StyledFab = styled(Fab)({
 });
 
 function CustomList() {
+
+  const { currentUser } = useAuth();
+  console.log('Usuario actual:', currentUser)
+
   const [items, setItems] = useState([
     {
       id: 1,
@@ -53,14 +57,13 @@ function CustomList() {
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
   const fetchIngredientesUsuario = async () => {
-    // Asegúrate de reemplazar 'correo@gmail.com' con el correo real del usuario
-    const correoUsuario = 'correo@gmail.com'; // Aquí deberías obtener el correo del estado, prop, o localStorage
+    // Asegúrate de reemplazar currentUser con el correo real del usuario
 
     try {
       const response = await fetch('http://localhost:3030/ingredientesUsuario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ correo: correoUsuario }),
+        body: JSON.stringify({ correo: currentUser }),
       });
 
       if (!response.ok) {
@@ -127,7 +130,7 @@ function CustomList() {
       });
 
       if (response.ok) {
-        alert('Ingrediente agregado exitosamente');
+        // alert('Ingrediente agregado exitosamente');
         // Realiza cualquier otra acción necesaria después de la adición
       } else {
         const errorData = await response.json();
@@ -193,7 +196,7 @@ function CustomList() {
           idIngrediente: selectedIngredient.idingrediente,
           cantidad: newItemQuantity,
           unidad: newItemUnit,
-          usuario: { correo: "correo@gmail.com" }
+          usuario: { correo: currentUser }
         }),
       });
 
@@ -220,7 +223,7 @@ function CustomList() {
           idIngrediente: selectedIngredient.idingrediente,
           unidad: selectedIngredient.unidad,
 
-          usuario: { correo: "correo@gmail.com" },
+          usuario: { correo: currentUser },
 
         }),
       });

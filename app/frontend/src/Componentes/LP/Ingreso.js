@@ -3,9 +3,10 @@ import { Button, Modal, TextField } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../../AuthContext';
 const Ingreso = () => {
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -19,7 +20,7 @@ const Ingreso = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    correo: username, // Asegúrate de que username sea el correo, si no, cambia la lógica para obtenerlo correctamente.
+                    correo: username, // Aquí usas el valor de 'username' como el correo
                     contrasena: password,
                 }),
             });
@@ -27,6 +28,7 @@ const Ingreso = () => {
             const data = await response.json();
 
             if (response.ok) {
+                login(username); // Actualiza el estado global con el correo del usuario
                 navigate('/contenido');
             } else {
                 alert(data.message || 'Error al iniciar sesión');
@@ -40,6 +42,7 @@ const Ingreso = () => {
         setUsername('');
         setPassword('');
     };
+
 
 
     const [mostrarRegistro, setMostrarRegistro] = useState(false);
@@ -149,7 +152,7 @@ const Ingreso = () => {
                         <Button
                             className='boton-crear-cuenta'
                             onClick={secondHandleSubmit}
-                            sx={{ ...theme.components.MuiButton.styleOverrides.root,backgroundColor: '#FF6347', width: "130px" }}
+                            sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#FF6347', width: "130px" }}
                         >
                             Registrar
                         </Button>
@@ -188,7 +191,7 @@ const Ingreso = () => {
                                 </Button>
                                 <Button
                                     className='boton-registrar'
-                                    sx={{ ...theme.components.MuiButton.styleOverrides.root,backgroundColor: '#FF6347', width: "180px" }}
+                                    sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#FF6347', width: "180px" }}
                                     onClick={mostrarFormularioRegistro}
                                 >
                                     No tengo cuenta
