@@ -1,4 +1,3 @@
-
 .gridPinterest {
   flex: 1;
   height: auto;
@@ -28,7 +27,7 @@
 .pin .contenido {
   width: 100%;
   height: 50px;
-  background-color: rgba(255, 128, 132, 0.68  );
+  background-color: rgba(255, 128, 132, 0.68);
   position: absolute;
   bottom: -55px;
   backdrop-filter: blur(2px);
@@ -56,6 +55,8 @@
   font-size: 15px;
   margin: 20px;
 }
+
+
 
 .pin.small {
   grid-row-end: span 26;

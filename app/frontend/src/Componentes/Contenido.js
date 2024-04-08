@@ -4,6 +4,7 @@ import { db } from '../firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
+import FormOpcional from './FormOpcional';
 import Pin from './Pin';
 import './Contenido.css';
 import { useAuth } from '../AuthContext';
@@ -16,8 +17,10 @@ function Contenido() {
   const [searchText, setSearchText] = useState('');
   const [lastUpdate, setLastUpdate] = useState(Date.now());
 
+  const [showForm, setShowForm] = useState(true);
+  const handleFormClose = () => setShowForm(false);
+
   const { currentUser } = useAuth();
-  console.log(currentUser,'currentUser');
 
   //Generar Recetas
   useEffect(() => {
@@ -119,7 +122,7 @@ function Contenido() {
 
   // Estilo para el contenedor desplazable
   const scrollableContainerStyle = {
-    maxHeight: '600px', // Ajusta esta altura a tus necesidades
+    maxHeight: '600px',
     overflowY: 'auto'
   };
 
@@ -135,21 +138,50 @@ function Contenido() {
       const response = await fetch(url);
       const data = await response.json();
       if (data.results.length > 0) {
-        return data.results[0].urls.small; // Retorna la URL de la primera imagen encontrada
+        return data.results[0].urls.small;
       }
-      return 'https://via.placeholder.com/150'; // Una imagen por defecto si no se encuentran resultados
+      return 'https://via.placeholder.com/150';
     } catch (error) {
       console.error('Error fetching image:', error);
-      return 'https://via.placeholder.com/150'; // Retorna una imagen por defecto en caso de error
+      return 'https://via.placeholder.com/150';
     }
   };
 
+  const markAsFavorite = async (idReceta) => {
+    try {
+      const response = await fetch('http://localhost:3030/receta/marcarFavorita', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          idReceta,
+          usuario: {
+            correo: currentUser,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`No se pudo marcar la receta ${idReceta} como favorita`);
+      }
+
+      console.log(`Receta con id ${idReceta} marcada como favorita`);
+
+    } catch (error) {
+      console.error('Error al marcar como favorita:', error);
+    }
+  };
 
   return (
     <Container maxWidth="false" className='contenido'>
+
+      {/* Mostrar el formulario si showForm es verdadero */}
+      {showForm && <FormOpcional onClose={handleFormClose} />}
+
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
-          <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate}/>
+          <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
         </Grid>
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
@@ -157,11 +189,14 @@ function Contenido() {
             <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
               {recipes.map((recipe) => (
                 <Pin
+                  id={recipe.id}
+                  onMarkFavorite={markAsFavorite}
                   key={recipe.id}
                   pinSize={recipe.pinSize || "medium"}
                   imgSrc={recipe.imageUrl}
                   name={recipe.nombre}
                   link={`/receta/${recipe.id}`} // Asume que tienes una ruta para mostrar los detalles de la receta
+                  recipeDetails={recipe}
                 />
               ))}
             </Masonry>
@@ -170,7 +205,6 @@ function Contenido() {
       </Grid>
     </Container>
   );
-
 }
 
 export default Contenido;
