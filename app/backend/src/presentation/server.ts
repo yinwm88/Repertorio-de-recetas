@@ -3,7 +3,7 @@ import path from "path";
 import cors from "cors"; // Importa el paquete CORS
 
 interface OpcionesServer {
-    puerto:number;
+    puerto: number;
     rutas: Router;
     rutaPublica?: string;
 }
@@ -17,15 +17,23 @@ export class Server {
     private readonly rutas: Router;
 
     constructor(opciones: OpcionesServer) {
-        const {puerto, rutas, rutaPublica = 'public'} = opciones;
+        const { puerto, rutas, rutaPublica = 'public' } = opciones;
         this.puerto = puerto;
         this.rutas = rutas;
         this.rutaPublica = rutaPublica;
     }
 
     public async iniciar() {
+
+        this.app.use((req, res, next) => {
+            const now = new Date().toISOString();
+            console.log(`${now}: ${req.method} ${req.originalUrl}`);
+            next(); // Asegúrate de llamar a next() para que la solicitud continúe a través de los siguientes middlewares o rutas.
+        });
+
+
         this.app.use(cors());
-        
+
         //* Middlewares
         this.app.use(express.json()); // raw
         this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded

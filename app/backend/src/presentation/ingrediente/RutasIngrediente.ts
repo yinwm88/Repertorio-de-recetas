@@ -12,7 +12,7 @@ export class RutasIngrediente {
 
         router.post('/agregar', controlador.agregarIngrediente ); 
         router.post('/buscar', controlador.buscarIngrediente );
-        router.delete('/eliminar/:id', controlador.eliminarIngrediente );
+        router.post('/eliminar/:id', controlador.eliminarIngrediente );
         router.patch('/:id', controlador.editarIngrediente );
         
         return router;

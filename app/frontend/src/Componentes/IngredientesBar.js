@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import {Box, CssBaseline,Typography, IconButton, Paper, Fab, List, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { debounce } from 'lodash';
+import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import BookIcon from '@mui/icons-material/Book';
 import SearchIcon from '@mui/icons-material/Search';
-import  './IngredientesBar.css';
+import './IngredientesBar.css';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const itemIcons = {
   shopping: <ShoppingCartIcon />,
@@ -46,6 +49,101 @@ function CustomList() {
   const [newItemIcon, setNewItemIcon] = useState('shopping');
   const [searchText, setSearchText] = useState('');
 
+  const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
+
+  const fetchIngredientesUsuario = async () => {
+    // Asegúrate de reemplazar 'correo@gmail.com' con el correo real del usuario
+    const correoUsuario = 'correo@gmail.com'; // Aquí deberías obtener el correo del estado, prop, o localStorage
+
+    try {
+      const response = await fetch('http://localhost:3030/ingredientesUsuario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ correo: correoUsuario }),
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo cargar los ingredientes del usuario');
+      }
+
+      const data = await response.json();
+      setIngredientesUsuario(data.ingredientes);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+
+
+    fetchIngredientesUsuario();
+  }, [lastUpdate]); // Dependencia en lastUpdate para recargar la lista cada vez que se añade un nuevo ingrediente
+
+
+  const [newItemUnit, setNewItemUnit] = useState('');
+  const [searchIngredient, setSearchIngredient] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
+  const fetchIngredients = debounce(async (searchText) => {
+    if (!searchText) {
+      setSearchResults([]);
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3030/Ingrediente/buscar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ingrediente: searchText }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setSearchResults(Array.isArray(data.ingredientes) ? data.ingredientes : []);
+      } else {
+        console.error('Error buscando ingredientes');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }, 300);
+
+  const handleSelectIngredient = async (ingrediente) => {
+    // Aquí podrías mostrar un diálogo para confirmar y seleccionar la unidad
+    // Para este ejemplo, simplemente haré la solicitud directamente
+
+    try {
+      const response = await fetch('http://localhost:3000/ingrediente/agregar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idIngrediente: ingrediente.idingrediente,
+          unidad: 'g', // Asumiendo una unidad fija por simplicidad
+          usuario: { correo: "pepe27@ciencias.mx" } // Asumiendo un usuario fijo por simplicidad
+        }),
+      });
+
+      if (response.ok) {
+        alert('Ingrediente agregado exitosamente');
+        // Realiza cualquier otra acción necesaria después de la adición
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Error al agregar ingrediente');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al conectar con el servidor.');
+    }
+  };
+
+  useEffect(() => {
+    fetchIngredients(searchText);
+  }, [searchText]);
+
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -69,16 +167,80 @@ function CustomList() {
     item.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  // Estilo para el contenedor de la lista
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+
+  const selectIngredient = (ingrediente) => {
+    setSelectedIngredient(ingrediente);
+    setSearchResults([]);
+    setSearchIngredient(ingrediente.nombre);
+    setNewItemUnit(ingrediente.unidad);
+  };
+
+
   const listContainerStyle = {
-    maxHeight: '400px', // Ajusta esta altura según tus necesidades
+    maxHeight: '400px',
     overflowY: 'auto'
   };
+
+  const handleAddItemToStaticList = async () => {
+    if (!selectedIngredient) return;
+
+    try {
+      const response = await fetch('http://localhost:3030/ingrediente/agregar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idIngrediente: selectedIngredient.idingrediente,
+          cantidad: newItemQuantity,
+          unidad: newItemUnit,
+          usuario: { correo: "correo@gmail.com" }
+        }),
+      });
+
+      if (!response.ok) throw new Error('No se pudo agregar el ingrediente');
+
+      alert('Ingrediente agregado exitosamente');
+      setLastUpdate(Date.now());
+      handleClose();
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al agregar ingrediente');
+    }
+  };
+
+  const handleDelete = async (selectedIngredient) => {
+    console.log('Trying to delete', selectedIngredient)
+    try {
+      const response = await fetch(`http://localhost:3030/ingrediente/eliminar/${selectedIngredient.idingrediente}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          idIngrediente: selectedIngredient.idingrediente,
+          unidad: selectedIngredient.unidad,
+
+          usuario: { correo: "correo@gmail.com" },
+
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo eliminar el ingrediente');
+      }
+
+      // Recargar la lista de ingredientes del usuario tras la eliminación exitosa
+      fetchIngredientesUsuario();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper square sx={{ p: 2, minHeight: '40vh', display: 'flex', flexDirection: 'column' , marginTop:'40px'}}>
+      <Paper square sx={{ p: 2, minHeight: '40vh', display: 'flex', flexDirection: 'column', marginTop: '40px' }}>
         <Typography variant="h5" gutterBottom component="div">
           Ingredientes
         </Typography>
@@ -96,63 +258,104 @@ function CustomList() {
           </IconButton>
         </Box>
         <Box sx={listContainerStyle}>
-          <List sx={{ width: '100%' }}>
-            {filteredItems.map(({ id, name, quantity, icon }) => (
-              <ListItemButton key={id}>
+          <List>
+            {ingredientesUsuario.map((ingrediente) => (
+              <ListItem
+                key={ingrediente.idingrediente}
+                secondaryAction={
+                  <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(ingrediente)}>
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
                 <ListItemAvatar>
-                  <Avatar>{itemIcons[icon]}</Avatar>
+                  <Avatar>{/* Icono del ingrediente */}</Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={name} secondary={`Cantidad: ${quantity}`} />
-              </ListItemButton>
+                <ListItemText
+                  primary={ingrediente.nombre}
+                  secondary={`Cantidad: ${ingrediente.cantidad} ${ingrediente.unidad}`}
+                />
+              </ListItem>
             ))}
           </List>
+
         </Box>
-        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{margin:15}}>
+
+
+
+        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ margin: 15 }}>
           <AddIcon />
         </StyledFab>
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Añadir nuevo ítem</DialogTitle>
+          <DialogTitle>Añadir ingrediente 🍎</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Ingresa los detalles del nuevo ítem.
+              Busca y selecciona un ingrediente.
             </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
-              id="name"
-              label="Nombre del ítem"
+              id="searchIngredient"
+              label="Buscar ingrediente"
               type="text"
               fullWidth
               variant="standard"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
+              value={searchIngredient}
+              onChange={(e) => {
+                setSearchIngredient(e.target.value);
+                fetchIngredients(e.target.value); // Asumiendo que esta función ya existe y se ha adaptado para actualizar setSearchResults
+              }}
             />
-            <TextField
-              margin="dense"
-              id="quantity"
-              label="Cantidad"
-              type="number"
-              fullWidth
-              variant="standard"
-              value={newItemQuantity}
-              onChange={(e) => setNewItemQuantity(Number(e.target.value))}
-            />
-            <TextField
-              margin="dense"
-              id="icon"
-              label="Icono (shopping, food, book)"
-              type="text"
-              fullWidth
-              variant="standard"
-              value={newItemIcon}
-              onChange={(e) => setNewItemIcon(e.target.value)}
-            />
+            {/* Muestra los resultados de la búsqueda aquí */}
+            <List sx={{ width: '100%', bgcolor: 'background.paper', maxHeight: 200, overflow: 'auto', mt: 2 }}>
+
+
+
+              {searchResults.map((ingrediente) => (
+                <ListItem
+                  key={ingrediente.idingrediente}
+                  button
+                  onClick={() => selectIngredient(ingrediente)}
+                  sx={{ '&:hover': { bgcolor: 'action.hover' } }}
+                >
+                  <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
+                </ListItem>
+              ))}
+
+            </List>
+            {/* Los siguientes campos aparecerán después de seleccionar un ingrediente */}
+            {selectedIngredient && (
+              <>
+                <TextField
+                  margin="dense"
+                  id="quantity"
+                  label="Cantidad"
+                  type="number"
+                  fullWidth
+                  variant="standard"
+                  value={newItemQuantity}
+                  onChange={(e) => setNewItemQuantity(Number(e.target.value))}
+                />
+                <TextField
+                  margin="dense"
+                  id="unit"
+                  label="Unidad de medida"
+                  type="text"
+                  fullWidth
+                  variant="standard"
+                  value={newItemUnit}
+                  onChange={(e) => setNewItemUnit(e.target.value)}
+                  disabled={true}
+                />
+              </>
+            )}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancelar</Button>
-            <Button onClick={handleAddItem}>Añadir</Button>
+            <Button onClick={handleAddItemToStaticList}>Añadir</Button>
           </DialogActions>
         </Dialog>
+
       </Paper>
     </React.Fragment>
   );

@@ -5,6 +5,7 @@ import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
 import Pin from './Pin';
+import './Contenido.css';
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);

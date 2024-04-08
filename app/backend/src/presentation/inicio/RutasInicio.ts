@@ -12,9 +12,9 @@ export class RutasInicio {
         const recetaService = new RecetaService();
         const controlador = new ControladorInicio(ingredienteService, recetaService);
 
-        router.get('/ingredientesUsuario', controlador.obtenerIngredientesUsuario );
-        //TODO: Generar recetas del usuario
-        router.get('/generarRecetas',controlador.generarRecetas );
+        router.post('/ingredientesUsuario', controlador.obtenerIngredientesUsuario);
+        router.post('/generarRecetas', controlador.generarRecetas);
+        
         
         return router;
     }
