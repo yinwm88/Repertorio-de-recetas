@@ -272,7 +272,7 @@ function CustomList() {
                 }
               >
                 <ListItemAvatar>
-                  <Avatar>{/* Icono del ingrediente */}</Avatar>
+                  <FastfoodIcon>{/* Icono del ingrediente */}</FastfoodIcon>
                 </ListItemAvatar>
                 <ListItemText
                   primary={ingrediente.nombre}
