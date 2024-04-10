@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalamos las dependencias del frontend.
-RUN npm install && npm install firebase@compat
+RUN npm install 
 
 
 # Copiamos todo el contenido del directorio frontend al contenedor.
