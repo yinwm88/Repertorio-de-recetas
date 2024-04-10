@@ -1,0 +1,4 @@
+app/frontend/node_modules/
+app/backend/src/postgres/base/
+app/backend/src/postgres/
+app/backend/prisma/migrations/
