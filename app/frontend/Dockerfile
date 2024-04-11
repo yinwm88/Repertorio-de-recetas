@@ -2,13 +2,13 @@
 FROM node:18-alpine
 
 # Copiamos los archivos del frontend al directorio de trabajo del contenedor.
-WORKDIR /frontend
+WORKDIR /app
 
 # opiamos package.json y package-lock.json al directorio de trabajo.
 COPY package*.json ./
 
 # Instalamos las dependencias del frontend.
-RUN npm install
+RUN npm install && npm install firebase@compat
 
 
 # Copiamos todo el contenido del directorio frontend al contenedor.
