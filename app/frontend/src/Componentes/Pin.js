@@ -9,13 +9,13 @@ import { db } from '../firebaseConfig';
 
 const fetchRecetaPorNombre = async (nombreReceta) => {
 
-    const translation = await translate(nombreReceta, { to: 'en' });
-    const nombreRecetaEnIngles = translation.text;
+    // const translation = await translate(nombreReceta, { to: 'en' });
+    // const nombreRecetaEnIngles = translation.text;
 
 
     const recetasRef = db.ref('recetas');
     try {
-        const snapshot = await recetasRef.orderByChild('title').equalTo(nombreRecetaEnIngles).once('value');
+        const snapshot = await recetasRef.orderByChild('title').equalTo(nombreReceta).once('value');
         if (snapshot.exists()) {
             const recetas = snapshot.val();
             const recetasArray = Object.keys(recetas).map(key => ({
@@ -34,7 +34,7 @@ const fetchRecetaPorNombre = async (nombreReceta) => {
     }
 };
 
-fetchRecetaPorNombre('Cacio e pepe').then(recetas => {
+fetchRecetaPorNombre('stuffed tomatoes').then(recetas => {
     console.log('RRRRecetas encontradas:', recetas);
 }).catch(error => {
     console.error(error);

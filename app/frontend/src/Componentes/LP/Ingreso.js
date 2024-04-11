@@ -57,7 +57,7 @@ const Ingreso = () => {
 
     const secondHandleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3000/join/registrarse', {
+            const response = await fetch('http://localhost:3030/join/registrarse', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
