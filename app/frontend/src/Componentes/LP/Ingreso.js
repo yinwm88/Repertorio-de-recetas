@@ -57,7 +57,7 @@ const Ingreso = () => {
 
     const secondHandleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3000/join/registrarse', {
+            const response = await fetch('http://localhost:3001/join/registrarse', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,6 +71,7 @@ const Ingreso = () => {
             });
 
             const data = await response.json();
+            console.log('Response data:', data);
 
             if (response.ok) {
                 alert('Registro exitoso, por favor inicie sesión.');
