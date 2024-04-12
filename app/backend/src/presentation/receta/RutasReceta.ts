@@ -12,6 +12,7 @@ export class RutasReceta{
 
         router.post('/datosReceta/:id', controlador.datosReceta);
         router.post('/marcarFavorita', controlador.marcarFavorita);
+        router.post('/recetasFavoritas', controlador.recetasFavoritas);
         
         return router;
     }

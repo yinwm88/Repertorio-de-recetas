@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado, IngresarUsuarioDto, RecetaDto, RegistrarUsuarioDto } from "../../domain";
-import { UsuarioService } from "../services/usuario.service";
+import { ErrorCustomizado, RecetaDto } from "../../domain";
 import { RecetaService } from "../services/receta.service";
 
 export class ControladorRecetas{
@@ -32,9 +31,9 @@ export class ControladorRecetas{
     }
 
 
-    public datosReceta= ( req:Request, res: Response ) => {
-         const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
-         if (error) {
+    public datosReceta = ( req:Request, res: Response ) => {
+        const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
+        if (error) {
             return res.status(400).json(error);
         }
 
@@ -42,4 +41,15 @@ export class ControladorRecetas{
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
         }
+    
+    public recetasFavoritas = ( req: Request, res: Response ) => {
+        const { correo } = req.body;
+        if (!correo) {
+            return res.status(400).json('Falta el correo del usuario');
+        }
+
+        this.recetaService.recetasFavoritas( correo! )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }

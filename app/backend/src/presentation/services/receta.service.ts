@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto } from "../../domain";
+import { ErrorCustomizado, IngredientesRecetasDto, RecetaDto } from "../../domain";
 
 export class RecetaService {
 
@@ -78,6 +78,22 @@ export class RecetaService {
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async recetasFavoritas(correo: string){
+        const correoExiste = await prisma.usuario.findFirst({
+            where : { correo: correo }
+        });
+        if( !correoExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' )
+        
+        try {
+            const favoritas = await prisma.preferir.findMany({
+                where: {correo : correo}
+            });
+            return { recetas: favoritas };
+        }catch(error){
+            throw ErrorCustomizado.internalServer( `${error}` );
         }
     }
 }

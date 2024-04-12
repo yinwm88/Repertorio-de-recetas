@@ -370,7 +370,6 @@ insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gma
 
 
 
-
 select nombre -- al final usaremos idReceta en lugar de nombre
 from Receta 
 where not exists (
@@ -385,6 +384,13 @@ where not exists (
     )
 )
 
+insert into Preferir(idreceta, correo) values (1, 'erick@gmail.com');
+insert into Preferir(idreceta, correo) values (10, 'erick@gmail.com');
+insert into Preferir(idreceta, correo) values (14, 'erick@gmail.com');
+
+
+select idreceta from Preferir
+where correo = 'erick@gmail.com'
 
 
 
