@@ -1,10 +1,13 @@
-import { Encriptador, GestorJwt } from "../../config";
+import { Encriptador, GestorJwt, envs } from "../../config";
 import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado, IngresarUsuarioDto, RegistrarUsuarioDto } from "../../domain";
+import { CorreoService } from "./correo.service";
 
 export class UsuarioService {
 
-    constructor() {}
+    constructor(
+        private readonly correoService:CorreoService
+    ) {}
 
     async ingresarUsuario( ingresarUsuarioDto: IngresarUsuarioDto ) {
         
@@ -49,10 +52,16 @@ export class UsuarioService {
                     salt: salt
                 }
             });
+            await this.enviarLinkCorreo( usuarioNuevo.correo );
+
+            const token = await GestorJwt.generateToken({ correo: usuarioNuevo.correo });
+            if ( !token ) throw ErrorCustomizado.internalServer('Error al crear el Jwt');
+
+
             const {contrasena, ...usuario} = EntidadUsuario.crearInstancia( usuarioNuevo )
             return { 
                 usuario: usuario,
-                token:'Token'
+                token:token
             }
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
@@ -60,5 +69,54 @@ export class UsuarioService {
 
     }
 
+    private async enviarLinkCorreo( correo: string ) {
+        const token = await GestorJwt.generateToken({ correo });
+        if ( !token ) throw ErrorCustomizado.internalServer('Error al crear el Jwt');
+
+        const link = `${ envs.WEBSERVICE_URL }/join/validarCorreo/${ token }`;
+        
+        const html = `
+        <h1>Validar el Correo</h1>
+        <p>Entra en el siguiente link: </p>
+        <a href="${ link }">Para validar el correo: ${ correo }</a>
+        `;
+
+        const options = {
+        to: correo,
+        subject: 'Validar correo',
+        htmlBody: html,
+        }
+
+        const isSent = await this.correoService.enviarCorreo(options);
+        if ( !isSent ) throw ErrorCustomizado.internalServer('Error enviando el correo');
+
+        return true;
+    }
+
+    public validarCorreo = async(token:string) => {
+
+        const payload = await GestorJwt.validateToken(token);
+        if ( !payload ) throw ErrorCustomizado.noAutorizado('Token Invalido');
     
+        const { correo } = payload as { correo: string };
+        if ( !correo ) throw ErrorCustomizado.internalServer('El correo no esta en el token');
+    
+        const usuario = await prisma.usuario.findUnique({
+            where: { correo: correo }
+        })
+        if (!usuario) throw ErrorCustomizado.internalServer('El correo no existe');
+
+        try {
+            await prisma.usuario.update({
+                where: { correo: usuario.correo },
+                data: {
+                    verificado: true
+                }
+            });
+
+            return true;
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+      }
 }
