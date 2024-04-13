@@ -8,13 +8,15 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalamos las dependencias del backend, incluyendo Axios
-RUN npm install && npm install axios
+RUN npm install
 
 # Copiamos todo el contenido del directorio del backend al contenedor.
 COPY . .
 
 # Exponemos el puerto 3000 al mundo exterior.
-EXPOSE 3000
+EXPOSE 3030
+
+ENV APP_VERSION=${APP_VERSION}
 
 # Comando para ejecutar el servidor backend.
-CMD ["node", "src/app.js"]
+CMD ["npm", "run", "dev"]

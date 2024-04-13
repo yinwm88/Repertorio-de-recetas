@@ -1,12 +1,16 @@
-version: '3'
-
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - "3030:3030"
+    environment:
+      - POSTGRES_USER=postgres
+      - PGUSER=postgres
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=RECETAS
     depends_on:
       - postgres
 
@@ -18,13 +22,12 @@ services:
       - "3000:3000"
 
   postgres:
-    build:
-      context: ./DB
-      dockerfile: Dockerfile
+    image: postgres:latest
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: contraseña
-      POSTGRES_DB: nombre_base_de_datos
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=RECETAS
     ports:
       - "5432:5432"
-
