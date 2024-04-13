@@ -24,7 +24,7 @@ export class UsuarioService {
 
         const {contrasena, ...user} = EntidadUsuario.crearInstancia( usuario )
 
-        const token = await GestorJwt.generateToken({ correo: usuario.correo });
+        const token = await GestorJwt.generarToken({ correo: usuario.correo });
         if ( !token ) throw ErrorCustomizado.internalServer('Error al crear el Jwt');
 
         return { 
@@ -54,7 +54,7 @@ export class UsuarioService {
             });
             await this.enviarLinkCorreo( usuarioNuevo.correo );
 
-            const token = await GestorJwt.generateToken({ correo: usuarioNuevo.correo });
+            const token = await GestorJwt.generarToken({ correo: usuarioNuevo.correo });
             if ( !token ) throw ErrorCustomizado.internalServer('Error al crear el Jwt');
 
 
@@ -70,7 +70,7 @@ export class UsuarioService {
     }
 
     private async enviarLinkCorreo( correo: string ) {
-        const token = await GestorJwt.generateToken({ correo });
+        const token = await GestorJwt.generarToken({ correo });
         if ( !token ) throw ErrorCustomizado.internalServer('Error al crear el Jwt');
 
         const link = `${ envs.WEBSERVICE_URL }/join/validarCorreo/${ token }`;
@@ -95,7 +95,7 @@ export class UsuarioService {
 
     public validarCorreo = async(token:string) => {
 
-        const payload = await GestorJwt.validateToken(token);
+        const payload = await GestorJwt.validarToken(token);
         if ( !payload ) throw ErrorCustomizado.noAutorizado('Token Invalido');
     
         const { correo } = payload as { correo: string };
