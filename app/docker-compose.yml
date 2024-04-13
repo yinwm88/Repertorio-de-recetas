@@ -6,11 +6,11 @@ services:
     ports:
       - "3001:3001"
     environment:
-      POSTGRES_USER: "postgres"
-      PGUSER: "postgres"
-      POSTGRES_PASSWORD: "mypassword"
-      POSTGRES_PORT: "5432"
-      POSTGRES_DB: "RECETAS"
+      - POSTGRES_USER=postgres
+      - PGUSER=postgres
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=RECETAS
     depends_on:
       - postgres
 
@@ -22,13 +22,12 @@ services:
       - "3000:3000"
 
   postgres:
-    build:
-      context: ./DB
-      dockerfile: Dockerfile
+    image: postgres:latest
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "mypassword"
-      POSTGRES_DB: "RECETAS"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=RECETAS
     ports:
       - "5432:5432"
-

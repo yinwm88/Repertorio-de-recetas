@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3001
 
 # Comando para ejecutar el servidor backend.
-CMD ["node", "src/app.js"]
+CMD ["npm", "run", "dev"]

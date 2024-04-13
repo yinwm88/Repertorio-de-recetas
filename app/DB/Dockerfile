@@ -7,7 +7,6 @@ ENV POSTGRES_PASSWORD=mypassword
 # Exponer el puerto por defecto de PostgreSQL
 EXPOSE 5432
 
-COPY . .
 
 # Success. You can now start the database server using:
 # postgres-1  | 

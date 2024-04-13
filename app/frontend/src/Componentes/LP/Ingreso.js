@@ -14,7 +14,7 @@ const Ingreso = () => {
 
     const firstHandleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3030/join/ingresar', {
+            const response = await fetch('http://localhost:3001/join/ingresar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
