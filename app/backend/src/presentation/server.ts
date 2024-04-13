@@ -28,7 +28,7 @@ export class Server {
         this.app.use((req, res, next) => {
             const now = new Date().toISOString();
             console.log(`${now}: ${req.method} ${req.originalUrl}`);
-            next(); // Asegúrate de llamar a next() para que la solicitud continúe a través de los siguientes middlewares o rutas.
+            next();
         });
 
 

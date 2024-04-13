@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 
-export class Crypto {
+export class Encriptador {
     constructor() {}
 
     public static crearHash(contrasena: string): string[] {

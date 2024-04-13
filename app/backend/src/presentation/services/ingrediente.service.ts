@@ -69,7 +69,7 @@ export class IngredienteService {
                 take:10,
                 where:{ 
                     nombre: {
-                        startsWith: `${ingrediente}_`,
+                        startsWith: `${ingrediente}`,
                         mode: 'insensitive'
                     }
                 }
