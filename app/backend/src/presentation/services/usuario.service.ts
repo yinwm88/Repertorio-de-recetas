@@ -77,17 +77,16 @@ export class UsuarioService {
         
         const html = `
         <h1>Validar el Correo</h1>
-        <p>Entra en el siguiente link: </p>
-        <a href="${ link }">Para validar el correo: ${ correo }</a>
+        <p>Entra en el siguiente link, para validar el correo: ${ correo }</p>
+        <a href="${ link }">click</a>
         `;
-
-        const options = {
-        to: correo,
-        subject: 'Validar correo',
-        htmlBody: html,
+        const opciones = {
+            to: correo,
+            subject: 'Validar correo',
+            htmlBody: html,
         }
 
-        const isSent = await this.correoService.enviarCorreo(options);
+        const isSent = await this.correoService.enviarCorreo( opciones );
         if ( !isSent ) throw ErrorCustomizado.internalServer('Error enviando el correo');
 
         return true;

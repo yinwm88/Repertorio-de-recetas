@@ -6,7 +6,7 @@ const JWT_SEED = envs.JWT_SEED;
 
 export class GestorJwt {
 
-    static async generarToken( payload:any, duration: string = '1h' ) {
+    static async generarToken( payload:any, duration: string = '15m' ) {
         return new Promise((resolve) => {
             jwt.sign(payload, JWT_SEED, { expiresIn: duration }, (err, token) => {
                 if ( err ) return resolve(null);
@@ -23,9 +23,6 @@ export class GestorJwt {
       
                 resolve(decoded);
             });
-      
-      
-      
         })
     }
 }

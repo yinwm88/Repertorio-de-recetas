@@ -8,12 +8,12 @@ export class IngredienteService {
 
     async agregarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, user: EntidadUsuario) {
         
-        const ingredienteExiste = await prisma.ingrediente.findFirst({
+        const ingredienteExiste = await prisma.ingrediente.findUnique({
             where: { idingrediente: manipularIngredienteDto.idIngrediente }
         });
         if ( !ingredienteExiste ) throw ErrorCustomizado.badRequest( 'Ingrediente no existe' );
         
-        const usuarioExiste = await prisma.usuario.findFirst({
+        const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: user.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
