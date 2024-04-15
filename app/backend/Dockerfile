@@ -13,6 +13,10 @@ RUN npm install
 # Copiamos todo el contenido del directorio del backend al contenedor.
 COPY . .
 
+# Genera la libreria de prisma
+COPY prisma /app/prisma
+RUN npx prisma generate
+
 # Exponemos el puerto 3000 al mundo exterior.
 EXPOSE 3001
 
