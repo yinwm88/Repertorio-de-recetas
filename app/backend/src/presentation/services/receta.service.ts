@@ -98,9 +98,78 @@ export class RecetaService {
             });
 
             return {
-                nombre: recetaNueva?.nombre,
-                tiempo: recetaNueva?.tiempo,
-                proceso: recetaNueva?.proceso
+                recta:{
+                    nombre: recetaNueva?.nombre,
+                    tiempo: recetaNueva?.tiempo,
+                    proceso: recetaNueva?.proceso,
+                },
+                correo: usuario.correo
+            }
+        }catch (error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async editarReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario ) {
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
+        });
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        const recetaExiste = await prisma.receta.findUnique( {
+            where: { idreceta: datosReceta.idReceta }
+        });
+        if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
+
+        try {
+            const recetaNueva = await prisma.receta.update({
+                where:{
+                    idreceta: datosReceta.idReceta
+                },
+                data: {
+                    nombre: datosReceta.nombre,
+                    tiempo: datosReceta.tiempo,
+                    proceso: datosReceta.proceso,
+                    correo: usuario.correo
+                }    
+            });
+
+            return {
+                recta:{
+                    nombre: recetaNueva?.nombre,
+                    tiempo: recetaNueva?.tiempo,
+                    proceso: recetaNueva?.proceso,
+                },
+                correo: usuario.correo
+            }
+        }catch (error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async eliminarReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario ) {
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
+        });
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        const recetaExiste = await prisma.receta.findUnique( {
+            where: { idreceta: datosReceta.idReceta }
+        });
+        if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
+        
+        try {
+            const recetaEliminada = await prisma.receta.delete({
+                where: {
+                    idreceta: datosReceta.idReceta
+                }
+            });
+
+            return {
+                recta:{
+                    nombre: recetaEliminada?.nombre,
+                    tiempo: recetaEliminada?.tiempo,
+                    proceso: recetaEliminada?.proceso
+                },
+                correo: usuario.correo
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
