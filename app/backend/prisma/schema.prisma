@@ -75,6 +75,8 @@ model preferir {
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model receta {
   idreceta              Int                     @id(map: "pkreceta") @default(autoincrement())
+  correo                String?                 @db.VarChar(70)
+  imagen                String?                 @db.VarChar(60)
   nombre                String                  @db.VarChar(50)
   tiempo                Int?
   proceso               String
@@ -82,6 +84,7 @@ model receta {
   haberingrediente      haberingrediente[]
   necesitar             necesitar[]
   preferir              preferir[]
+  usuario               usuario?                @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkrecetausario")
   tiporeceta            tiporeceta[]
 }
 
@@ -104,7 +107,7 @@ model teneringrediente {
   usuario        usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkteneringrediente1")
   ingrediente    ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkteneringrediente2")
 
-  @@unique(name: "tenerId",[correo, idingrediente], map: "uniqueteneringrediente")
+  @@unique([correo, idingrediente], name: "tenerId", map: "uniqueteneringrediente")
 }
 
 model tiporeceta {
@@ -129,6 +132,7 @@ model usuario {
   verificado       Boolean?
   poseer           poseer[]
   preferir         preferir[]
+  receta           receta[]
   seralergico      seralergico[]
   teneringrediente teneringrediente[]
 }

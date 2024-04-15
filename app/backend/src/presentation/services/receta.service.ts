@@ -80,4 +80,30 @@ export class RecetaService {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
+
+    async crearReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario ) {
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
+        });
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        try {
+            const recetaNueva = await prisma.receta.create({
+                data: {
+                    nombre: datosReceta.nombre,
+                    tiempo: datosReceta.tiempo,
+                    proceso: datosReceta.proceso,
+                    correo: usuario.correo
+                }    
+            });
+
+            return {
+                nombre: recetaNueva?.nombre,
+                tiempo: recetaNueva?.tiempo,
+                proceso: recetaNueva?.proceso
+            }
+        }catch (error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
 }
