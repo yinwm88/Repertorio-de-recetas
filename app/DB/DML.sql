@@ -382,7 +382,7 @@ where not exists (
         inner join tenerIngrediente on Ingrediente.idIngrediente = tenerIngrediente.idIngrediente 
         where correo = 'erick@gmail.com'
     )
-)
+);
 
 insert into Preferir(idreceta, correo) values (1, 'erick@gmail.com');
 insert into Preferir(idreceta, correo) values (10, 'erick@gmail.com');
