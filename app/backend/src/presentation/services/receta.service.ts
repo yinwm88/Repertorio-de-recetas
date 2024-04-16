@@ -100,10 +100,19 @@ export class RecetaService {
             const receta = await prisma.receta.findUnique({
                 where: {idreceta : datosReceta.idReceta}
             });
+
+            const ingredientes = await prisma.haberingrediente.findMany({
+                where : {idreceta : datosReceta.idReceta},
+                select : {
+                    idingrediente : true,
+                    cantidad : true
+                }
+            });
             return {
                 nombre: receta?.nombre,
                 tiempo: receta?.tiempo,
-                proceso: receta?.proceso
+                proceso: receta?.proceso,
+                ingredientes : ingredientes
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
