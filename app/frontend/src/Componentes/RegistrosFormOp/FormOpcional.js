@@ -4,7 +4,6 @@ import FechaNacimiento from './Datos/Generales/FechaNacimiento'
 import Peso from './Datos/Generales/Peso'
 import Talla from './Datos/Generales/Talla'
 import Objetivo from './Datos/Opcionales/Objetivo';
-import Enfermedades from './Datos/Opcionales/Enfermedades';
 import Alergias from './Datos/Opcionales/Alergias';
 import { Typography,styled, Button} from '@mui/material';
 
@@ -17,7 +16,7 @@ const FormContainer = styled('form')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginLeft: '570px',
+  marginLeft: '590px',
   marginTop: '50px',
   padding: theme.spacing(2),
   width: '400px',
@@ -129,8 +128,6 @@ const handleCheckboxChange = (event) => {
           
           <Objetivo value1={formData.Tiene_Objetivo} value2={formData.Objetivo} handleChange={handleChange}/>
         
-          <Enfermedades value1={formData.Tiene_Enfermedad} value2={formData.Enfermedades} handleChange={handleChange}/>
-
           <Alergias value1={formData.Tiene_Alergia} value2={formData.searchText} value3={formData.Ingredientes_Alergia} handleChange={handleChange} handleCheckboxChange={handleCheckboxChange} handleSearchInputChange={handleSearchInputChange} filteredIngredientes={filteredIngredientes}/>
 
 
