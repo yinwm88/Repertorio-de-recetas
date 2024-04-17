@@ -16,14 +16,14 @@ const objetivoOptions = [
   { value: 'controlar_dieta', label: 'Controlar dieta' },
 ];
 
-const Objetivo = ({ value1, value2,  handleChange }) => (
+const Objetivo = ({ value1, value2,  handleObjetivoChange, handleSelectChange }) => (
   <FormControl component="fieldset" fullWidth required variant="outlined">
     <Typography marginTop={"15px"}>¿Quiere seguir algun objetivo?</Typography>
     <RadioGroup
       aria-label="tiene-objetivo"
       name="Tiene_Objetivo"
       value={value1}
-      onChange={handleChange}
+      onChange={handleObjetivoChange}
       row
     >
       <FormControlLabel value="si" control={<Radio />} label="Sí" />
@@ -37,7 +37,7 @@ const Objetivo = ({ value1, value2,  handleChange }) => (
           labelId="objetivo-label"
           name="Objetivo"
           value={value2}
-          onChange={handleChange}
+          onChange={handleSelectChange}
         >
           {objetivoOptions.map((option) => (
             <MenuItem key={option.value} value={option.value}>

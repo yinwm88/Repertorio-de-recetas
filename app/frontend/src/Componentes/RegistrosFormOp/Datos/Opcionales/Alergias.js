@@ -4,14 +4,14 @@ import {FormControl,Typography,RadioGroup,FormControlLabel,Radio,TextField, Chec
 
 
 
-const Alergias= ({ value1, value2, value3, handleChange, handleSearchInputChange,filteredIngredientes, handleCheckboxChange}) => (
+const Alergias= ({ value1, value2, value3, handleAlergiaChange, handleSearchInputChange,filteredIngredientes, handleCheckboxChange}) => (
   <FormControl component="fieldset" fullWidth required variant="outlined">
-    <Typography marginTop={"15px"}>¿Tienes  alergia a algún ingrediente?</Typography>
+    <Typography marginTop={"15px"}>¿Tiene alguna alergia a algún ingrediente?</Typography>
     <RadioGroup
       aria-label="tiene-alergia"
       name="Tiene_Alergia"
       value={value1}
-      onChange={handleChange}
+      onChange={handleAlergiaChange}
       row
     >
       <FormControlLabel value="si" control={<Radio />} label="Sí" />

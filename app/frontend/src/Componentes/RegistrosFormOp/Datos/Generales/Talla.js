@@ -20,9 +20,15 @@ const Talla = ({ value, handleChange }) => {
         }}
         required
         onKeyDown={(e) => {
-        if (!(e.key === 'Backspace') && !(e.key === '.') && isNaN(Number(e.key))) {
-            e.preventDefault();
-        }
+            // Permitir retroceso, punto decimal y números
+            if (
+                !(e.key === 'Backspace') && 
+                !(e.key === '.') && 
+                !(e.key >= '0' && e.key <= '9') && 
+                !(e.key >= '0' && e.key <= '9' && e.target.value.includes('.'))
+            ) {
+                e.preventDefault();
+            }
         }}
   />
   );

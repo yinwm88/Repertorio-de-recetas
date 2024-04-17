@@ -16,7 +16,7 @@ const FormContainer = styled('form')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginLeft: '590px',
+  marginLeft: '620px',
   marginTop: '50px',
   padding: theme.spacing(2),
   width: '400px',
@@ -49,12 +49,85 @@ const FormOpcional = ({ onClose }) => {
     searchText: '', 
   });
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleObjetivoChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+      Objetivo: value === 'no' ? '' : prevFormData.Objetivo,
+    }));
+  };
+
+  const handleSelectChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+      Tiene_Objetivo: value !== '' ? 'si' : 'no',
+    }));
+  };
+
+  const handleAlergiaChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+      // Si el usuario selecciona "No" después de haber seleccionado "Sí",
+      // borramos el valor en "Ingredientes_Alergia"
+      Ingredientes_Alergia: name === 'Tiene_Alergia' && value === 'no' ? [] : prevFormData.Ingredientes_Alergia,
+    }));
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        Ingredientes_Alergia: [...prevFormData.Ingredientes_Alergia, value],
+        // Si el usuario selecciona un ingrediente después de haber seleccionado "No",
+        // cambiamos el valor de "Tiene_Alergia" a "si"
+        Tiene_Alergia: 'si',
+      }));
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        Ingredientes_Alergia: prevFormData.Ingredientes_Alergia.filter(
+          (item) => item !== value
+        ),
+      }));
+    }
+  };
+
+  const handleSearchInputChange = (event) => {
+    setFormData({
+      ...formData,
+      searchText: event.target.value,
+    });
+  };
+
+  const filteredIngredientes = ingredientesBaseDatos.filter((ingrediente) =>
+    ingrediente.toLowerCase().includes(formData.searchText.toLowerCase())
+  );
+
+
+  useEffect(() => {
+    if (!registered) {
+      setModalIsOpen(true);
+    }
+  }, [registered]);
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    onClose();
   };
 
   const handleSubmit = async (e) => {
@@ -69,47 +142,6 @@ const FormOpcional = ({ onClose }) => {
     setModalIsOpen(false);
     onClose();
   };
-
-  useEffect(() => {
-    if (!registered) {
-      setModalIsOpen(true);
-    }
-  }, [registered]);
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    onClose();
-  };
-
-
-
-const handleCheckboxChange = (event) => {
-    const { value, checked } = event.target;
-    if (checked) {
-      setFormData({
-        ...formData,
-        Ingredientes_Alergia: [...formData.Ingredientes_Alergia, value],
-      });
-    } else {
-      setFormData({
-        ...formData,
-        Ingredientes_Alergia: formData.Ingredientes_Alergia.filter(
-          (item) => item !== value
-        ),
-      });
-    }
-  };
-
-  const handleSearchInputChange = (event) => {
-    setFormData({
-      ...formData,
-      searchText: event.target.value,
-    });
-  };
-
-  const filteredIngredientes = ingredientesBaseDatos.filter((ingrediente) =>
-    ingrediente.toLowerCase().includes(formData.searchText.toLowerCase())
-  );
 
   return (
 
@@ -126,9 +158,9 @@ const handleCheckboxChange = (event) => {
           
           <Talla value={formData.Talla} handleChange={handleChange}/>
           
-          <Objetivo value1={formData.Tiene_Objetivo} value2={formData.Objetivo} handleChange={handleChange}/>
+          <Objetivo value1={formData.Tiene_Objetivo} value2={formData.Objetivo} handleObjetivoChange={handleObjetivoChange} handleSelectChange={handleSelectChange}/>
         
-          <Alergias value1={formData.Tiene_Alergia} value2={formData.searchText} value3={formData.Ingredientes_Alergia} handleChange={handleChange} handleCheckboxChange={handleCheckboxChange} handleSearchInputChange={handleSearchInputChange} filteredIngredientes={filteredIngredientes}/>
+          <Alergias value1={formData.Tiene_Alergia} value2={formData.searchText} value3={formData.Ingredientes_Alergia} handleAlergiaChange={handleAlergiaChange} handleCheckboxChange={handleCheckboxChange} handleSearchInputChange={handleSearchInputChange} filteredIngredientes={filteredIngredientes}/>
 
 
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
