@@ -52,4 +52,15 @@ export class ControladorRecetas{
         .then( recetas => res.status(200).json( recetas ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public recetasIncompletas = (req : Request, res: Response) =>{
+        const { correo } = req.body;   
+        if(!correo) {
+            return res.status(400).json( 'Falta el correo del usuario' );
+        }
+        
+        this.recetaService.recetasIncompletas( correo! )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch ( error => this.manejarError( error, res ));
+    }
 }

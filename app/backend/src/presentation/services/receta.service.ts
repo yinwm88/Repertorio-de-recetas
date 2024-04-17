@@ -118,4 +118,42 @@ export class RecetaService {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
+
+    async recetasIncompletas(correo: string) {
+        const [correoExiste, ingredientesUsuario] = await Promise.all([
+            prisma.usuario.findFirst({ where: { correo } }),
+            prisma.teneringrediente.findMany({
+                where: { correo },
+                select: { idingrediente: true },
+            }),
+        ]);
+    
+        if (!correoExiste) throw ErrorCustomizado.badRequest('No existe el usuario');
+    
+        const cantidadRecetas = await prisma.receta.count();
+    
+        const ingredientesReceta = await Promise.all(
+            Array.from({ length: cantidadRecetas }, (_, index) =>
+                prisma.haberingrediente.findMany({
+                    where: { idreceta: index + 1 },
+                    select: { idingrediente: true },
+                }).then(ingredientes =>
+                    ingredientes.map(ingrediente => ingrediente.idingrediente)
+                )
+            )
+        );
+    
+        const recetasIncompletas = ingredientesReceta.map((ingredientes, index) => {
+            const porcentaje = ingredientesUsuario.filter(ingredienteUsuario =>
+                ingredientes.includes(ingredienteUsuario.idingrediente)
+            ).length;
+    
+            return {
+                idreceta: index + 1,
+                porcentaje: ((porcentaje / ingredientes.length) * 100).toFixed(2),
+            };
+        });
+    
+        return { recetas: recetasIncompletas };
+    }
 }
