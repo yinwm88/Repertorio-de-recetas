@@ -13,7 +13,6 @@ export class RecetaService {
         if ( !correoExiste ) throw ErrorCustomizado.badRequest( 'El correo no existe' )
 
         try {
-
             const ingredientes = await prisma.teneringrediente.findMany({
                 where: { correo: ingredientesRecetaDto.correo },
                 select : { 
@@ -23,20 +22,37 @@ export class RecetaService {
             });
 
             const cantidadRecetas = await prisma.receta.count();
-            const ingredientesReceta = [];
+            const ingredientesRecetas: number[][][] = [];
             const recetasListas = [];
 
             for (let index = 1; index <= cantidadRecetas; index++) {
-                const ingredientesRecetas = await prisma.haberingrediente.findMany({
+                const ingredientesReceta = await prisma.haberingrediente.findMany({
                     where: { idreceta: index },
-                    select: {idingrediente : true}
+                    select: {
+                            idingrediente : true,
+                            cantidad : true
+                    }
                 });
-                ingredientesReceta.push(ingredientesRecetas.map(ingrediente => ingrediente.idingrediente));
+                ingredientesRecetas.push([ingredientesReceta.map(ingrediente => ingrediente.idingrediente), ingredientesReceta.map(ingrediente => ingrediente.cantidad)]);
             }
 
-            for (let index = 0; index < ingredientesReceta.length; index++) {
-                if(ingredientesReceta[index].every(ingrediente => ingredientes.some(ing => ing.idingrediente === ingrediente))) {
-                    recetasListas.push({ idreceta:index + 1 });
+            for (let index = 0; index < ingredientesRecetas.length; index++) {
+                const ingredientesReceta = ingredientesRecetas[index][0];
+                const cantidadesReceta = ingredientesRecetas[index][1];
+            
+                const tieneTodosLosIngredientes = ingredientesReceta.every(ingrediente =>
+                    ingredientes.some(ing => ing.idingrediente === ingrediente)
+                );
+            
+                const tieneCantidadesSuficientes = cantidadesReceta.every(cantidad =>
+                    ingredientes.some(ing =>
+                        ing.idingrediente === ingredientesReceta[cantidadesReceta.indexOf(cantidad)]
+                        && Number(ing.cantidad) >= cantidad
+                    )
+                );
+            
+                if (tieneTodosLosIngredientes && tieneCantidadesSuficientes) {
+                    recetasListas.push({ idreceta: index + 1 });
                 }
             }
 
@@ -120,40 +136,40 @@ export class RecetaService {
     }
 
     async recetasIncompletas(correo: string) {
-        const [correoExiste, ingredientesUsuario] = await Promise.all([
-            prisma.usuario.findFirst({ where: { correo } }),
-            prisma.teneringrediente.findMany({
-                where: { correo },
+    const [correoExiste, ingredientesUsuario] = await Promise.all([
+        prisma.usuario.findFirst({ where: { correo } }),
+        prisma.teneringrediente.findMany({
+            where: { correo },
+            select: { idingrediente: true },
+        }),
+    ]);
+
+    if (!correoExiste) throw ErrorCustomizado.badRequest('No existe el usuario');
+
+    const cantidadRecetas = await prisma.receta.count();
+
+    const ingredientesReceta = await Promise.all(
+        Array.from({ length: cantidadRecetas }, (_, index) =>
+            prisma.haberingrediente.findMany({
+                where: { idreceta: index + 1 },
                 select: { idingrediente: true },
-            }),
-        ]);
-    
-        if (!correoExiste) throw ErrorCustomizado.badRequest('No existe el usuario');
-    
-        const cantidadRecetas = await prisma.receta.count();
-    
-        const ingredientesReceta = await Promise.all(
-            Array.from({ length: cantidadRecetas }, (_, index) =>
-                prisma.haberingrediente.findMany({
-                    where: { idreceta: index + 1 },
-                    select: { idingrediente: true },
-                }).then(ingredientes =>
-                    ingredientes.map(ingrediente => ingrediente.idingrediente)
-                )
+            }).then(ingredientes =>
+                ingredientes.map(ingrediente => ingrediente.idingrediente)
             )
-        );
-    
-        const recetasIncompletas = ingredientesReceta.map((ingredientes, index) => {
-            const porcentaje = ingredientesUsuario.filter(ingredienteUsuario =>
-                ingredientes.includes(ingredienteUsuario.idingrediente)
-            ).length;
-    
-            return {
-                idreceta: index + 1,
-                porcentaje: ((porcentaje / ingredientes.length) * 100).toFixed(2),
-            };
-        });
-    
-        return { recetas: recetasIncompletas };
+        )
+    );
+
+    const recetasIncompletas = ingredientesReceta.map((ingredientes, index) => {
+        const porcentaje = ingredientesUsuario.filter(ingredienteUsuario =>
+            ingredientes.includes(ingredienteUsuario.idingrediente)
+        ).length;
+
+        return {
+            idreceta: index + 1,
+            porcentaje: ((porcentaje / ingredientes.length) * 100).toFixed(2),
+        };
+    });
+
+    return { recetas: recetasIncompletas };
     }
 }
