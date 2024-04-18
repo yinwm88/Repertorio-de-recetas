@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto } from "../../domain";
+import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto, RecetaIngredientesDto } from "../../domain";
 
 export class RecetaService {
 
@@ -81,7 +81,7 @@ export class RecetaService {
         }
     }
 
-    async crearReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario ) {
+    async crearReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -95,6 +95,16 @@ export class RecetaService {
                     proceso: datosReceta.proceso,
                     correo: usuario.correo
                 }    
+            });
+
+            recetaIngredientesDto.ingredientes.forEach(async ingrediente => {                
+                const ingredientesReceta = await prisma.haberingrediente.createMany({
+                    data: {
+                        idreceta: recetaNueva.idreceta,
+                        idingrediente: ingrediente.idIngrediente,
+                        cantidad: ingrediente.cantidad
+                    }
+                });
             });
 
             return {
