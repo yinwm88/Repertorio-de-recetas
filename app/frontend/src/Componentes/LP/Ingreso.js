@@ -103,9 +103,9 @@ const Ingreso = () => {
                 <div className='empezar'>
                     Comenzar
                 </div>
-            </Button>
+                </Button>
 
-            <Modal open={open} onClose={() => setOpen(false)}>
+            <Modal open={open} onClose={() => { setOpen(false); setNombre(''); setApellido(''); setCorreo(''); setPassword(''); setMostrarRegistro(false); }}>
                 {mostrarRegistro ? (
                     <div className='nueva-cuenta'>
                         <TextField

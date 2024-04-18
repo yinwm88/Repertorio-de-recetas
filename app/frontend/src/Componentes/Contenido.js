@@ -4,7 +4,7 @@ import { db } from '../firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
-import FormOpcional from './FormOpcional';
+import FormOpcional from './RegistrosFormOp/FormOpcional';
 import Pin from './Pin';
 import './Contenido.css';
 import { useAuth } from '../AuthContext';
