@@ -349,42 +349,6 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 89, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 28, 35);
 
 
-insert into usuario(correo, nombre, apellido, peso, talla, actividad, objetivo, contrasena) values ('erick@gmail.com','Erick', 'Garcia', 65, 1.71, 'Ejercicio diario', 'subir de peso', 'asiesola');
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 1, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 2, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 3, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 4, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 5, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 6, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 7, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 8, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 9, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 10, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 27, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 28, 10);
-insert into teneringrediente(correo, idIngrediente, cantidad) values ('erick@gmail.com', 29, 10);
-
-
---select idingrediente from teneringrediente natural join ingrediente 
---where correo = 'erick@gmail.com'
-
-
-
-
-select nombre -- al final usaremos idReceta en lugar de nombre
-from Receta 
-where not exists (
-    select idIngrediente 
-    from haberIngrediente 
-    where haberIngrediente.idReceta = Receta.idReceta 
-    and idIngrediente not in (
-        select Ingrediente.idIngrediente 
-        from Ingrediente 
-        inner join tenerIngrediente on Ingrediente.idIngrediente = tenerIngrediente.idIngrediente 
-        where correo = 'erick@gmail.com'
-    )
-)
-
 
 
 

@@ -12,10 +12,11 @@ export class RutasReceta{
 
         router.post('/datosReceta/:id', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
+        router.post('/recetasFavoritas', controlador.recetasFavoritas);
         router.post('/crearReceta', controlador.crearReceta );
         router.patch('/editarReceta', controlador.editarReceta );
         router.delete('/eliminarReceta', controlador.eliminarReceta );
-
+        router.post('/recetasIncompletas', controlador.recetasIncompletas);
         return router;
     }
 }

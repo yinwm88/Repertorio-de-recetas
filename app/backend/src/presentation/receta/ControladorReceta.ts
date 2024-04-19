@@ -34,12 +34,15 @@ export class ControladorRecetas{
     public datosReceta = ( req:Request, res: Response ) => {
          const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
          if (error) {
+        const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
+        if (error) {
             return res.status(400).json(error);
         }
 
         this.recetaService.datosReceta( recetaDto! )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
+        }
     }
 
     public crearReceta = ( req:Request, res: Response ) => {
@@ -54,6 +57,7 @@ export class ControladorRecetas{
         .catch( error => this.manejarError( error, res ));
    }
 
+    
     public editarReceta = ( req:Request, res: Response ) => {
         const [error, recetaDto] = RecetaDto.crearInstancia( req.body );
         if (error) return res.status(400).json(error);
@@ -71,5 +75,26 @@ export class ControladorRecetas{
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
     }
+    
+    public recetasFavoritas = ( req: Request, res: Response ) => {
+        const { correo } = req.body;
+        if (!correo) {
+            return res.status(400).json('Falta el correo del usuario');
+        }
 
+        this.recetaService.recetasFavoritas( correo! )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch( error => this.manejarError( error, res ));
+    }
+
+    public recetasIncompletas = (req : Request, res: Response) =>{
+        const { correo } = req.body;   
+        if(!correo) {
+            return res.status(400).json( 'Falta el correo del usuario' );
+        }
+        
+        this.recetaService.recetasIncompletas( correo! )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch ( error => this.manejarError( error, res ));
+    }
 }

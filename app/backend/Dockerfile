@@ -13,10 +13,12 @@ RUN npm install
 # Copiamos todo el contenido del directorio del backend al contenedor.
 COPY . .
 
-# Exponemos el puerto 3000 al mundo exterior.
-EXPOSE 3030
+# Genera la libreria de prisma
+COPY prisma /app/prisma
+RUN npx prisma generate
 
-ENV APP_VERSION=${APP_VERSION}
+# Exponemos el puerto 3000 al mundo exterior.
+EXPOSE 3001
 
 # Comando para ejecutar el servidor backend.
 CMD ["npm", "run", "dev"]
