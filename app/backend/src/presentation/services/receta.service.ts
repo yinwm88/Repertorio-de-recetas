@@ -1,5 +1,6 @@
+import { error } from "console";
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto, RecetaIngredientesDto } from "../../domain";
+import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto, RecetaIngredientesDto, CrearRecetaDto } from "../../domain";
 
 export class RecetaService {
 
@@ -135,7 +136,7 @@ export class RecetaService {
         }
     }
 
-    async crearReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
+    async crearReceta( datosReceta: CrearRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -149,23 +150,25 @@ export class RecetaService {
                     proceso: datosReceta.proceso,
                     correo: usuario.correo
                 }    
-            });
+            }); 
 
-            recetaIngredientesDto.ingredientes.forEach(async ingrediente => {                
-                const ingredientesReceta = await prisma.haberingrediente.createMany({
+            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+                await prisma.haberingrediente.create({
                     data: {
-                        idreceta: recetaNueva.idreceta,
-                        idingrediente: ingrediente.idIngrediente,
-                        cantidad: ingrediente.cantidad
+                        idreceta: recetaNueva.idreceta ,
+                        idingrediente: +ingrediente.idIngrediente,
+                        cantidad: +ingrediente.cantidad
                     }
                 });
             });
+
 
             return {
                 recta:{
                     nombre: recetaNueva?.nombre,
                     tiempo: recetaNueva?.tiempo,
                     proceso: recetaNueva?.proceso,
+                    ingredientes: recetaIngredientesDto.ingredientes
                 },
                 correo: usuario.correo
             }

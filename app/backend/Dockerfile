@@ -17,6 +17,7 @@ COPY . .
 COPY prisma /app/prisma
 RUN npx prisma generate
 
+ENV APP_VERSION=${APP_VERSION}
 # Exponemos el puerto 3000 al mundo exterior.
 EXPOSE 3001
 

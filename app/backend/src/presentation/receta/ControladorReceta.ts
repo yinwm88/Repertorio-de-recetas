@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado, RecetaDto, RecetaIngredientesDto } from "../../domain";
+import { CrearRecetaDto, ErrorCustomizado, RecetaDto, RecetaIngredientesDto } from "../../domain";
 import { RecetaService } from "../services/receta.service";
 
 export class ControladorRecetas{
@@ -46,13 +46,12 @@ export class ControladorRecetas{
     }
 
     public crearReceta = ( req:Request, res: Response ) => {
-        const [error, recetaDto] = RecetaDto.crearInstancia( req.body );
+        const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
         if (error) return res.status(400).json(error);
-
-        const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( req.body.ingredientes );
+        const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( crearRecetaDto!.ingredientes );
         if (erroringredientes) return res.status(400).json(erroringredientes);
         
-        this.recetaService.crearReceta( recetaDto!, req.body.usuario, recetaIngredientesDto! )
+        this.recetaService.crearReceta( crearRecetaDto!, req.body.usuario, recetaIngredientesDto! )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
    }

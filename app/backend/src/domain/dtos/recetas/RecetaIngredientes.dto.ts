@@ -1,14 +1,17 @@
 
+interface Ingrediente {
+    idIngrediente: number,
+    cantidad: number
+}
 
 export class RecetaIngredientesDto {
     private constructor(
-        public readonly ingredientes: any[]
+        public readonly ingredientes: Ingrediente[]
     ) {}
 
-    static crearInstancia( arreglo: any[]): [string?, RecetaIngredientesDto?] {
-        if (arreglo.length == 0) return ['Faltan los ingredientes'];
-        const ingredientes: number[] = [];
-        arreglo.forEach( ingrediente => {
+    static crearInstancia( ingredientes: Ingrediente[]): [string?, RecetaIngredientesDto?] {
+        if (ingredientes.length == 0) return ['Faltan los ingredientes'];
+        ingredientes.forEach( ingrediente => {
             if( !ingrediente.idIngrediente ) return ['Falta el idIngrediente de un ingrediente'];
             if( !ingrediente.cantidad ) return ['Falta la cantidad del ingrediente'];
         });
