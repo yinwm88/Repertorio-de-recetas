@@ -1,6 +1,6 @@
 import { error } from "console";
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto, RecetaIngredientesDto, CrearRecetaDto } from "../../domain";
+import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto } from "../../domain";
 
 export class RecetaService {
 
@@ -162,7 +162,6 @@ export class RecetaService {
                 });
             });
 
-
             return {
                 recta:{
                     nombre: recetaNueva?.nombre,
@@ -177,7 +176,7 @@ export class RecetaService {
         }
     }
 
-    async editarReceta ( datosReceta: RecetaDto, usuario: EntidadUsuario ) {
+    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -186,25 +185,39 @@ export class RecetaService {
             where: { idreceta: datosReceta.idReceta }
         });
         if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
+        if ( recetaExiste.correo !== usuarioExiste.correo ) throw ErrorCustomizado.noAutorizado( 'La receta pertenece a este usuario' );
 
         try {
-            const recetaNueva = await prisma.receta.update({
+            const recetaActualizada = await prisma.receta.update({
                 where:{
                     idreceta: datosReceta.idReceta
                 },
                 data: {
                     nombre: datosReceta.nombre,
                     tiempo: datosReceta.tiempo,
-                    proceso: datosReceta.proceso,
-                    correo: usuario.correo
+                    proceso: datosReceta.proceso
                 }    
+            });
+
+            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+                await prisma.haberingrediente.update({
+                    haberIngredienteId: {
+                        idReceta: recetaActualizada.idreceta,
+                        idIngrediente: +ingrediente.idIngrediente
+                    }
+                    data: {
+                        idingrediente: +ingrediente.idIngrediente,
+                        cantidad: +ingrediente.cantidad
+                    }
+                });
             });
 
             return {
                 recta:{
-                    nombre: recetaNueva?.nombre,
-                    tiempo: recetaNueva?.tiempo,
-                    proceso: recetaNueva?.proceso,
+                    nombre: recetaActualizada?.nombre,
+                    tiempo: recetaActualizada?.tiempo,
+                    proceso: recetaActualizada?.proceso,
+                    ingredientes: recetaIngredientesDto.ingredientes
                 },
                 correo: usuario.correo
             }

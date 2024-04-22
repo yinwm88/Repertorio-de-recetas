@@ -31,7 +31,7 @@ model haberingrediente {
   receta        receta      @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkhaberingrediente1")
   ingrediente   ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkhaberingrediente2")
 
-  @@unique([idreceta, idingrediente], map: "uniquehaberingrediente1")
+  @@unique( name: "haberIngredienteId", [idreceta, idingrediente], map: "uniquehaberingrediente1")
 }
 
 model ingrediente {
