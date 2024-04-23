@@ -199,18 +199,22 @@ export class RecetaService {
                 }    
             });
 
+            await prisma.haberingrediente.deleteMany({
+                where: {
+                    idreceta: recetaActualizada.idreceta
+                }
+            });
+
             recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
-                await prisma.haberingrediente.update({
-                    haberIngredienteId: {
-                        idReceta: recetaActualizada.idreceta,
-                        idIngrediente: +ingrediente.idIngrediente
-                    }
+                await prisma.haberingrediente.create({
                     data: {
+                        idreceta: recetaActualizada.idreceta ,
                         idingrediente: +ingrediente.idIngrediente,
                         cantidad: +ingrediente.cantidad
                     }
                 });
             });
+
 
             return {
                 recta:{
