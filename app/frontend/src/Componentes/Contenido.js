@@ -26,7 +26,7 @@ function Contenido() {
   useEffect(() => {
     const fetchRecetas = async () => {
       // Paso 2: Fetchear la lista de recetas que el usuario puede hacer
-      const response = await fetch('http://localhost:3030/generarRecetas', {
+      const response = await fetch('http://localhost:3001/generarRecetas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ function Contenido() {
 
       // Paso 3: Fetchear los detalles de cada receta
       const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-        const responseReceta = await fetch(`http://localhost:3030/receta/datosReceta/${receta.idreceta}`, {
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -149,7 +149,7 @@ function Contenido() {
 
   const markAsFavorite = async (idReceta) => {
     try {
-      const response = await fetch('http://localhost:3030/receta/marcarFavorita', {
+      const response = await fetch('http://localhost:3001/receta/marcarFavorita', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
