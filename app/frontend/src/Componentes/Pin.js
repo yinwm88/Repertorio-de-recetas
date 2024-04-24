@@ -60,7 +60,7 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
         };
 
         try {
-            const response = await fetch('http://localhost:3001/editar/crearReceta', {
+            const response = await fetch('http://localhost:3001/receta/editarReceta', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
