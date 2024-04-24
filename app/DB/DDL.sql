@@ -14,8 +14,7 @@ create table Usuario (
     contrasena varchar(200),
     salt varchar(200),
     verificado bool
-);
- 
+); 
 
 alter table Usuario alter column correo set not null;
 alter table Usuario alter column nombre set not null;
@@ -47,6 +46,8 @@ alter table Electrodomestico add constraint pkElectro primary key(idElectro);
 
 create table Receta ( 
 	idReceta serial,
+	correo Varchar(70),
+	imagen Varchar(60),
 	nombre varchar(50),
 	tiempo int,
 	proceso text
@@ -59,7 +60,8 @@ alter table Receta alter column proceso set not null;
 alter table Receta add constraint pkReceta primary key(idReceta);
 alter table Receta add constraint nombreRecetaC1 check(nombre <> ' ');
 alter table Receta add constraint nombreRecetaC2 check(nombre ~ '^[a-zÑñA-ZáéíóúÁÉÍÓÚüÜ -]*$');
-
+alter table Receta add constraint fkRecetaUsario foreign key(correo) references Usuario(correo)
+on update cascade on delete cascade;
 
 create table Ingrediente (
 	idIngrediente serial,
@@ -69,7 +71,6 @@ create table Ingrediente (
 	calorias int
 );
 
-
 alter table Ingrediente alter column idIngrediente set not null;
 alter table Ingrediente alter column nombre set not null;
 alter table Ingrediente alter column unidad set not null;
@@ -77,8 +78,6 @@ alter table Ingrediente alter column caduca set not null;
 alter table Ingrediente alter column calorias set not null;
 
 alter table Ingrediente add constraint pkIngrediente primary key(idIngrediente);
-
-
 
 create table Poseer (
     idElectro int,

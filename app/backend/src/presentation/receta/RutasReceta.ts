@@ -1,6 +1,6 @@
-import { Router } from "express";
-import { RecetaService } from "../services/receta.service";
-import { ControladorRecetas } from "./ControladorReceta";
+import { Router } from 'express';
+import { RecetaService } from '../services/receta.service';
+import { ControladorRecetas } from './ControladorReceta';
 
 export class RutasReceta{
 
@@ -10,12 +10,13 @@ export class RutasReceta{
         const recetaService = new RecetaService();
         const controlador = new ControladorRecetas(recetaService);
 
-        router.post('/datosReceta/:id', controlador.datosReceta);
-        router.post('/marcarFavorita', controlador.marcarFavorita);
-        
+        router.post('/datosReceta', controlador.datosReceta );
+        router.post('/marcarFavorita', controlador.marcarFavorita );
+        router.post('/recetasFavoritas', controlador.recetasFavoritas);
+        router.post('/crearReceta', controlador.crearReceta );
+        router.patch('/editarReceta', controlador.editarReceta );
+        router.delete('/eliminarReceta', controlador.eliminarReceta );
+        router.post('/recetasIncompletas', controlador.recetasIncompletas);
         return router;
     }
-
-
-
 }

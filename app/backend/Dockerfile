@@ -8,13 +8,18 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalamos las dependencias del backend, incluyendo Axios
-RUN npm install && npm install axios
+RUN npm install
 
 # Copiamos todo el contenido del directorio del backend al contenedor.
 COPY . .
 
+# Genera la libreria de prisma
+COPY prisma /app/prisma
+RUN npx prisma generate
+
+ENV APP_VERSION=${APP_VERSION}
 # Exponemos el puerto 3000 al mundo exterior.
-EXPOSE 3000
+EXPOSE 3001
 
 # Comando para ejecutar el servidor backend.
-CMD ["node", "src/app.js"]
+CMD ["npm", "run", "dev"]

@@ -14,7 +14,7 @@ const Ingreso = () => {
 
     const firstHandleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3030/join/ingresar', {
+            const response = await fetch('http://localhost:3001/join/ingresar', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const Ingreso = () => {
 
     const secondHandleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:3000/join/registrarse', {
+            const response = await fetch('http://localhost:3001/join/registrarse', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,6 +71,7 @@ const Ingreso = () => {
             });
 
             const data = await response.json();
+            console.log('Response data:', data);
 
             if (response.ok) {
                 alert('Registro exitoso, por favor inicie sesión.');
@@ -103,9 +104,9 @@ const Ingreso = () => {
                 <div className='empezar'>
                     Comenzar
                 </div>
-            </Button>
+                </Button>
 
-            <Modal open={open} onClose={() => setOpen(false)}>
+            <Modal open={open} onClose={() => { setOpen(false); setNombre(''); setApellido(''); setCorreo(''); setPassword(''); setMostrarRegistro(false); }}>
                 {mostrarRegistro ? (
                     <div className='nueva-cuenta'>
                         <TextField

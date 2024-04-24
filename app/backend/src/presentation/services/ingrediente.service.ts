@@ -6,15 +6,15 @@ export class IngredienteService {
 
     constructor() {}
 
-    async agregarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, user: EntidadUsuario) {
+    async agregarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {
         
-        const ingredienteExiste = await prisma.ingrediente.findFirst({
+        const ingredienteExiste = await prisma.ingrediente.findUnique({
             where: { idingrediente: manipularIngredienteDto.idIngrediente }
         });
         if ( !ingredienteExiste ) throw ErrorCustomizado.badRequest( 'Ingrediente no existe' );
         
-        const usuarioExiste = await prisma.usuario.findFirst({
-            where: { correo: user.correo }
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
@@ -22,7 +22,7 @@ export class IngredienteService {
             const ingrediente = await prisma.teneringrediente.create({
                 data:{
                     idingrediente:+manipularIngredienteDto.idIngrediente,
-                    correo:user.correo,
+                    correo:usuario.correo,
                     cantidad: manipularIngredienteDto.cantidad                    
                 }
             });
@@ -69,7 +69,7 @@ export class IngredienteService {
                 take:10,
                 where:{ 
                     nombre: {
-                        startsWith: `${ingrediente}_`,
+                        startsWith: `${ingrediente}`,
                         mode: 'insensitive'
                     }
                 }
@@ -84,7 +84,7 @@ export class IngredienteService {
 
     }
                 
-    async eliminarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, user: EntidadUsuario) {
+    async eliminarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {
         
         const ingredienteExiste = await prisma.ingrediente.findFirst({
             where: { idingrediente: manipularIngredienteDto.idIngrediente }
@@ -92,7 +92,7 @@ export class IngredienteService {
         if ( !ingredienteExiste ) throw ErrorCustomizado.badRequest( 'Ingrediente no existe' );
         
         const usuarioExiste = await prisma.usuario.findFirst({
-            where: { correo: user.correo }
+            where: { correo: usuario.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
@@ -100,7 +100,7 @@ export class IngredienteService {
             const ingrediente = await prisma.teneringrediente.delete({
                 where: {    
                     tenerId:{
-                        correo: user.correo,
+                        correo: usuario.correo,
                         idingrediente: manipularIngredienteDto.idIngrediente
                     }
                 }
@@ -117,7 +117,7 @@ export class IngredienteService {
         }
     }
 
-    async editarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, user: EntidadUsuario) {
+    async editarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {
         
         const ingredienteExiste = await prisma.ingrediente.findFirst({
             where: { idingrediente: manipularIngredienteDto.idIngrediente }
@@ -125,7 +125,7 @@ export class IngredienteService {
         if ( !ingredienteExiste ) throw ErrorCustomizado.badRequest( 'Ingrediente no existe' );
         
         const usuarioExiste = await prisma.usuario.findFirst({
-            where: { correo: user.correo }
+            where: { correo: usuario.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
@@ -133,7 +133,7 @@ export class IngredienteService {
             const ingrediente = await prisma.teneringrediente.update({
                 where: {    
                     tenerId:{
-                        correo: user.correo,
+                        correo: usuario.correo,
                         idingrediente: manipularIngredienteDto.idIngrediente
                     }
                 },

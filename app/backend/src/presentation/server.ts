@@ -33,8 +33,13 @@ export class Server {
             console.log(`${now}: ${req.method} ${req.originalUrl}`);
             next();
         });
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: true }));
+
+
+        this.app.use(cors());
+
+        //* Middlewares
+        this.app.use(express.json()); // raw
+        this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded
 
         this.app.use(express.static(this.rutaPublica));
 

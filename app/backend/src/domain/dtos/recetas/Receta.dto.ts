@@ -5,10 +5,11 @@ export class RecetaDto{
     ){}
 
     static crearInstancia( objeto: { [key: string]: any }): [string?, RecetaDto?] {
-        const {idReceta} = objeto;
-        if (!idReceta) return ['Falta el id de la receta'];   
+        const { idReceta } = objeto;
 
-        return [, new RecetaDto(idReceta)];
+        if (!idReceta) return ['Falta el id de la receta'];     
+
+        return [, new RecetaDto( idReceta )];
     }
 
 }

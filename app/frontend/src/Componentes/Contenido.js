@@ -4,10 +4,16 @@ import { db } from '../firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
-import FormOpcional from './FormOpcional';
+import FormOpcional from './RegistrosFormOp/FormOpcional';
+
+import CrearReceta from './CrearReceta/CrearReceta';
+import BotonParaCrearReceta from './CrearReceta/BotonParaCrearReceta';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+
 import Pin from './Pin';
 import './Contenido.css';
 import { useAuth } from '../AuthContext';
+
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
@@ -26,7 +32,7 @@ function Contenido() {
   useEffect(() => {
     const fetchRecetas = async () => {
       // Paso 2: Fetchear la lista de recetas que el usuario puede hacer
-      const response = await fetch('http://localhost:3030/generarRecetas', {
+      const response = await fetch('http://localhost:3001/generarRecetas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -38,9 +44,11 @@ function Contenido() {
 
       const data = await response.json();
 
+      console.log('Datos Recibidos', data)
+
       // Paso 3: Fetchear los detalles de cada receta
       const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-        const responseReceta = await fetch(`http://localhost:3030/receta/datosReceta/${receta.idreceta}`, {
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -51,6 +59,7 @@ function Contenido() {
         });
 
         const dataReceta = await responseReceta.json();
+        console.log('Receta recibida:', dataReceta)
         const imageUrl = await fetchImageForRecipe(dataReceta.nombre); // Usa tu función existente para obtener la imagen
 
         return {
@@ -128,9 +137,6 @@ function Contenido() {
 
   // ----------------FIREBASE
 
-
-
-
   const fetchImageForRecipe = async (recipeName) => {
     const apiKey = 'b_AdzULWC-uN9c6WbeuSD0wN7kSgl0FT1ir-vpelHD8';
     const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${apiKey}`;
@@ -149,7 +155,7 @@ function Contenido() {
 
   const markAsFavorite = async (idReceta) => {
     try {
-      const response = await fetch('http://localhost:3030/receta/marcarFavorita', {
+      const response = await fetch('http://localhost:3001/receta/marcarFavorita', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -181,8 +187,11 @@ function Contenido() {
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
+          <BotonParaCrearReceta />
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
+
         </Grid>
+
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
           <Container maxWidth="false" className="contenido">
@@ -202,6 +211,7 @@ function Contenido() {
             </Masonry>
           </Container>
         </Grid>
+
       </Grid>
     </Container>
   );

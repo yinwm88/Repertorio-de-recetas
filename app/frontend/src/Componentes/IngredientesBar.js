@@ -59,7 +59,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     // Asegúrate de reemplazar currentUser con el correo real del usuario
 
     try {
-      const response = await fetch('http://localhost:3030/ingredientesUsuario', {
+      const response = await fetch('http://localhost:3001/ingredientesUsuario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ correo: currentUser }),
@@ -96,7 +96,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     }
 
     try {
-      const response = await fetch('http://localhost:3030/Ingrediente/buscar', {
+      const response = await fetch('http://localhost:3001/ingrediente/buscar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ingrediente: searchText }),
@@ -118,7 +118,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     // Para este ejemplo, simplemente haré la solicitud directamente
 
     try {
-      const response = await fetch('http://localhost:3000/ingrediente/agregar', {
+      const response = await fetch('http://localhost:3000/Ingrediente/agregar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -188,7 +188,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     if (!selectedIngredient) return;
 
     try {
-      const response = await fetch('http://localhost:3030/ingrediente/agregar', {
+      const response = await fetch('http://localhost:3001/ingrediente/agregar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -212,7 +212,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
 
   const handleDelete = async (selectedIngredient) => {
     try {
-      const response = await fetch(`http://localhost:3030/ingrediente/eliminar/${selectedIngredient.idingrediente}`, {
+      const response = await fetch(`http://localhost:3001/ingrediente/eliminar/${selectedIngredient.idingrediente}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
