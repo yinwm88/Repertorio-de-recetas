@@ -8,6 +8,7 @@ import Contenido from '../Contenido';
 import Footer from './Footer';
 import { useAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import CrearReceta from '../CrearReceta/CrearReceta';
 
 
 // Dentro de LandingPage o un componente similar.
@@ -20,6 +21,7 @@ const LandingPage = () => {
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
           <Route path="/contenido" element={<ContenidoProtected />} />
+          <Route path="/crear-receta" element={<CrearReceta />} />
         </Routes>
       </Container>
       {/* <Footer/> */}

@@ -5,9 +5,15 @@ import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
 import FormOpcional from './RegistrosFormOp/FormOpcional';
+
+import CrearReceta from './CrearReceta/CrearReceta'; 
+import BotonParaCrearReceta from './CrearReceta/BotonParaCrearReceta';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+
 import Pin from './Pin';
 import './Contenido.css';
 import { useAuth } from '../AuthContext';
+
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
@@ -128,9 +134,6 @@ function Contenido() {
 
   // ----------------FIREBASE
 
-
-
-
   const fetchImageForRecipe = async (recipeName) => {
     const apiKey = 'b_AdzULWC-uN9c6WbeuSD0wN7kSgl0FT1ir-vpelHD8';
     const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${apiKey}`;
@@ -181,8 +184,10 @@ function Contenido() {
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
+          <BotonParaCrearReceta/>
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
         </Grid>
+        
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
           <Container maxWidth="false" className="contenido">
@@ -202,6 +207,7 @@ function Contenido() {
             </Masonry>
           </Container>
         </Grid>
+
       </Grid>
     </Container>
   );
