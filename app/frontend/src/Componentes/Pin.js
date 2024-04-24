@@ -3,6 +3,7 @@ import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, Dial
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import EditIcon from '@mui/icons-material/Edit';
 import { translate } from '@vitalets/google-translate-api';
+import { useAuth } from '../AuthContext';
 
 import { db } from '../firebaseConfig';
 
@@ -11,7 +12,6 @@ const fetchRecetaPorNombre = async (nombreReceta) => {
 
     // const translation = await translate(nombreReceta, { to: 'en' });
     //   const nombreRecetaEnIngles = translation.text;
-
 
     const recetasRef = db.ref('recetas');
     try {
@@ -49,13 +49,17 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
     const [nombreEditado, setNombreEditado] = useState(name);
     const [procesoEditado, setProcesoEditado] = useState(recipeDetails ? recipeDetails.proceso : '');
     
+    const auth = useAuth();
+
+
     const handleSaveChanges = async () => {
+        const userEmail = auth.user ? auth.user.email : '';
         const recetaEditada = {
             idReceta: id,
             nombre: nombreEditado,
             proceso: procesoEditado,
             usuario: {
-                correo: "joselopbau27@gmail.com" // Puedes cambiar esto por el correo del usuario actual
+                correo: userEmail 
             }
         };
 
