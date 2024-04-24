@@ -46,7 +46,40 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
     const [openDialog, setOpenDialog] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false); // Nuevo estado para controlar el modal de edición
     const [showEditButton, setShowEditButton] = useState(false);
+    const [nombreEditado, setNombreEditado] = useState(name);
+    const [procesoEditado, setProcesoEditado] = useState(recipeDetails ? recipeDetails.proceso : '');
     
+    const handleSaveChanges = async () => {
+        const recetaEditada = {
+            idReceta: id,
+            nombre: nombreEditado,
+            proceso: procesoEditado,
+            usuario: {
+                correo: "joselopbau27@gmail.com" // Puedes cambiar esto por el correo del usuario actual
+            }
+        };
+
+        try {
+            const response = await fetch('http://localhost:3001/editar/crearReceta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(recetaEditada)
+            });
+
+            if (response.ok) {
+                console.log('Receta editada y enviada correctamente');
+            } else {
+                console.error('Error al editar la receta:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error al editar la receta:', error);
+        }
+
+        handleCloseEditModal();
+    };
+
     const handleClick = (e) => {
         e.stopPropagation();
         setFavorita(!favorita);
@@ -152,9 +185,9 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                 <TextField
                     id="recipe-name"
                     type="text"
-                    defaultValue={name}
+                    value={nombreEditado}
+                    onChange={(e) => setNombreEditado(e.target.value)}
                     fullWidth
-                    // Manejar el cambio en el nombre de la receta aquí
                 />
             </FormControl>
         )}
@@ -164,12 +197,12 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
             <FormControl fullWidth margin="normal">
                 <InputLabel htmlFor="recipe-details">Nuevos Detalles de la Receta</InputLabel>
                 <TextField
-                    id="recipe-details"
-                    multiline
-                    rows={4}
-                    defaultValue={recipeDetails && recipeDetails.proceso}
-                    fullWidth
-                    // Manejar el cambio en los detalles de la receta aquí
+                     id="recipe-details"
+                     multiline
+                     rows={4}
+                     value={procesoEditado}
+                     onChange={(e) => setProcesoEditado(e.target.value)}
+                     fullWidth
                 />
             </FormControl>
         )}
@@ -177,7 +210,7 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
     </DialogContent>
     <DialogActions>
         <Button onClick={handleCloseEditModal}>Cancelar</Button>
-        <Button onClick={handleCloseEditModal} color="primary">Guardar</Button>
+        <Button onClick={handleSaveChanges} color="primary">Guardar</Button>
     </DialogActions>
 </Dialog>
         </div>
