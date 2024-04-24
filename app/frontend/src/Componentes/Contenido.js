@@ -44,9 +44,11 @@ function Contenido() {
 
       const data = await response.json();
 
+      console.log('Datos Recibidos',data)
+
       // Paso 3: Fetchear los detalles de cada receta
       const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -184,8 +186,9 @@ function Contenido() {
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
-          <BotonParaCrearReceta/>
+          
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
+          <BotonParaCrearReceta/>
         </Grid>
         
         <Grid item sm={12} md={8}>

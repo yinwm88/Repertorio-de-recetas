@@ -96,7 +96,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/Ingrediente/buscar', {
+      const response = await fetch('http://localhost:3001/ingrediente/buscar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ingrediente: searchText }),
@@ -118,7 +118,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     // Para este ejemplo, simplemente haré la solicitud directamente
 
     try {
-      const response = await fetch('http://localhost:3000/ingrediente/agregar', {
+      const response = await fetch('http://localhost:3000/Ingrediente/agregar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
