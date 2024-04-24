@@ -6,7 +6,7 @@ import FiltroRecetas from './Filtros';
 import Masonry from '@mui/lab/Masonry';
 import FormOpcional from './RegistrosFormOp/FormOpcional';
 
-import CrearReceta from './CrearReceta/CrearReceta'; 
+import CrearReceta from './CrearReceta/CrearReceta';
 import BotonParaCrearReceta from './CrearReceta/BotonParaCrearReceta';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
@@ -44,7 +44,7 @@ function Contenido() {
 
       const data = await response.json();
 
-      console.log('Datos Recibidos',data)
+      console.log('Datos Recibidos', data)
 
       // Paso 3: Fetchear los detalles de cada receta
       const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
@@ -59,6 +59,7 @@ function Contenido() {
         });
 
         const dataReceta = await responseReceta.json();
+        console.log('Receta recibida:', dataReceta)
         const imageUrl = await fetchImageForRecipe(dataReceta.nombre); // Usa tu función existente para obtener la imagen
 
         return {
@@ -186,11 +187,11 @@ function Contenido() {
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
-          
+          <BotonParaCrearReceta />
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
-          <BotonParaCrearReceta/>
+
         </Grid>
-        
+
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
           <Container maxWidth="false" className="contenido">
