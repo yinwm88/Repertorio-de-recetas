@@ -16,7 +16,24 @@
   overflow: hidden;
   cursor: pointer;
   box-shadow: 10px 10px 20px rgba(132, 132, 132, 0.5);
+  position: relative;
 }
+
+
+.edit {
+  position: absolute;
+  top: 0;
+  left:0;
+  z-index: 1; 
+  background-color:rgba(161, 245, 5, 0.9);
+  transition: opacity 0.3s ease;
+  border-radius: 30px;
+}
+
+.edit:hover {
+  opacity: 0.7; 
+}
+
 
 .pin .mainPic {
   width: 100%;
@@ -38,6 +55,11 @@
 }
 
 .pin:hover .contenido {
+  bottom: 0;
+  transition: bottom 0.3s;
+  ;
+}
+.pin:hover .edit{
   bottom: 0;
   transition: bottom 0.3s;
   ;

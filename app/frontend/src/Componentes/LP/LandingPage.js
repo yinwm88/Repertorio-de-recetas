@@ -21,7 +21,7 @@ const LandingPage = () => {
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
           <Route path="/contenido" element={<ContenidoProtected />} />
-          <Route path="/crear-receta" element={<CrearReceta />} />
+          <Route path="/crear-receta" element={<CrearReceta />} />z
         </Routes>
       </Container>
       {/* <Footer/> */}
