@@ -5,7 +5,7 @@ import Peso from './Datos/Generales/Peso'
 import Talla from './Datos/Generales/Talla'
 import Objetivo from './Datos/Opcionales/Objetivo';
 import Alergias from './Datos/Opcionales/Alergias';
-import { Typography,styled, Button} from '@mui/material';
+import { Typography, styled, Button, Dialog } from '@mui/material';
 
 //IMPORTANTE
 // Cargar los ingredientes de la base de datos
@@ -16,13 +16,10 @@ const FormContainer = styled('form')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  marginLeft: '620px',
-  marginTop: '50px',
+  margin: '20px',
   padding: theme.spacing(2),
-  width: '400px',
   backgroundColor: 'white',
   borderRadius: '8px',
-  boxShadow: theme.shadows[5],
   outline: 'none',
 }));
 
@@ -33,9 +30,9 @@ const FormButton = styled(Button)(({ theme }) => ({
 
 const FormOpcional = ({ onClose }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  
+
   const [registered, setRegistered] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     Fecha_de_nacimiento: '',
     Talla: '',
@@ -46,7 +43,7 @@ const FormOpcional = ({ onClose }) => {
     Enfermedades: [],
     Tiene_Alergia: 'no',
     Ingredientes_Alergia: [],
-    searchText: '', 
+    searchText: '',
   });
 
 
@@ -144,50 +141,49 @@ const FormOpcional = ({ onClose }) => {
   };
 
   return (
+    <Dialog open={modalIsOpen} onClose={closeModal}>
+        <FormContainer onSubmit={handleSubmit}>
 
-    <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Formulario">
-      <FormContainer onSubmit={handleSubmit}>
-        
-        <Typography variant="h6" gutterBottom>
-          Completa tu registro
-        </Typography>
-      
-          <FechaNacimiento value={formData.Fecha_de_nacimiento} handleChange={handleChange}/>
-          
-          <Peso value={formData.Peso} handleChange={handleChange}/>
-          
-          <Talla value={formData.Talla} handleChange={handleChange}/>
-          
-          <Objetivo value1={formData.Tiene_Objetivo} value2={formData.Objetivo} handleObjetivoChange={handleObjetivoChange} handleSelectChange={handleSelectChange}/>
-        
-          <Alergias value1={formData.Tiene_Alergia} value2={formData.searchText} value3={formData.Ingredientes_Alergia} handleAlergiaChange={handleAlergiaChange} handleCheckboxChange={handleCheckboxChange} handleSearchInputChange={handleSearchInputChange} filteredIngredientes={filteredIngredientes}/>
+          <Typography variant="h6" gutterBottom>
+            Completa tu registro
+          </Typography>
+
+          <FechaNacimiento value={formData.Fecha_de_nacimiento} handleChange={handleChange} />
+
+          <Peso value={formData.Peso} handleChange={handleChange} />
+
+          <Talla value={formData.Talla} handleChange={handleChange} />
+
+          <Objetivo value1={formData.Tiene_Objetivo} value2={formData.Objetivo} handleObjetivoChange={handleObjetivoChange} handleSelectChange={handleSelectChange} />
+
+          <Alergias value1={formData.Tiene_Alergia} value2={formData.searchText} value3={formData.Ingredientes_Alergia} handleAlergiaChange={handleAlergiaChange} handleCheckboxChange={handleCheckboxChange} handleSearchInputChange={handleSearchInputChange} filteredIngredientes={filteredIngredientes} />
 
 
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <FormButton type="submit" variant="contained" color="primary">
-          Enviar
-        </FormButton>
-        <FormButton
-          type="button"
-          variant="outlined"
-          style={{
-            background: 'none',
-            color: 'grey',
-            textDecoration: 'underline',
-            border: 'none', 
-            marginLeft:'210px'
-          }}
-          onClick={handleOmit}
-          onMouseEnter={(e) => e.target.style.color = 'blue'} 
-          onMouseLeave={(e) => e.target.style.color = 'grey'} 
-        >
-         Omitir
-        </FormButton>
-      </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <FormButton type="submit" variant="contained" color="primary">
+              Enviar
+            </FormButton>
+            <FormButton
+              type="button"
+              variant="outlined"
+              style={{
+                background: 'none',
+                color: 'grey',
+                textDecoration: 'underline',
+                border: 'none',
+                marginLeft: '210px'
+              }}
+              onClick={handleOmit}
+              onMouseEnter={(e) => e.target.style.color = 'blue'}
+              onMouseLeave={(e) => e.target.style.color = 'grey'}
+            >
+              Omitir
+            </FormButton>
+          </div>
 
-      
-      </FormContainer>
-    </Modal>
+
+        </FormContainer>
+    </Dialog>
   );
 };
 
