@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import React, { useState, useEffect } from "react";
+import { IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'; import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import EditIcon from '@mui/icons-material/Edit';
 import { translate } from '@vitalets/google-translate-api';
@@ -14,9 +13,9 @@ const fetchRecetaPorNombre = async (nombreReceta) => {
 function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails }) {
     const [favorita, setFavorita] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
-    const [showEditButton, setShowEditButton] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false); // Nuevo estado para controlar el modal de edición
-
+    const [showEditButton, setShowEditButton] = useState(false);
+    
     const handleClick = (e) => {
         e.stopPropagation();
         setFavorita(!favorita);
@@ -49,8 +48,18 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
         setShowEditButton(false);
     };
 
+    const [editOption, setEditOption] = useState('recipeDetails');
+
+    useEffect(() => {
+        // Cerrar el modal del pin cada vez que se cierre el modal de edición
+        if (!openEditModal) {
+            setOpenDialog(false);
+        }
+    }, [openEditModal]);
+
+
     return (
-        <div className={`pin ${pinSize}`} onClick={handleOpenDialog} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <div className={`pin ${pinSize}`} onClick={!openEditModal ? handleOpenDialog : null} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
            
             <div className="edit" style={{ display: showEditButton ? 'block' : 'none' }}>
                 <IconButton className="editIcon" style={{ position: 'absolute', top: '3px', left: '3px', backgroundColor: 'yellowgreen', '&:hover': { backgroundColor: 'lightgreen' }}} onClick={(e) => {
@@ -70,6 +79,7 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                     {favorita ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </IconButton>
             </div>
+            
             <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
                 <DialogTitle>{name}</DialogTitle>
                 <DialogContent>
@@ -84,19 +94,61 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                     <Button onClick={handleCloseDialog}>Cerrar</Button>
                 </DialogActions>
             </Dialog>
-            <Dialog open={openEditModal} onClose={handleCloseEditModal} maxWidth="md" fullWidth> {/* Modal de edición */}
+
+                {/* MODAL DE EDICIOM */}
+            <Dialog open={openEditModal} onClose={handleCloseEditModal} maxWidth="md" fullWidth> 
                 <DialogTitle>Editar Receta</DialogTitle>
-                {/* Aquí puedes agregar campos de entrada para editar la receta */}
+                
                 <DialogContent>
-                    <DialogContentText>
-                        Agrega campos de edición aquí...
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseEditModal}>Cancelar</Button>
-                    <Button onClick={handleCloseEditModal} color="primary">Guardar</Button>
-                </DialogActions>
-            </Dialog>
+        <FormControl fullWidth margin="normal">
+            <InputLabel id="edit-option-label">¿Qué desea editar?</InputLabel>
+            <Select
+                labelId="edit-option-label"
+                id="edit-option"
+                value={editOption}
+                onChange={(e) => setEditOption(e.target.value)}
+                fullWidth
+            >
+                <MenuItem value="name" disabled={editOption === 'recipeDetails'}>Nombre</MenuItem>
+                <MenuItem value="recipeDetails">Detalles de la Receta</MenuItem>
+            </Select>
+        </FormControl>
+
+        {/* Campos de entrada para editar el nombre de la receta */}
+        {editOption === 'name' && (
+            <FormControl fullWidth margin="normal">
+                <InputLabel htmlFor="recipe-name">Nuevo Nombre de la Receta</InputLabel>
+                <TextField
+                    id="recipe-name"
+                    type="text"
+                    defaultValue={name}
+                    fullWidth
+                    // Manejar el cambio en el nombre de la receta aquí
+                />
+            </FormControl>
+        )}
+
+        {/* Campos de entrada para editar los detalles de la receta */}
+        {editOption === 'recipeDetails' && (
+            <FormControl fullWidth margin="normal">
+                <InputLabel htmlFor="recipe-details">Nuevos Detalles de la Receta</InputLabel>
+                <TextField
+                    id="recipe-details"
+                    multiline
+                    rows={4}
+                    defaultValue={recipeDetails && recipeDetails.proceso}
+                    fullWidth
+                    // Manejar el cambio en los detalles de la receta aquí
+                />
+            </FormControl>
+        )}
+
+    </DialogContent>
+    <DialogActions>
+        <Button onClick={handleCloseEditModal}>Cancelar</Button>
+        <Button onClick={handleCloseEditModal} color="primary">Guardar</Button>
+    </DialogActions>
+</Dialog>
         </div>
     );
 }
