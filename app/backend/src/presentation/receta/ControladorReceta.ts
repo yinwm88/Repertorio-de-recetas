@@ -32,18 +32,15 @@ export class ControladorRecetas{
 
 
     public datosReceta = ( req:Request, res: Response ) => {
-         const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
-         if (error) {
         const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
-        if (error) {
-            return res.status(400).json(error);
-        }
-
+        
+        if (error) return res.status(400).json(error);
+    
         this.recetaService.datosReceta( recetaDto! )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
-        }
     }
+    
 
     public crearReceta = ( req:Request, res: Response ) => {
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
