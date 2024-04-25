@@ -8,7 +8,6 @@ export class ControladorRecetas{
         private readonly recetaService: RecetaService
     ){}
 
-
     private manejarError = ( error:unknown, res: Response ) => {
         if (error instanceof ErrorCustomizado) {
             return res.status(error.codigoEstatus).json({ error: error.mensaje});
@@ -28,19 +27,7 @@ export class ControladorRecetas{
         this.recetaService.marcarFavorita( idReceta, correo )
         .then( receta => res.status(201).json( receta ))
         .catch( error => this.manejarError( error, res ));
-    }
-
-
-    public datosReceta = ( req:Request, res: Response ) => {
-        const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
-        
-        if (error) return res.status(400).json(error);
-    
-        this.recetaService.datosReceta( recetaDto! )
-        .then( datos => res.status(200).json( datos ))
-        .catch( error => this.manejarError( error, res ));
-    }
-    
+    }    
 
     public crearReceta = ( req:Request, res: Response ) => {
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
@@ -94,5 +81,14 @@ export class ControladorRecetas{
         this.recetaService.recetasIncompletas( correo! )
         .then( recetas => res.status(200).json( recetas ))
         .catch ( error => this.manejarError( error, res ));
+    }
+
+    public datosReceta = ( req: Request, res: Response ) => {
+        const { idReceta } = req.params;
+        if (!idReceta) return res.status(400).json('Falta el parametro idReceta ');
+        
+        this.recetaService.datosReceta( +idReceta )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch( error => this.manejarError( error, res ));
     }
 }

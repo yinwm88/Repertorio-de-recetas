@@ -1,4 +1,3 @@
-import { error } from "console";
 import { prisma } from "../../data/postgres";
 import { EntidadUsuario, EntidadReceta, ErrorCustomizado, IngredientesRecetasDto, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto } from "../../domain";
 
@@ -107,19 +106,14 @@ export class RecetaService {
         }
     }
 
-    async datosReceta(datosReceta: RecetaDto){
-        const recetaExiste = await prisma.receta.findFirst({
-            where : {idreceta : datosReceta.idReceta}
+    async datosReceta( idReceta: number ){
+        const receta = await prisma.receta.findUnique({
+            where : {idreceta : idReceta}
         });
-        if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'No existe la receta' )
-        
+        if ( !receta ) throw ErrorCustomizado.noEncontrado('No existe la receta')
         try {
-            const receta = await prisma.receta.findUnique({
-                where: {idreceta : datosReceta.idReceta}
-            });
-
             const ingredientes = await prisma.haberingrediente.findMany({
-                where : {idreceta : datosReceta.idReceta},
+                where : {idreceta : idReceta},
                 select : {
                     idingrediente : true,
                     cantidad : true

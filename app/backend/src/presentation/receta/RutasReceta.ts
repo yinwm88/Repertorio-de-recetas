@@ -10,13 +10,16 @@ export class RutasReceta{
         const recetaService = new RecetaService();
         const controlador = new ControladorRecetas(recetaService);
 
-        router.post('/datosReceta', controlador.datosReceta );
+        router.get('/datosReceta/:idReceta', controlador.datosReceta );
+        router.get('/crearCopia/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
-        router.post('/recetasFavoritas', controlador.recetasFavoritas);
+        router.post('/recetasFavoritas', controlador.recetasFavoritas );
         router.post('/crearReceta', controlador.crearReceta );
+        router.post('/recetasIncompletas', controlador.recetasIncompletas );
+
         router.patch('/editarReceta', controlador.editarReceta );
         router.delete('/eliminarReceta', controlador.eliminarReceta );
-        router.post('/recetasIncompletas', controlador.recetasIncompletas);
+
         return router;
     }
 }
