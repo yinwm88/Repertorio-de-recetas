@@ -156,11 +156,13 @@ export class UsuarioService {
 
     async cambiarCorreo() {}
     
-    async cambiarPeso(correo:string ,peso : number) {
+    async cambiarPeso(correo:string, peso : number) {
         const usuarioExiste = await prisma.usuario.findFirst({
             where : {correo : correo}   
         });
         if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+
+        if (peso <= 0) throw ErrorCustomizado.badRequest( 'El peso tiene que ser mayor a 0' );
 
         try{
             const usuarioActualizado = await prisma.usuario.update({
@@ -170,12 +172,33 @@ export class UsuarioService {
                 }
             });
 
-            return {datos : usuarioActualizado};
+            return {peso: usuarioActualizado.peso} ;
         }catch(error){
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
         
     }
     
-    async cambiarAltura() {}
+    async cambiarAltura(correo:string, talla:number) {
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : correo}
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        if(talla <= 0) throw ErrorCustomizado.badRequest( 'La altura tiene que ser mayor a 0' );
+
+        try{
+            const usuarioActualizado = await prisma.usuario.update({
+                where : {correo : correo},
+                data : {
+                    talla : talla
+                }
+            });
+
+            return {altura: usuarioActualizado.talla} ;
+        } catch(error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+
+    }
 }

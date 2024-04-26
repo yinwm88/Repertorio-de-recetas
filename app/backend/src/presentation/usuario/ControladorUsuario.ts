@@ -39,8 +39,8 @@ export class ControladorUsuario {
     }
     
     public cambiarAltura = ( req: Request, res: Response ) => {
-
-        this.usuarioService.cambiarAltura()
+        const { correo, talla } = req.body;
+        this.usuarioService.cambiarAltura(correo, talla)
         .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }
