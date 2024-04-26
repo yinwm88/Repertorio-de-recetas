@@ -119,11 +119,15 @@ export class RecetaService {
                     cantidad : true
                 }
             });
+            const utensilios = await prisma.necesitar.findMany({
+                where : { idreceta : idReceta}
+            });
             return {
                 nombre: receta?.nombre,
                 tiempo: receta?.tiempo,
                 proceso: receta?.proceso,
-                ingredientes : ingredientes
+                ingredientes : ingredientes,
+                utensilios : utensilios
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );

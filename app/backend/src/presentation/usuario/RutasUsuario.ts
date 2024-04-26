@@ -23,6 +23,12 @@ export class RutasUsuario {
         router.put('/correo', controlador.cambiarCorreo );
         router.put('/peso', controlador.cambiarPeso );
         router.put('/altura', controlador.cambiarAltura );
+        // TODO: Agregar utensilio al usuario
+        router.put('utensilio/:id/active', );
+        // TODO: Quitar utensilio al usuario
+        router.delete('utensilio/:id', );
+        // TODO: Rutas para las funciones del usuario: cambiar contraseña, peso, talla, etc.
+        router.patch('/formOpcional', controlador.formOpcional);
 
         return router;
     }
