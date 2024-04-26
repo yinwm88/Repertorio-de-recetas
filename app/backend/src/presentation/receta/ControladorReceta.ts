@@ -19,10 +19,10 @@ export class ControladorRecetas{
     public marcarFavorita = ( req:Request, res: Response ) => {
         const { idReceta, correo } = req.body;
         if (!idReceta) {
-            return res.status(400).json('Falta el id de la receta');
+            return res.status(400).json({error: 'Falta el id de la receta'});
         }
         if (!correo) {
-            return res.status(400).json('Falta el correo');
+            return res.status(400).json({error: 'Falta el correo'});
         }
         this.recetaService.marcarFavorita( idReceta, correo )
         .then( receta => res.status(201).json( receta ))
@@ -64,7 +64,7 @@ export class ControladorRecetas{
     public recetasFavoritas = ( req: Request, res: Response ) => {
         const { correo } = req.body;
         if (!correo) {
-            return res.status(400).json('Falta el correo del usuario');
+            return res.status(400).json({error:'Falta el correo del usuario'});
         }
 
         this.recetaService.recetasFavoritas( correo! )
@@ -75,7 +75,7 @@ export class ControladorRecetas{
     public recetasIncompletas = (req : Request, res: Response) =>{
         const { correo } = req.body;   
         if(!correo) {
-            return res.status(400).json( 'Falta el correo del usuario' );
+            return res.status(400).json({error: 'Falta el correo del usuario' });
         }
         
         this.recetaService.recetasIncompletas( correo! )
@@ -85,7 +85,7 @@ export class ControladorRecetas{
 
     public datosReceta = ( req: Request, res: Response ) => {
         const { idReceta } = req.params;
-        if (!idReceta) return res.status(400).json('Falta el parametro idReceta ');
+        if (!idReceta) return res.status(400).json({error: 'Falta el parametro idReceta '});
         
         this.recetaService.datosReceta( +idReceta )
         .then( recetas => res.status(200).json( recetas ))

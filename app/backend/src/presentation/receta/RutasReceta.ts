@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { RecetaService } from '../services/receta.service';
 import { ControladorRecetas } from './ControladorReceta';
+import { JoinMiddleware } from '../middlewares/join.middleware';
 
 export class RutasReceta{
 
@@ -14,11 +15,11 @@ export class RutasReceta{
         router.get('/crearCopia/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
         router.post('/recetasFavoritas', controlador.recetasFavoritas );
-        router.post('/crearReceta', controlador.crearReceta );
+        router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
         router.post('/recetasIncompletas', controlador.recetasIncompletas );
 
-        router.patch('/editarReceta', controlador.editarReceta );
-        router.delete('/eliminarReceta', controlador.eliminarReceta );
+        router.patch('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
+        router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
 
         return router;
     }
