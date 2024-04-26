@@ -32,8 +32,8 @@ export class ControladorUsuario {
     }
 
     public cambiarPeso = ( req: Request, res: Response ) => {
-
-        this.usuarioService.cambiarPeso()
+        const { correo, peso } = req.body;
+        this.usuarioService.cambiarPeso(correo, peso)
         .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }

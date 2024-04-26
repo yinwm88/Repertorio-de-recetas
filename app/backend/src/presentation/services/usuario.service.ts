@@ -156,7 +156,26 @@ export class UsuarioService {
 
     async cambiarCorreo() {}
     
-    async cambiarPeso() {}
+    async cambiarPeso(correo:string ,peso : number) {
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : correo}   
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+
+        try{
+            const usuarioActualizado = await prisma.usuario.update({
+                where : {correo : correo},
+                data : {
+                    peso : peso
+                }
+            });
+
+            return {datos : usuarioActualizado};
+        }catch(error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+        
+    }
     
     async cambiarAltura() {}
 }
