@@ -3,6 +3,7 @@ import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado, IngresarUsuarioDto, RegistrarUsuarioDto } from "../../domain";
 import { CorreoService } from "./correo.service";
 
+
 export class UsuarioService {
 
     constructor(
@@ -67,6 +68,38 @@ export class UsuarioService {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
 
+    }
+
+    async formularioOpcional(correo: string, peso:number, actividad:string, talla : number, alergias:number[] ){
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : correo}
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+
+        try {
+            const usuarioActualizado = await prisma.usuario.update({
+                where : {correo : correo},
+                data : {
+                    peso : peso,
+                    talla : talla,
+                    actividad : actividad
+                }
+            });
+
+            for (let i = 0; i < alergias.length; i++) {
+                await prisma.seralergico.create({
+                    data : {
+                        idingrediente : alergias[i],
+                        correo : correo
+                    }
+                });
+            }
+            return {datos : usuarioActualizado};
+
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+        
     }
 
     private async enviarLinkCorreo( correo: string ) {

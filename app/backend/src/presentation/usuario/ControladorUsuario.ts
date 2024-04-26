@@ -44,4 +44,15 @@ export class ControladorUsuario {
         .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public formOpcional = ( req:Request, res: Response ) => {
+        const { correo, peso, actividad, talla, alergias } = req.body;
+        if (!correo) {
+            return res.status(400).json('Falta el correo');
+        }
+        this.usuarioService.formularioOpcional( correo, peso, actividad, talla, alergias )
+        .then( usuario => res.status(201).json( usuario ))
+        .catch( error => this.manejarError( error, res ));
+    }
+
 }
