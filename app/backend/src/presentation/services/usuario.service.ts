@@ -117,5 +117,13 @@ export class UsuarioService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-      }
+    }
+
+    async cambiarContrasena() {}
+
+    async cambiarCorreo() {}
+    
+    async cambiarPeso() {}
+    
+    async cambiarAltura() {}
 }

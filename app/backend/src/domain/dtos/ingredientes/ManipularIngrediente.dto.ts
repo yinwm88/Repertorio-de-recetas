@@ -22,7 +22,6 @@ export class ManipularIngredienteDto {
         if (!idIngrediente) return ['Falta el id del ingrediente'];   
         if (!cantidad) return ['Falta la cantidad del ingrediente'];   
         if (!unidad) return ['Falta la unidad de medida del ingrediente'];   
-        
 
         return [, new ManipularIngredienteDto(+idIngrediente, cantidad, unidad)];
     }
