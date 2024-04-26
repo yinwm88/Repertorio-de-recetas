@@ -91,4 +91,10 @@ export class ControladorRecetas{
         .then( recetas => res.status(200).json( recetas ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public obtenerRecetasUsuario = ( req: Request, res: Response ) => {
+        this.recetaService.obtenerRecetasUsuario( req.body.usuario )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }

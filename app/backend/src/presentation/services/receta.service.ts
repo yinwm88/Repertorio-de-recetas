@@ -295,4 +295,23 @@ export class RecetaService {
     
         return { recetas: recetasIncompletas };
     }
+
+    async obtenerRecetasUsuario( usuario: EntidadUsuario ){
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
+        });
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        try {
+
+            const recetas = await prisma.receta.findMany({
+                where:{correo: usuarioExiste.correo}
+            });
+            
+            return{
+                recetas: recetas
+            }
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }   
 }

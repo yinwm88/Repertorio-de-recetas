@@ -15,11 +15,12 @@ export class RutasReceta{
         router.get('/crearCopia/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
         router.post('/recetasFavoritas', controlador.recetasFavoritas );
-        router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
         router.post('/recetasIncompletas', controlador.recetasIncompletas );
-
-        router.patch('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
+        
+        router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
+        router.put('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
         router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
+        router.get('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
 
         return router;
     }
