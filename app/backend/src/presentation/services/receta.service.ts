@@ -90,7 +90,7 @@ export class RecetaService {
         }
     }
 
-        async recetasFavoritas(correo: string){
+    async recetasFavoritas(correo: string){
         const correoExiste = await prisma.usuario.findFirst({
             where : { correo: correo }
         });
