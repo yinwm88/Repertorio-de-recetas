@@ -184,7 +184,7 @@ on update cascade on delete cascade;
 create table tenerIngrediente(
 	correo varchar(70),
 	idIngrediente int,
-	cantidad numeric(5,2),
+	cantidad numeric(10,2),
 	fecha Date,
 	fechaCaducidad Date
 );
