@@ -160,9 +160,8 @@ function Contenido() {
         },
         body: JSON.stringify({
           idReceta,
-          usuario: {
-            correo: currentUser,
-          },
+          correo: currentUser,
+
         }),
       });
 
