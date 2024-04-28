@@ -32,7 +32,7 @@ function Contenido() {
   useEffect(() => {
     const fetchRecetas = async () => {
       // Paso 2: Fetchear la lista de recetas que el usuario puede hacer
-      const response = await fetch('http://localhost:3001/generarRecetas', {
+      const response = await fetch('http://localhost:3001/receta/recetasIncompletas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,14 +48,12 @@ function Contenido() {
 
       // Paso 3: Fetchear los detalles de cada receta
       const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta`, {
-          method: 'POST',
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            idReceta: receta.idreceta,
-          }),
+
         });
 
         const dataReceta = await responseReceta.json();

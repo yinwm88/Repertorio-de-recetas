@@ -5,16 +5,16 @@ export class RecetaService {
 
     constructor(){};
 
-    async generarRecetas(ingredientesRecetaDto: IngredientesRecetasDto) {
+    async generarRecetas(correo: string) {
 
         const correoExiste = await prisma.usuario.findFirst({
-            where: { correo: ingredientesRecetaDto.correo }
+            where: { correo: correo }
         });
         if ( !correoExiste ) throw ErrorCustomizado.badRequest( 'El correo no existe' )
 
         try {
             const ingredientes = await prisma.teneringrediente.findMany({
-                where: { correo: ingredientesRecetaDto.correo },
+                where: { correo: correo },
                 select : { 
                         idingrediente: true,
                         cantidad: true
