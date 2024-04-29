@@ -118,8 +118,10 @@ const CrearReceta = () => {
   return (
     <div>
       <div style={{ marginTop: '20px' }}>
+        
+        <Button variant="blackText" color="primary" href="/contenido">Regresar</Button>
         <AnimatedTypingText text="  Tus habilidades culinarias podrán inspirar a muchos otros." />
-        <Button variant='blackText' onClick={clickButton} style={{ backgroundColor: 'red' }}> O</Button>
+        {/* <Button variant='blackText' onClick={clickButton} style={{ backgroundColor: 'red' }}> O</Button> */}
 
       </div>
       <div style={{

@@ -12,11 +12,14 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 
 import Pin from './Pin';
 import './Contenido.css';
-import { useAuth } from '../AuthContext';
+import { useAuth, getToken } from '../AuthContext';
 
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
+  const [userRecipes, setUserRecipes] = useState([]);
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(20);
   const [lastKey, setLastKey] = useState('');
@@ -27,6 +30,40 @@ function Contenido() {
   const handleFormClose = () => setShowForm(false);
 
   const { currentUser, getToken } = useAuth();
+
+
+  useEffect(() => {
+    const fetchUserRecetas = async () => {
+      const response = await fetch('http://localhost:3001/receta/recetasUsuario', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${getToken()}`,
+
+        },
+
+      });
+
+      const data = await response.json();
+
+      console.log('ALLDATA', data)
+
+      const userRecipesDetails = await Promise.all(data.recetas.map(async (receta) => {
+        const imageUrl = await fetchImageForRecipe(receta.nombre); // Reutiliza tu función existente para obtener imágenes
+
+        return {
+          id: receta.idreceta,
+          ...receta,
+          imageUrl,
+        };
+      }));
+
+      setUserRecipes(userRecipesDetails);
+    };
+
+    fetchUserRecetas();
+  }, [currentUser, lastUpdate]);
+
 
   //Generar Recetas
   useEffect(() => {
@@ -136,19 +173,53 @@ function Contenido() {
   // ----------------FIREBASE
 
   const fetchImageForRecipe = async (recipeName) => {
-    const apiKey = 'b_AdzULWC-uN9c6WbeuSD0wN7kSgl0FT1ir-vpelHD8';
-    const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${apiKey}`;
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data.results.length > 0) {
-        return data.results[0].urls.small;
+
+
+
+    // Claves API para cada servicio
+    const unsplashApiKey = 'b_AdzULWC-uN9c6WbeuSD0wN7kSgl0FT1ir-vpelHD8';
+    const pexelsApiKey = 'sY5tEwT4E7thugNrTx8eoLbu2YLlBri6ZtsQy5Fq1ULDLaewybrFuvDg';
+    const pixabayApiKey = '43641615-297e61c4d9af146e80502ee5b';
+    const flickrApiKey = '901aeda7df55b720f817e24c8de7455e';
+
+    // URL de búsqueda para cada API
+    const urls = [
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName +' dish')}&client_id=${unsplashApiKey}`,
+      `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName + ' food')}&format=json&nojsoncallback=1`,
+      `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
+      `https://api.pexels.com/v1/search?query=${encodeURIComponent(recipeName + ' dish')}&per_page=1`,
+
+
+    ];
+
+    for (const url of urls) {
+      try {
+        const response = await fetch(url, {
+          headers: url.includes('pexels') ? { Authorization: pexelsApiKey } : {}
+        });
+        const data = await response.json();
+        let imageUrl = '';
+
+        if (url.includes('unsplash') && data.results.length > 0) {
+          imageUrl = data.results[0].urls.small;
+        } else if (url.includes('pexels') && data.photos.length > 0) {
+          imageUrl = data.photos[0].src.small;
+        } else if (url.includes('pixabay') && data.hits.length > 0) {
+          imageUrl = data.hits[0].webformatURL;
+        } else if (url.includes('flickr') && data.photos.photo.length > 0) {
+          const photo = data.photos.photo[0];
+          imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`;
+        }
+
+        if (imageUrl) {
+          return imageUrl;
+        }
+      } catch (error) {
+        console.error(`Error fetching image from ${url}:`, error);
       }
-      return 'https://via.placeholder.com/150';
-    } catch (error) {
-      console.error('Error fetching image:', error);
-      return 'https://via.placeholder.com/150';
     }
+
+    return 'https://via.placeholder.com/150';
   };
 
   const markAsFavorite = async (idReceta) => {
@@ -188,27 +259,47 @@ function Contenido() {
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
           <BotonParaCrearReceta />
-          
+
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
 
         </Grid>
 
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
-          {/* <Button variant='blackText' onClick={clickButton} style={{backgroundColor:'red'}}> O</Button> */}
           <Container maxWidth="false" className="contenido">
+            <h1>Mis recetas</h1>
+            <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
+              {
+                userRecipes.map((recipe) => (
+                  <Pin
+                    id={recipe.id}
+                    onMarkFavorite={markAsFavorite}
+                    key={recipe.id}
+                    pinSize={recipe.pinSize || "medium"}
+                    imgSrc={recipe.imageUrl}
+                    name={recipe.nombre}
+                    link={`/receta/${recipe.id}`} // Asume que tienes una ruta para mostrar los detalles de la receta
+                    recipeDetails={recipe}
+                  />
+                ))
+              }
+            </Masonry>
+            <h1>Recetas de la Comunidad</h1>
             <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
               {recipes.map((recipe) => (
-                <Pin
-                  id={recipe.id}
-                  onMarkFavorite={markAsFavorite}
-                  key={recipe.id}
-                  pinSize={recipe.pinSize || "medium"}
-                  imgSrc={recipe.imageUrl}
-                  name={recipe.nombre}
-                  link={`/receta/${recipe.id}`} // Asume que tienes una ruta para mostrar los detalles de la receta
-                  recipeDetails={recipe}
-                />
+                //renderiza solo si tiene id 
+                recipe.id && (
+                  <Pin
+                    id={recipe.id}
+                    onMarkFavorite={markAsFavorite}
+                    key={recipe.id}
+                    pinSize={recipe.pinSize || "medium"}
+                    imgSrc={recipe.imageUrl}
+                    name={recipe.nombre}
+                    link={`/receta/${recipe.id}`} // Asume que tienes una ruta para mostrar los detalles de la receta
+                    recipeDetails={recipe}
+                  />
+                )
               ))}
             </Masonry>
           </Container>
