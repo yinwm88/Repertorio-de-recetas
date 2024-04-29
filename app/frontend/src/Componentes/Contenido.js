@@ -179,7 +179,6 @@ function Contenido() {
   return (
     <Container maxWidth="false" className='contenido'>
 
-      {/* Mostrar el formulario si showForm es verdadero */}
       {showForm && <FormOpcional onClose={handleFormClose} />}
 
       <Grid container spacing={4}>

@@ -1,34 +1,39 @@
 import React, { useState } from 'react';
-import { Button, Modal, TextField } from '@mui/material';
+import { Button, Modal, TextField, Box, Typography } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 const Ingreso = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [userData, setUserData] = useState({
+        username: '',
+        password: '',
+        nombre: '',
+        apellido: '',
+        correo: ''
+    });
     const [open, setOpen] = useState(false);
+    const [mostrarRegistro, setMostrarRegistro] = useState(false);
 
-    const firstHandleSubmit = async () => {
+    const handleChange = (prop) => (event) => {
+        setUserData({ ...userData, [prop]: event.target.value });
+    };
+
+    const handleLogin = async () => {
         try {
             const response = await fetch('http://localhost:3001/join/ingresar', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    correo: username, // Aquí usas el valor de 'username' como el correo
-                    contrasena: password,
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo: userData.username, contrasena: userData.password })
             });
-
             const data = await response.json();
 
             if (response.ok) {
-                login(username); // Actualiza el estado global con el correo del usuario
+                login(userData.username, userData.token);
                 navigate('/contenido');
             } else {
                 alert(data.message || 'Error al iniciar sesión');
@@ -37,41 +42,17 @@ const Ingreso = () => {
             console.error('Error:', error);
             alert('Error al conectar con el servidor.');
         }
-
         setOpen(false);
-        setUsername('');
-        setPassword('');
     };
 
-
-
-    const [mostrarRegistro, setMostrarRegistro] = useState(false);
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
-    const [correo, setCorreo] = useState('');
-
-
-    const mostrarFormularioRegistro = () => {
-        setMostrarRegistro(true);
-    };
-
-    const secondHandleSubmit = async () => {
+    const handleRegister = async () => {
         try {
             const response = await fetch('http://localhost:3001/join/registrarse', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    correo,
-                    nombre,
-                    apellido,
-                    contrasena: password,
-                }),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData)
             });
-
             const data = await response.json();
-            console.log('Response data:', data);
 
             if (response.ok) {
                 alert('Registro exitoso, por favor inicie sesión.');
@@ -83,127 +64,139 @@ const Ingreso = () => {
             console.error('Error:', error);
             alert('Error al conectar con el servidor.');
         }
-
         setOpen(false);
-        setNombre('');
-        setApellido('');
-        setCorreo('');
-        setPassword('');
     };
 
-
+    const toggleForms = () => {
+        setMostrarRegistro(!mostrarRegistro);
+        if (mostrarRegistro) {
+            setUserData({ ...userData, nombre: '', apellido: '', correo: '' });
+        }
+    };
 
     return (
-        <div>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
             <Button
+                variant="contained"
+                color="primary"
                 endIcon={<LoginIcon />}
                 onClick={() => setOpen(true)}
-                sx={{ marginTop: '55px' }}
-
             >
-                <div className='empezar'>
-                    Comenzar
-                </div>
-                </Button>
+                Comenzar
+            </Button>
 
-            <Modal open={open} onClose={() => { setOpen(false); setNombre(''); setApellido(''); setCorreo(''); setPassword(''); setMostrarRegistro(false); }}>
-                {mostrarRegistro ? (
-                    <div className='nueva-cuenta'>
-                        <TextField
-                            label="Nombre"
-                            InputLabelProps={{ style: { color: 'white' } }}
-                            InputProps={{ style: { color: 'white' } }}
-                            margin="normal"
-                            fullWidth
-                            value={nombre}
-                            onChange={(e) => setNombre(e.target.value)}
-                        />
-                        <TextField
-                            label="Apellido"
-                            InputLabelProps={{ style: { color: 'white' } }}
-                            InputProps={{ style: { color: 'white' } }}
-                            margin="normal"
-                            fullWidth
-                            value={apellido}
-                            onChange={(e) => setApellido(e.target.value)}
-                        />
-                        <TextField
-                            label="e-mail"
-                            InputLabelProps={{ style: { color: 'white' } }}
-                            InputProps={{ style: { color: 'white' } }}
-                            margin="normal"
-                            fullWidth
-                            value={correo}
-                            onChange={(e) => setCorreo(e.target.value)}
-                        />
-
-
-
-                        <TextField
-                            label="Contraseña"
-                            InputLabelProps={{ style: { color: 'white' } }}
-                            InputProps={{ style: { color: 'white' } }}
-                            type="password"
-                            margin="normal"
-                            fullWidth
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-
-                        <Button
-                            className='boton-crear-cuenta'
-                            onClick={secondHandleSubmit}
-                            sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#FF6347', width: "130px" }}
-                        >
-                            Registrar
-                        </Button>
-                    </div>
-                ) : (
-                    <>
-                        <div className='interior'>
+            <Modal
+                open={open}
+                onClose={() => {
+                    setOpen(false);
+                    setUserData({
+                        username: '',
+                        password: '',
+                        nombre: '',
+                        apellido: '',
+                        correo: ''
+                    });
+                    setMostrarRegistro(false);
+                }}
+            >
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    boxShadow: 24,
+                    p: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2
+                }}>
+                    {mostrarRegistro ? (
+                        <>
+                            <Button
+                                startIcon={<ArrowBackIcon />}
+                                onClick={toggleForms}
+                                sx={{ mb: 2 }}
+                                style={{ color: 'black' }}
+                            >
+                                Regresar
+                            </Button>
                             <TextField
-                                label="Usuario"
-                                InputLabelProps={{ style: { color: 'white' } }}
-                                InputProps={{ style: { color: 'white' } }}
-                                margin="normal"
+                                label="Nombre"
+                                variant="outlined"
                                 fullWidth
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                value={userData.nombre}
+                                onChange={handleChange('nombre')}
+                            />
+                            <TextField
+                                label="Apellido"
+                                variant="outlined"
+                                fullWidth
+                                value={userData.apellido}
+                                onChange={handleChange('apellido')}
+                            />
+                            <TextField
+                                label="e-mail"
+                                variant="outlined"
+                                fullWidth
+                                value={userData.correo}
+                                onChange={handleChange('correo')}
                             />
                             <TextField
                                 label="Contraseña"
-                                InputLabelProps={{ style: { color: 'white' } }}
-                                InputProps={{ style: { color: 'white' } }}
                                 type="password"
-                                margin="normal"
+                                variant="outlined"
                                 fullWidth
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                value={userData.password}
+                                onChange={handleChange('password')}
                             />
-                            <div>
-
-                                <Button variant="contained"
-                                    color="primary"
-                                    className='boton-iniciar-sesion'
-                                    sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#2E8B57', width: "150px" }}
-                                    onClick={firstHandleSubmit}>
-
-                                    Iniciar Sesión
-                                </Button>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={handleRegister}
+                            >
+                                Registrar
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <TextField
+                                label="Usuario"
+                                variant="outlined"
+                                fullWidth
+                                value={userData.username}
+                                onChange={handleChange('username')}
+                            />
+                            <TextField
+                                label="Contraseña"
+                                type="password"
+                                variant="outlined"
+                                fullWidth
+                                value={userData.password}
+                                onChange={handleChange('password')}
+                            />
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 2 }}>
                                 <Button
-                                    className='boton-registrar'
-                                    sx={{ ...theme.components.MuiButton.styleOverrides.root, backgroundColor: '#FF6347', width: "180px" }}
-                                    onClick={mostrarFormularioRegistro}
+                                    variant="outlined"
+                                    onClick={toggleForms}
                                 >
                                     No tengo cuenta
                                 </Button>
-                            </div>
-                        </div>
-                    </>
-                )}
+                                <Button
+                                    variant="contained"
+                                    onClick={handleLogin}
+                                >
+                                    Iniciar Sesión
+                                </Button>
+                            </Box>
+                        </>
+                    )}
+                </Box>
             </Modal>
-        </div>
+        </Box>
     );
 };
+
 
 export default Ingreso;

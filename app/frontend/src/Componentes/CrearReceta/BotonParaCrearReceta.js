@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 
 const BotonParaCrearReceta = () => {
   return (
-    <Button color="inherit" component={Link} to="/crear-receta" style={{marginTop:'30px'}}>Crear Nueva Receta</Button>
+    <Button  variant='semiContained' component={Link} to="/crear-receta" style={{marginTop:'30px'}}>Crear Nueva Receta</Button>
   );
 };
 
