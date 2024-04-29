@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { IconButton, Dialog, DialogTitle, Typography,DialogContent, DialogContentText, DialogActions, Button, FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'; import FavoriteIcon from '@mui/icons-material/Favorite';
+import { IconButton, Dialog, DialogTitle, Typography,DialogContent, DialogContentText, DialogActions, Button, FormControl, InputLabel, Select, MenuItem, TextField,List, ListItem,  ListItemText } from '@mui/material';
+
+import DeleteIcon from '@mui/icons-material/Delete';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import EditIcon from '@mui/icons-material/Edit';
 import { translate } from '@vitalets/google-translate-api';
@@ -47,15 +50,9 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
     const userEmail = auth.user ? auth.user.email : '';
     const { currentUser } = useAuth();
 
-    const [formData, setFormData]=useState({
-        idReceta:id,
-        usuario: userEmail,
-        nombre:name,
-        tiempo: '',
-        proceso:recipeDetails,
-        ingredientes:''
-    })
-   
+
+    const [error, setError] = useState(null);
+
     const [favorita, setFavorita] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false); 
@@ -68,6 +65,40 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
 
     const [editOption, setEditOption] = useState('');
 
+    const [searchText, setSearchText] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+    const fetchIngredients = async (text) => {
+        if (!text.trim()) {
+          setSearchResults([]);
+          return;
+        }
+    
+        try {
+          const response = await fetch(`http://localhost:3001/ingrediente/buscar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ingrediente: text }),
+          });
+          const data = await response.json();
+          if (response.ok) {
+            if (Array.isArray(data.ingredientes)) {
+              setSearchResults(data.ingredientes);
+            } else {
+              setSearchResults([]);
+            }
+          } else {
+            console.error('Error buscando ingredientes:', data.message);
+            setError(data.message || 'Error al buscar ingredientes');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          setError('Error al conectarse al servidor');
+        }
+      };
+
+
     const handleSaveChanges = async () => {
        const formBody = [];
 
@@ -76,7 +107,10 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
         formBody.push(`nombre=${encodeURIComponent(nombreEditado)}`);
         formBody.push(`tiempo=${encodeURIComponent(tiempoEditado)}`);
         formBody.push(`proceso=${encodeURIComponent(procesoEditado)}`);
-        // Añadir ingredientes a formBody.
+        selectedIngredients.forEach((ingrediente, index) => {
+            formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);
+            formBody.push(`ingredientes[${index}][cantidad]=${encodeURIComponent(ingrediente.cantidad)}`);
+          });
         formBody.push(`usuario[correo]=${encodeURIComponent(currentUser || '')}`);
 
         try {
@@ -265,13 +299,57 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                             <Typography variant="subtitle1" gutterBottom>Nueva lista de ingredientes</Typography>
                             <FormControl fullWidth margin="normal">
                                 <TextField
-                                    id="ingredientes"
-                                    multiline
-                                    rows={4}
-                                    value={ingredientesEditados}
-                                    onChange={(e) => setIngredientes(e.target.value)}
-                                    fullWidth
-                                    />
+                                   id="searchIngredient"
+                                   label="Buscar ingrediente"
+                                   type="text"
+                                   fullWidth
+                                   variant="outlined"
+                                   value={searchText}
+                                   onChange={(e) => {
+                                     const text = e.target.value;
+                                     setSearchText(text);
+                                     fetchIngredients(text);
+                                   }}
+                                   margin="normal"
+                                />
+                                <List>
+                                    {searchResults.map((ingrediente) => (
+                                        <ListItem
+                                        key={ingrediente.idingrediente}
+                                        button
+                                        onClick={() => {
+                                            setSelectedIngredients([...selectedIngredients, { ...ingrediente, cantidad: 1, unidad: ingrediente.unidad }]);
+                                            setSearchResults([]);
+                                            setSearchText('');
+                                        }}
+                                        >
+                                        <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
+                                        </ListItem>
+                                    ))}
+                                    </List>
+
+                                    <List>
+                                    {selectedIngredients.map((ing, index) => (
+                                        <ListItem key={index}>
+                                        <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
+                                        <TextField
+                                            type="number"
+                                            value={ing.cantidad}
+                                            onChange={(e) => {
+                                            const newSelectedIngredients = [...selectedIngredients];
+                                            newSelectedIngredients[index].cantidad = Number(e.target.value);
+                                            setSelectedIngredients(newSelectedIngredients);
+                                            }}
+                                        />
+                                        <IconButton onClick={() => {
+                                            const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
+                                            setSelectedIngredients(newSelectedIngredients);
+                                        }}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                        </ListItem>
+                                    ))}
+                                </List>
                             </FormControl>
                         </>
                     )}
@@ -281,9 +359,10 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                     <Button onClick={handleCloseEditModal}>Cancelar</Button>
                     <Button onClick={handleSaveChanges} color="primary">Guardar</Button>
                 </DialogActions>
-            </Dialog>
-
+            </Dialog>   
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
+        
     );
 }
 
