@@ -40,6 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const getToken = () => {
     // Obtiene el token guardado
+    
     return Cookies.get('authToken');
   };
 

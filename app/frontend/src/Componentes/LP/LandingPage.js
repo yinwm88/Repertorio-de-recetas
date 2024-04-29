@@ -19,12 +19,10 @@ const LandingPage = () => {
     if (!currentUser) {
       const user = getUserDataFromCookies();
       if (user) {
-        const token = Cookies.get('authToken'); 
-        login(user, token);
+        console.log('Usuario encontrado', user);
+        
         navigate('/contenido');
-      } else {
-        navigate('/');
-      }
+      } 
     }
   }, [currentUser, getUserDataFromCookies, login, navigate]);
 

@@ -23,6 +23,8 @@ const Ingreso = () => {
         setUserData({ ...userData, [prop]: event.target.value });
     };
 
+
+
     const handleLogin = async () => {
         try {
             const response = await fetch('http://localhost:3001/join/ingresar', {
@@ -33,7 +35,8 @@ const Ingreso = () => {
             const data = await response.json();
 
             if (response.ok) {
-                login(userData.username, userData.token);
+                login(userData.username, data.token);
+                console.log('Datos de usuario:', userData.username, data.token);
                 navigate('/contenido');
             } else {
                 alert(data.message || 'Error al iniciar sesión');

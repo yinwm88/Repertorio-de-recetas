@@ -22,7 +22,7 @@ const CrearReceta = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-  const { currentUser } = useAuth();
+  const { currentUser, getToken } = useAuth();
   const fetchIngredients = async (text) => {
     if (!text.trim()) {
       setSearchResults([]);
@@ -74,9 +74,11 @@ const CrearReceta = () => {
       const response = await fetch('http://localhost:3001/receta/crearReceta', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'Authorization': `Bearer ${getToken()}`,
         },
         body: formBody.join("&"),
+        token:getToken(),
       });
 
       let data;
@@ -109,127 +111,132 @@ const CrearReceta = () => {
     }
   };
 
+  const clickButton = () => {
+    console.log(getToken())
+  }
 
   return (
-    <div> 
-        <div style={{marginTop:'20px'}}>
-          <AnimatedTypingText text="  Tus habilidades culinarias podrán inspirar a muchos otros."/>
-        </div>           
-         <div style={{
-            backgroundColor: '#FADCD9',
-            padding: '20px',
-            borderRadius: '10px',
-            marginTop: '40px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
-            maxWidth: '1000px', 
-            marginLeft: 'auto',
-            marginRight: 'auto', 
-          }}>
-            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-              <TextField
-                id="nombre"
-                name="nombre"
-                label="Nombre de la receta"
-                variant="outlined"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                required
-                fullWidth
-                margin="normal"
-                sx={{ flex: '3', marginRight: '10px' }} 
-              />
-              <TextField
-                id="tiempo"
-                name="tiempo"
-                label="Tiempo(minutos)"
-                type="number"
-                variant="outlined"
-                value={tiempo}
-                onChange={(e) => setTiempo(e.target.value)}
-                required
-                fullWidth
-                margin="normal"
-                sx={{ flex: '0.7' }}
-              />
-            </div>
+    <div>
+      <div style={{ marginTop: '20px' }}>
+        <AnimatedTypingText text="  Tus habilidades culinarias podrán inspirar a muchos otros." />
+        <Button variant='blackText' onClick={clickButton} style={{ backgroundColor: 'red' }}> O</Button>
+
+      </div>
+      <div style={{
+        backgroundColor: '#FADCD9',
+        padding: '20px',
+        borderRadius: '10px',
+        marginTop: '40px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '1000px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+          <TextField
+            id="nombre"
+            name="nombre"
+            label="Nombre de la receta"
+            variant="outlined"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            required
+            fullWidth
+            margin="normal"
+            sx={{ flex: '3', marginRight: '10px' }}
+          />
+          <TextField
+            id="tiempo"
+            name="tiempo"
+            label="Tiempo(minutos)"
+            type="number"
+            variant="outlined"
+            value={tiempo}
+            onChange={(e) => setTiempo(e.target.value)}
+            required
+            fullWidth
+            margin="normal"
+            sx={{ flex: '0.7' }}
+          />
+        </div>
 
 
-            <TextField
-              id="proceso"
-              name="proceso"
-              label="Proceso de preparación"
-              multiline
-              rows={4}
-              variant="outlined"
-              value={proceso}
-              onChange={(e) => setProceso(e.target.value)}
-              required
-              fullWidth
-              margin="normal"
-            />
-            <TextField
-              id="searchIngredient"
-              label="Buscar ingrediente"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={searchText}
-              onChange={(e) => {
-                const text = e.target.value;
-                setSearchText(text);
-                fetchIngredients(text);
+        <TextField
+          id="proceso"
+          name="proceso"
+          label="Proceso de preparación"
+          multiline
+          rows={4}
+          variant="outlined"
+          value={proceso}
+          onChange={(e) => setProceso(e.target.value)}
+          required
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          id="searchIngredient"
+          label="Buscar ingrediente"
+          type="text"
+          fullWidth
+          variant="outlined"
+          value={searchText}
+          onChange={(e) => {
+            const text = e.target.value;
+            setSearchText(text);
+            fetchIngredients(text);
+          }}
+          margin="normal"
+        />
+
+        <List>
+          {searchResults.map((ingrediente) => (
+            <ListItem
+              key={ingrediente.idingrediente}
+              button
+              onClick={() => {
+                setSelectedIngredients([...selectedIngredients, { ...ingrediente, cantidad: 1, unidad: ingrediente.unidad }]);
+                setSearchResults([]);
+                setSearchText('');
               }}
-              margin="normal"
-            />
+            >
+              <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
+            </ListItem>
+          ))}
+        </List>
 
-            <List>
-              {searchResults.map((ingrediente) => (
-                <ListItem
-                  key={ingrediente.idingrediente}
-                  button
-                  onClick={() => {
-                    setSelectedIngredients([...selectedIngredients, { ...ingrediente, cantidad: 1, unidad: ingrediente.unidad }]);
-                    setSearchResults([]);
-                    setSearchText('');
-                  }}
-                >
-                  <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
-                </ListItem>
-              ))}
-            </List>
+        <List>
+          {selectedIngredients.map((ing, index) => (
+            <ListItem key={index} style={{ display: 'flex', alignItems: 'center' }}>
+              <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
+              <TextField
+                type="number"
+                value={ing.cantidad}
+                onChange={(e) => {
+                  const newSelectedIngredients = [...selectedIngredients];
+                  newSelectedIngredients[index].cantidad = Number(e.target.value);
+                  setSelectedIngredients(newSelectedIngredients);
+                }}
+              />
+              <IconButton onClick={() => {
+                const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
+                setSelectedIngredients(newSelectedIngredients);
+              }}>
+                <DeleteIcon />
+              </IconButton>
+            </ListItem>
+          ))}
+        </List>
+      </div>
 
-            <List>
-              {selectedIngredients.map((ing, index) => (
-                <ListItem key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                  <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
-                  <TextField
-                    type="number"
-                    value={ing.cantidad}
-                    onChange={(e) => {
-                      const newSelectedIngredients = [...selectedIngredients];
-                      newSelectedIngredients[index].cantidad = Number(e.target.value);
-                      setSelectedIngredients(newSelectedIngredients);
-                    }}
-                  />
-                  <IconButton onClick={() => {
-                    const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
-                    setSelectedIngredients(newSelectedIngredients);
-                  }}>
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItem>
-              ))}
-            </List>
-          </div>
-
-          <div style={{  padding: '20px', marginTop: '15px', marginLeft: '1100px' }}>
-                <Button onClick={handleSubmit} variant="contained" color="primary">
-                  Crear Receta
-                </Button>
-          </div>
+      <div style={{ padding: '20px', marginTop: '15px', marginLeft: '1100px' }}>
+        <Button onClick={handleSubmit} variant="contained" color="primary">
+          Crear Receta
+        </Button>
+      </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );

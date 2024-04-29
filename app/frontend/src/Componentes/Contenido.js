@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Container } from '@mui/material';
+import { Grid, Container, Button } from '@mui/material';
 import { db } from '../firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
@@ -26,7 +26,7 @@ function Contenido() {
   const [showForm, setShowForm] = useState(true);
   const handleFormClose = () => setShowForm(false);
 
-  const { currentUser } = useAuth();
+  const { currentUser, getToken } = useAuth();
 
   //Generar Recetas
   useEffect(() => {
@@ -57,7 +57,7 @@ function Contenido() {
         });
 
         const dataReceta = await responseReceta.json();
-        console.log('Receta recibida:', dataReceta)
+        // console.log('Receta recibida:', dataReceta)
         const imageUrl = await fetchImageForRecipe(dataReceta.nombre); // Usa tu función existente para obtener la imagen
 
         return {
@@ -176,6 +176,10 @@ function Contenido() {
     }
   };
 
+  // const clickButton = () => {
+  //   console.log(getToken())
+  // }
+
   return (
     <Container maxWidth="false" className='contenido'>
 
@@ -184,12 +188,14 @@ function Contenido() {
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
           <BotonParaCrearReceta />
+          
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
 
         </Grid>
 
         <Grid item sm={12} md={8}>
           <FiltroRecetas />
+          {/* <Button variant='blackText' onClick={clickButton} style={{backgroundColor:'red'}}> O</Button> */}
           <Container maxWidth="false" className="contenido">
             <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
               {recipes.map((recipe) => (
