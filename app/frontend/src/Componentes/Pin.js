@@ -283,12 +283,16 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                             <FormControl fullWidth margin="normal">
                                 <TextField
                                     id="tiempo"
-                                    multiline
-                                    rows={4}
+                                    name="tiempo"
+                                    label="Tiempo de preparación (minutos)"
+                                    type="number"
+                                    variant="outlined"
                                     value={tiempoEditado}
                                     onChange={(e) => setTiempo(e.target.value)}
+                                    required
                                     fullWidth
-                                    />
+                                    margin="normal"
+                                />
                             </FormControl>
                         </>
                     )}
