@@ -124,11 +124,11 @@ const CrearReceta = () => {
             flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
-            maxWidth: '1000px', // Cambiado el ancho máximo para que se adapte al tamaño de la pantalla
+            maxWidth: '1000px', 
             marginLeft: 'auto',
-            marginRight: 'auto', // Centrado horizontalmente
+            marginRight: 'auto', 
           }}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%' }}>
               <TextField
                 id="nombre"
                 name="nombre"
@@ -139,7 +139,7 @@ const CrearReceta = () => {
                 required
                 fullWidth
                 margin="normal"
-                sx={{ flex: '3', marginBottom: '10px' }} // Ajuste de espacio entre los campos
+                sx={{ flex: '3', marginRight: '10px' }} 
               />
               <TextField
                 id="tiempo"
@@ -152,9 +152,10 @@ const CrearReceta = () => {
                 required
                 fullWidth
                 margin="normal"
-                sx={{ flex: '1', marginBottom: '10px' }} // Ajuste de espacio entre los campos y ancho flexible
+                sx={{ flex: '0.7' }}
               />
             </div>
+
 
             <TextField
               id="proceso"
