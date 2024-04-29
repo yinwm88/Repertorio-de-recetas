@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../../AuthContext';
+import AnimatedTypingText from './AnimatedTypingText';
 
 const CrearReceta = () => {
   const [formData, setFormData] = useState({
@@ -110,105 +111,124 @@ const CrearReceta = () => {
 
 
   return (
-    <div style={{ backgroundColor: '#FADCD9', padding: '20px', borderRadius: '10px', marginTop: '130px' }}>
-      <Typography variant="h6">
-        Seguro tus habilidades culinarias podran inspirar a muchos otros.
-      </Typography>
-      <div>
-        <TextField
-          id="nombre"
-          name="nombre"
-          label="Nombre de la receta"
-          variant="outlined"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          id="tiempo"
-          name="tiempo"
-          label="Tiempo de preparación (minutos)"
-          type="number"
-          variant="outlined"
-          value={tiempo}
-          onChange={(e) => setTiempo(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          id="proceso"
-          name="proceso"
-          label="Proceso de preparación"
-          multiline
-          rows={4}
-          variant="outlined"
-          value={proceso}
-          onChange={(e) => setProceso(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          id="searchIngredient"
-          label="Buscar ingrediente"
-          type="text"
-          fullWidth
-          variant="outlined"
-          value={searchText}
-          onChange={(e) => {
-            const text = e.target.value;
-            setSearchText(text);
-            fetchIngredients(text);
-          }}
-          margin="normal"
-        />
-
-        <List>
-          {searchResults.map((ingrediente) => (
-            <ListItem
-              key={ingrediente.idingrediente}
-              button
-              onClick={() => {
-                setSelectedIngredients([...selectedIngredients, { ...ingrediente, cantidad: 1, unidad: ingrediente.unidad }]);
-                setSearchResults([]);
-                setSearchText('');
-              }}
-            >
-              <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
-            </ListItem>
-          ))}
-        </List>
-
-        <List>
-          {selectedIngredients.map((ing, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
+    <div> 
+        <div style={{marginTop:'20px'}}>
+          <AnimatedTypingText text="  Tus habilidades culinarias podrán inspirar a muchos otros."/>
+        </div>           
+         <div style={{
+            backgroundColor: '#FADCD9',
+            padding: '20px',
+            borderRadius: '10px',
+            marginTop: '40px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '1000px', // Cambiado el ancho máximo para que se adapte al tamaño de la pantalla
+            marginLeft: 'auto',
+            marginRight: 'auto', // Centrado horizontalmente
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
               <TextField
-                type="number"
-                value={ing.cantidad}
-                onChange={(e) => {
-                  const newSelectedIngredients = [...selectedIngredients];
-                  newSelectedIngredients[index].cantidad = Number(e.target.value);
-                  setSelectedIngredients(newSelectedIngredients);
-                }}
+                id="nombre"
+                name="nombre"
+                label="Nombre de la receta"
+                variant="outlined"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+                sx={{ flex: '3', marginBottom: '10px' }} // Ajuste de espacio entre los campos
               />
-              <IconButton onClick={() => {
-                const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
-                setSelectedIngredients(newSelectedIngredients);
-              }}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))}
-        </List>
+              <TextField
+                id="tiempo"
+                name="tiempo"
+                label="Tiempo(minutos)"
+                type="number"
+                variant="outlined"
+                value={tiempo}
+                onChange={(e) => setTiempo(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+                sx={{ flex: '1', marginBottom: '10px' }} // Ajuste de espacio entre los campos y ancho flexible
+              />
+            </div>
 
-        <Button onClick={handleSubmit} variant="contained" color="primary">
-          Crear Receta
-        </Button>
-      </div>
+            <TextField
+              id="proceso"
+              name="proceso"
+              label="Proceso de preparación"
+              multiline
+              rows={4}
+              variant="outlined"
+              value={proceso}
+              onChange={(e) => setProceso(e.target.value)}
+              required
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              id="searchIngredient"
+              label="Buscar ingrediente"
+              type="text"
+              fullWidth
+              variant="outlined"
+              value={searchText}
+              onChange={(e) => {
+                const text = e.target.value;
+                setSearchText(text);
+                fetchIngredients(text);
+              }}
+              margin="normal"
+            />
+
+            <List>
+              {searchResults.map((ingrediente) => (
+                <ListItem
+                  key={ingrediente.idingrediente}
+                  button
+                  onClick={() => {
+                    setSelectedIngredients([...selectedIngredients, { ...ingrediente, cantidad: 1, unidad: ingrediente.unidad }]);
+                    setSearchResults([]);
+                    setSearchText('');
+                  }}
+                >
+                  <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
+                </ListItem>
+              ))}
+            </List>
+
+            <List>
+              {selectedIngredients.map((ing, index) => (
+                <ListItem key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                  <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
+                  <TextField
+                    type="number"
+                    value={ing.cantidad}
+                    onChange={(e) => {
+                      const newSelectedIngredients = [...selectedIngredients];
+                      newSelectedIngredients[index].cantidad = Number(e.target.value);
+                      setSelectedIngredients(newSelectedIngredients);
+                    }}
+                  />
+                  <IconButton onClick={() => {
+                    const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
+                    setSelectedIngredients(newSelectedIngredients);
+                  }}>
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItem>
+              ))}
+            </List>
+          </div>
+
+          <div style={{  padding: '20px', marginTop: '15px', marginLeft: '1100px' }}>
+                <Button onClick={handleSubmit} variant="contained" color="primary">
+                  Crear Receta
+                </Button>
+          </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );

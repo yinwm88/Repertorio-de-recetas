@@ -4,7 +4,7 @@ import { IconButton, Dialog, DialogTitle, Typography,DialogContent, DialogConten
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import EditIcon from '@mui/icons-material/Edit';
+import EditarRecetaCreadaIcon from '@mui/icons-material/Edit';
 import { translate } from '@vitalets/google-translate-api';
 import { useAuth } from '../AuthContext';
 
@@ -46,10 +46,7 @@ fetchRecetaPorNombre('stuffed tomatoes').then(recetas => {
 );
 
 function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails }) {
-    const auth = useAuth();
-    const userEmail = auth.user ? auth.user.email : '';
     const { currentUser } = useAuth();
-
 
     const [error, setError] = useState(null);
 
@@ -61,7 +58,6 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
     const [nombreEditado, setNombre] = useState(name);
     const [procesoEditado, setProceso] = useState(recipeDetails ? recipeDetails.proceso : '');
     const [tiempoEditado, setTiempo] = useState('');
-    const [ingredientesEditados, setIngredientes] = useState('');
 
     const [editOption, setEditOption] = useState('');
 
@@ -186,16 +182,17 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
 
     return (
         <div className={`pin ${pinSize}`} onClick={!openEditModal ? handleOpenDialog : null} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-           
+            {/* Boton icono para editar una receta creada*/}
             <div className="edit" style={{ display: showEditButton ? 'block' : 'none' }}>
                 <IconButton className="editIcon" style={{ position: 'absolute', top: '3px', left: '3px', backgroundColor: 'yellowgreen', '&:hover': { backgroundColor: 'lightgreen' }}} onClick={(e) => {
                     e.stopPropagation();
                     handleOpenEditModal(); 
                 }}>
-                    <EditIcon />
+                    <EditarRecetaCreadaIcon />
                 </IconButton>
             </div>
-
+            
+             {/* Imagen y marcar Fav*/}
             <img className="mainPic" src={imgSrc} alt={name} />
             <div className="contenido">
                 <div className="nombreReceta">
@@ -205,7 +202,8 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                     {favorita ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </IconButton>
             </div>
-            
+    
+            {/*Descripcion de receta*/}
             <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
                 <DialogTitle>{name}</DialogTitle>
                 <DialogContent>
@@ -221,7 +219,7 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                 </DialogActions>
             </Dialog>
 
-                {/* MODAL DE EDICIOM */}
+            {/* MODAL DE EDICIOM  solo las recetas creadas por el usuario pueden editarse*/}
             <Dialog open={openEditModal} onClose={handleCloseEditModal} maxWidth="md" fullWidth> 
                 <DialogTitle style={{ textAlign: 'center' }}>Editando {name} </DialogTitle>
                 
@@ -259,7 +257,7 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                         </>
                     )}
 
-                    {/* Campos de entrada para editar los detalles de la receta */}
+                    {/* Campos de entrada para editar los detalles de la receta*/}
                     {editOption === 'recipeDetails' && (
                         <>
                             <Typography variant="subtitle1" gutterBottom>Nuevos Detalles de la Receta</Typography>
@@ -363,7 +361,10 @@ function Pin({ id, pinSize, imgSrc, name, link, onMarkFavorite, recipeDetails })
                     <Button onClick={handleCloseEditModal}>Cancelar</Button>
                     <Button onClick={handleSaveChanges} color="primary">Guardar</Button>
                 </DialogActions>
-            </Dialog>   
+            </Dialog> 
+
+
+
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
         
