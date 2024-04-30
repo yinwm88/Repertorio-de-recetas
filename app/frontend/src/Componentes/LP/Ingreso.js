@@ -234,6 +234,7 @@ const Ingreso = () => {
                                 <Button
                                     variant="contained"
                                     onClick={handleLogin}
+                                    disabled={!userData.username || !userData.contrasena}
                                 >
                                     Iniciar Sesión
                                 </Button>
