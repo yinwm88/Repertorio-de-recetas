@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Modal, TextField, Box, Typography } from '@mui/material';
+import { Button, Modal, TextField, Box, Typography,CircularProgress } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
+
+
 const Ingreso = () => {
     const navigate = useNavigate();
     const { login } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
 
     const [userData, setUserData] = useState({
         username: '',
-        password: '',
+        contrasena: '',
         nombre: '',
         apellido: '',
         correo: ''
@@ -30,45 +39,78 @@ const Ingreso = () => {
             const response = await fetch('http://localhost:3001/join/ingresar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ correo: userData.username, contrasena: userData.password })
+                body: JSON.stringify({ correo: userData.username, contrasena: userData.contrasena })
             });
             const data = await response.json();
+
 
             if (response.ok) {
                 login(userData.username, data.token);
                 console.log('Datos de usuario:', userData.username, data.token);
                 navigate('/contenido');
+
+
             } else {
-                alert(data.message || 'Error al iniciar sesión');
+                MySwal.fire({
+                    title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> {data.error}</Typography>,
+                    icon: 'error',
+                })
+
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error al conectar con el servidor.');
+            MySwal.fire({
+                title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}>  {error}</Typography>,
+                icon: 'error',
+            })
         }
         setOpen(false);
     };
 
     const handleRegister = async () => {
+        setIsLoading(true);
         try {
             const response = await fetch('http://localhost:3001/join/registrarse', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(userData)
+                body: JSON.stringify({
+                    correo: userData.correo,
+                    nombre: userData.nombre,
+                    apellido: userData.apellido,
+                    contrasena: userData.contrasena
+                })
             });
+
+
             const data = await response.json();
 
+
+
             if (response.ok) {
-                alert('Registro exitoso, por favor inicie sesión.');
+
+                MySwal.fire({
+                    title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> Registro exitoso</Typography>,
+                    icon: 'success',
+                })
                 setMostrarRegistro(false);
             } else {
-                alert(data.message || 'Error al registrar la cuenta');
+                MySwal.fire({
+                    title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> {data.error}</Typography>,
+                    icon: 'error',
+                })
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error al conectar con el servidor.');
+            MySwal.fire({
+                title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> error</Typography>,
+                icon: 'error',
+            })
         }
         setOpen(false);
+        setIsLoading(false);
+
     };
+
 
     const toggleForms = () => {
         setMostrarRegistro(!mostrarRegistro);
@@ -94,7 +136,7 @@ const Ingreso = () => {
                     setOpen(false);
                     setUserData({
                         username: '',
-                        password: '',
+                        contrasena: '',
                         nombre: '',
                         apellido: '',
                         correo: ''
@@ -151,16 +193,19 @@ const Ingreso = () => {
                                 type="password"
                                 variant="outlined"
                                 fullWidth
-                                value={userData.password}
-                                onChange={handleChange('password')}
+                                value={userData.contrasena}
+                                onChange={handleChange('contrasena')}
                             />
                             <Button
                                 variant="contained"
                                 color="success"
                                 onClick={handleRegister}
+                                disabled={!userData.nombre || !userData.apellido || !userData.correo || !userData.contrasena || isLoading}
+                                startIcon={isLoading ? <CircularProgress size={24} /> : null}
                             >
-                                Registrar
+                                {isLoading ? 'Registrando...' : 'Registrar'}
                             </Button>
+
                         </>
                     ) : (
                         <>
@@ -176,8 +221,8 @@ const Ingreso = () => {
                                 type="password"
                                 variant="outlined"
                                 fullWidth
-                                value={userData.password}
-                                onChange={handleChange('password')}
+                                value={userData.contrasena}
+                                onChange={handleChange('contrasena')}
                             />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 2 }}>
                                 <Button
