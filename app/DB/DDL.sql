@@ -50,7 +50,9 @@ create table Receta (
 	imagen Varchar(60),
 	nombre varchar(50),
 	tiempo int,
-	proceso text
+	proceso text,
+	likes int default 0,
+	padre int
 );
 
 alter table Receta alter column idReceta set not null;
@@ -60,6 +62,8 @@ alter table Receta alter column proceso set not null;
 alter table Receta add constraint pkReceta primary key(idReceta);
 alter table Receta add constraint nombreRecetaC1 check(nombre <> ' ');
 alter table Receta add constraint nombreRecetaC2 check(nombre ~ '^[a-zÑñA-ZáéíóúÁÉÍÓÚüÜ -]*$');
+alter table Receta add constraint fkRecetaVariacion foreign key(padre) references Receta(idReceta)
+on update cascade on delete cascade;
 alter table Receta add constraint fkRecetaUsario foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
 
