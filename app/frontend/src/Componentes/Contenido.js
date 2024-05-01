@@ -184,7 +184,7 @@ function Contenido() {
 
     // URL de búsqueda para cada API
     const urls = [
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName +' dish')}&client_id=${unsplashApiKey}`,
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName )}&client_id=${unsplashApiKey}`,
       `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName + ' food')}&format=json&nojsoncallback=1`,
       `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
       `https://api.pexels.com/v1/search?query=${encodeURIComponent(recipeName + ' dish')}&per_page=1`,
