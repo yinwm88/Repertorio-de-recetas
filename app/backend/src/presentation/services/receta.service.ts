@@ -119,6 +119,13 @@ export class RecetaService {
                     cantidad : true
                 }
             });
+            const variaciones = await prisma.receta.findMany({
+                where: { padre: receta.idreceta },
+                select: {
+                    nombre: true,
+                    idreceta: true
+                }
+            });
             const utensilios = await prisma.necesitar.findMany({
                 where : { idreceta : idReceta}
             });
@@ -127,7 +134,8 @@ export class RecetaService {
                 tiempo: receta?.tiempo,
                 proceso: receta?.proceso,
                 ingredientes : ingredientes,
-                utensilios : utensilios
+                utensilios : utensilios,
+                variaciones: variaciones
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
