@@ -183,7 +183,8 @@ export class RecetaService {
             where: { idreceta: datosReceta.idReceta }
         });
         if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
-        if ( recetaExiste.correo !== usuarioExiste.correo ) throw ErrorCustomizado.noAutorizado( 'La receta pertenece a este usuario' );
+        if ( !recetaExiste.correo ) throw ErrorCustomizado.badRequest( 'La receta no puede ser editada' );
+        if ( recetaExiste.correo !== usuarioExiste.correo ) throw ErrorCustomizado.noAutorizado( 'La receta no pertenece a este usuario' );
 
         try {
             const recetaActualizada = await prisma.receta.update({

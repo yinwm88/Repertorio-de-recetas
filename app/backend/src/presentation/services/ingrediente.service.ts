@@ -19,6 +19,7 @@ export class IngredienteService {
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
         try {
+            const fechaActual = new Date();
             const ingrediente = await prisma.teneringrediente.upsert({
                 where:{
                     tenerId:{
@@ -27,6 +28,7 @@ export class IngredienteService {
                     }
                 },
                 update:{
+                    fecha: fechaActual,
                     cantidad: {
                         increment: manipularIngredienteDto.cantidad
                     }
@@ -34,7 +36,8 @@ export class IngredienteService {
                 create:{
                     idingrediente:+manipularIngredienteDto.idIngrediente,
                     correo:usuario.correo,
-                    cantidad: manipularIngredienteDto.cantidad                    
+                    cantidad: manipularIngredienteDto.cantidad,
+                    fecha: fechaActual                    
                 }
             });
             return {
