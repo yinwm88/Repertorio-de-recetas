@@ -19,6 +19,7 @@ export class UsuarioService {
         
         const hash: string = usuario.contrasena;
         const salt: string = usuario.salt!;
+        if ( !usuario.verificado ) throw ErrorCustomizado.badRequest( 'Usuario no verificado' );
         if ( !Encriptador.compararContrasena(ingresarUsuarioDto.contrasena, hash, salt) ) {
             throw ErrorCustomizado.badRequest( 'Contraseña incorrecta' );
         }

@@ -12,7 +12,6 @@ export class RutasReceta{
         const controlador = new ControladorRecetas(recetaService);
 
         router.get('/datosReceta/:idReceta', controlador.datosReceta );
-        router.get('/crearCopia/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
         router.post('/recetasFavoritas', controlador.recetasFavoritas );
         router.post('/recetasIncompletas', controlador.recetasIncompletas );
@@ -21,6 +20,7 @@ export class RutasReceta{
         router.put('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
         router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
         router.get('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
+        router.post('/nuevaVariacion', [ JoinMiddleware.validarJwt ], controlador.crearVariacion );
 
         return router;
     }

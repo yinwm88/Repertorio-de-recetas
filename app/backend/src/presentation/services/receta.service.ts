@@ -162,10 +162,54 @@ export class RecetaService {
 
             return {
                 recta:{
-                    nombre: recetaNueva?.nombre,
-                    tiempo: recetaNueva?.tiempo,
-                    proceso: recetaNueva?.proceso,
+                    nombre: recetaNueva.nombre,
+                    tiempo: recetaNueva.tiempo,
+                    proceso: recetaNueva.proceso,
                     ingredientes: recetaIngredientesDto.ingredientes
+                },
+                correo: usuario.correo
+            }
+        }catch (error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
+        });
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        try {
+            const recetaNueva = await prisma.receta.create({
+                data: {
+                    nombre: datosReceta.nombre,
+                    tiempo: datosReceta.tiempo,
+                    proceso: datosReceta.proceso,
+                    correo: usuario.correo,
+                    padre: datosReceta.idReceta
+                }    
+            }); 
+
+            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+                await prisma.haberingrediente.create({
+                    data: {
+                        idreceta: recetaNueva.idreceta ,
+                        idingrediente: +ingrediente.idIngrediente,
+                        cantidad: +ingrediente.cantidad
+                    }
+                });
+            });
+
+            return {
+                recta:{
+                    idReceta: recetaNueva.idreceta,
+                    nombre: recetaNueva.nombre,
+                    tiempo: recetaNueva.tiempo,
+                    proceso: recetaNueva.proceso,
+                    recetaPadre: recetaNueva.padre,
+                    likes: recetaNueva.likes,
+                    ingredientes: recetaIngredientesDto.ingredientes,
                 },
                 correo: usuario.correo
             }

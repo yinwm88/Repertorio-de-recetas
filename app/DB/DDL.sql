@@ -13,7 +13,7 @@ create table Usuario (
     objetivo objetivos,
     contrasena varchar(200),
     salt varchar(200),
-    verificado bool
+    verificado bool default FALSE
 ); 
 
 alter table Usuario alter column correo set not null;

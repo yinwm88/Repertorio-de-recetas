@@ -31,7 +31,7 @@ model haberingrediente {
   receta        receta      @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkhaberingrediente1")
   ingrediente   ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkhaberingrediente2")
 
-  @@unique( name: "haberIngredienteId", [idreceta, idingrediente], map: "uniquehaberingrediente1")
+  @@unique([idreceta, idingrediente], name: "haberIngredienteId", map: "uniquehaberingrediente1")
 }
 
 model ingrediente {
@@ -80,11 +80,15 @@ model receta {
   nombre                String                  @db.VarChar(50)
   tiempo                Int?
   proceso               String
+  likes                 Int?                    @default(0)
+  padre                 Int?
   caracteristicasreceta caracteristicasreceta[]
   haberingrediente      haberingrediente[]
   necesitar             necesitar[]
   preferir              preferir[]
   usuario               usuario?                @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkrecetausario")
+  receta                receta?                 @relation("recetaToreceta", fields: [padre], references: [idreceta], onDelete: Cascade, map: "fkrecetavariacion")
+  other_receta          receta[]                @relation("recetaToreceta")
   tiporeceta            tiporeceta[]
 }
 
@@ -101,7 +105,7 @@ model seralergico {
 model teneringrediente {
   correo         String      @db.VarChar(70)
   idingrediente  Int
-  cantidad       Decimal     @db.Decimal(5, 2)
+  cantidad       Decimal     @db.Decimal(10, 2)
   fecha          DateTime?   @db.Date
   fechacaducidad DateTime?   @db.Date
   usuario        usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkteneringrediente1")
@@ -129,7 +133,7 @@ model usuario {
   objetivo         objetivos?
   contrasena       String             @db.VarChar(200)
   salt             String?            @db.VarChar(200)
-  verificado       Boolean?
+  verificado       Boolean?           @default(false)
   poseer           poseer[]
   preferir         preferir[]
   receta           receta[]
