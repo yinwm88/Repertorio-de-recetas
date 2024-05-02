@@ -19,8 +19,19 @@ export class IngredienteService {
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
         try {
-            const ingrediente = await prisma.teneringrediente.create({
-                data:{
+            const ingrediente = await prisma.teneringrediente.upsert({
+                where:{
+                    tenerId:{
+                        idingrediente:+manipularIngredienteDto.idIngrediente,
+                        correo:usuario.correo
+                    }
+                },
+                update:{
+                    cantidad: {
+                        increment: manipularIngredienteDto.cantidad
+                    }
+                },
+                create:{
                     idingrediente:+manipularIngredienteDto.idIngrediente,
                     correo:usuario.correo,
                     cantidad: manipularIngredienteDto.cantidad                    
