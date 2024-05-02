@@ -6,4 +6,3 @@ export * from './entities/IngredienteUsuario.entidad';
 export * from './entities/receta.entidad';
 export * from './entities/ingrediente.entidad';
 export * from './entities/ingredienteReceta.entidad';
-export * from './interfaces/InformacionReceta.interface';

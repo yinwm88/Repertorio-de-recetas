@@ -121,10 +121,12 @@ export class RecetaService {
             });
             const variaciones = await prisma.receta.findMany({
                 where: { padre: receta.idreceta },
+                take: 10,
+                orderBy: { likes: 'asc' },
                 select: {
                     nombre: true,
                     idreceta: true
-                }
+                },
             });
             const utensilios = await prisma.necesitar.findMany({
                 where : { idreceta : idReceta}
