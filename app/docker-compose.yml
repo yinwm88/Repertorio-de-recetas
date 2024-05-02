@@ -14,12 +14,12 @@ services:
     depends_on:
       - postgres
 
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
+  frontend:
+     build:
+       context: ./frontend
+       dockerfile: Dockerfile
+     ports:
+       - "3000:3000"
 
   postgres:
     image: postgres:latest
