@@ -362,5 +362,8 @@ export class RecetaService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-    }   
+    }
+
+    //TODO: Implementar esta cosa
+    async crearListaCompra(correo: string, idReceta : number){}
 }
