@@ -67,7 +67,7 @@ export class RecetaService {
                     } else {
                         return { idingrediente: ingredienteReceta.idingrediente, cantidadFaltante: 0 };
                     }
-                });
+                }).filter(ingrediente => ingrediente.cantidadFaltante > 0);
 
                 const porcentajeIngredientes = Number(((ingredientesUsuarioTotal / ingredientesRecetaTotal) * 100).toFixed(2));
 
