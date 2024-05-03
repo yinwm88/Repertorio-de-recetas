@@ -1,13 +1,78 @@
+import { error } from "console";
 import { prisma } from "../../data/postgres";
-import { ErrorCustomizado } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado } from "../../domain";
 
 export class UtensilioService {
 
     constructor() {}
 
-    async activarUtensilio( idUtensilio: number ) {}
+    //TODO: Corregir error en la respuesta
+    async activarUtensilio( idUtensilio: number, usuario: EntidadUsuario ) {
+        const utensilioExiste = await prisma.electrodomestico.findUnique({
+            where: { idelectro: idUtensilio }
+        });
+        if ( !utensilioExiste ) throw ErrorCustomizado.badRequest( 'Utensilio no existe' );
+        const utensilioAgregado = await prisma.poseer.findUnique({
+            where: {
+                poseerID:{
+                    correo: usuario.correo,
+                    idelectro: idUtensilio
+                }
+            }
+        })
+        if ( utensilioAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio ya esta agregado' );
 
-    async desactivarUtensilio( idUtensilio: number ) {}
+        try {            
+            const utensilio = await prisma.poseer.create({
+                data: {
+                    idelectro: idUtensilio,
+                    correo: usuario.correo
+                }
+            });
+            return {
+                idUtensilio:utensilio.idelectro,
+                correo:utensilio.correo
+            } 
+        } catch (error) {
+            console.log(error)
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async desactivarUtensilio( idUtensilio: number, usuario: EntidadUsuario ) {
+        const utensilioExiste = await prisma.electrodomestico.findUnique({
+            where: { idelectro: idUtensilio }
+        });
+        if ( !utensilioExiste ) throw ErrorCustomizado.badRequest( 'Utensilio no existe' );
+        const utensilioNoAgregado = await prisma.poseer.findUnique({
+            where: {
+                poseerID:{
+                    correo: usuario.correo,
+                    idelectro: idUtensilio
+                }
+            }
+        })
+        if ( !utensilioNoAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio no ha sido agregado' );
+
+        try {            
+            const utensilio = await prisma.poseer.delete({
+                where:{
+                    poseerID:{
+                        correo: usuario.correo,
+                        idelectro: idUtensilio
+                    }
+                }
+            });
+            return {
+                idUtensilio:utensilio.idelectro,
+                correo:utensilio.correo
+            } 
+        } catch (error) {
+            console.log(error)
+
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
     
     async buscarUtensilio( cadenaUtensilio: string ) {
         try {

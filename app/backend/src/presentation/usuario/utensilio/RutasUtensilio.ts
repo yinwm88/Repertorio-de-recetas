@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { controladorUtensilio } from "./ControladorUtensilio";
 import { UtensilioService } from "../../services";
+import { JoinMiddleware } from "../../middlewares/join.middleware";
 
 export class RutasUtensilio {
 
@@ -10,8 +11,8 @@ export class RutasUtensilio {
         const controlador:controladorUtensilio = new controladorUtensilio( utensilioService );
 
         router.get('/', controlador.obtenerUtensilios );
-        router.put('/:idUtensilio/active', controlador.activarUtensilio );
-        router.delete('/:idUtensilio', controlador.desactivarUtensilio );
+        router.put('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
+        router.delete('/:idUtensilio', [ JoinMiddleware.validarJwt ], controlador.desactivarUtensilio );
         router.post('/buscar', controlador.buscarUtensilio );
 
         return router;

@@ -20,6 +20,7 @@ model electrodomestico {
   idelectro Int         @id(map: "pkelectro") @default(autoincrement())
   nombre    String      @unique(map: "nombreelectro") @db.VarChar(50)
   sustituto Int?
+  icono     String?     @db.VarChar(60)
   necesitar necesitar[]
   poseer    poseer[]
 }
@@ -51,7 +52,7 @@ model necesitar {
   electrodomestico electrodomestico @relation(fields: [idelectro], references: [idelectro], onDelete: Cascade, map: "fknecesitarelect")
   receta           receta           @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fknecesitarreceta")
 
-  @@unique([idelectro, idreceta], map: "uniquenecesitar")
+  @@unique([idelectro, idreceta], name: "necesitarID", map: "uniquenecesitar")
 }
 
 model poseer {
@@ -60,7 +61,7 @@ model poseer {
   electrodomestico electrodomestico @relation(fields: [idelectro], references: [idelectro], onDelete: Cascade, map: "fkposeerelect")
   usuario          usuario          @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkposeerusua")
 
-  @@unique([idelectro, correo], map: "uniqueposeer")
+  @@unique([idelectro, correo], name: "poseerID", map: "uniqueposeer")
 }
 
 model preferir {
