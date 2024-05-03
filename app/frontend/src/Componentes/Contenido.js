@@ -31,80 +31,114 @@ function Contenido() {
 
   const { currentUser, getToken } = useAuth();
 
-
   useEffect(() => {
     const fetchUserRecetas = async () => {
-      const response = await fetch('http://localhost:3001/receta/recetasUsuario', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getToken()}`,
+      try {
+        const response = await fetch('http://localhost:3001/receta/recetasUsuario', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`,
+          },
+        });
 
-        },
+        // Manejo de errores por fallos en el HTTP
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-      });
+        const data = await response.json();
 
-      const data = await response.json();
+        // Verificación de si 'recetas' existe y es un array
+        if (!Array.isArray(data.recetas)) {
+          throw new Error('Invalid data format');
+        }
 
-      console.log('ALLDATA', data)
+        const userRecipesDetails = await Promise.all(data.recetas.map(async (receta) => {
+          const imageUrl = await fetchImageForRecipe(receta.nombre); // Reutiliza tu función existente para obtener imágenes
 
-      const userRecipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-        const imageUrl = await fetchImageForRecipe(receta.nombre); // Reutiliza tu función existente para obtener imágenes
+          return {
+            id: receta.idreceta,
+            ...receta,
+            imageUrl,
+          };
+        }));
 
-        return {
-          id: receta.idreceta,
-          ...receta,
-          imageUrl,
-        };
-      }));
+        setUserRecipes(userRecipesDetails);
+      } catch (error) {
+        console.error('Error fetching user recipes:', error);
 
-      setUserRecipes(userRecipesDetails);
+        setUserRecipes([]);
+      }
     };
 
     fetchUserRecetas();
   }, [currentUser, lastUpdate]);
 
-
   //Generar Recetas
   useEffect(() => {
     const fetchRecetas = async () => {
-      // Paso 2: Fetchear la lista de recetas que el usuario puede hacer
-      const response = await fetch('http://localhost:3001/receta/recetasIncompletas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          correo: currentUser,
-        }),
-      });
-
-      const data = await response.json();
-
-      console.log('Datos Recibidos', data)
-
-      // Paso 3: Fetchear los detalles de cada receta
-      const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
-          method: 'GET',
+      try {
+        // Fetchear la lista de recetas que el usuario puede hacer
+        const response = await fetch('http://localhost:3001/receta/recetasIncompletas', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-
+          body: JSON.stringify({
+            correo: currentUser,
+          }),
         });
 
-        const dataReceta = await responseReceta.json();
-        // console.log('Receta recibida:', dataReceta)
-        const imageUrl = await fetchImageForRecipe(dataReceta.nombre); // Usa tu función existente para obtener la imagen
+        // Manejo de errores por fallos en el HTTP
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-        return {
-          id: receta.idreceta,
-          ...dataReceta,
-          imageUrl,
-        };
-      }));
+        const data = await response.json();
 
-      setRecipes(recipesDetails);
+        // Verificación de si 'recetas' existe y es un array
+        if (!Array.isArray(data.recetas)) {
+          throw new Error('Invalid data format');
+        }
+
+        // Fetchear los detalles de cada receta
+        const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
+          const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          // Manejo de errores en la segunda petición
+          if (!responseReceta.ok) {
+            throw new Error(`HTTP error! Status: ${responseReceta.status}`);
+          }
+
+          const dataReceta = await responseReceta.json();
+
+          // Verificación de datos recibidos
+          if (!dataReceta.nombre) {
+            throw new Error('Invalid recipe data');
+          }
+
+          const imageUrl = await fetchImageForRecipe(dataReceta.nombre); // Usa tu función existente para obtener la imagen
+
+          return {
+            id: receta.idreceta,
+            ...dataReceta,
+            imageUrl,
+          };
+        }));
+
+        setRecipes(recipesDetails);
+      } catch (error) {
+        console.error('Error fetching recipes:', error);
+
+        // Aquí puedes establecer un estado de error para notificar al usuario
+        setRecipes([]); // Usar un arreglo vacío como fallback
+      }
     };
 
     fetchRecetas();
@@ -184,7 +218,7 @@ function Contenido() {
 
     // URL de búsqueda para cada API
     const urls = [
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName )}&client_id=${unsplashApiKey}`,
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${unsplashApiKey}`,
       `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName + ' food')}&format=json&nojsoncallback=1`,
       `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
       `https://api.pexels.com/v1/search?query=${encodeURIComponent(recipeName + ' dish')}&per_page=1`,
