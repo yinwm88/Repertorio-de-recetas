@@ -14,7 +14,6 @@ export class RutasReceta{
         router.get('/datosReceta/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
         router.post('/recetasFavoritas', controlador.recetasFavoritas );
-        router.post('/recetasIncompletas', controlador.recetasIncompletas );
         
         router.get('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
         router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );

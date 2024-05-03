@@ -20,7 +20,6 @@ model electrodomestico {
   idelectro Int         @id(map: "pkelectro") @default(autoincrement())
   nombre    String      @unique(map: "nombreelectro") @db.VarChar(50)
   sustituto Int?
-  icono     String?     @db.VarChar(60)
   necesitar necesitar[]
   poseer    poseer[]
 }
@@ -134,7 +133,7 @@ model usuario {
   objetivo         objetivos?
   contrasena       String             @db.VarChar(200)
   salt             String?            @db.VarChar(200)
-  verificado       Boolean?           @default(false)
+  verificado       Boolean?
   poseer           poseer[]
   preferir         preferir[]
   receta           receta[]
