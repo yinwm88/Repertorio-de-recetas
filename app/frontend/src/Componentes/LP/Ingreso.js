@@ -119,6 +119,19 @@ const Ingreso = () => {
         }
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            if (mostrarRegistro) {
+                if (userData.nombre && userData.apellido && userData.correo && userData.contrasena && !isLoading) {
+                    handleRegister();
+                }
+            } else {
+                if (userData.username && userData.contrasena) {
+                    handleLogin();
+                }
+            }
+        }
+    };
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
             <Button
@@ -159,7 +172,6 @@ const Ingreso = () => {
                 }}>
                     {mostrarRegistro ? (
                         <>
-
                             <Button
                                 startIcon={<ArrowBackIcon />}
                                 onClick={toggleForms}
@@ -177,6 +189,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.nombre}
                                 onChange={handleChange('nombre')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="Apellido"
@@ -184,6 +197,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.apellido}
                                 onChange={handleChange('apellido')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="e-mail"
@@ -191,6 +205,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.correo}
                                 onChange={handleChange('correo')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="Contraseña"
@@ -199,6 +214,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.contrasena}
                                 onChange={handleChange('contrasena')}
+                                onKeyPress={handleKeyPress}
                             />
                             <Button
                                 variant="contained"
@@ -209,7 +225,6 @@ const Ingreso = () => {
                             >
                                 {isLoading ? 'Registrando...' : 'Registrar'}
                             </Button>
-
                         </>
                     ) : (
                         <>
@@ -222,6 +237,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.username}
                                 onChange={handleChange('username')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="Contraseña"
@@ -230,6 +246,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.contrasena}
                                 onChange={handleChange('contrasena')}
+                                onKeyPress={handleKeyPress}
                             />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 2 }}>
                                 <Button
@@ -253,6 +270,4 @@ const Ingreso = () => {
         </Box>
     );
 };
-
-
 export default Ingreso;
