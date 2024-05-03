@@ -59,9 +59,10 @@ const Ingreso = () => {
         } catch (error) {
             console.error('Error:', error);
             MySwal.fire({
-                title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}>  {error}</Typography>,
+                title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}>{error.message}</Typography>,
                 icon: 'error',
             })
+
         }
         setOpen(false);
     };
