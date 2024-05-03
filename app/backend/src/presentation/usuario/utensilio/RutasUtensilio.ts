@@ -9,10 +9,10 @@ export class RutasUtensilio {
         const utensilioService: UtensilioService = new UtensilioService();
         const controlador:controladorUtensilio = new controladorUtensilio( utensilioService );
 
+        router.get('/', controlador.obtenerUtensilios );
         router.put('/:idUtensilio/active', controlador.activarUtensilio );
         router.delete('/:idUtensilio', controlador.desactivarUtensilio );
         router.post('/buscar', controlador.buscarUtensilio );
-        router.get('/', controlador.obtenerUtensilios );
 
         return router;
     }

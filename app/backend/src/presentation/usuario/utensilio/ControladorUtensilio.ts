@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ErrorCustomizado } from "../../../domain";
 import { UtensilioService } from "../../services";
+import { error } from "console";
 
 export class controladorUtensilio {
 
@@ -18,7 +19,7 @@ export class controladorUtensilio {
 
     public activarUtensilio = ( req: Request, res: Response ) => {
         const { idUtensilio } = req.params;
-        if ( !idUtensilio ) return res.status(400).json('Falta el idUtensilio');
+        if ( !idUtensilio ) return res.status(400).json({error:'Falta el idUtensilio'});
 
         this.utensilioService.activarUtensilio( +idUtensilio )
         .then( utensilio => res.status(200).json( utensilio ))
@@ -27,7 +28,7 @@ export class controladorUtensilio {
 
     public desactivarUtensilio = ( req: Request, res: Response) => {
         const { idUtensilio } = req.params;
-        if ( !idUtensilio ) return res.status(400).json('Falta el idUtensilio');
+        if ( !idUtensilio ) return res.status(400).json({error:'Falta el idUtensilio'});
 
         this.utensilioService.desactivarUtensilio( +idUtensilio )
         .then( utensilio => res.status(200).json( utensilio ))
@@ -36,7 +37,7 @@ export class controladorUtensilio {
 
     public buscarUtensilio = ( req: Request, res: Response) => {
         const { utensilio } = req.body;
-        if ( !utensilio ) return res.status(400).json('Falta el nombre del utensilio');
+        if ( !utensilio ) return res.status(400).json({error:'Falta el nombre del utensilio'});
 
         this.utensilioService.buscarUtensilio( utensilio )
         .then( utensilio => res.status(200).json( utensilio ))
