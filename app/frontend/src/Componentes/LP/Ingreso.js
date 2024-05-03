@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal, TextField, Box, Typography,CircularProgress } from '@mui/material';
+import { Button, Modal, TextField, Box, Typography, CircularProgress } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -159,6 +158,7 @@ const Ingreso = () => {
                 }}>
                     {mostrarRegistro ? (
                         <>
+
                             <Button
                                 startIcon={<ArrowBackIcon />}
                                 onClick={toggleForms}
@@ -167,6 +167,9 @@ const Ingreso = () => {
                             >
                                 Regresar
                             </Button>
+                            <Typography sx={{ fontSize: { xs: '1.5rem', md: '1.4rem', fontWeight: 'bold' }, textAlign: 'left' }}>
+                                Registro
+                            </Typography>
                             <TextField
                                 label="Nombre"
                                 variant="outlined"
@@ -209,6 +212,9 @@ const Ingreso = () => {
                         </>
                     ) : (
                         <>
+                            <Typography sx={{ fontSize: { xs: '1.5rem', md: '1.4rem', fontWeight: 'bold' }, textAlign: 'left' }}>
+                                Iniciar sesión
+                            </Typography>
                             <TextField
                                 label="Usuario"
                                 variant="outlined"

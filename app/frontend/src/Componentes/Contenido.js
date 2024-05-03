@@ -7,7 +7,6 @@ import Masonry from '@mui/lab/Masonry';
 import FormOpcional from './RegistrosFormOp/FormOpcional';
 
 import CrearReceta from './CrearReceta/CrearReceta';
-import BotonParaCrearReceta from './CrearReceta/BotonParaCrearReceta';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Pin from './Pin';
@@ -18,68 +17,23 @@ import { useAuth, getToken } from '../AuthContext';
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(20);
   const [lastKey, setLastKey] = useState('');
   const [searchText, setSearchText] = useState('');
   const [lastUpdate, setLastUpdate] = useState(Date.now());
-
   const [showForm, setShowForm] = useState(true);
   const handleFormClose = () => setShowForm(false);
-
   const { currentUser, getToken } = useAuth();
 
-  useEffect(() => {
-    const fetchUserRecetas = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/receta/recetasUsuario', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`,
-          },
-        });
+  const [isAgregarRecetaOpen, setIsAgregarRecetaOpen] = useState(false);
+  const handleOpenAgregarReceta = () => setIsAgregarRecetaOpen(true);
+  const handleCloseAgregarReceta = () => setIsAgregarRecetaOpen(false);
 
-        // Manejo de errores por fallos en el HTTP
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
 
-        const data = await response.json();
-
-        // Verificación de si 'recetas' existe y es un array
-        if (!Array.isArray(data.recetas)) {
-          throw new Error('Invalid data format');
-        }
-
-        const userRecipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-          const imageUrl = await fetchImageForRecipe(receta.nombre); // Reutiliza tu función existente para obtener imágenes
-
-          return {
-            id: receta.idreceta,
-            ...receta,
-            imageUrl,
-          };
-        }));
-
-        setUserRecipes(userRecipesDetails);
-      } catch (error) {
-        console.error('Error fetching user recipes:', error);
-
-        setUserRecipes([]);
-      }
-    };
-
-    fetchUserRecetas();
-  }, [currentUser, lastUpdate]);
-
-  //Generar Recetas
   useEffect(() => {
     const fetchRecetas = async () => {
       try {
-        // Fetchear la lista de recetas que el usuario puede hacer
         const response = await fetch('http://localhost:3001/receta/recetasIncompletas', {
           method: 'POST',
           headers: {
@@ -90,19 +44,16 @@ function Contenido() {
           }),
         });
 
-        // Manejo de errores por fallos en el HTTP
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        // Verificación de si 'recetas' existe y es un array
         if (!Array.isArray(data.recetas)) {
           throw new Error('Invalid data format');
         }
 
-        // Fetchear los detalles de cada receta
         const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
           const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
             method: 'GET',
@@ -111,117 +62,58 @@ function Contenido() {
             },
           });
 
-          // Manejo de errores en la segunda petición
           if (!responseReceta.ok) {
-            throw new Error(`HTTP error! Status: ${responseReceta.status}`);
+            // throw new Error(`HTTP error! Status: ${responseReceta.status}`);
+            console.log(`HTTP error! Status: ${responseReceta.status}`);
           }
 
           const dataReceta = await responseReceta.json();
 
-          // Verificación de datos recibidos
           if (!dataReceta.nombre) {
-            throw new Error('Invalid recipe data');
+            console.log('Invalid data format');
           }
 
-          const imageUrl = await fetchImageForRecipe(dataReceta.nombre); // Usa tu función existente para obtener la imagen
+          const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
 
           return {
             id: receta.idreceta,
             ...dataReceta,
+            porcentaje: receta.porcentaje,
             imageUrl,
           };
         }));
 
+        // console.log('Recipes:', recipesDetails)
         setRecipes(recipesDetails);
+        filtrarRecetas(recipesDetails);
       } catch (error) {
         console.error('Error fetching recipes:', error);
 
-        // Aquí puedes establecer un estado de error para notificar al usuario
-        setRecipes([]); // Usar un arreglo vacío como fallback
+        setRecipes([]);
       }
     };
 
     fetchRecetas();
   }, [lastUpdate]);
 
-  // Añadir una función para manejar cambios en la búsqueda
-  const handleSearchChange = (text) => {
-    setSearchText(text.toLowerCase());
-  };
-  // Filtrar recetas basadas en el texto de búsqueda antes de renderizarlas
-  // const filteredRecipes = recipes.filter(recipe =>
-  //   recipe.title.toLowerCase().includes(searchText)
-  // );
 
 
-  // ----------------FIREBASE
 
-  // useEffect(() => {
-  //   fetchRecipes();
-  // }, [currentPage]); // Dependencia actualizada a currentPage
-
-  // const fetchRecipes = () => {
-  //   console.log("Intentando recuperar recetas...");
-  //   let query = db.ref('recetas').orderByKey().limitToFirst(recipesPerPage);
-
-  //   if (lastKey) {
-  //     query = query.startAt(lastKey);
-  //   }
-
-  //   query.once('value', async (snapshot) => {
-  //     console.log("Datos recibidos de Firebase:", snapshot.val());
-  //     const recipesData = snapshot.val();
-  //     if (!recipesData) {
-  //       return;
-  //     }
-
-  //     const recipesList = await Promise.all(Object.keys(recipesData).map(async (key) => {
-  //       const imageUrl = await fetchImageForRecipe(recipesData[key].title); // Buscar la imagen basada en el título de la receta
-  //       return {
-  //         id: key,
-  //         ...recipesData[key],
-  //         imageUrl, // Agregar la URL de la imagen a la receta
-  //       };
-  //     }));
-
-  //     // Actualizar el estado con las nuevas recetas, incluidas las imágenes
-  //     if (recipesList.length > 0) {
-  //       setLastKey(recipesList[recipesList.length - 1].id);
-  //       setRecipes(recipes.concat(recipesList));
-  //     }
-  //   });
-  // };
-
-  // Cambiar página
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // Ajustar la lógica para mostrar las recetas actuales basadas en la paginación
-  const currentRecipes = recipes.slice(0, currentPage * recipesPerPage);
-
-  // Estilo para el contenedor desplazable
-  const scrollableContainerStyle = {
-    maxHeight: '600px',
-    overflowY: 'auto'
-  };
-
-  // ----------------FIREBASE
 
   const fetchImageForRecipe = async (recipeName) => {
 
 
 
-    // Claves API para cada servicio
     const unsplashApiKey = 'b_AdzULWC-uN9c6WbeuSD0wN7kSgl0FT1ir-vpelHD8';
     const pexelsApiKey = 'sY5tEwT4E7thugNrTx8eoLbu2YLlBri6ZtsQy5Fq1ULDLaewybrFuvDg';
     const pixabayApiKey = '43641615-297e61c4d9af146e80502ee5b';
     const flickrApiKey = '901aeda7df55b720f817e24c8de7455e';
-
-    // URL de búsqueda para cada API
     const urls = [
-      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${unsplashApiKey}`,
-      `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName + ' food')}&format=json&nojsoncallback=1`,
-      `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
-      `https://api.pexels.com/v1/search?query=${encodeURIComponent(recipeName + ' dish')}&per_page=1`,
+      `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${unsplashApiKey}&collections=food,comida&per_page=1`,
+      `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1&tags=comida,food`,
+
+      `https://api.pexels.com/v1/search?query=${encodeURIComponent('food' + recipeName)}&per_page=1`,
+      `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food' + recipeName)}`,
 
 
     ];
@@ -281,63 +173,62 @@ function Contenido() {
     }
   };
 
-  // const clickButton = () => {
-  //   console.log(getToken())
-  // }
+  const [filtroTiempo, setFiltroTiempo] = useState([0, 120]);
+
+const filtrarRecetas = (recetas) => {
+  return recetas
+    .filter((receta) =>
+      receta.tiempo >= filtroTiempo[0] && receta.tiempo <= filtroTiempo[1] &&
+      receta.nombre.toLowerCase().includes(searchText.toLowerCase())
+    )
+    .sort((a, b) => b.porcentaje - a.porcentaje);
+};
 
   return (
     <Container maxWidth="false" className='contenido'>
 
       {showForm && <FormOpcional onClose={handleFormClose} />}
+      <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} />
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
-          <BotonParaCrearReceta />
+          <FiltroRecetas
+            onSearchChange={setSearchText}
+            onTimeChange={setFiltroTiempo}
 
+          />
+          <Button variant='semiContained' onClick={handleOpenAgregarReceta}>Crear Nueva Receta</Button>
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
-
         </Grid>
 
         <Grid item sm={12} md={8}>
-          <FiltroRecetas />
-          <Container maxWidth="false" className="contenido">
-            <h1>Mis recetas</h1>
-            <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
-              {
-                userRecipes.map((recipe) => (
-                  <Pin
-                    id={recipe.id}
-                    onMarkFavorite={markAsFavorite}
-                    key={recipe.id}
-                    pinSize={recipe.pinSize || "medium"}
-                    imgSrc={recipe.imageUrl}
-                    name={recipe.nombre}
-                    link={`/receta/${recipe.id}`} // Asume que tienes una ruta para mostrar los detalles de la receta
-                    recipeDetails={recipe}
-                  />
-                ))
-              }
-            </Masonry>
-            <h1>Recetas de la Comunidad</h1>
-            <Masonry columns={{ xs: 2, sm: 3, md: 4 }} spacing={2}>
-              {recipes.map((recipe) => (
-                //renderiza solo si tiene id 
-                recipe.id && (
-                  <Pin
-                    id={recipe.id}
-                    onMarkFavorite={markAsFavorite}
-                    key={recipe.id}
-                    pinSize={recipe.pinSize || "medium"}
-                    imgSrc={recipe.imageUrl}
-                    name={recipe.nombre}
-                    link={`/receta/${recipe.id}`} // Asume que tienes una ruta para mostrar los detalles de la receta
-                    recipeDetails={recipe}
-                  />
-                )
-              ))}
-            </Masonry>
-          </Container>
+
+          <div className="scrollable-container">
+            <Container maxWidth="false" className='contenido' style={{ height: '100vh' }}>
+
+
+              <h1>Recetas</h1>
+              <Masonry columns={{ xs: 2, sm: 3, md: 3 }} spacing={2.5}>
+                {filtrarRecetas(recipes).map((recipe) =>
+                  recipe.id && recipe.porcentaje > 0 && (
+                    <Pin
+                      id={recipe.id}
+                      onMarkFavorite={markAsFavorite}
+                      key={recipe.id}
+                      porcentaje={recipe.porcentaje}
+                      pinSize={recipe.pinSize || "medium"}
+                      imgSrc={recipe.imageUrl}
+                      name={recipe.nombre}
+                      link={`/receta/${recipe.id}`}
+                      recipeDetails={recipe}
+                    />
+                  )
+                )}
+              </Masonry>
+            </Container>
+          </div>
         </Grid>
+
 
       </Grid>
     </Container>

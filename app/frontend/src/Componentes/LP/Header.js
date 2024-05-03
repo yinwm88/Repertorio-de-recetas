@@ -35,7 +35,7 @@ const Header = () => {
                 position: 'absolute',
                 top: 0,
                 left: 0,
-                width: '100%', 
+                width: '100%',
                 height: '100%',
                 display: 'flex',
                 flexDirection: { xs: 'column', md: 'row' },
@@ -54,7 +54,7 @@ const Header = () => {
                 paddingTop: { xs: '20px', md: '10px' },
                 marginLeft: { xs: '0', md: '10px' },
                 textAlign: { xs: 'center', md: 'left' },
-                
+
             }}>
                 <Typography sx={{ fontSize: { xs: '1.5rem', md: '2rem' }, textAlign: 'center' }}>
                     Recetas Ideales para tu Cocina
@@ -76,9 +76,11 @@ const Header = () => {
                     width: 'max-content',
                     bottom: -150,
                     filter: 'blur(5px)',
+                    animation: 'scroll 100s linear infinite', // Velocidad y duración del desplazamiento
                 }}
             >
-                {images.concat(images).map((image, index) => ( // Duplica las imágenes para la animación continua
+
+                {images.concat(images).map((image, index) => ( // Duplicar la lista para el efecto continuo
                     <img
                         key={index}
                         src={image}
@@ -92,6 +94,7 @@ const Header = () => {
                         }}
                     />
                 ))}
+
             </Box>
 
         </Box>
