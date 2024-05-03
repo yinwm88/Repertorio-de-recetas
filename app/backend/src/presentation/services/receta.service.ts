@@ -119,6 +119,15 @@ export class RecetaService {
                     cantidad : true
                 }
             });
+            const variaciones = await prisma.receta.findMany({
+                where: { padre: receta.idreceta },
+                take: 10,
+                orderBy: { likes: 'asc' },
+                select: {
+                    nombre: true,
+                    idreceta: true
+                },
+            });
             const utensilios = await prisma.necesitar.findMany({
                 where : { idreceta : idReceta}
             });
@@ -127,7 +136,8 @@ export class RecetaService {
                 tiempo: receta?.tiempo,
                 proceso: receta?.proceso,
                 ingredientes : ingredientes,
-                utensilios : utensilios
+                utensilios : utensilios,
+                variaciones: variaciones
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
@@ -162,10 +172,54 @@ export class RecetaService {
 
             return {
                 recta:{
-                    nombre: recetaNueva?.nombre,
-                    tiempo: recetaNueva?.tiempo,
-                    proceso: recetaNueva?.proceso,
+                    nombre: recetaNueva.nombre,
+                    tiempo: recetaNueva.tiempo,
+                    proceso: recetaNueva.proceso,
                     ingredientes: recetaIngredientesDto.ingredientes
+                },
+                correo: usuario.correo
+            }
+        }catch (error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
+        const usuarioExiste = await prisma.usuario.findUnique( {
+            where: { correo: usuario.correo }
+        });
+        if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        try {
+            const recetaNueva = await prisma.receta.create({
+                data: {
+                    nombre: datosReceta.nombre,
+                    tiempo: datosReceta.tiempo,
+                    proceso: datosReceta.proceso,
+                    correo: usuario.correo,
+                    padre: datosReceta.idReceta
+                }    
+            }); 
+
+            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+                await prisma.haberingrediente.create({
+                    data: {
+                        idreceta: recetaNueva.idreceta ,
+                        idingrediente: +ingrediente.idIngrediente,
+                        cantidad: +ingrediente.cantidad
+                    }
+                });
+            });
+
+            return {
+                recta:{
+                    idReceta: recetaNueva.idreceta,
+                    nombre: recetaNueva.nombre,
+                    tiempo: recetaNueva.tiempo,
+                    proceso: recetaNueva.proceso,
+                    recetaPadre: recetaNueva.padre,
+                    likes: recetaNueva.likes,
+                    ingredientes: recetaIngredientesDto.ingredientes,
                 },
                 correo: usuario.correo
             }
@@ -183,7 +237,8 @@ export class RecetaService {
             where: { idreceta: datosReceta.idReceta }
         });
         if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
-        if ( recetaExiste.correo !== usuarioExiste.correo ) throw ErrorCustomizado.noAutorizado( 'La receta pertenece a este usuario' );
+        if ( !recetaExiste.correo ) throw ErrorCustomizado.badRequest( 'La receta no puede ser editada' );
+        if ( recetaExiste.correo !== usuarioExiste.correo ) throw ErrorCustomizado.noAutorizado( 'La receta no pertenece a este usuario' );
 
         try {
             const recetaActualizada = await prisma.receta.update({

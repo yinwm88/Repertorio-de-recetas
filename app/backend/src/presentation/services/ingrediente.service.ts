@@ -19,11 +19,25 @@ export class IngredienteService {
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
         try {
-            const ingrediente = await prisma.teneringrediente.create({
-                data:{
+            const fechaActual = new Date();
+            const ingrediente = await prisma.teneringrediente.upsert({
+                where:{
+                    tenerId:{
+                        idingrediente:+manipularIngredienteDto.idIngrediente,
+                        correo:usuario.correo
+                    }
+                },
+                update:{
+                    fecha: fechaActual,
+                    cantidad: {
+                        increment: manipularIngredienteDto.cantidad
+                    }
+                },
+                create:{
                     idingrediente:+manipularIngredienteDto.idIngrediente,
                     correo:usuario.correo,
-                    cantidad: manipularIngredienteDto.cantidad                    
+                    cantidad: manipularIngredienteDto.cantidad,
+                    fecha: fechaActual                    
                 }
             });
             return {
@@ -72,6 +86,10 @@ export class IngredienteService {
                         startsWith: `${ingrediente}`,
                         mode: 'insensitive'
                     }
+                },
+                select:{
+                    nombre: true,
+                    idingrediente: true
                 }
             });
             if (ingredientes.length === 0 ) {
@@ -81,7 +99,6 @@ export class IngredienteService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-
     }
                 
     async eliminarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {

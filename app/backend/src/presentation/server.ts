@@ -25,13 +25,6 @@ export class Server {
 
     public async iniciar() {
 
-        this.app.use((req, res, next) => {
-            const now = new Date().toISOString();
-            console.log(`${now}: ${req.method} ${req.originalUrl}`);
-            next();
-        });
-
-
         this.app.use(cors());
 
         //* Middlewares

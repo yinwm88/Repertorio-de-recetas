@@ -12,15 +12,15 @@ export class RutasReceta{
         const controlador = new ControladorRecetas(recetaService);
 
         router.get('/datosReceta/:idReceta', controlador.datosReceta );
-        router.get('/crearCopia/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
         router.post('/recetasFavoritas', controlador.recetasFavoritas );
         router.post('/recetasIncompletas', controlador.recetasIncompletas );
         
-        router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
-        router.put('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
-        router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
         router.get('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
+        router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
+        router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
+        router.post('/nuevaVariacion', [ JoinMiddleware.validarJwt ], controlador.crearVariacion );
+        router.put('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
 
         return router;
     }

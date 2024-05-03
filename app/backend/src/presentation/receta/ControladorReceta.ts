@@ -31,7 +31,7 @@ export class ControladorRecetas{
 
     public crearReceta = ( req:Request, res: Response ) => {
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
-        if (error) return res.status(400).json(error);
+        if (error) return res.status(400).json({error:error});
         const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( crearRecetaDto!.ingredientes );
         if (erroringredientes) return res.status(400).json(erroringredientes);
         
@@ -43,7 +43,7 @@ export class ControladorRecetas{
     
     public editarReceta = ( req:Request, res: Response ) => {
         const [error, editarRecetaDto] = EditarRecetaDto.crearInstancia( req.body );
-        if (error) return res.status(400).json(error);
+        if (error) return res.status(400).json({error:error});
         const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( editarRecetaDto!.ingredientes );
         if (erroringredientes) return res.status(400).json(erroringredientes);
         
@@ -54,7 +54,7 @@ export class ControladorRecetas{
 
     public eliminarReceta = ( req:Request, res: Response ) => {
         const [error, recetaDto] = RecetaDto.crearInstancia( req.body );
-        if (error) return res.status(400).json(error);
+        if (error) return res.status(400).json({error:error});
         
         this.recetaService.eliminarReceta( recetaDto!, req.body.usuario )
         .then( datos => res.status(200).json( datos ))
@@ -89,6 +89,17 @@ export class ControladorRecetas{
         
         this.recetaService.datosReceta( +idReceta )
         .then( recetas => res.status(200).json( recetas ))
+        .catch( error => this.manejarError( error, res ));
+    }
+
+    public crearVariacion = ( req: Request, res: Response ) => {
+        const [error, variacionReceta] = EditarRecetaDto.crearInstancia( req.body );
+        if (error) return res.status(400).json({error:error});
+        const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( variacionReceta!.ingredientes );
+        if (erroringredientes) return res.status(400).json(erroringredientes);
+
+        this.recetaService.crearVariacionReceta( variacionReceta!, req.body.usuario, recetaIngredientesDto! )
+        .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
     }
 
