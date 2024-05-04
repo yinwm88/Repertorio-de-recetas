@@ -11,7 +11,7 @@ function Inicio() {
           Kitchenify
         </Typography>
         <Typography sx={{ fontFamily: 'Poppins', fontSize:'30px' }} variant="h5" component="h2" gutterBottom>
-          AAA
+          ¿De qué se trata?
         </Typography>
         <Typography sx={{ fontFamily: 'Poppins' }} variant="body1">
           Kitchenify es tu asistente de cocina personalizado. Ofrecemos un repertorio de recetas adaptadas a tus ingredientes disponibles en la cocina, tus gustos, alergias y estado de salud.
