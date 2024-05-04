@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { ErrorCustomizado, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 import { IngredienteService } from "../services/ingrediente.service";
+import { error } from "console";
 
 export class ControladorIngrediente {
     
@@ -19,7 +20,7 @@ export class ControladorIngrediente {
     public agregarIngrediente = ( req:Request, res: Response ) => {
         const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
         if (error) {
-            return res.status(400).json(error);
+            return res.status(400).json({error: error});
         }
         this.ingredienteService.agregarIngrediente(manipularIngredienteDto!, req.body.usuario)
         .then( ingrediente => res.status(201).json( ingrediente ))
@@ -29,7 +30,7 @@ export class ControladorIngrediente {
     public editarIngrediente = ( req:Request, res: Response ) => {
         const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
         if (error) {
-            return res.status(400).json(error);
+            return res.status(400).json({error: error});
         }
         this.ingredienteService.editarIngrediente(manipularIngredienteDto!, req.body.usuario)
         .then( ingrediente => res.status(201).json( ingrediente ))
@@ -40,7 +41,7 @@ export class ControladorIngrediente {
     public eliminarIngrediente = ( req:Request, res: Response ) => {
         const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
         if (error) {
-            return res.status(400).json(error);
+            return res.status(400).json({error: error});
         }
         this.ingredienteService.eliminarIngrediente(manipularIngredienteDto!, req.body.usuario)
             .then( ingrediente => res.status(200).json( ingrediente ))
@@ -50,7 +51,7 @@ export class ControladorIngrediente {
     public buscarIngrediente = ( req:Request, res: Response ) => {
         const { ingrediente } = req.body;
         if (!ingrediente) {
-            return res.status(400).json('Hace falta el ingrediente');
+            return res.status(400).json({error:'Hace falta el ingrediente'});
         }
 
         this.ingredienteService.buscarIngrediente( req.body.ingrediente )

@@ -13,6 +13,13 @@ services:
       - POSTGRES_DB=RECETAS
     depends_on:
       - postgres
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src/
+          target: /app/src/
+          ignore:
+            - node_modules/
 
   frontend:
     build:
@@ -20,11 +27,23 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src/
+          target: /app/src/
+          ignore:
+            - node_modules/
 
   postgres:
     image: postgres:latest
+    
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
+      - ./DB/entrypoint.sh:/docker-entrypoint-initdb.d/entrypoint.sh
+      - ./DB/DML.sql:/docker-entrypoint-initdb.d/DML.sql
+      - ./DB/DDL.sql:/docker-entrypoint-initdb.d/DLL.sql
+    entrypoint: /docker-entrypoint-initdb.d/entrypoint.sh
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=mypassword

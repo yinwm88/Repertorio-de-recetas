@@ -1,3 +1,10 @@
+/* Contenido.css */
+.scrollable-container {
+  max-height: 900px; /* O la altura que prefieras */
+  overflow-y: auto; /* Permite el desplazamiento vertical */
+}
+
+
 .gridPinterest {
   flex: 1;
   height: auto;

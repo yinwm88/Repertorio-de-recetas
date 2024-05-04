@@ -1,18 +1,28 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Inicio from './Inicio';
 import TopBarLP from './TopBarLP';
-import { ThemeProvider, Container } from '@mui/material';
+import {Container } from '@mui/material';
 import Header from './Header';
 import Contenido from '../Contenido';
-import Footer from './Footer';
 import { useAuth } from '../../AuthContext';
-import { useNavigate } from 'react-router-dom';
-import CrearReceta from '../CrearReceta/CrearReceta';
 
-
-// Dentro de LandingPage o un componente similar.
 const LandingPage = () => {
+  const { currentUser, getUserDataFromCookies, login } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!currentUser) {
+      const user = getUserDataFromCookies();
+      if (user) {
+        console.log('Usuario encontrado', user);
+        
+        navigate('/contenido');
+      } 
+    }
+  }, [currentUser, getUserDataFromCookies, login, navigate]);
+
   return (
     <>
       <TopBarLP />
@@ -21,15 +31,12 @@ const LandingPage = () => {
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
           <Route path="/contenido" element={<ContenidoProtected />} />
-          <Route path="/crear-receta" element={<CrearReceta />} />z
         </Routes>
       </Container>
-      {/* <Footer/> */}
     </>
   );
 };
 
-// Componente ContenidoProtected
 const ContenidoProtected = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
@@ -40,8 +47,7 @@ const ContenidoProtected = () => {
     }
   }, [currentUser, navigate]);
 
-  return currentUser ? <Contenido /> : null; // O cualquier componente de "cargando" mientras se verifica
+  return currentUser ? <Contenido /> : null;
 };
-
 
 export default LandingPage;

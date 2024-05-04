@@ -3,6 +3,7 @@ import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado, IngresarUsuarioDto, RegistrarUsuarioDto } from "../../domain";
 import { CorreoService } from "./correo.service";
 
+
 export class UsuarioService {
 
     constructor(
@@ -18,6 +19,7 @@ export class UsuarioService {
         
         const hash: string = usuario.contrasena;
         const salt: string = usuario.salt!;
+        if ( !usuario.verificado ) throw ErrorCustomizado.badRequest( 'Usuario no verificado' );
         if ( !Encriptador.compararContrasena(ingresarUsuarioDto.contrasena, hash, salt) ) {
             throw ErrorCustomizado.badRequest( 'Contraseña incorrecta' );
         }
@@ -69,6 +71,38 @@ export class UsuarioService {
 
     }
 
+    async formularioOpcional(correo: string, peso:number, actividad:string, talla : number, alergias:number[] ){
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : correo}
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+
+        try {
+            const usuarioActualizado = await prisma.usuario.update({
+                where : {correo : correo},
+                data : {
+                    peso : peso,
+                    talla : talla,
+                    actividad : actividad
+                }
+            });
+
+            for (let i = 0; i < alergias.length; i++) {
+                await prisma.seralergico.create({
+                    data : {
+                        idingrediente : alergias[i],
+                        correo : correo
+                    }
+                });
+            }
+            return {datos : usuarioActualizado};
+
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+        
+    }
+
     private async enviarLinkCorreo( correo: string ) {
         const token = await GestorJwt.generarToken({ correo });
         if ( !token ) throw ErrorCustomizado.internalServer('Error al crear el Jwt');
@@ -92,7 +126,7 @@ export class UsuarioService {
         return true;
     }
 
-    public validarCorreo = async(token:string) => {
+    async validarCorreo(token:string) {
 
         const payload = await GestorJwt.validarToken(token);
         if ( !payload ) throw ErrorCustomizado.noAutorizado('Token Invalido');
@@ -117,5 +151,48 @@ export class UsuarioService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-      }
+    }
+
+    async cambiarContrasena() {}
+    
+    async cambiarPeso( usuario: EntidadUsuario, peso : number ) {
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : usuario.correo}   
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+
+        try{
+            const usuarioActualizado = await prisma.usuario.update({
+                where : {correo : usuario.correo},
+                data : {
+                    peso : peso
+                }
+            });
+
+            return {peso: usuarioActualizado.peso} ;
+        }catch(error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+        
+    }
+    
+    async cambiarAltura( usuario: EntidadUsuario, talla:number ) {
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : usuario.correo}
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        try{
+            const usuarioActualizado = await prisma.usuario.update({
+                where : {correo : usuario.correo},
+                data : {
+                    talla : talla
+                }
+            });
+
+            return {altura: usuarioActualizado.talla} ;
+        } catch(error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
 }

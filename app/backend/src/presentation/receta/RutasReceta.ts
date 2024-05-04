@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { RecetaService } from '../services/receta.service';
 import { ControladorRecetas } from './ControladorReceta';
+import { JoinMiddleware } from '../middlewares/join.middleware';
 
 export class RutasReceta{
 
@@ -10,13 +11,16 @@ export class RutasReceta{
         const recetaService = new RecetaService();
         const controlador = new ControladorRecetas(recetaService);
 
-        router.post('/datosReceta', controlador.datosReceta );
+        router.get('/datosReceta/:idReceta', controlador.datosReceta );
         router.post('/marcarFavorita', controlador.marcarFavorita );
-        router.post('/recetasFavoritas', controlador.recetasFavoritas);
-        router.post('/crearReceta', controlador.crearReceta );
-        router.patch('/editarReceta', controlador.editarReceta );
-        router.delete('/eliminarReceta', controlador.eliminarReceta );
-        router.post('/recetasIncompletas', controlador.recetasIncompletas);
+        router.post('/recetasFavoritas', controlador.recetasFavoritas );
+        
+        router.get('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
+        router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
+        router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
+        router.post('/nuevaVariacion', [ JoinMiddleware.validarJwt ], controlador.crearVariacion );
+        router.put('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
+
         return router;
     }
 }

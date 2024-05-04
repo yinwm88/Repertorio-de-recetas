@@ -6,12 +6,14 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 const tags = ['Mexicana', 'Italiana', 'Vegana', 'Sin gluten'];
 const dietas = ['Vegetariano', 'Keto', 'Paleo', 'Vegano'];
 
-function FiltroRecetas({ onSearchChange }) {
+function FiltroRecetas({ onSearchChange, onTimeChange }) {
   const [busqueda, setBusqueda] = useState('');
   const [tagsSeleccionados, setTagsSeleccionados] = useState([]);
   const [dietaSeleccionada, setDietaSeleccionada] = useState('');
-  const [rangoPrecio, setRangoPrecio] = useState([20, 40]);
+  const [rangoTiempo, setRangoTiempo] = useState([0, 120]); // Por ejemplo, 0 a 120 minutos
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
+
+  
 
   const handleTagClick = (tag) => {
     const currentIndex = tagsSeleccionados.indexOf(tag);
@@ -30,8 +32,9 @@ function FiltroRecetas({ onSearchChange }) {
     setDietaSeleccionada(dietaSeleccionada === dieta ? '' : dieta);
   };
 
-  const handleRangoPrecioChange = (event, newValue) => {
-    setRangoPrecio(newValue);
+  const handleTiempoChange = (event, newValue) => {
+    setRangoTiempo(newValue);
+    onTimeChange(newValue);
   };
 
   const toggleFiltros = () => {
@@ -39,7 +42,7 @@ function FiltroRecetas({ onSearchChange }) {
   };
 
   return (
-    <Box sx={{ p: 2 }}>
+    <Box sx={{ p: 2,marginTop:3 }}>
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
         <TextField
           fullWidth
@@ -51,7 +54,7 @@ function FiltroRecetas({ onSearchChange }) {
           value={busqueda}
           onChange={(e) => {
             setBusqueda(e.target.value);
-            onSearchChange(e.target.value); // Llamar a onSearchChange cada vez que el valor de búsqueda cambie
+            onSearchChange(e.target.value);
           }}
         />
         <Button variant="outlined" onClick={toggleFiltros} startIcon={<FilterListIcon />}>
@@ -86,13 +89,13 @@ function FiltroRecetas({ onSearchChange }) {
           </Stack>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Typography variant="h6">Rango de precio</Typography>
+          <Typography variant="h6">Rango de tiempo (minutos)</Typography>
           <Slider
-            value={rangoPrecio}
-            onChange={handleRangoPrecioChange}
+            value={rangoTiempo}
+            onChange={handleTiempoChange}
             valueLabelDisplay="auto"
             min={0}
-            max={100}
+            max={120} // Ajusta el máximo según las recetas
           />
         </Box>
       </Collapse>

@@ -1,64 +1,107 @@
 import { createTheme } from '@mui/material';
-
+import { red, teal, green, amber } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#FF5A5F', // Rojo suave característico de Airbnb
+      main: '#FF5A5F',
     },
     secondary: {
-      main: '#008489', // Turquesa, usado en el sitio de Airbnb para contrastes
+      main: '#4caf50',
     },
     error: {
-      main: '#E41E26', // Rojo error, más intenso
+      main: red[700],
     },
     background: {
-      default: '#fff', // Fondo blanco para mantener el diseño limpio y brillante
+      default: '#fff',
     },
     text: {
-      primary: '#484848', // Gris oscuro para textos, proporciona suficiente contraste sin ser duro
-      secondary: '#767676', // Gris más claro para subtextos o elementos menos importantes
+      primary: '#484848',
+      secondary: '#767676',
     },
   },
-
   typography: {
-    fontFamily: 'Poppins',
-    h1: {
-      fontSize: '2.125rem', // Títulos grandes
-      fontWeight: 400,
-    },
-    h2: {
-      fontSize: '1.5rem', // Subtítulos
-      fontWeight: 400,
-    },
-     h5: {
-      fontSize: '1.1rem', // Subtítulos
-      fontWeight: 400,
-    },
-    body1: {
-      fontSize: '1rem', // Texto estándar
-      fontWeight: 400,
-    },
+    fontFamily: 'Poppins, Arial, sans-serif',
     button: {
-      textTransform: 'none', // Los botones no deberían tener texto en mayúsculas automáticamente
+      textTransform: 'none',
       fontWeight: 500,
+    },
+    h1: {
+      fontSize: '2rem',
+      fontWeight: 700,
+      color: '#484848',
     },
   },
 
   components: {
+
     MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 20, // Bordes más redondeados para los botones
-          padding: '8px 15px', // Padding ajustado para los botones
-          fontSize: '0.875rem', // Tamaño de letra para los botones
-          color: '#fff', // Texto blanco para mayor legibilidad sobre colores de fondo
-          backgroundColor: '#FF5A5F', // Fondo rojo suave característico para los botones
-          '&:hover': {
-            backgroundColor: '#E57373', // Un rojo más claro para el estado hover
+      variants: [
+        {
+          props: { variant: 'contained' },
+          style: {
+            borderRadius: 20,
+            backgroundColor: '#FF5A5F',
+            color: '#fff',
+            '&:hover': {
+              backgroundColor: '#4caf50',
+            },
           },
         },
-      },
+        {
+          props: { variant: 'outlined' },
+          style: {
+            borderRadius: 20,
+            borderColor: '#4caf50',
+            color: '#4caf50',
+            '&:hover': {
+              backgroundColor: teal[100],
+              borderColor: '#008480',
+            },
+          },
+        },
+        {
+          props: { variant: 'text' },
+          style: {
+            color: green[500],
+            '&:hover': {
+              backgroundColor: green[100],
+            },
+          },
+        },
+        {
+          props: { variant: 'whiteText' }, // Variante con texto blanco
+          style: {
+            color: '#fff', // Texto blanco
+            '&:hover': {
+              backgroundColor: '#e3e3e34a', // Fondo más claro en hover
+            },
+          },
+        },
+        {
+          props: { variant: 'blackText' }, // Variante con texto negro
+          style: {
+            color: '#000', // Texto negro
+            '&:hover': {
+              backgroundColor: '#eee', // Fondo más claro en hover
+            },
+          },
+        },
+        {
+          props: { variant: 'semiContained' },
+          style: {
+            borderRadius: 20,
+            background: '#4caf5033',
+            borderColor: '#4caf50',
+            color: '#4caf50',
+            '&:hover': {
+              backgroundColor: teal[100],
+              borderColor: '#008480',
+            },
+          }
+
+        }
+      ],
     },
   },
 });

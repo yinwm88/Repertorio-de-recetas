@@ -1,0 +1,23 @@
+.recipe-card .editIcon {
+    visibility: hidden;
+}
+
+.recipe-card:hover .editIcon {
+    visibility: visible;
+}
+.progressBar {
+    width: 100%;
+    height: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    margin: 10px 10px;
+    z-index: 10;
+    position: absolute;
+}
+.progressBarBack{
+    width: 100%;
+    height: 100%;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    
+}

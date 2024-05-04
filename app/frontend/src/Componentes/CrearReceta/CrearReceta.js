@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,  } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../../AuthContext';
+import AnimatedTypingText from './AnimatedTypingText';
 
-const CrearReceta = () => {
+const CrearReceta = ({isOpen,onClose}) => {
   const [formData, setFormData] = useState({
     nombre: '',
     tiempo: '',
@@ -21,7 +22,7 @@ const CrearReceta = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-  const { currentUser } = useAuth();
+  const { currentUser, getToken } = useAuth();
   const fetchIngredients = async (text) => {
     if (!text.trim()) {
       setSearchResults([]);
@@ -73,9 +74,11 @@ const CrearReceta = () => {
       const response = await fetch('http://localhost:3001/receta/crearReceta', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'Authorization': `Bearer ${getToken()}`,
         },
         body: formBody.join("&"),
+        token: getToken(),
       });
 
       let data;
@@ -108,36 +111,53 @@ const CrearReceta = () => {
     }
   };
 
+  const clickButton = () => {
+    console.log(getToken())
+  }
 
   return (
-    <div style={{ backgroundColor: '#FADCD9', padding: '20px', borderRadius: '10px', marginTop: '130px' }}>
-      <Typography variant="h6">
-        Seguro tus habilidades culinarias podran inspirar a muchos otros.
-      </Typography>
-      <div>
-        <TextField
-          id="nombre"
-          name="nombre"
-          label="Nombre de la receta"
-          variant="outlined"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          id="tiempo"
-          name="tiempo"
-          label="Tiempo de preparación (minutos)"
-          type="number"
-          variant="outlined"
-          value={tiempo}
-          onChange={(e) => setTiempo(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
+    <Dialog open={isOpen} onClose={onClose}>
+      <div style={{
+        padding: '30px',
+        borderRadius: '10px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '1000px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      }}>
+        <h1>Crear Nueva Receta</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+          <TextField
+            id="nombre"
+            name="nombre"
+            label="Nombre de la receta"
+            variant="outlined"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            required
+            fullWidth
+            margin="normal"
+            sx={{ flex: '3', marginRight: '10px' }}
+          />
+          <TextField
+            id="tiempo"
+            name="tiempo"
+            label="Tiempo(minutos)"
+            type="number"
+            variant="outlined"
+            value={tiempo}
+            onChange={(e) => setTiempo(e.target.value)}
+            required
+            fullWidth
+            margin="normal"
+            sx={{ flex: '0.7' }}
+          />
+        </div>
+
+
         <TextField
           id="proceso"
           name="proceso"
@@ -184,7 +204,7 @@ const CrearReceta = () => {
 
         <List>
           {selectedIngredients.map((ing, index) => (
-            <ListItem key={index}>
+            <ListItem key={index} style={{ display: 'flex', alignItems: 'center' }}>
               <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
               <TextField
                 type="number"
@@ -205,12 +225,15 @@ const CrearReceta = () => {
           ))}
         </List>
 
-        <Button onClick={handleSubmit} variant="contained" color="primary">
+        <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!nombre || !tiempo || !proceso || selectedIngredients.length === 0}>
           Crear Receta
         </Button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
+
+
+    </Dialog>
   );
 };
 

@@ -13,7 +13,7 @@ create table Usuario (
     objetivo objetivos,
     contrasena varchar(200),
     salt varchar(200),
-    verificado bool
+    verificado bool default FALSE
 ); 
 
 alter table Usuario alter column correo set not null;
@@ -34,7 +34,8 @@ alter table Usuario add constraint pkUsuario primary key(correo);
 create table Electrodomestico ( 
 	idElectro serial,
 	nombre varchar(50),
-	sustituto int
+	sustituto int,
+	icono Varchar(60)
 );
 alter table Electrodomestico alter column idElectro set not null;
 alter table Electrodomestico alter column nombre set not null;
@@ -50,7 +51,9 @@ create table Receta (
 	imagen Varchar(60),
 	nombre varchar(50),
 	tiempo int,
-	proceso text
+	proceso text,
+	likes int default 0,
+	padre int
 );
 
 alter table Receta alter column idReceta set not null;
@@ -60,6 +63,8 @@ alter table Receta alter column proceso set not null;
 alter table Receta add constraint pkReceta primary key(idReceta);
 alter table Receta add constraint nombreRecetaC1 check(nombre <> ' ');
 alter table Receta add constraint nombreRecetaC2 check(nombre ~ '^[a-zÑñA-ZáéíóúÁÉÍÓÚüÜ -]*$');
+alter table Receta add constraint fkRecetaVariacion foreign key(padre) references Receta(idReceta)
+on update cascade on delete cascade;
 alter table Receta add constraint fkRecetaUsario foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
 
@@ -184,7 +189,7 @@ on update cascade on delete cascade;
 create table tenerIngrediente(
 	correo varchar(70),
 	idIngrediente int,
-	cantidad numeric(5,2),
+	cantidad numeric(10,2),
 	fecha Date,
 	fechaCaducidad Date
 );

@@ -8,7 +8,6 @@ export class ControladorRecetas{
         private readonly recetaService: RecetaService
     ){}
 
-
     private manejarError = ( error:unknown, res: Response ) => {
         if (error instanceof ErrorCustomizado) {
             return res.status(error.codigoEstatus).json({ error: error.mensaje});
@@ -20,31 +19,19 @@ export class ControladorRecetas{
     public marcarFavorita = ( req:Request, res: Response ) => {
         const { idReceta, correo } = req.body;
         if (!idReceta) {
-            return res.status(400).json('Falta el id de la receta');
+            return res.status(400).json({error: 'Falta el id de la receta'});
         }
         if (!correo) {
-            return res.status(400).json('Falta el correo');
+            return res.status(400).json({error: 'Falta el correo'});
         }
         this.recetaService.marcarFavorita( idReceta, correo )
         .then( receta => res.status(201).json( receta ))
         .catch( error => this.manejarError( error, res ));
-    }
-
-
-    public datosReceta = ( req:Request, res: Response ) => {
-        const [error, recetaDto] = RecetaDto.crearInstancia( req.body);
-        
-        if (error) return res.status(400).json(error);
-    
-        this.recetaService.datosReceta( recetaDto! )
-        .then( datos => res.status(200).json( datos ))
-        .catch( error => this.manejarError( error, res ));
-    }
-    
+    }    
 
     public crearReceta = ( req:Request, res: Response ) => {
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
-        if (error) return res.status(400).json(error);
+        if (error) return res.status(400).json({error:error});
         const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( crearRecetaDto!.ingredientes );
         if (erroringredientes) return res.status(400).json(erroringredientes);
         
@@ -56,7 +43,7 @@ export class ControladorRecetas{
     
     public editarReceta = ( req:Request, res: Response ) => {
         const [error, editarRecetaDto] = EditarRecetaDto.crearInstancia( req.body );
-        if (error) return res.status(400).json(error);
+        if (error) return res.status(400).json({error:error});
         const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( editarRecetaDto!.ingredientes );
         if (erroringredientes) return res.status(400).json(erroringredientes);
         
@@ -67,7 +54,7 @@ export class ControladorRecetas{
 
     public eliminarReceta = ( req:Request, res: Response ) => {
         const [error, recetaDto] = RecetaDto.crearInstancia( req.body );
-        if (error) return res.status(400).json(error);
+        if (error) return res.status(400).json({error:error});
         
         this.recetaService.eliminarReceta( recetaDto!, req.body.usuario )
         .then( datos => res.status(200).json( datos ))
@@ -77,7 +64,7 @@ export class ControladorRecetas{
     public recetasFavoritas = ( req: Request, res: Response ) => {
         const { correo } = req.body;
         if (!correo) {
-            return res.status(400).json('Falta el correo del usuario');
+            return res.status(400).json({error:'Falta el correo del usuario'});
         }
 
         this.recetaService.recetasFavoritas( correo! )
@@ -85,14 +72,29 @@ export class ControladorRecetas{
         .catch( error => this.manejarError( error, res ));
     }
 
-    public recetasIncompletas = (req : Request, res: Response) =>{
-        const { correo } = req.body;   
-        if(!correo) {
-            return res.status(400).json( 'Falta el correo del usuario' );
-        }
+    public datosReceta = ( req: Request, res: Response ) => {
+        const { idReceta } = req.params;
+        if (!idReceta) return res.status(400).json({error: 'Falta el parametro idReceta '});
         
-        this.recetaService.recetasIncompletas( correo! )
+        this.recetaService.datosReceta( +idReceta )
         .then( recetas => res.status(200).json( recetas ))
-        .catch ( error => this.manejarError( error, res ));
+        .catch( error => this.manejarError( error, res ));
+    }
+
+    public crearVariacion = ( req: Request, res: Response ) => {
+        const [error, variacionReceta] = EditarRecetaDto.crearInstancia( req.body );
+        if (error) return res.status(400).json({error:error});
+        const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( variacionReceta!.ingredientes );
+        if (erroringredientes) return res.status(400).json(erroringredientes);
+
+        this.recetaService.crearVariacionReceta( variacionReceta!, req.body.usuario, recetaIngredientesDto! )
+        .then( datos => res.status(200).json( datos ))
+        .catch( error => this.manejarError( error, res ));
+    }
+
+    public obtenerRecetasUsuario = ( req: Request, res: Response ) => {
+        this.recetaService.obtenerRecetasUsuario( req.body.usuario )
+        .then( recetas => res.status(200).json( recetas ))
+        .catch( error => this.manejarError( error, res ));
     }
 }

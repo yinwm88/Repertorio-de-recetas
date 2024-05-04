@@ -28,16 +28,6 @@ export class Server {
         this.app.use(cors());
 
         //* Middlewares
-        this.app.use((req, res, next) => {
-            const now = new Date().toISOString();
-            console.log(`${now}: ${req.method} ${req.originalUrl}`);
-            next();
-        });
-
-
-        this.app.use(cors());
-
-        //* Middlewares
         this.app.use(express.json()); // raw
         this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded
 
