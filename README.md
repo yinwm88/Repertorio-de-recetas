@@ -1,15 +1,26 @@
-<div align="center">
 # **USAGE**
-</div>
 
-<div>
-    1. Copiar variables de `.env.test` a un `.env`
-    2. Moverte a la carpeta backend 
-        ```cd app/backend``` 
-    3. Correr en la carpeta del backend 
-        ```npx prisma generate```
-    3. Correr al nivel del docker-compose.yml
-        ```chmod a+x DB/entrypoint.sh ``` 
-    4. Correr servidor
-        ```docker compose watch```
-</div>
+1. Entra al directorio de `app`
+2. Copia las variables de entorno  del `.env.test` a un `.env`
+  ```sh
+   cp backend/.env.test  backend/.env
+   ```
+3. En el directorio del `backend` corre
+   
+   ```sh
+   cd backend
+   npx prisma generate
+   cd ..
+   ```
+   
+4. Ejecuta
+   
+   ```
+   chmod a+x DB/entrypoint.sh
+   ```
+   
+6. Corre el servidor 
+   
+   ```
+   docker compose watch
+   ```
