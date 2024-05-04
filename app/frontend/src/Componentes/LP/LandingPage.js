@@ -3,13 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Inicio from './Inicio';
 import TopBarLP from './TopBarLP';
-import { ThemeProvider, Container } from '@mui/material';
+import {Container } from '@mui/material';
 import Header from './Header';
 import Contenido from '../Contenido';
-import Footer from './Footer';
 import { useAuth } from '../../AuthContext';
-import Cookies from 'js-cookie'; // Importa js-cookie aquí
-import CrearReceta from '../CrearReceta/CrearReceta';
 
 const LandingPage = () => {
   const { currentUser, getUserDataFromCookies, login } = useAuth();
@@ -34,7 +31,6 @@ const LandingPage = () => {
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
           <Route path="/contenido" element={<ContenidoProtected />} />
-          <Route path="/crear-receta" element={<CrearReceta />} />
         </Routes>
       </Container>
     </>

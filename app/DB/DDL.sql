@@ -34,7 +34,8 @@ alter table Usuario add constraint pkUsuario primary key(correo);
 create table Electrodomestico ( 
 	idElectro serial,
 	nombre varchar(50),
-	sustituto int
+	sustituto int,
+	icono Varchar(60)
 );
 alter table Electrodomestico alter column idElectro set not null;
 alter table Electrodomestico alter column nombre set not null;

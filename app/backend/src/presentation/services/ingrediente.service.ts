@@ -86,6 +86,10 @@ export class IngredienteService {
                         startsWith: `${ingrediente}`,
                         mode: 'insensitive'
                     }
+                },
+                select:{
+                    nombre: true,
+                    idingrediente: true
                 }
             });
             if (ingredientes.length === 0 ) {
@@ -95,7 +99,6 @@ export class IngredienteService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-
     }
                 
     async eliminarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {

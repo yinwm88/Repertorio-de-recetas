@@ -23,24 +23,23 @@ export class ControladorUsuario {
         .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }
-    
-    public cambiarCorreo = ( req: Request, res: Response ) => {
-
-        this.usuarioService.cambiarCorreo()
-        .then( usuario => res.status(200).json( usuario ))
-        .catch( error => this.manejarError( error, res ));
-    }
 
     public cambiarPeso = ( req: Request, res: Response ) => {
-        const { correo, peso } = req.body;
-        this.usuarioService.cambiarPeso(correo, peso)
+        const { peso } = req.body;
+        if ( !peso ) return res.status(400).json({error:'Falta el peso'});
+        if (peso <= 0) return res.status(400).json({error:'El peso tiene que ser mayor a 0'});
+
+        this.usuarioService.cambiarPeso( req.body.usuario, peso )
         .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }
     
     public cambiarAltura = ( req: Request, res: Response ) => {
-        const { correo, talla } = req.body;
-        this.usuarioService.cambiarAltura(correo, talla)
+        const { talla } = req.body;
+        if ( !talla ) return res.status(400).json({error:'Falta la talla'});
+        if ( talla <= 0 ) return res.status(400).json({error:'la tall tiene que ser mayor a 0'});
+
+        this.usuarioService.cambiarAltura( req.body.usuario, talla )
         .then( usuario => res.status(200).json( usuario ))
         .catch( error => this.manejarError( error, res ));
     }

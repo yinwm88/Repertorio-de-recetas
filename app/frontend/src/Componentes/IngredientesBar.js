@@ -10,6 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import './IngredientesBar.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../AuthContext';
+import Swal from 'sweetalert2'
 
 const itemIcons = {
   shopping: <ShoppingCartIcon />,
@@ -26,7 +27,7 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-function CustomList({lastUpdate, setLastUpdate}) {
+function CustomList({ lastUpdate, setLastUpdate }) {
 
   const { currentUser } = useAuth();
   console.log('Usuario actual:', currentUser)
@@ -86,9 +87,11 @@ function CustomList({lastUpdate, setLastUpdate}) {
   const [newItemUnit, setNewItemUnit] = useState('');
   const [searchIngredient, setSearchIngredient] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
+
   const fetchIngredients = debounce(async (searchText) => {
     if (!searchText) {
       setSearchResults([]);
@@ -113,33 +116,7 @@ function CustomList({lastUpdate, setLastUpdate}) {
     }
   }, 300);
 
-  const handleSelectIngredient = async (ingrediente) => {
-    // Aquí podrías mostrar un diálogo para confirmar y seleccionar la unidad
-    // Para este ejemplo, simplemente haré la solicitud directamente
 
-    try {
-      const response = await fetch('http://localhost:3000/Ingrediente/agregar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          idIngrediente: ingrediente.idingrediente,
-          unidad: 'g', // Asumiendo una unidad fija por simplicidad
-          usuario: { correo: "pepe27@ciencias.mx" } // Asumiendo un usuario fijo por simplicidad
-        }),
-      });
-
-      if (response.ok) {
-        // alert('Ingrediente agregado exitosamente');
-        // Realiza cualquier otra acción necesaria después de la adición
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || 'Error al agregar ingrediente');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error al conectar con el servidor.');
-    }
-  };
 
   useEffect(() => {
     fetchIngredients(searchText);
@@ -200,8 +177,11 @@ function CustomList({lastUpdate, setLastUpdate}) {
       });
 
       if (!response.ok) throw new Error('No se pudo agregar el ingrediente');
+      Swal.fire({
+        text: 'Ingrediente agregado exitosamente!',
+        icon: 'success',
+      });
 
-      alert('Ingrediente agregado exitosamente');
       setLastUpdate(Date.now());
       handleClose();
     } catch (error) {
@@ -242,23 +222,11 @@ function CustomList({lastUpdate, setLastUpdate}) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper square sx={{ p: 2, minHeight: '40vh', display: 'flex', flexDirection: 'column', marginTop: '40px' }}>
-        <Typography variant="h5" gutterBottom component="div">
+      <Paper square sx={{ p: 2, display: 'flex', flexDirection: 'column', marginTop: '40px' }}>
+        <h2>
           Ingredientes
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Buscar ítem..."
-            fullWidth
-            margin="normal"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <IconButton type="submit" aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Box>
+        </h2>
+
         <Box sx={listContainerStyle}>
           <List>
             {ingredientesUsuario.map((ingrediente) => (
@@ -285,9 +253,11 @@ function CustomList({lastUpdate, setLastUpdate}) {
 
 
 
-        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ margin: 15 }}>
+        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ top:40 }}>
           <AddIcon />
         </StyledFab>
+
+        
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Añadir ingrediente 🍎</DialogTitle>
           <DialogContent>
@@ -325,7 +295,6 @@ function CustomList({lastUpdate, setLastUpdate}) {
               ))}
 
             </List>
-            {/* Los siguientes campos aparecerán después de seleccionar un ingrediente */}
             {selectedIngredient && (
               <>
                 <TextField

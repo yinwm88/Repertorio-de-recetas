@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,  } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../../AuthContext';
 import AnimatedTypingText from './AnimatedTypingText';
 
-const CrearReceta = () => {
+const CrearReceta = ({isOpen,onClose}) => {
   const [formData, setFormData] = useState({
     nombre: '',
     tiempo: '',
@@ -78,7 +78,7 @@ const CrearReceta = () => {
           'Authorization': `Bearer ${getToken()}`,
         },
         body: formBody.join("&"),
-        token:getToken(),
+        token: getToken(),
       });
 
       let data;
@@ -116,19 +116,10 @@ const CrearReceta = () => {
   }
 
   return (
-    <div>
-      <div style={{ marginTop: '20px' }}>
-        
-        <Button variant="blackText" color="primary" href="/contenido">Regresar</Button>
-        <AnimatedTypingText text="  Tus habilidades culinarias podrán inspirar a muchos otros." />
-        {/* <Button variant='blackText' onClick={clickButton} style={{ backgroundColor: 'red' }}> O</Button> */}
-
-      </div>
+    <Dialog open={isOpen} onClose={onClose}>
       <div style={{
-        backgroundColor: '#FADCD9',
-        padding: '20px',
+        padding: '30px',
         borderRadius: '10px',
-        marginTop: '40px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -137,6 +128,7 @@ const CrearReceta = () => {
         marginLeft: 'auto',
         marginRight: 'auto',
       }}>
+        <h1>Crear Nueva Receta</h1>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <TextField
             id="nombre"
@@ -232,15 +224,16 @@ const CrearReceta = () => {
             </ListItem>
           ))}
         </List>
-      </div>
 
-      <div style={{ padding: '20px', marginTop: '15px', marginLeft: '1100px' }}>
-        <Button onClick={handleSubmit} variant="contained" color="primary">
+        <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!nombre || !tiempo || !proceso || selectedIngredients.length === 0}>
           Crear Receta
         </Button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </div>
+
+
+    </Dialog>
   );
 };
 

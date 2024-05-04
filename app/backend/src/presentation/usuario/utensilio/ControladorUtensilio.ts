@@ -18,25 +18,25 @@ export class controladorUtensilio {
 
     public activarUtensilio = ( req: Request, res: Response ) => {
         const { idUtensilio } = req.params;
-        if ( !idUtensilio ) return res.status(400).json('Falta el idUtensilio');
+        if ( +idUtensilio <= 0 ) return res.status(400).json({error:'El id debe de ser positivo'});
 
-        this.utensilioService.activarUtensilio( +idUtensilio )
+        this.utensilioService.activarUtensilio( +idUtensilio, req.body.usuario )
         .then( utensilio => res.status(200).json( utensilio ))
         .catch( error => this.manejarError( error, res ));
     }
 
     public desactivarUtensilio = ( req: Request, res: Response) => {
         const { idUtensilio } = req.params;
-        if ( !idUtensilio ) return res.status(400).json('Falta el idUtensilio');
+        if ( +idUtensilio <= 0 ) return res.status(400).json({error:'El id debe de ser positivo'});
 
-        this.utensilioService.desactivarUtensilio( +idUtensilio )
+        this.utensilioService.desactivarUtensilio( +idUtensilio, req.body.usuario )
         .then( utensilio => res.status(200).json( utensilio ))
         .catch( error => this.manejarError( error, res ));
     }
 
     public buscarUtensilio = ( req: Request, res: Response) => {
         const { utensilio } = req.body;
-        if ( !utensilio ) return res.status(400).json('Falta el nombre del utensilio');
+        if ( !utensilio ) return res.status(400).json({error:'Falta el nombre del utensilio'});
 
         this.utensilioService.buscarUtensilio( utensilio )
         .then( utensilio => res.status(200).json( utensilio ))

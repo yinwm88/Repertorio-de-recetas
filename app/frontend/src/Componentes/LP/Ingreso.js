@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal, TextField, Box, Typography,CircularProgress } from '@mui/material';
+import { Button, Modal, TextField, Box, Typography, CircularProgress } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import theme from '../../Tema/tema';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -60,9 +59,10 @@ const Ingreso = () => {
         } catch (error) {
             console.error('Error:', error);
             MySwal.fire({
-                title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}>  {error}</Typography>,
+                title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}>{error.message}</Typography>,
                 icon: 'error',
             })
+
         }
         setOpen(false);
     };
@@ -119,6 +119,19 @@ const Ingreso = () => {
         }
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            if (mostrarRegistro) {
+                if (userData.nombre && userData.apellido && userData.correo && userData.contrasena && !isLoading) {
+                    handleRegister();
+                }
+            } else {
+                if (userData.username && userData.contrasena) {
+                    handleLogin();
+                }
+            }
+        }
+    };
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 8 }}>
             <Button
@@ -167,12 +180,16 @@ const Ingreso = () => {
                             >
                                 Regresar
                             </Button>
+                            <Typography sx={{ fontSize: { xs: '1.5rem', md: '1.4rem', fontWeight: 'bold' }, textAlign: 'left' }}>
+                                Registro
+                            </Typography>
                             <TextField
                                 label="Nombre"
                                 variant="outlined"
                                 fullWidth
                                 value={userData.nombre}
                                 onChange={handleChange('nombre')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="Apellido"
@@ -180,6 +197,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.apellido}
                                 onChange={handleChange('apellido')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="e-mail"
@@ -187,6 +205,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.correo}
                                 onChange={handleChange('correo')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="Contraseña"
@@ -195,6 +214,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.contrasena}
                                 onChange={handleChange('contrasena')}
+                                onKeyPress={handleKeyPress}
                             />
                             <Button
                                 variant="contained"
@@ -205,16 +225,19 @@ const Ingreso = () => {
                             >
                                 {isLoading ? 'Registrando...' : 'Registrar'}
                             </Button>
-
                         </>
                     ) : (
                         <>
+                            <Typography sx={{ fontSize: { xs: '1.5rem', md: '1.4rem', fontWeight: 'bold' }, textAlign: 'left' }}>
+                                Iniciar sesión
+                            </Typography>
                             <TextField
                                 label="Usuario"
                                 variant="outlined"
                                 fullWidth
                                 value={userData.username}
                                 onChange={handleChange('username')}
+                                onKeyPress={handleKeyPress}
                             />
                             <TextField
                                 label="Contraseña"
@@ -223,6 +246,7 @@ const Ingreso = () => {
                                 fullWidth
                                 value={userData.contrasena}
                                 onChange={handleChange('contrasena')}
+                                onKeyPress={handleKeyPress}
                             />
                             <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 1, mt: 2 }}>
                                 <Button
@@ -246,6 +270,4 @@ const Ingreso = () => {
         </Box>
     );
 };
-
-
 export default Ingreso;

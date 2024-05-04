@@ -126,7 +126,7 @@ export class UsuarioService {
         return true;
     }
 
-    public validarCorreo = async(token:string) => {
+    async validarCorreo(token:string) {
 
         const payload = await GestorJwt.validarToken(token);
         if ( !payload ) throw ErrorCustomizado.noAutorizado('Token Invalido');
@@ -154,20 +154,16 @@ export class UsuarioService {
     }
 
     async cambiarContrasena() {}
-
-    async cambiarCorreo() {}
     
-    async cambiarPeso(correo:string, peso : number) {
+    async cambiarPeso( usuario: EntidadUsuario, peso : number ) {
         const usuarioExiste = await prisma.usuario.findFirst({
-            where : {correo : correo}   
+            where : {correo : usuario.correo}   
         });
         if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
 
-        if (peso <= 0) throw ErrorCustomizado.badRequest( 'El peso tiene que ser mayor a 0' );
-
         try{
             const usuarioActualizado = await prisma.usuario.update({
-                where : {correo : correo},
+                where : {correo : usuario.correo},
                 data : {
                     peso : peso
                 }
@@ -180,17 +176,15 @@ export class UsuarioService {
         
     }
     
-    async cambiarAltura(correo:string, talla:number) {
+    async cambiarAltura( usuario: EntidadUsuario, talla:number ) {
         const usuarioExiste = await prisma.usuario.findFirst({
-            where : {correo : correo}
+            where : {correo : usuario.correo}
         });
         if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
-        if(talla <= 0) throw ErrorCustomizado.badRequest( 'La altura tiene que ser mayor a 0' );
-
         try{
             const usuarioActualizado = await prisma.usuario.update({
-                where : {correo : correo},
+                where : {correo : usuario.correo},
                 data : {
                     talla : talla
                 }
@@ -200,6 +194,5 @@ export class UsuarioService {
         } catch(error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-
     }
 }

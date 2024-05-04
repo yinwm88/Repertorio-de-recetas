@@ -26,8 +26,15 @@ const theme = createTheme({
       textTransform: 'none',
       fontWeight: 500,
     },
+    h1: {
+      fontSize: '2rem',
+      fontWeight: 700,
+      color: '#484848',
+    },
   },
+
   components: {
+
     MuiButton: {
       variants: [
         {
@@ -84,7 +91,7 @@ const theme = createTheme({
           props: { variant: 'semiContained' },
           style: {
             borderRadius: 20,
-            background:'#4caf5033',
+            background: '#4caf5033',
             borderColor: '#4caf50',
             color: '#4caf50',
             '&:hover': {
