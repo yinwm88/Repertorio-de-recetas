@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { RutasUtensilio } from "./utensilio/RutasUtensilio";
+
 import { ControladorUsuario } from "./ControladorUsuario";
 import { CorreoService, UsuarioService } from "../services";
 import { envs } from "../../config";
+import { JoinMiddleware } from "../middlewares/join.middleware";
+import { RutasUtensilio } from "./utensilio/RutasUtensilio";
 
 export class RutasUsuario {
 
@@ -18,10 +20,10 @@ export class RutasUsuario {
         const controlador: ControladorUsuario = new ControladorUsuario( usuarioService );
 
         router.use('/utensilio', RutasUtensilio.rutas );
-        router.put('/contrasena', controlador.cambiarContrasena );
-        router.put('/correo', controlador.cambiarCorreo );
-        router.put('/peso', controlador.cambiarPeso );
-        router.put('/altura', controlador.cambiarAltura );
+        router.put('/contrasena', [ JoinMiddleware.validarJwt ], controlador.cambiarContrasena );
+        router.put('/peso', [ JoinMiddleware.validarJwt ], controlador.cambiarPeso );
+        router.put('/altura', [ JoinMiddleware.validarJwt ], controlador.cambiarAltura );
+
         return router;
     }
 }
