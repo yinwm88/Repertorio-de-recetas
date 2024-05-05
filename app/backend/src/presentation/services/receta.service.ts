@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto } from "../../domain";
 
 export class RecetaService {
 
@@ -176,7 +176,7 @@ export class RecetaService {
         }
     }
 
-    async crearReceta( datosReceta: CrearRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
+    async crearReceta( datosReceta: CrearRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto, utensilios: RecetaUtensiliosDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -192,7 +192,7 @@ export class RecetaService {
                 }    
             }); 
 
-            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+            ingredientes.ingredientes.forEach( async ingrediente => {
                 await prisma.haberingrediente.create({
                     data: {
                         idreceta: recetaNueva.idreceta ,
@@ -202,12 +202,22 @@ export class RecetaService {
                 });
             });
 
+            utensilios.utensilios.forEach( async utensilio => {
+                await prisma.necesitar.create({
+                    data: {
+                        idreceta: recetaNueva.idreceta ,
+                        idelectro: utensilio
+                    }
+                });
+            });
+
             return {
                 recta:{
                     nombre: recetaNueva.nombre,
                     tiempo: recetaNueva.tiempo,
                     proceso: recetaNueva.proceso,
-                    ingredientes: recetaIngredientesDto.ingredientes
+                    ingredientes: ingredientes.ingredientes,
+                    utensilios: utensilios.utensilios
                 },
                 correo: usuario.correo
             }
@@ -216,7 +226,7 @@ export class RecetaService {
         }
     }
 
-    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
+    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -233,7 +243,7 @@ export class RecetaService {
                 }    
             }); 
 
-            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+            ingredientes.ingredientes.forEach( async ingrediente => {
                 await prisma.haberingrediente.create({
                     data: {
                         idreceta: recetaNueva.idreceta ,
@@ -251,7 +261,7 @@ export class RecetaService {
                     proceso: recetaNueva.proceso,
                     recetaPadre: recetaNueva.padre,
                     likes: recetaNueva.likes,
-                    ingredientes: recetaIngredientesDto.ingredientes,
+                    ingredientes: ingredientes.ingredientes,
                 },
                 correo: usuario.correo
             }
@@ -260,7 +270,7 @@ export class RecetaService {
         }
     }
 
-    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, recetaIngredientesDto: RecetaIngredientesDto ) {
+    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -290,7 +300,7 @@ export class RecetaService {
                 }
             });
 
-            recetaIngredientesDto.ingredientes.forEach( async ingrediente => {
+            ingredientes.ingredientes.forEach( async ingrediente => {
                 await prisma.haberingrediente.create({
                     data: {
                         idreceta: recetaActualizada.idreceta ,
@@ -306,7 +316,7 @@ export class RecetaService {
                     nombre: recetaActualizada?.nombre,
                     tiempo: recetaActualizada?.tiempo,
                     proceso: recetaActualizada?.proceso,
-                    ingredientes: recetaIngredientesDto.ingredientes
+                    ingredientes: ingredientes.ingredientes
                 },
                 correo: usuario.correo
             }
