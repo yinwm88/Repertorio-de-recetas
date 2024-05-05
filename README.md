@@ -5,6 +5,11 @@
   ```sh
    cp backend/.env.test  backend/.env
    ```
+(O en win)
+```
+copy "backend\.env.test" "backend\.env"
+```
+
 3. En el directorio del `backend` corre
    
    ```sh
