@@ -86,10 +86,6 @@ export class IngredienteService {
                         startsWith: `${ingrediente}`,
                         mode: 'insensitive'
                     }
-                },
-                select:{
-                    nombre: true,
-                    idingrediente: true
                 }
             });
             if (ingredientes.length === 0 ) {
