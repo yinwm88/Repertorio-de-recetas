@@ -155,7 +155,8 @@ export class RecetaService {
                 },
             });
             const utensilios = await prisma.necesitar.findMany({
-                where : { idreceta : idReceta}
+                where : { idreceta : idReceta},
+                select : {idelectro : true}
             });
             const tipos = await prisma.tiporeceta.findMany({
                 where : { idreceta : idReceta},
