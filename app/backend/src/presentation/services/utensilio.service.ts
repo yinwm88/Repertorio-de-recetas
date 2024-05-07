@@ -87,7 +87,7 @@ export class UtensilioService {
                 select:{
                     nombre: true,
                     idelectro: true, 
-                    icono: true
+                    //icono: true
                 }
             });
             if (utensilio.length === 0 ) {

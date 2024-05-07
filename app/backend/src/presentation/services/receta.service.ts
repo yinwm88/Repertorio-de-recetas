@@ -106,8 +106,17 @@ export class RecetaService {
                     correo: correo
                 }
             });
+
+            const likear = await prisma.receta.updateMany({
+                where : { idreceta : idReceta },
+                data : {  
+                    likes : {
+                        increment : 1
+                    }
+                 }
+            });
+
             return {
-                correo: favorita.correo,
                 idreceta: favorita.idreceta
             };
         } catch (error) {
@@ -124,7 +133,8 @@ export class RecetaService {
         
         try {
             const favoritas = await prisma.preferir.findMany({
-                where: {correo : correo}
+                where: {correo : correo},
+                select : { idreceta : true }
             });
             return { recetas: favoritas};
         }catch(error){
@@ -167,7 +177,7 @@ export class RecetaService {
                 tiempo: receta?.tiempo,
                 proceso: receta?.proceso,
                 tipos : tipos,
-                calorias: 0,
+                likes : receta?.likes,
                 ingredientes : ingredientes,
                 utensilios : utensilios,
                 variaciones: variaciones
@@ -371,6 +381,26 @@ export class RecetaService {
                 recetas: recetas
             }
         } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async borrarReceta(correo : string, idReceta: number){
+        const recetaExiste = await prisma.receta.findFirst({
+            where : { idreceta : idReceta },
+            select : { correo : true }
+        });
+        if( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
+        if ( recetaExiste.correo !== correo ) throw ErrorCustomizado.badRequest( 'El usuario proporcionado no puede eliminar esta receta' );
+
+        try {
+            const recetaEliminada = await prisma.receta.delete({
+                where : { idreceta : idReceta }
+            });
+            return {
+                recetaEliminada
+            };
+        } catch(error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
