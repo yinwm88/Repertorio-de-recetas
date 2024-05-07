@@ -21,14 +21,15 @@ services:
   #   ports:
   #     - "3000:3000"
 
-  postgres:
+ postgres:
+    build: ./DB
     image: postgres:latest
-  # COMENTADO PARA PROBAR POBLAR LA BD
-    #volumes: 
-      # - ~/apps/postgres:/var/lib/postgresql/data
+      # COMENTADO PARA PROBAR POBLAR LA BD
+      #volumes: 
+        # - ~/apps/postgres:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_DB=RECETAS
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=mypassword
+        - POSTGRES_DB=RECETAS
     ports:
-      - "5432:5432"
+        - "5432:5432"
