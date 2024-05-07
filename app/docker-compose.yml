@@ -1,18 +1,18 @@
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
-    environment:
-      - POSTGRES_USER=postgres
-      - PGUSER=postgres
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=RECETAS
-    depends_on:
-      - postgres
+  #backend:
+    # build:
+    #context: ./backend
+      # dockerfile: Dockerfile
+    #ports:
+      # - "3001:3001"
+    #environment:
+      # - POSTGRES_USER=postgres
+      #- PGUSER=postgres
+      #- POSTGRES_PASSWORD=mypassword
+      #- POSTGRES_PORT=5432
+      #- POSTGRES_DB=RECETAS
+    #depends_on:
+      #- postgres
 
   # frontend:
   #   build:
@@ -23,8 +23,9 @@ services:
 
   postgres:
     image: postgres:latest
-    volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+  # COMENTADO PARA PROBAR POBLAR LA BD
+    #volumes: 
+      # - ~/apps/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=mypassword
