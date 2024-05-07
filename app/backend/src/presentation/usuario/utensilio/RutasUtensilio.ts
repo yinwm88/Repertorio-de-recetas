@@ -14,6 +14,7 @@ export class RutasUtensilio {
         router.put('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
         router.delete('/:idUtensilio', [ JoinMiddleware.validarJwt ], controlador.desactivarUtensilio );
         router.post('/buscar', controlador.buscarUtensilio );
+        router.post('/datos', controlador.datosUtensilio)   
 
         return router;
     }

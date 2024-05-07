@@ -49,4 +49,12 @@ export class controladorUtensilio {
         .catch( error => this.manejarError( error, res ));
     }
     
+    public datosUtensilio = ( req: Request, res: Response ) => {
+        const { id } = req.body;
+        if( !id ) return res.status(400).json({error:'Falta el id del utensilio'});
+
+        this.utensilioService.datosUtensilio( id )
+        .then( utensilio => res.status(200).json( utensilio ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }
