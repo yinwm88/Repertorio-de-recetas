@@ -14,7 +14,7 @@ export class RutasIngrediente {
         router.post('/buscar', controlador.buscarIngrediente );
         router.post('/eliminar/:id', controlador.eliminarIngrediente );
         router.patch('/:id', controlador.editarIngrediente );
-        
+        router.post('/datos', controlador.datosIngrediente)
         return router;
     }
 }
