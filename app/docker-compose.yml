@@ -13,13 +13,27 @@ services:
         - POSTGRES_DB=RECETAS
       depends_on:
         - postgres
+      develop:
+        watch:
+          - action: sync
+            path: ./backend/src/
+            target: /app/src/
+            ignore:
+              - node_modules/
 
     frontend:
-        build:
-          context: ./frontend
-          dockerfile: Dockerfile
-        ports:
-          - "3000:3000"
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      ports:
+        - "3000:3000"
+      develop:
+        watch:
+          - action: sync
+            path: ./frontend/src/
+            target: /app/src/
+            ignore:
+              - node_modules/
 
     postgres:
         build: ./DB
