@@ -4,6 +4,13 @@
   overflow-y: auto; /* Permite el desplazamiento vertical */
 }
 
+.contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
 
 .gridPinterest {
   flex: 1;

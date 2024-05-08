@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Container, Button } from '@mui/material';
+import { Grid, Container, Button, Tabs, Tab } from '@mui/material';
 import { db } from '../firebaseConfig';
 import IngredientesBar from './IngredientesBar';
 import FiltroRecetas from './Filtros';
@@ -13,6 +13,9 @@ import Pin from './Pin';
 import './Contenido.css';
 import { useAuth, getToken } from '../AuthContext';
 
+function TabPanel({ children, value, index }) {
+  return value === index && <div>{children}</div>;
+}
 
 function Contenido() {
   const [recipes, setRecipes] = useState([]);
@@ -30,6 +33,10 @@ function Contenido() {
   const handleOpenAgregarReceta = () => setIsAgregarRecetaOpen(true);
   const handleCloseAgregarReceta = () => setIsAgregarRecetaOpen(false);
 
+  const [activeTab, setActiveTab] = useState(0);
+  const handleTabChange = (event, newValue) => {
+    setActiveTab(newValue);
+  };
 
   useEffect(() => {
     const fetchRecetas = async () => {
@@ -178,19 +185,18 @@ function Contenido() {
 
   const [filtroTiempo, setFiltroTiempo] = useState([0, 120]);
 
-const filtrarRecetas = (recetas) => {
-  return recetas
-    .filter((receta) =>
-      receta.tiempo >= filtroTiempo[0] && receta.tiempo <= filtroTiempo[1] &&
-      receta.nombre.toLowerCase().includes(searchText.toLowerCase())
-    )
-    .sort((a, b) => b.porcentaje - a.porcentaje);
-};
+  const filtrarRecetas = (recetas) => {
+    return recetas
+      .filter((receta) =>
+        receta.tiempo >= filtroTiempo[0] && receta.tiempo <= filtroTiempo[1] &&
+        receta.nombre.toLowerCase().includes(searchText.toLowerCase())
+      )
+      .sort((a, b) => b.porcentaje - a.porcentaje);
+  };
 
   return (
-    <Container maxWidth="false" className='contenido'>
+    <Container maxWidth={false} className='contenido'>
 
-      {/* {showForm && <FormOpcional onClose={handleFormClose} />} */}
       <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} />
 
       <Grid container spacing={4}>
@@ -198,41 +204,73 @@ const filtrarRecetas = (recetas) => {
           <FiltroRecetas
             onSearchChange={setSearchText}
             onTimeChange={setFiltroTiempo}
-
           />
-          <Button variant='semiContained' onClick={handleOpenAgregarReceta}>Crear Nueva Receta</Button>
+
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
+
+          <Button variant='semiContained' onClick={handleOpenAgregarReceta} style={{ marginTop: 50 }}>Crear Nueva Receta</Button>
         </Grid>
 
         <Grid item sm={12} md={8}>
 
-          <div className="scrollable-container">
-            <Container maxWidth="false" className='contenido' style={{ height: '100vh' }}>
 
 
-              <h1>Recetas</h1>
-              <Masonry columns={{ xs: 2, sm: 3, md: 3 }} spacing={2.5}>
-                {filtrarRecetas(recipes).map((recipe) =>
-                  recipe.id && recipe.porcentaje > 0 && (
-                    <Pin
-                      id={recipe.id}
-                      onMarkFavorite={markAsFavorite}
-                      key={recipe.id}
-                      porcentaje={recipe.porcentaje}
-                      pinSize={recipe.pinSize || "medium"}
-                      imgSrc={recipe.imageUrl}
-                      name={recipe.nombre}
-                      link={`/receta/${recipe.id}`}
-                      recipeDetails={recipe}
-                    />
-                  )
-                )}
-              </Masonry>
-            </Container>
-          </div>
+          <Tabs value={activeTab} onChange={handleTabChange} aria-label="Recetas Tabs">
+            <Tab label="Recetas" />
+            <Tab label="Mis recetas" />
+          </Tabs>
+
+
+          <TabPanel value={activeTab} index={0}>
+            <div className="scrollable-container">
+              <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
+                <h1>Recetas</h1>
+                <Masonry columns={{ xs: 2, sm: 3, md: 3 }} spacing={2.5}>
+                  {filtrarRecetas(recipes).map((recipe) =>
+                    recipe.id && recipe.porcentaje > 0 && (
+                      <Pin
+                        id={recipe.id}
+                        onMarkFavorite={markAsFavorite}
+                        key={recipe.id}
+                        porcentaje={recipe.porcentaje}
+                        pinSize={recipe.pinSize || "medium"}
+                        imgSrc={recipe.imageUrl}
+                        name={recipe.nombre}
+                        link={`/receta/${recipe.id}`}
+                        recipeDetails={recipe}
+                      />
+                    )
+                  )}
+                </Masonry>
+              </Container>
+            </div>
+          </TabPanel>
+
+          <TabPanel value={activeTab} index={1}>
+            <div className="scrollable-container">
+              <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
+                <h1>Mis recetas</h1>
+                <Masonry columns={{ xs: 2, sm: 3, md: 3 }} spacing={2.5}>
+                  {filtrarRecetas(recipes).map((recipe) =>
+                    recipe.id && recipe.porcentaje === 100 && (
+                      <Pin
+                        id={recipe.id}
+                        onMarkFavorite={markAsFavorite}
+                        key={recipe.id}
+                        porcentaje={recipe.porcentaje}
+                        pinSize={recipe.pinSize || "medium"}
+                        imgSrc={recipe.imageUrl}
+                        name={recipe.nombre}
+                        link={`/receta/${recipe.id}`}
+                        recipeDetails={recipe}
+                      />
+                    )
+                  )}
+                </Masonry>
+              </Container>
+            </div>
+          </TabPanel>
         </Grid>
-
-
       </Grid>
     </Container>
   );

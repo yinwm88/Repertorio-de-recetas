@@ -42,12 +42,13 @@ function FiltroRecetas({ onSearchChange, onTimeChange }) {
   };
 
   return (
-    <Box sx={{ p: 2,marginTop:3 }}>
+    <Box sx={{ p: 2}}>
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
         <TextField
           fullWidth
           variant="outlined"
           label="Buscar recetas"
+          
           InputProps={{
             endAdornment: <SearchIcon />,
           }}
@@ -57,7 +58,7 @@ function FiltroRecetas({ onSearchChange, onTimeChange }) {
             onSearchChange(e.target.value);
           }}
         />
-        <Button variant="outlined" onClick={toggleFiltros} startIcon={<FilterListIcon />}>
+        <Button variant="blackText" onClick={toggleFiltros} startIcon={<FilterListIcon />}>
           Filtros
         </Button>
       </Stack>
