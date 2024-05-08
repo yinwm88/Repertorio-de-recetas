@@ -7,6 +7,7 @@ import {Container } from '@mui/material';
 import Header from './Header';
 import Contenido from '../Contenido';
 import { useAuth } from '../../AuthContext';
+import Config from '../Configuracion';
 
 const LandingPage = () => {
   const { currentUser, getUserDataFromCookies, login } = useAuth();
@@ -31,6 +32,7 @@ const LandingPage = () => {
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
           <Route path="/contenido" element={<ContenidoProtected />} />
+          <Route path="/settings" element={<Config />} />
         </Routes>
       </Container>
     </>

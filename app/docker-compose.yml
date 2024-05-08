@@ -1,33 +1,48 @@
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
-    environment:
-      - POSTGRES_USER=postgres
-      - PGUSER=postgres
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=RECETAS
-    depends_on:
-      - postgres
+    backend:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      ports:
+        - "3001:3001"
+      environment:
+        - POSTGRES_USER=postgres
+        - PGUSER=postgres
+        - POSTGRES_PASSWORD=mypassword
+        - POSTGRES_PORT=5432
+        - POSTGRES_DB=RECETAS
+      depends_on:
+        - postgres
+      develop:
+        watch:
+          - action: sync
+            path: ./backend/src/
+            target: /app/src/
+            ignore:
+              - node_modules/
 
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"
+    #frontend:
+      #build:
+        #context: ./frontend
+        #dockerfile: Dockerfile
+      #ports:
+        #- "3000:3000"
+      #develop:
+        #watch:
+          #- action: sync
+            #path: ./frontend/src/
+            #target: /app/src/
+            #ignore:
+              #- node_modules/
 
-  postgres:
-    image: postgres:latest
-    volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_DB=RECETAS
-    ports:
-      - "5432:5432"
+    postgres:
+        build: ./DB
+        image: postgres:latest
+        volumes: 
+            - ~/apps/postgres:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=mypassword
+            - POSTGRES_DB=RECETAS
+        ports:
+            - "5432:5432"

@@ -60,6 +60,7 @@ const CrearReceta = ({isOpen,onClose}) => {
     formBody.push(`nombre=${encodeURIComponent(nombre)}`);
     formBody.push(`tiempo=${encodeURIComponent(tiempo)}`);
     formBody.push(`proceso=${encodeURIComponent(proceso)}`);
+    formBody.push(`utensilios=[{"utensilio":1}]`);
 
     // Añadir ingredientes a formBody.
     selectedIngredients.forEach((ingrediente, index) => {

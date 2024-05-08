@@ -58,4 +58,16 @@ export class ControladorIngrediente {
         .then( ingredientes => res.status(200).json( ingredientes ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public datosIngrediente = ( req:Request, res:Response ) => {
+        const { id } = req.body;
+        if (!id) {
+            return res.status(400).json({error:'Hace falta el id'});
+        }
+
+        this.ingredienteService.getDatosIngrediente( req.body.id )
+        .then( ingrediente => res.status(200).json( ingrediente ))
+        .catch( error => this.manejarError( error, res ));
+    }
+
 }

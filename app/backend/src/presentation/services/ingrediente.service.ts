@@ -165,4 +165,24 @@ export class IngredienteService {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
+
+    async getDatosIngrediente(id : number){
+        const ingredienteExiste = await prisma.ingrediente.findFirst({
+            where : { idingrediente : id}
+        });
+        if (!ingredienteExiste) throw ErrorCustomizado.badRequest( 'El ingrediente no existe' );
+        try {
+            const ingrediente = await prisma.ingrediente.findFirst({
+                where : { idingrediente : id},
+                select : { 
+                    nombre : true,
+                    unidad : true,
+                    calorias : true
+                 }
+            });
+            return ingrediente;
+        } catch(error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
 }

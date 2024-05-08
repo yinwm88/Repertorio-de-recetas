@@ -34,7 +34,7 @@ function Contenido() {
   useEffect(() => {
     const fetchRecetas = async () => {
       try {
-        const response = await fetch('http://localhost:3001/receta/recetasIncompletas', {
+        const response = await fetch('http://localhost:3001/generarRecetas', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -50,12 +50,15 @@ function Contenido() {
 
         const data = await response.json();
 
+        console.log('aaaaaaaaaaaaaaaa', data.recetas)
+
         if (!Array.isArray(data.recetas)) {
           throw new Error('Invalid data format');
         }
 
         const recipesDetails = await Promise.all(data.recetas.map(async (receta) => {
-          const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
+          console.log('buscando', receta.idReceta)
+          const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idReceta}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -64,7 +67,7 @@ function Contenido() {
 
           if (!responseReceta.ok) {
             // throw new Error(`HTTP error! Status: ${responseReceta.status}`);
-            console.log(`HTTP error! Status: ${responseReceta.status}`);
+            console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idreceta} ${receta}`);
           }
 
           const dataReceta = await responseReceta.json();
@@ -76,7 +79,7 @@ function Contenido() {
           const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
 
           return {
-            id: receta.idreceta,
+            id: receta.idReceta,
             ...dataReceta,
             porcentaje: receta.porcentaje,
             imageUrl,

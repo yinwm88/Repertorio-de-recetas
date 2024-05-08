@@ -40,7 +40,7 @@ export class ControladorRecetas{
         this.recetaService.crearReceta( crearRecetaDto!, req.body.usuario, recetaIngredientesDto!, recetaUtensiliosDto! )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
-   }
+    }
     
     public editarReceta = ( req:Request, res: Response ) => {
         const [error, editarRecetaDto] = EditarRecetaDto.crearInstancia( req.body );
@@ -102,4 +102,17 @@ export class ControladorRecetas{
         .then( recetas => res.status(200).json( recetas ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public borrarRecetaUsuario = ( req:Request, res: Response ) => {
+        const { idReceta, correo } = req.body;
+        if (!idReceta) {
+            return res.status(400).json({error: 'Falta el id de la receta'});
+        }
+        if (!correo) {
+            return res.status(400).json({error: 'Falta el correo'});
+        }
+        this.recetaService.borrarReceta( correo, idReceta )
+        .then( receta => res.status(201).json( receta ))
+        .catch( error => this.manejarError( error, res ));
+    }  
 }

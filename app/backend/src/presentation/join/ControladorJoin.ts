@@ -40,8 +40,8 @@ export class ControladorJoin {
         const { token } = req.params;
         
         this.usuarioService.validarCorreo( token )
-          .then( () => res.json('Correo validado') )
-          .catch( error => this.manejarError(error, res) );
+            .then( () => res.json('Correo validado') )
+            .catch( error => this.manejarError(error, res) );
     
     }
 }

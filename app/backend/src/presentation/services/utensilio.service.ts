@@ -6,6 +6,23 @@ export class UtensilioService {
 
     constructor() {}
 
+    async datosUtensilio(idUtensilio : number){
+
+        const utensilioExiste = await prisma.electrodomestico.findFirst({
+            where : { idelectro : idUtensilio }            
+        });
+        if( !utensilioExiste ) throw ErrorCustomizado.badRequest( 'El tensilio no existe' );
+
+        try {
+            const utensilio = await prisma.electrodomestico.findFirst({
+                where : {idelectro : idUtensilio}
+            });
+            return utensilio
+        }catch(error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
     //TODO: Corregir error en la respuesta
     async activarUtensilio( idUtensilio: number, usuario: EntidadUsuario ) {
         const utensilioExiste = await prisma.electrodomestico.findUnique({
@@ -87,7 +104,7 @@ export class UtensilioService {
                 select:{
                     nombre: true,
                     idelectro: true, 
-                    icono: true
+                    //icono: true
                 }
             });
             if (utensilio.length === 0 ) {

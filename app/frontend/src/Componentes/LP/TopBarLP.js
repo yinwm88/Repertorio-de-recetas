@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
+import SettingsIcon from '@mui/icons-material/Settings';
+
 
 function TopBar() {
 
@@ -28,7 +30,13 @@ function TopBar() {
           Kitchenify
         </Typography>
         {currentUser ? (
-          <Button variant="whiteText" component={Link} to="/" onClick={logout}>Cerrar Sesión</Button>
+          <div>
+            <IconButton component={Link} to="/settings">
+              <SettingsIcon />
+            </IconButton>
+
+            <Button variant="whiteText" component={Link} to="/" onClick={logout}>Cerrar Sesión</Button>
+          </div>
         ) : (
           <>
             <Button variant="whiteText" component={Link} to="/">Inicio</Button>
