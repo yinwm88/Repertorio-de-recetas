@@ -2,30 +2,24 @@
 
 1. Entra al directorio de `app`
 2. Copia las variables de entorno  del `.env.test` a un `.env`
-  ```sh
+  ```zh
    cp backend/.env.test  backend/.env
    ```
 (O en win)
-```
+```cmd
 copy "backend\.env.test" "backend\.env"
 ```
 
-3. En el directorio del `backend` corre
+3. En el directorio del `backend` corre (OPCIONAL)
    
-   ```sh
+   ```bash
    cd backend
    npx prisma generate
    cd ..
    ```
    
-4. Ejecuta
+4. Corre el servidor 
    
-   ```
-   chmod a+x DB/entrypoint.sh
-   ```
-   
-6. Corre el servidor 
-   
-   ```
+   ```bash
    docker compose watch
    ```
