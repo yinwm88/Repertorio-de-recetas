@@ -90,6 +90,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  //Cambiar el cntenido del drawer
+  const [drawerContent, setDrawerContent] = useState("Inicio");
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -97,6 +99,10 @@ export default function MiniDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleListItemClick = (text) => {
+    setDrawerContent(text);
   };
 
   return (
@@ -131,13 +137,14 @@ export default function MiniDrawer() {
         <List>
         {['Datos', 'Utensilios', 'Estadisticas', 'Volver'].map((text, index) => (
             <ListItem key={text} disablePadding style={{ display: 'block' }}>
-              <ListItemButton
-                style={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  paddingLeft: 20,
-                }}
-              >
+                <ListItemButton
+                  onClick={() => handleListItemClick(text)}
+                  style={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    paddingLeft: 20,
+                  }}
+                >
                 <ListItemIcon
                   style={{
                     minWidth: 0,
@@ -158,16 +165,29 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" style={{ flexGrow: 1, padding: 20 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-  
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-        </Typography>
+        {drawerContent === 'Datos' && (
+          <Typography paragraph>
+            Contenido para Datos
+          </Typography>
+        )}
+        {drawerContent === 'Utensilios' && (
+          <Typography paragraph>
+            Contenido para Utensilios
+          </Typography>
+        )}
+        {drawerContent === 'Estadisticas' && (
+          <Typography paragraph>
+            Contenido para Estadisticas
+          </Typography>
+        )}
+        {drawerContent === 'Volver' && (
+          //hacer link para volver a la pagina de inicio
+          <Typography paragraph>
+             Para SAlir
+          </Typography>
+        )}
       </Box>
+
     </Box>
   );
 }
