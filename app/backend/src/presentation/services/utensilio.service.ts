@@ -93,7 +93,7 @@ export class UtensilioService {
             if (utensilio.length === 0 ) {
                 return {utensilio: 'No hay ingredientes'};
             }
-            return {utensilio: utensilio};
+            return { utensilios: utensilio };
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
@@ -101,7 +101,13 @@ export class UtensilioService {
     
     async obtenerUtensilios() {
         try {
-            const utensilios = await prisma.electrodomestico.findMany();
+            const utensilios = await prisma.electrodomestico.findMany({
+                select:{
+                    idelectro: true,
+                    nombre: true,
+                    icono: true
+                }
+            });
             
             return {
                 utensilios: utensilios
