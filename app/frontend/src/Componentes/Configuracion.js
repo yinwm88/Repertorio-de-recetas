@@ -20,6 +20,8 @@ import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import BlenderIcon from '@mui/icons-material/Blender';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
+import { Link } from 'react-router-dom';
+
 
 const drawerWidth = 240;
 
@@ -152,8 +154,12 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : index=== 2? <LeaderboardRoundedIcon />: <KeyboardReturnRoundedIcon/>}
-                </ListItemIcon>
+                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : index=== 2? <LeaderboardRoundedIcon />:<Link to="/contenido">
+                                                                                                                                  <IconButton color="inherit" aria-label="Volver">
+                                                                                                                                    <KeyboardReturnRoundedIcon />
+                                                                                                                                  </IconButton>
+                                                                                                                                </Link> }
+                    </ListItemIcon>
                 <ListItemText primary={text} style={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
@@ -180,12 +186,7 @@ export default function MiniDrawer() {
             Contenido para Estadisticas
           </Typography>
         )}
-        {drawerContent === 'Volver' && (
-          //hacer link para volver a la pagina de inicio
-          <Typography paragraph>
-             Para SAlir
-          </Typography>
-        )}
+  
       </Box>
 
     </Box>
