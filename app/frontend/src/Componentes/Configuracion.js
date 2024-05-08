@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import BlenderIcon from '@mui/icons-material/Blender';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
+import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 
 const drawerWidth = 240;
 
@@ -128,7 +129,7 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-        {['Datos', 'Utensilios', 'Estadisticas' ].map((text, index) => (
+        {['Datos', 'Utensilios', 'Estadisticas', 'Volver'].map((text, index) => (
             <ListItem key={text} disablePadding style={{ display: 'block' }}>
               <ListItemButton
                 style={{
@@ -144,7 +145,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : <LeaderboardRoundedIcon />}
+                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : index=== 2? <LeaderboardRoundedIcon />: <KeyboardReturnRoundedIcon/>}
                 </ListItemIcon>
                 <ListItemText primary={text} style={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
