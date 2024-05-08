@@ -190,7 +190,7 @@ const filtrarRecetas = (recetas) => {
   return (
     <Container maxWidth="false" className='contenido'>
 
-      {showForm && <FormOpcional onClose={handleFormClose} />}
+      {/* {showForm && <FormOpcional onClose={handleFormClose} />} */}
       <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} />
 
       <Grid container spacing={4}>

@@ -11,7 +11,10 @@ import './IngredientesBar.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../AuthContext';
 import Swal from 'sweetalert2'
-
+import Slider from '@mui/material/Slider';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import Chip from '@mui/material/Chip';
 const itemIcons = {
   shopping: <ShoppingCartIcon />,
   food: <FastfoodIcon />,
@@ -54,11 +57,46 @@ function CustomList({ lastUpdate, setLastUpdate }) {
   const [newItemIcon, setNewItemIcon] = useState('shopping');
   const [searchText, setSearchText] = useState('');
 
+
+  //Edicion
+  const [editingIngredient, setEditingIngredient] = useState(null);
+  const [editingQuantity, setEditingQuantity] = useState(0);
+
+  const startEditing = (ingrediente) => {
+    setEditingIngredient(ingrediente);
+    setEditingQuantity(ingrediente.cantidad);
+  };
+  const confirmDelete = async (ingrediente) => {
+    try {
+      const response = await fetch(`http://localhost:3001/ingrediente/eliminar/${ingrediente.idingrediente}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idIngrediente: ingrediente.idingrediente,
+          cantidad: parseInt(editingQuantity),
+          unidad: ingrediente.unidad,
+          usuario: { correo: currentUser },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo eliminar el ingrediente');
+      }
+
+      setEditingIngredient(null); // Resetear el ingrediente en edición
+      setLastUpdate(Date.now());
+      fetchIngredientesUsuario();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+
+  //Ingredientes Usuario
   const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
-
   const fetchIngredientesUsuario = async () => {
-    // Asegúrate de reemplazar currentUser con el correo real del usuario
-
     try {
       const response = await fetch('http://localhost:3001/ingredientesUsuario', {
         method: 'POST',
@@ -161,6 +199,23 @@ function CustomList({ lastUpdate, setLastUpdate }) {
     overflowY: 'auto'
   };
 
+  const secondaryActionStyles = {
+    editing: {
+      display: 'flex',
+      flexDirection: 'column', 
+      alignItems: 'flex-start', 
+      width: '100%',  
+    },
+    sliderContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      width: '160%', 
+      paddingLeft: '8px',  
+      paddingRight: '80px' ,
+       
+    }
+  };
+
   const handleAddItemToStaticList = async () => {
     if (!selectedIngredient) return;
 
@@ -232,20 +287,54 @@ function CustomList({ lastUpdate, setLastUpdate }) {
             {ingredientesUsuario.map((ingrediente) => (
               <ListItem
                 key={ingrediente.idingrediente}
+                style={{overflow: 'hidden'}}
                 secondaryAction={
-                  <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(ingrediente)}>
-                    <DeleteIcon />
-                  </IconButton>
+                  editingIngredient?.idingrediente === ingrediente.idingrediente ? (
+                    <Box sx={secondaryActionStyles.editing}>
+                      <Box  sx={secondaryActionStyles.sliderContainer}>
+                        <Chip
+                          label={editingQuantity}
+                          color="primary"
+                          variant="outlined"
+                          size="small"
+                          sx={{ mx: 1 }}
+                        />
+                        <Slider
+                          value={editingQuantity}
+                          onChange={(e, newValue) => setEditingQuantity(newValue)}
+                          aria-labelledby="input-slider"
+                          min={0}
+                          max={ingrediente.cantidad}
+                          sx={{ width: '150%' }}  // Ocupa todo el ancho
+                        />
+                      </Box>
+                      <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                        <IconButton onClick={() => confirmDelete(editingIngredient)} aria-label="confirm">
+                          <CheckIcon />
+                        </IconButton>
+                        <IconButton onClick={() => setEditingIngredient(null)} aria-label="cancel">
+                          <CloseIcon />
+                        </IconButton>
+                      </Box>
+                    </Box>
+                  ) : (
+                    <Box sx={secondaryActionStyles.normal}>
+                      <IconButton edge="end" aria-label="edit" onClick={() => startEditing(ingrediente)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Box>
+                  )
                 }
               >
                 <ListItemAvatar>
-                  <FastfoodIcon>{/* Icono del ingrediente */}</FastfoodIcon>
+                  <FastfoodIcon />
                 </ListItemAvatar>
                 <ListItemText
                   primary={ingrediente.nombre}
                   secondary={`Cantidad: ${ingrediente.cantidad} ${ingrediente.unidad}`}
                 />
               </ListItem>
+
             ))}
           </List>
 
@@ -253,11 +342,11 @@ function CustomList({ lastUpdate, setLastUpdate }) {
 
 
 
-        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ top:40 }}>
+        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ top: 40 }}>
           <AddIcon />
         </StyledFab>
 
-        
+
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Añadir ingrediente 🍎</DialogTitle>
           <DialogContent>
