@@ -17,7 +17,7 @@ function TabPanel({ children, value, index }) {
   return value === index && <div>{children}</div>;
 }
 
-function Contenido() {
+function Contenido({ handleThemeChange }) {
   const [recipes, setRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -195,7 +195,7 @@ function Contenido() {
   };
 
   return (
-    <Container maxWidth={false} className='contenido'>
+    <Container maxWidth={false} className='mainContainer'>
 
       <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} />
 
@@ -205,10 +205,10 @@ function Contenido() {
             onSearchChange={setSearchText}
             onTimeChange={setFiltroTiempo}
           />
-
+          <Button variant='semiContained' onClick={handleOpenAgregarReceta} style={{ marginTop: 0 }}>Crear Nueva Receta</Button>
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
 
-          <Button variant='semiContained' onClick={handleOpenAgregarReceta} style={{ marginTop: 50 }}>Crear Nueva Receta</Button>
+
         </Grid>
 
         <Grid item sm={12} md={8}>
@@ -218,7 +218,10 @@ function Contenido() {
           <Tabs value={activeTab} onChange={handleTabChange} aria-label="Recetas Tabs">
             <Tab label="Recetas" />
             <Tab label="Mis recetas" />
+            <Tab label="Recetas Favoritas" />
+
           </Tabs>
+
 
 
           <TabPanel value={activeTab} index={0}>
