@@ -5,11 +5,20 @@ export const fetchImageForRecipe = async (recipeName) => {
   const pixabayApiKey = '43641615-297e61c4d9af146e80502ee5b';
   const flickrApiKey = '901aeda7df55b720f817e24c8de7455e';
 
+  // const urls = [
+  //   `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${unsplashApiKey}`,
+  //   `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1&tags=comida,food`,
+  //   `https://api.pexels.com/v1/search?query=${encodeURIComponent('food ' + recipeName)}&per_page=1`,
+  //   `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
+  // ];
+
   const urls = [
-    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${unsplashApiKey}&collections=food,comida&per_page=1`,
-    `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1&tags=comida,food`,
-    `https://api.pexels.com/v1/search?query=${encodeURIComponent('food ' + recipeName)}&per_page=1`,
+
+    `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
+    `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
+    
+
   ];
 
   for (const url of urls) {
@@ -39,6 +48,23 @@ export const fetchImageForRecipe = async (recipeName) => {
 
   return 'https://via.placeholder.com/150';
 };
+
+// const google_images = require("free-google-images");
+
+// export const fetchImageForRecipe = async (recipeName) => {
+//   try {
+//     const results = await google_images.search(`${recipeName} food`);
+//     if (results.length > 0) {
+//       return results[0].image.url;
+//     } else {
+//       return 'https://via.placeholder.com/150';
+//     }
+//   } catch (error) {
+//     console.error(`Error fetching image:`, error);
+//     return 'https://via.placeholder.com/150';
+//   }
+// };
+
 
 
 export const fetchRecetas = async (currentUser, getToken, setRecipes) => {
