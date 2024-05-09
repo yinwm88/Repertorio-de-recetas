@@ -1,4 +1,4 @@
-# **USAGE**
+# **USAGE DEV**
 
 1. Entra al directorio de `app`
 2. Copia las variables de entorno  del `.env.test` a un `.env`
@@ -23,3 +23,4 @@ copy "backend\.env.test" "backend\.env"
    ```bash
    docker compose watch
    ```
+> Si haz detenido el docker compose watch, entonces para volverlo a correr debera ser en una nueva terminal
