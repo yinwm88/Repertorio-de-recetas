@@ -33,7 +33,7 @@ const StyledFab = styled(Fab)({
 function CustomList({ lastUpdate, setLastUpdate }) {
 
   const { currentUser } = useAuth();
-  console.log('Usuario actual:', currentUser)
+  // console.log('Usuario actual:', currentUser)
 
   const [items, setItems] = useState([
     {

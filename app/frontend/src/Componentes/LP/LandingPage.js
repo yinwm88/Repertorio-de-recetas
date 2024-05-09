@@ -17,7 +17,7 @@ const LandingPage = ({isDarkMode,handleThemeChange}) => {
     if (!currentUser) {
       const user = getUserDataFromCookies();
       if (user) {
-        console.log('Usuario encontrado', user);
+        // console.log('Usuario encontrado', user);
         
         navigate('/contenido');
       } 

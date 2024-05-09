@@ -6,7 +6,7 @@ import Masonry from '@mui/lab/Masonry';
 import CrearReceta from '../CrearReceta/CrearReceta';
 import Pin from '../Pin';
 import TabPanel from './TabPanel';
-import { fetchRecetas, fetchUserRecipes } from './helpers/fetchRecetas';
+import { fetchRecetas, fetchUserRecipes, fetchFavoriteRecipes } from './helpers/fetchRecetas';
 import { markAsFavorite } from './helpers/markAsFavorite';
 
 import { useAuth } from '../../AuthContext';
@@ -17,6 +17,7 @@ function Contenido() {
 
   const [recipes, setRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
   const [isAgregarRecetaOpen, setIsAgregarRecetaOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -33,7 +34,20 @@ function Contenido() {
 
   useEffect(() => {
     if (activeTab === 1) fetchUserRecipes(currentUser, getToken, setUserRecipes);
+    if (activeTab === 2) fetchFavoriteRecipes(currentUser, getToken, setFavoriteRecipes);
   }, [activeTab, currentUser]);
+
+  useEffect(() => {
+    console.log('FRecetas:', favoriteRecipes);
+  }, [favoriteRecipes]);
+
+  useEffect(() => {
+    console.log('URecetas:', userRecipes);
+  }, [userRecipes]);
+
+  useEffect(() => {
+    console.log('Recetas:', recipes);
+  }, [recipes]);
 
   const filtrarRecetas = (recetas) =>
     recetas
@@ -50,22 +64,24 @@ function Contenido() {
       {filtrarRecetas(recetas).map(
         (recipe) =>
           recipe.id &&
-          recipe.porcentaje > 0 && (
+          ('porcentaje' in recipe ? recipe.porcentaje > 0 : true) && (
             <Pin
               id={recipe.id}
               onMarkFavorite={() => markAsFavorite(recipe.id, currentUser)}
               key={recipe.id}
-              porcentaje={recipe.porcentaje}
+              porcentaje={recipe.porcentaje || 1}
               pinSize={recipe.pinSize || "medium"}
               imgSrc={recipe.imageUrl}
               name={recipe.nombre}
               link={`/receta/${recipe.id}`}
               recipeDetails={recipe}
+              markedFavorite={recipe.porcentaje === undefined ? true : false}
             />
           )
       )}
     </Masonry>
   );
+
 
   return (
     <Container maxWidth={false} className='mainContainer'>
@@ -109,6 +125,7 @@ function Contenido() {
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
                 <h1>Recetas Favoritas</h1>
+                {renderPins(favoriteRecipes)}
               </Container>
             </div>
           </TabPanel>

@@ -42,99 +42,155 @@ export const fetchImageForRecipe = async (recipeName) => {
 
 
 export const fetchRecetas = async (currentUser, getToken, setRecipes) => {
-    try {
-      const response = await fetch('http://localhost:3001/generarRecetas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify({ correo: currentUser }),
-      });
-  
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-  
-      const data = await response.json();
-      if (!Array.isArray(data.recetas)) throw new Error('Invalid data format');
-  
-      const recipesDetails = await Promise.all(
-        data.recetas.map(async (receta) => {
-          const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idReceta}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          });
-  
-          if (!responseReceta.ok) {
-            console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idReceta}`);
-            return null;
-          }
-  
-          const dataReceta = await responseReceta.json();
-          if (!dataReceta.nombre) return null;
-  
-          const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
-  
-          return {
-            id: receta.idReceta,
-            ...dataReceta,
-            porcentaje: receta.porcentaje,
-            imageUrl,
-          };
-        })
-      );
-  
-      setRecipes(recipesDetails.filter(Boolean));
-    } catch (error) {
-      console.error('Error fetching recipes:', error);
-      setRecipes([]);
-    }
-  };
-  
-  export const fetchUserRecipes = async (currentUser, getToken, setUserRecipes) => {
-    try {
-      const response = await fetch('http://localhost:3001/receta/recetasUsuario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify({ correo: currentUser }),
-      });
-  
-      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-  
-      const data = await response.json();
-      if (!Array.isArray(data.recetas)) throw new Error('Invalid data format');
-  
-      const userRecipesDetails = await Promise.all(
-        data.recetas.map(async (receta) => {
-          const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idReceta}`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-          });
-  
-          if (!responseReceta.ok) {
-            console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idReceta}`);
-            return null;
-          }
-  
-          const dataReceta = await responseReceta.json();
-          if (!dataReceta.nombre) return null;
-  
-          const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
-  
-          return {
-            id: receta.idReceta,
-            ...dataReceta,
-            imageUrl,
-          };
-        })
-      );
-  
-      setUserRecipes(userRecipesDetails.filter(Boolean));
-    } catch (error) {
-      console.error('Error fetching user recipes:', error);
-      setUserRecipes([]);
-    }
-  };
-  
+  try {
+    const response = await fetch('http://localhost:3001/generarRecetas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({ correo: currentUser }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const data = await response.json();
+    if (!Array.isArray(data.recetas)) throw new Error('Invalid data format');
+
+
+    const recipesDetails = await Promise.all(
+      data.recetas.map(async (receta) => {
+        if (!receta.idReceta) return null;
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idReceta}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!responseReceta.ok) {
+          console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idReceta}`);
+          return null;
+        }
+
+        const dataReceta = await responseReceta.json();
+        if (!dataReceta.nombre) return null;
+
+        const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
+
+        return {
+          id: receta.idReceta,
+          ...dataReceta,
+          porcentaje: receta.porcentaje,
+          imageUrl,
+        };
+      })
+    );
+
+    setRecipes(recipesDetails.filter(Boolean));
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    setRecipes([]);
+  }
+};
+
+export const fetchUserRecipes = async (currentUser, getToken, setUserRecipes) => {
+  try {
+    const response = await fetch('http://localhost:3001/receta/recetasUsuario', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({ correo: currentUser }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const data = await response.json();
+    if (!Array.isArray(data.recetas)) throw new Error('Invalid data format');
+
+    
+
+    const userRecipesDetails = await Promise.all(
+      data.recetas.map(async (receta) => {
+        if (!receta.idReceta) return null;
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idReceta}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!responseReceta.ok) {
+          console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idReceta}`);
+          return null;
+        }
+
+        const dataReceta = await responseReceta.json();
+        if (!dataReceta.nombre) return null;
+
+        const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
+
+        return {
+          id: receta.idReceta,
+          ...dataReceta,
+          imageUrl,
+        };
+      })
+    );
+
+    setUserRecipes(userRecipesDetails.filter(Boolean));
+  } catch (error) {
+    console.error('Error fetching user recipes:', error);
+    setUserRecipes([]);
+  }
+};
+
+
+export const fetchFavoriteRecipes = async (currentUser, getToken, setFavoriteRecipes) => {
+  try {
+    const response = await fetch('http://localhost:3001/receta/recetasFavoritas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({ correo: currentUser }),
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const data = await response.json();
+    if (!Array.isArray(data.recetas)) throw new Error('Invalid data format');
+
+
+    const favoriteRecipesDetails = await Promise.all(
+      data.recetas.map(async (receta) => {
+        if (!receta.idreceta) return null;
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!responseReceta.ok) {
+          console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idreceta}`);
+          return null;
+        }
+
+        const dataReceta = await responseReceta.json();
+        if (!dataReceta.nombre) return null;
+
+        const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
+
+        return {
+          id: receta.idreceta,
+          ...dataReceta,
+          imageUrl,
+        };
+      })
+    );
+
+    setFavoriteRecipes(favoriteRecipesDetails.filter(Boolean));
+    // console.log('Recetas Favoritas Encontradas:', favoriteRecipesDetails)
+  } catch (error) {
+    console.error('Error fetching favorite recipes:', error);
+    setFavoriteRecipes([]);
+  }
+};

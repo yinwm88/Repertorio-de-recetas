@@ -32,7 +32,7 @@ const RecipeCard = ({
                 </IconButton>
 
                 <div className="progressBar" style={{
-                    width: '29.997%',
+                    width: porcentaje,
                     zIndex: 1,
                     background: 'rgb(252, 176, 69)',
                     backgroundImage: 'linear-gradient(90deg, rgb(252, 176, 69) 0%, rgb(252, 118, 118) 100%)',

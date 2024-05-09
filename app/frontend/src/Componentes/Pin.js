@@ -13,13 +13,14 @@ import RecipeCard from "./Pin/RecipeCard";
 
 import { useAuth } from "../AuthContext";
 
-function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcentaje }) {
+function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcentaje, markedFavorite }) {
 
-    
+
 
     const { currentUser, getToken } = useAuth();
 
-    const [favorita, setFavorita] = useState(false);
+    const [favorita, setFavorita] = useState(markedFavorite);
+
     const [openDialog, setOpenDialog] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [editOption, setEditOption] = useState("name");
@@ -32,9 +33,10 @@ function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcent
     const [searchResults, setSearchResults] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
 
-    const handleClick = (e) => {
+    const handleLikeClick = (e) => {
         e.stopPropagation();
-        setFavorita(!favorita);
+        // setFavorita(!favorita);
+        setFavorita(true)
         onMarkFavorite(id);
     };
 
@@ -131,7 +133,7 @@ function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcent
                 imgSrc={imgSrc}
                 name={name}
                 favorita={favorita}
-                onToggleFavorite={handleClick}
+                onToggleFavorite={handleLikeClick}
                 onEditClick={handleOpenEditModal}
                 onClick={!openEditModal ? handleOpenDialog : null}
                 porcentaje={porcentaje}
