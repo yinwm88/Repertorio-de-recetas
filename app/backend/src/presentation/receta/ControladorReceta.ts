@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CrearRecetaDto, EditarRecetaDto, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, RecetaUtensiliosDto } from "../../domain";
+import { CrearReceta, CrearRecetaDto, EditarReceta, EditarRecetaDto, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, RecetaUtensiliosDto } from "../../domain";
 import { RecetaService } from "../services/receta.service";
 
 export class ControladorRecetas{
@@ -37,7 +37,13 @@ export class ControladorRecetas{
         const [errorUtensilios, recetaUtensiliosDto] = RecetaUtensiliosDto.crearInstancia( crearRecetaDto!.utensilios );
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
         
-        this.recetaService.crearReceta( crearRecetaDto!, req.body.usuario, recetaIngredientesDto!, recetaUtensiliosDto! )
+        const informacionReceta:CrearReceta = {
+            datosReceta: crearRecetaDto!,
+            usuario:  req.body.usuario,
+            ingredientes: recetaIngredientesDto!,
+            utensilios: recetaUtensiliosDto!
+        } 
+        this.recetaService.crearReceta( informacionReceta )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
     }
@@ -50,7 +56,13 @@ export class ControladorRecetas{
         const [errorUtensilios, recetaUtensiliosDto] = RecetaUtensiliosDto.crearInstancia( editarRecetaDto!.utensilios );
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
 
-        this.recetaService.editarReceta( editarRecetaDto!, req.body.usuario, recetaIngredientesDto!, recetaUtensiliosDto! )
+        const informacionReceta:EditarReceta = {
+            datosReceta: editarRecetaDto!,
+            usuario:  req.body.usuario,
+            ingredientes: recetaIngredientesDto!,
+            utensilios: recetaUtensiliosDto!
+        } 
+        this.recetaService.editarReceta( informacionReceta )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
     }
@@ -91,8 +103,13 @@ export class ControladorRecetas{
         if (erroringredientes) return res.status(400).json({error: erroringredientes});
         const [errorUtensilios, recetaUtensiliosDto] = RecetaUtensiliosDto.crearInstancia( variacionReceta!.utensilios );
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
-
-        this.recetaService.crearVariacionReceta( variacionReceta!, req.body.usuario, recetaIngredientesDto!, recetaUtensiliosDto! )
+        const informacionReceta:EditarReceta = {
+            datosReceta: variacionReceta!,
+            usuario:  req.body.usuario,
+            ingredientes: recetaIngredientesDto!,
+            utensilios: recetaUtensiliosDto!
+        } 
+        this.recetaService.crearVariacionReceta( informacionReceta )
         .then( datos => res.status(200).json( datos ))
         .catch( error => this.manejarError( error, res ));
     }

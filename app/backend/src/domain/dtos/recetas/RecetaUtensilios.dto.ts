@@ -1,6 +1,4 @@
-interface Utensilio {
-    idUtensilio: number
-}
+import { Utensilio } from "../../interfaces/Utensilio.interface";
 
 export class RecetaUtensiliosDto {
     private constructor(
