@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta } from "../../domain";
 
 export class RecetaService {
 
@@ -187,7 +187,8 @@ export class RecetaService {
         }
     }
 
-    async crearReceta( datosReceta: CrearRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto, utensilios: RecetaUtensiliosDto ) {
+    async crearReceta( informacionReceta: CrearReceta ) {
+        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -241,7 +242,8 @@ export class RecetaService {
         }
     }
 
-    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto, utensilios: RecetaUtensiliosDto) {
+    async crearVariacionReceta( informacionReceta: EditarReceta ) {
+        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -295,7 +297,8 @@ export class RecetaService {
         }
     }
 
-    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto,  utensilios: RecetaUtensiliosDto ) {
+    async editarReceta ( informacionReceta: EditarReceta ) {
+        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });

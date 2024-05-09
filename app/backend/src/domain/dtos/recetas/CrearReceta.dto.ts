@@ -1,11 +1,14 @@
+import { Ingrediente } from "../../interfaces/Ingrediente.interface";
+import { Utensilio } from "../../interfaces/Utensilio.interface";
+
 export class CrearRecetaDto {
 
     private constructor(
         public readonly nombre: string,
         public readonly tiempo: number,
         public readonly proceso: string,
-        public readonly ingredientes: any[],
-        public readonly utensilios: any[],
+        public readonly ingredientes: Ingrediente[],
+        public readonly utensilios: Utensilio[],
     ){}
 
     static crearInstancia( objeto: { [key: string]: any }): [string?, CrearRecetaDto?] {
@@ -17,10 +20,7 @@ export class CrearRecetaDto {
         if ( !ingredientes ) return ['Faltan los ingredientes de la receta'];     
         if ( !utensilios ) return ['Faltan los utensilios de la receta'];     
         if ( +tiempo < 0 ) return ['El tiempo debe de ser positivo'];     
-        
-
-        
+           
         return [, new CrearRecetaDto( nombre, +tiempo, proceso, ingredientes, utensilios )];
     }
-
 }
