@@ -18,6 +18,7 @@ export class EditarRecetaDto {
         if (!tiempo) return ['Falta el tiempo de la receta'];     
         if (!proceso) return ['Falta el proceso de la receta'];     
         if ( !ingredientes ) return ['Faltan los ingredientes de la receta'];     
+        if ( !utensilios ) return ['Faltan los utensilios de la receta'];     
         if ( +tiempo < 0 ) return ['El tiempo debe de ser positivo'];     
         
 
