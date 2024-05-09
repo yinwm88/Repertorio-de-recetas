@@ -11,7 +11,7 @@ export class RutasUtensilio {
         const controlador:controladorUtensilio = new controladorUtensilio( utensilioService );
 
         router.get('/', controlador.obtenerUtensilios );
-        router.post('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
+        router.put('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
         router.delete('/:idUtensilio', [ JoinMiddleware.validarJwt ], controlador.desactivarUtensilio );
         router.post('/buscar', controlador.buscarUtensilio );
         router.post('/datos', controlador.datosUtensilio)   

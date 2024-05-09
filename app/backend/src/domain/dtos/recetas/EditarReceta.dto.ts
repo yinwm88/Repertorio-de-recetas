@@ -7,11 +7,10 @@ export class EditarRecetaDto {
         public readonly tiempo: number,
         public readonly proceso: string,
         public readonly ingredientes: any[],
-        public readonly utensilios: any[],
     ){}
 
     static crearInstancia( objeto: { [key: string]: any }): [string?, EditarRecetaDto?] {
-        const { idReceta, nombre, tiempo, proceso, ingredientes, utensilios } = objeto;
+        const { idReceta, nombre, tiempo, proceso, ingredientes } = objeto;
 
         if (!idReceta) return ['Falta el id de la receta'];   
         if (!nombre) return ['Falta el nombre de la receta'];   
@@ -22,7 +21,7 @@ export class EditarRecetaDto {
         
 
         
-        return [, new EditarRecetaDto( +idReceta, nombre, +tiempo, proceso, ingredientes, utensilios )];
+        return [, new EditarRecetaDto( +idReceta, nombre, +tiempo, proceso, ingredientes )];
     }
 
 }

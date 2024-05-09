@@ -192,11 +192,7 @@ export class RecetaService {
             where: { correo: usuario.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
-        utensilios.utensilios.forEach( async utensilio => {
-            await prisma.electrodomestico.findFirstOrThrow({
-                where: { idelectro: +utensilio.idUtensilio}
-            });
-        });
+        
         try {
             const recetaNueva = await prisma.receta.create({
                 data: {
@@ -221,7 +217,7 @@ export class RecetaService {
                 await prisma.necesitar.create({
                     data: {
                         idreceta: recetaNueva.idreceta ,
-                        idelectro: +utensilio.idUtensilio
+                        idelectro: utensilio
                     }
                 });
             });
@@ -241,7 +237,7 @@ export class RecetaService {
         }
     }
 
-    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto, utensilios: RecetaUtensiliosDto) {
+    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -268,16 +264,6 @@ export class RecetaService {
                 });
             });
 
-            utensilios.utensilios.forEach( async utensilio => {
-                await prisma.necesitar.create({
-                    data: {
-                        idreceta: recetaNueva.idreceta ,
-                        idelectro: utensilio.idUtensilio
-                    }
-                });
-            });
-
-
             return {
                 recta:{
                     idReceta: recetaNueva.idreceta,
@@ -295,7 +281,7 @@ export class RecetaService {
         }
     }
 
-    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto,  utensilios: RecetaUtensiliosDto ) {
+    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto ) {
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -335,20 +321,6 @@ export class RecetaService {
                 });
             });
 
-            await prisma.necesitar.deleteMany({
-                where: {
-                    idreceta: recetaActualizada.idreceta
-                }
-            });
-
-            utensilios.utensilios.forEach( async utensilio => {
-                await prisma.necesitar.create({
-                    data: {
-                        idreceta: recetaActualizada.idreceta ,
-                        idelectro: utensilio.idUtensilio
-                    }
-                });
-            });
 
             return {
                 recta:{

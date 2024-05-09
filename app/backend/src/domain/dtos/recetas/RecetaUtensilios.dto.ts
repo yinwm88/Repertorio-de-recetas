@@ -1,16 +1,13 @@
-interface Utensilio {
-    idUtensilio: number
-}
 
 export class RecetaUtensiliosDto {
     private constructor(
-        public readonly utensilios: Utensilio[]
+        public readonly utensilios: number[]
     ) {}
 
-    static crearInstancia( utensilios: Utensilio[]): [string?, RecetaUtensiliosDto?] {
+    static crearInstancia( utensilios: number[]): [string?, RecetaUtensiliosDto?] {
         if ( utensilios.length == 0 ) return ['Faltan los utensilios'];
         utensilios.forEach( utensilio => {
-            if( !utensilio.idUtensilio ) return ['Falta el idUtensilio de un utensilio'];
+            if( !utensilio ) return ['Falta el idUtensilio de un utensilio'];
         });
         return [, new RecetaUtensiliosDto( utensilios )];
     }
