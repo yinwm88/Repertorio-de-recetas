@@ -100,20 +100,34 @@ export class RecetaService {
         if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' )
 
         try {
+
+            const like = await prisma.preferir.findFirst({
+                where : {idreceta : idReceta,
+                        correo : correo
+                }
+            });
+
+            if(like){
+                const deslike = await prisma.preferir.deleteMany({
+                    where : {correo : correo,
+                            idreceta : idReceta
+                            }
+                });
+                return {idReceta};
+            }
             const favorita = await prisma.preferir.create({
                 data: {
                     idreceta: idReceta,
                     correo: correo
-                }
+                    }
             });
-
             const likear = await prisma.receta.updateMany({
                 where : { idreceta : idReceta },
                 data : {  
                     likes : {
                         increment : 1
+                        }
                     }
-                 }
             });
 
             return {
@@ -122,7 +136,6 @@ export class RecetaService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-
     }
 
     async recetasFavoritas(correo: string){
