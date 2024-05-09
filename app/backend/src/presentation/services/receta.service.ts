@@ -113,7 +113,15 @@ export class RecetaService {
                             idreceta : idReceta
                             }
                 });
-                return {idReceta};
+                const reduceLikes = await prisma.receta.updateMany({
+                    where : { idreceta : idReceta},
+                    data : {
+                        likes : {
+                            decrement : 1
+                        }
+                    }
+                });
+                return {'Se eliminó el like': idReceta};
             }
             const favorita = await prisma.preferir.create({
                 data: {
@@ -130,9 +138,7 @@ export class RecetaService {
                     }
             });
 
-            return {
-                idreceta: favorita.idreceta
-            };
+            return {'Se agregó el like': favorita.idreceta};
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
