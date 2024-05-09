@@ -3,6 +3,7 @@ import {Typography, Button, FormControl, OutlinedInput, InputAdornment, FormHelp
 import { useAuth } from "../../AuthContext";
 import KeyIcon from '@mui/icons-material/Key';
 import Container from '@mui/material/Container';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 const Datos = () => {
@@ -22,10 +23,10 @@ const Datos = () => {
         </Button>
         
         <div>
-            <Typography sx={{marginTop:'60px', marginLeft:'10px'}}  variant="h5" gutterBottom>
+            <Typography sx={{marginTop:'50px', marginLeft:'10px'}}  variant="h5" gutterBottom>
                     Sobre Ti:
             </Typography> 
-            <Container sx={{ marginTop: '40px', display: 'flex', justifyContent: 'space-between' }}>
+            <Container sx={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between' }}>
                 
                 <FormControl sx={{ m: 1, width: 'calc(50% - 12px)' }} variant="outlined">
                     <Typography  variant="h6" gutterBottom  >
@@ -57,13 +58,18 @@ const Datos = () => {
                 </FormControl>
             </Container>
 
-            <Typography sx={{marginTop:'60px', marginLeft:'10px'}}  variant="h5" gutterBottom>
+            <Typography sx={{marginTop:'50px', marginLeft:'10px'}}  variant="h5" gutterBottom>
                     Alergias:
             </Typography>
             <Container>
 
             </Container>
 
+        </div>
+        <div >
+            <Button sx={{marginLeft:'700px',marginTop:'20px'}} variant="contained" endIcon={<SaveIcon />}>
+            Guardar 
+            </Button>
         </div>
     </div>
 
