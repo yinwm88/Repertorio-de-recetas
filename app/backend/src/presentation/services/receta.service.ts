@@ -318,7 +318,7 @@ export class RecetaService {
                     proceso: datosReceta.proceso
                 }    
             });
-
+            console.log(recetaActualizada)
             await prisma.haberingrediente.deleteMany({
                 where: {
                     idreceta: recetaActualizada.idreceta
@@ -328,12 +328,13 @@ export class RecetaService {
             ingredientes.ingredientes.forEach( async ingrediente => {
                 await prisma.haberingrediente.create({
                     data: {
-                        idreceta: recetaActualizada.idreceta ,
+                        idreceta: +datosReceta.idReceta,
                         idingrediente: +ingrediente.idIngrediente,
                         cantidad: +ingrediente.cantidad
                     }
                 });
             });
+
 
             await prisma.necesitar.deleteMany({
                 where: {

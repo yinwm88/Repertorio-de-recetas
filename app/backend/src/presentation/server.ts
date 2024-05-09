@@ -27,7 +27,6 @@ export class Server {
 
         this.app.use(cors());
 
-        //* Middlewares
         this.app.use(express.json()); // raw
         this.app.use(express.urlencoded({ extended: true })); // x-www-form-urlencoded
 
