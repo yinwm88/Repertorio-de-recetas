@@ -1,0 +1,4 @@
+.scrollable-container {
+  max-height: calc(100vh - 150px); /* Ajusta la altura disponible restando el espacio ocupado por otros elementos */
+  overflow-y: auto; 
+}

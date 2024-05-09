@@ -90,9 +90,6 @@ function Contenido() {
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
           <FiltroRecetas onSearchChange={setSearchText} onTimeChange={setFiltroTiempo} />
-          <Button variant='semiContained' onClick={handleOpenAgregarReceta} style={{ marginTop: 0 }}>
-            Crear Nueva Receta
-          </Button>
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
         </Grid>
 
@@ -116,6 +113,9 @@ function Contenido() {
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
                 <h1>Mis recetas</h1>
+                <Button variant='semiContained' onClick={handleOpenAgregarReceta} style={{ marginTop: 0 }}>
+                  Crear Nueva Receta
+                </Button>
                 {renderPins(userRecipes)}
               </Container>
             </div>

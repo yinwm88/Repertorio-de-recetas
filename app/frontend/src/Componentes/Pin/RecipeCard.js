@@ -4,6 +4,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import "./RecipeCard.css";
+import Heart from "react-animated-heart";
+
 
 const RecipeCard = ({
     imgSrc,
@@ -42,10 +44,13 @@ const RecipeCard = ({
 
                 <img className="mainPic" src={imgSrc} alt={name} />
                 <div className="contenido">
-                    <div className="nombreReceta">{name.charAt(0).toUpperCase() + name.slice(1, 20)}</div>
-                    <IconButton className="fav" onClick={onToggleFavorite}>
+                    <div className="nombreReceta">
+                        {name.length > 25 ? name.charAt(0).toUpperCase() + name.slice(1, 25) + '...' : name}
+                    </div>
+                    <Heart isClick={favorita} onClick={onToggleFavorite} />
+                    {/* <IconButton className="fav" onClick={onToggleFavorite}>
                         {favorita ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                    </IconButton>
+                    </IconButton> */}
                 </div>
             </div>
             : null
