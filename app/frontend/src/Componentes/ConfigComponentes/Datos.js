@@ -33,6 +33,7 @@ const Datos = () => {
                     </Typography>
                     <OutlinedInput
                         id="outlined-adornment-weight"
+                        type="number"
                         endAdornment={<InputAdornment position="end">kg</InputAdornment>}
                         aria-describedby="outlined-weight-helper-text"
                         inputProps={{
@@ -40,16 +41,17 @@ const Datos = () => {
                         }}
                     />
                 </FormControl>
-                <FormControl sx={{ m: 1, width: 'calc(50% - 12px)' }} variant="outlined">
+                <FormControl sx={{ m: 1, height: 'calc(50% - 12px)' }} variant="outlined">
                     <Typography  variant="h6" gutterBottom  >
                     Estatura
                     </Typography>
                     <OutlinedInput
-                        id="outlined-adornment-weight"
+                        id="outlined-adornment-height"
+                        type="number"
                         endAdornment={<InputAdornment position="end">mts</InputAdornment>}
-                        aria-describedby="outlined-weight-helper-text"
+                        aria-describedby="outlined-height-helper-text"
                         inputProps={{
-                            'aria-label': 'weight',
+                            'aria-label': 'height',
                         }}
                     />
                 </FormControl>
