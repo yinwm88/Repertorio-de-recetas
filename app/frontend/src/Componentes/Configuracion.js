@@ -125,13 +125,16 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography sx={{marginLeft:'50px'}} variant="h6" noWrap component="div">
             Configuracion
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
+        <Typography color="primary" sx={{marginLeft:'15px',marginTop:'25px', marginBottom:'25px'}}variant="h1">
+            Kitchenify
+        </Typography>    
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
