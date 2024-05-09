@@ -5,7 +5,7 @@ import Inicio from './Inicio';
 import TopBarLP from './TopBarLP';
 import {Container } from '@mui/material';
 import Header from './Header';
-import Contenido from '../Contenido';
+import Contenido from '../Contenido/Contenido';
 import { useAuth } from '../../AuthContext';
 import Config from '../Configuracion';
 
