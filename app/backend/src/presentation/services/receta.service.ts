@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta } from "../../domain";
 
 export class RecetaService {
 
@@ -187,16 +187,31 @@ export class RecetaService {
         }
     }
 
-    async crearReceta( datosReceta: CrearRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto, utensilios: RecetaUtensiliosDto ) {
+    async crearReceta( informacionReceta: CrearReceta ) {
+        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
-        utensilios.utensilios.forEach( async utensilio => {
-            await prisma.electrodomestico.findFirstOrThrow({
-                where: { idelectro: +utensilio.idUtensilio}
+
+        await Promise.all(ingredientes.ingredientes.map(async ingrediente => {
+            const existeIngrediente = await prisma.ingrediente.findUnique({
+                where: {
+                    idingrediente: +ingrediente.idIngrediente
+                }
             });
-        });
+            if (!existeIngrediente) throw ErrorCustomizado.badRequest('El ingrediente no existe');
+        }));
+
+        await Promise.all(utensilios.utensilios.map(async utensilios => {
+            const existeUtensilio = await prisma.electrodomestico.findUnique({
+                where: {
+                    idelectro: +utensilios.idUtensilio
+                }
+            });
+            if (!existeUtensilio) throw ErrorCustomizado.badRequest('El Utensilio no existe');
+        }));
+
         try {
             const recetaNueva = await prisma.receta.create({
                 data: {
@@ -241,11 +256,30 @@ export class RecetaService {
         }
     }
 
-    async crearVariacionReceta( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto, utensilios: RecetaUtensiliosDto) {
+    async crearVariacionReceta( informacionReceta: EditarReceta ) {
+        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        await Promise.all(ingredientes.ingredientes.map(async ingrediente => {
+            const existeIngrediente = await prisma.ingrediente.findUnique({
+                where: {
+                    idingrediente: +ingrediente.idIngrediente
+                }
+            });
+            if (!existeIngrediente) throw ErrorCustomizado.badRequest('El ingrediente no existe');
+        }));
+
+        await Promise.all(utensilios.utensilios.map(async utensilios => {
+            const existeUtensilio = await prisma.electrodomestico.findUnique({
+                where: {
+                    idelectro: +utensilios.idUtensilio
+                }
+            });
+            if (!existeUtensilio) throw ErrorCustomizado.badRequest('El Utensilio no existe');
+        }));
+
         
         try {
             const recetaNueva = await prisma.receta.create({
@@ -295,7 +329,8 @@ export class RecetaService {
         }
     }
 
-    async editarReceta ( datosReceta: EditarRecetaDto, usuario: EntidadUsuario, ingredientes: RecetaIngredientesDto,  utensilios: RecetaUtensiliosDto ) {
+    async editarReceta ( informacionReceta: EditarReceta ) {
+        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -306,6 +341,25 @@ export class RecetaService {
         if ( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
         if ( !recetaExiste.correo ) throw ErrorCustomizado.badRequest( 'La receta no puede ser editada' );
         if ( recetaExiste.correo !== usuarioExiste.correo ) throw ErrorCustomizado.noAutorizado( 'La receta no pertenece a este usuario' );
+
+        await Promise.all(ingredientes.ingredientes.map(async ingrediente => {
+            const existeIngrediente = await prisma.ingrediente.findUnique({
+                where: {
+                    idingrediente: +ingrediente.idIngrediente
+                }
+            });
+            if (!existeIngrediente) throw ErrorCustomizado.badRequest('El ingrediente no existe');
+        }));
+
+        await Promise.all(utensilios.utensilios.map(async utensilios => {
+            const existeUtensilio = await prisma.electrodomestico.findUnique({
+                where: {
+                    idelectro: +utensilios.idUtensilio
+                }
+            });
+            if (!existeUtensilio) throw ErrorCustomizado.badRequest('El Utensilio no existe');
+        }));
+
 
         try {
             const recetaActualizada = await prisma.receta.update({

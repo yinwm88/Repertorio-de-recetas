@@ -1,8 +1,4 @@
-
-interface Ingrediente {
-    idIngrediente: number,
-    cantidad: number
-}
+import { Ingrediente } from "../../interfaces/Ingrediente.interface";
 
 export class RecetaIngredientesDto {
     private constructor(
