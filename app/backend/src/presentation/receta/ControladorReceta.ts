@@ -132,4 +132,17 @@ export class ControladorRecetas{
         .then( receta => res.status(201).json( receta ))
         .catch( error => this.manejarError( error, res ));
     }  
+
+    public crearListaCompras = (req: Request, res: Response) => {
+        const { idReceta, correo } = req.body;
+        if (!idReceta) {
+            return res.status(400).json({error: 'Falta el id de la receta'});
+        }
+        if (!correo) {
+            return res.status(400).json({error: 'Falta el correo'});
+        }
+        this.recetaService.crearListaCompra( correo, idReceta )
+        .then( lista => res.status(201).json( lista ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }

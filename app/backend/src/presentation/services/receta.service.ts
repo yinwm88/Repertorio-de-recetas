@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta, IngredienteUsuario } from "../../domain";
 
 export class RecetaService {
 
@@ -456,7 +456,7 @@ export class RecetaService {
             });
 
             return {
-                recta:{
+                receta:{
                     nombre: recetaEliminada?.nombre,
                     tiempo: recetaEliminada?.tiempo,
                     proceso: recetaEliminada?.proceso
@@ -508,5 +508,48 @@ export class RecetaService {
     }
 
     //TODO: Implementar esta cosa
-    async crearListaCompra(correo: string, idReceta : number){}
+    async crearListaCompra(correo: string, idReceta : number){
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : correo}
+        });
+        const recetaExiste = await prisma.receta.findFirst({
+            where : {idreceta : idReceta }
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        if(!recetaExiste) throw ErrorCustomizado.badRequest( 'La receta no existe' )
+        
+        const ingredientesUsuario = await prisma.teneringrediente.findMany({
+            where : { correo : correo },
+            select : {
+                idingrediente : true,
+                cantidad : true
+            }
+        });
+        const ingredientesReceta = await prisma.haberingrediente.findMany({
+            where : { idreceta : idReceta},
+            select : {
+                idingrediente : true, 
+                cantidad : true
+            }
+        });
+
+        const ingredientesFaltantes = [];
+
+        for (const ingredienteReceta of ingredientesReceta) {
+            const ingredienteUsuario = ingredientesUsuario.find(ingredienteUsuario => ingredienteUsuario.idingrediente === ingredienteReceta.idingrediente);
+            if (!ingredienteUsuario) {
+                ingredientesFaltantes.push({
+                    idingrediente: ingredienteReceta.idingrediente,
+                    cantidad: ingredienteReceta.cantidad
+                });
+            } else if (Number(ingredienteUsuario.cantidad) < ingredienteReceta.cantidad) {
+                ingredientesFaltantes.push({
+                    idingrediente: ingredienteReceta.idingrediente,
+                    cantidad: ingredienteReceta.cantidad - Number(ingredienteUsuario.cantidad)
+                });
+            }
+        }
+
+        return {ingredientesFaltantes}
+    }   
 }
