@@ -21,7 +21,7 @@ import BlenderIcon from '@mui/icons-material/Blender';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 import { Link } from 'react-router-dom';
-
+import Datos from './ConfigComponentes/Datos';
 
 const drawerWidth = 240;
 
@@ -173,7 +173,7 @@ export default function MiniDrawer() {
         <DrawerHeader />
         {drawerContent === 'Datos' && (
           <Typography paragraph>
-            Contenido para Datos
+            <Datos/>
           </Typography>
         )}
         {drawerContent === 'Utensilios' && (
