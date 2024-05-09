@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -21,7 +22,7 @@ import BlenderIcon from '@mui/icons-material/Blender';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 import { Link } from 'react-router-dom';
-
+import Datos from './ConfigComponentes/Datos';
 
 const drawerWidth = 240;
 
@@ -108,7 +109,7 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box style={{ display: 'flex' }}>
+    <Container maxWidth="md">
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -137,16 +138,16 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-        {['Datos', 'Utensilios', 'Estadisticas', 'Volver'].map((text, index) => (
+          {['Datos', 'Utensilios', 'Estadisticas', 'Volver'].map((text, index) => (
             <ListItem key={text} disablePadding style={{ display: 'block' }}>
-                <ListItemButton
-                  onClick={() => handleListItemClick(text)}
-                  style={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    paddingLeft: 20,
-                  }}
-                >
+              <ListItemButton
+                onClick={() => handleListItemClick(text)}
+                style={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  paddingLeft: 20,
+                }}
+              >
                 <ListItemIcon
                   style={{
                     minWidth: 0,
@@ -154,16 +155,16 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : index=== 2? <LeaderboardRoundedIcon />:<Link to="/contenido">
-                                                                                                                                  <IconButton color="inherit" aria-label="Volver">
-                                                                                                                                    <KeyboardReturnRoundedIcon />
-                                                                                                                                  </IconButton>
-                                                                                                                                </Link> }
-                    </ListItemIcon>
+                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : index === 2 ? <LeaderboardRoundedIcon /> : <Link to="/contenido">
+                    <IconButton color="inherit" aria-label="Volver">
+                      <KeyboardReturnRoundedIcon />
+                    </IconButton>
+                  </Link>}
+                </ListItemIcon>
                 <ListItemText primary={text} style={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
-        ))}
+          ))}
 
         </List>
         <Divider />
@@ -173,7 +174,7 @@ export default function MiniDrawer() {
         <DrawerHeader />
         {drawerContent === 'Datos' && (
           <Typography paragraph>
-            Contenido para Datos
+            <Datos />
           </Typography>
         )}
         {drawerContent === 'Utensilios' && (
@@ -186,9 +187,9 @@ export default function MiniDrawer() {
             Contenido para Estadisticas
           </Typography>
         )}
-  
+
       </Box>
 
-    </Box>
+    </Container>
   );
 }

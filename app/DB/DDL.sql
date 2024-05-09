@@ -181,9 +181,9 @@ alter table haberIngrediente alter column cantidad set not null;
 
 alter table haberIngrediente add constraint uniqueHaberIngrediente1 unique(idReceta,idIngrediente);
 alter table haberIngrediente add constraint fkHaberIngrediente1 foreign key(idReceta) references Receta(idReceta)
-on update cascade on delete RESTRICT;
+on update cascade on delete cascade;
 alter table haberIngrediente add constraint fkHaberIngrediente2 foreign key(idIngrediente) references Ingrediente(idIngrediente)
-on update cascade on delete RESTRICT;
+on update cascade on delete cascade;
  
 
 create table tenerIngrediente(

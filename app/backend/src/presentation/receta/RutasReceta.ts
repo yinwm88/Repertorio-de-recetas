@@ -15,7 +15,7 @@ export class RutasReceta{
         router.post('/marcarFavorita', controlador.marcarFavorita );
         router.post('/recetasFavoritas', controlador.recetasFavoritas );
         
-        router.post('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
+        router.get('/recetasUsuario', [ JoinMiddleware.validarJwt ], controlador.obtenerRecetasUsuario );
         router.delete('/eliminarReceta', [ JoinMiddleware.validarJwt ], controlador.eliminarReceta );
         router.post('/crearReceta', [ JoinMiddleware.validarJwt ], controlador.crearReceta );
         router.post('/nuevaVariacion', [ JoinMiddleware.validarJwt ], controlador.crearVariacion );

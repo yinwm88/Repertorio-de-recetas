@@ -272,7 +272,7 @@ export class RecetaService {
                 await prisma.necesitar.create({
                     data: {
                         idreceta: recetaNueva.idreceta ,
-                        idelectro: +utensilio.idUtensilio
+                        idelectro: utensilio.idUtensilio
                     }
                 });
             });
@@ -346,7 +346,7 @@ export class RecetaService {
                 await prisma.necesitar.create({
                     data: {
                         idreceta: recetaActualizada.idreceta ,
-                        idelectro: +utensilio.idUtensilio
+                        idelectro: utensilio.idUtensilio
                     }
                 });
             });

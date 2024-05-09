@@ -5,11 +5,11 @@ import Inicio from './Inicio';
 import TopBarLP from './TopBarLP';
 import {Container } from '@mui/material';
 import Header from './Header';
-import Contenido from '../Contenido';
+import Contenido from '../Contenido/Contenido';
 import { useAuth } from '../../AuthContext';
 import Config from '../Configuracion';
 
-const LandingPage = () => {
+const LandingPage = ({isDarkMode,handleThemeChange}) => {
   const { currentUser, getUserDataFromCookies, login } = useAuth();
   const navigate = useNavigate();
 
@@ -26,12 +26,12 @@ const LandingPage = () => {
 
   return (
     <>
-      <TopBarLP />
+      <TopBarLP handleThemeChange={handleThemeChange} isDarkMode={isDarkMode}/>
       <Container maxWidth="xl">
         <Routes>
           <Route path="/" element={<Header />} />
           <Route path="/about" element={<Inicio />} />
-          <Route path="/contenido" element={<ContenidoProtected />} />
+          <Route path="/contenido" element={<ContenidoProtected />}  />
           <Route path="/settings" element={<Config />} />
         </Routes>
       </Container>
@@ -49,7 +49,7 @@ const ContenidoProtected = () => {
     }
   }, [currentUser, navigate]);
 
-  return currentUser ? <Contenido /> : null;
+  return currentUser ? <Contenido/> : null;
 };
 
 export default LandingPage;

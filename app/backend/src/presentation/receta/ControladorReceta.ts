@@ -87,10 +87,8 @@ export class ControladorRecetas{
     public crearVariacion = ( req: Request, res: Response ) => {
         const [error, variacionReceta] = EditarRecetaDto.crearInstancia( req.body );
         if (error) return res.status(400).json({error:error});
-        
         const [erroringredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( variacionReceta!.ingredientes );
         if (erroringredientes) return res.status(400).json({error: erroringredientes});
-
         const [errorUtensilios, recetaUtensiliosDto] = RecetaUtensiliosDto.crearInstancia( variacionReceta!.utensilios );
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
 
