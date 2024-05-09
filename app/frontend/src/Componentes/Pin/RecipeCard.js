@@ -45,7 +45,7 @@ const RecipeCard = ({
                 <img className="mainPic" src={imgSrc} alt={name} />
                 <div className="contenido">
                     <div className="nombreReceta">
-                        {name.length > 25 ? name.charAt(0).toUpperCase() + name.slice(1, 25) + '...' : name}
+                        {name.length > 25 ? name.charAt(0).toUpperCase() + name.slice(1, 30) + '...' : name}
                     </div>
                     <Heart isClick={favorita} onClick={onToggleFavorite} />
                     {/* <IconButton className="fav" onClick={onToggleFavorite}>

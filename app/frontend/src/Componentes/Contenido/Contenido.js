@@ -60,7 +60,7 @@ function Contenido() {
       .sort((a, b) => b.porcentaje - a.porcentaje);
 
   const renderPins = (recetas) => (
-    <Masonry columns={{ xs: 2, sm: 3, md: 3 }} spacing={2.5}>
+    <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={2.5}>
       {filtrarRecetas(recetas).map(
         (recipe) =>
           recipe.id &&
