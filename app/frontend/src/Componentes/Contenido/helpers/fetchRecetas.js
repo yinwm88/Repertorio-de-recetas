@@ -8,9 +8,9 @@ export const fetchImageForRecipe = async (recipeName) => {
 
   const urls = [
     `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
-    `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
+    `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food 4k')}`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
-    `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' food')}&count=1`
+    `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' dish 4k')}&count=1`
   ];
 
   for (const url of urls) {
