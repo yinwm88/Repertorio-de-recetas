@@ -4,12 +4,19 @@ export const fetchImageForRecipe = async (recipeName) => {
   const pexelsApiKey = 'sY5tEwT4E7thugNrTx8eoLbu2YLlBri6ZtsQy5Fq1ULDLaewybrFuvDg';
   const pixabayApiKey = '43641615-297e61c4d9af146e80502ee5b';
   const flickrApiKey = '901aeda7df55b720f817e24c8de7455e';
-  const bingApiKey = 'be025fdd15c34d56b262ce684b1184c1'; // reemplaza con tu clave
+  const bingApiKey = 'be025fdd15c34d56b262ce684b1184c1'; 
+
+  // const urls = [
+  //   `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' dish food 4k')}&count=1`,
+  //   `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' dish')}`,
+  //   `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
+  //   `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
+
+  // ];
 
   const urls = [
-    `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food 4k')}`,
+    `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' dish')}`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
-    `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' dish food 4k')}&count=1`,
     `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
 
   ];

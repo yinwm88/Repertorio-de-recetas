@@ -31,6 +31,8 @@ function Contenido() {
   const handleCloseAgregarReceta = () => setIsAgregarRecetaOpen(false);
   const handleTabChange = (event, newValue) => setActiveTab(newValue);
 
+  const triggerUpdate = () => setLastUpdate(Date.now());
+
   useEffect(() => {
     fetchRecetas(currentUser, getToken, setRecipes);
   }, [lastUpdate, currentUser]);
@@ -80,16 +82,18 @@ function Contenido() {
               recipeDetails={recipe}
               markedFavorite={recipe.porcentaje === undefined ? true : false}
               editable={activeTab === 1}
+              triggerUpdate={triggerUpdate} 
             />
           )
       )}
     </Masonry>
+
   );
 
 
   return (
     <Container maxWidth={false} className='mainContainer'>
-      <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} />
+      <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} triggerUpdate={triggerUpdate}/>
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
@@ -120,6 +124,7 @@ function Contenido() {
                 <Button variant='semiContained' onClick={handleOpenAgregarReceta} style={{ marginTop: 0 }}>
                   Crear Nueva Receta
                 </Button>
+                <div style={{ height: '20px' }}></div>
                 {renderPins(userRecipes)}
               </Container>
             </div>

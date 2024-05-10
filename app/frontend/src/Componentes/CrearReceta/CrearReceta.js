@@ -3,8 +3,8 @@ import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, L
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../../AuthContext';
 import AnimatedTypingText from './AnimatedTypingText';
-
-const CrearReceta = ({isOpen,onClose}) => {
+import Swal from 'sweetalert2';
+const CrearReceta = ({isOpen,onClose,triggerUpdate}) => {
   const [formData, setFormData] = useState({
     nombre: '',
     tiempo: '',
@@ -95,7 +95,13 @@ const CrearReceta = ({isOpen,onClose}) => {
 
       if (response.ok) {
         // Si el código de estado indica éxito
-        alert(data.message || '¡Tu receta ahora forma parte de la comunidad!');
+        Swal.fire({
+          title: 'Receta creada exitosamente',
+          icon: 'success',
+        });
+        //hide the modal
+        onClose();
+        triggerUpdate();
         // Aquí podrías redireccionar al usuario o resetear los estados del formulario
         setNombre('');
         setTiempo('');

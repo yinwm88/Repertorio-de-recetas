@@ -1,5 +1,4 @@
-// EditRecipeModal.js
-import React, { useState } from "react";
+import React from "react";
 import {
   Dialog,
   DialogTitle,
@@ -48,11 +47,11 @@ const EditRecipeModal = ({
         <FormControl fullWidth margin="normal">
           <InputLabel id="edit-option-label">¿Qué deseas editar de la receta?</InputLabel>
           <Select
-            labelId="edit-option-label"
             id="edit-option"
             value={editOption}
             onChange={(e) => setEditOption(e.target.value)}
             fullWidth
+            style={{ marginTop: "1rem" }}
           >
             <MenuItem value="name">Nombre de la receta</MenuItem>
             <MenuItem value="recipeDetails">Procedimiento</MenuItem>
@@ -63,11 +62,10 @@ const EditRecipeModal = ({
 
         {editOption === "name" && (
           <>
-            <Typography variant="subtitle1" gutterBottom>
-              Nuevo Nombre de la Receta
-            </Typography>
+            <InputLabel id="edit-option-label">Nuevo nombre de la receta</InputLabel>
             <FormControl fullWidth margin="normal">
               <TextField
+                labelId="edit-option-label"
                 id="recipe-name"
                 type="text"
                 value={nombreEditado}
@@ -167,17 +165,13 @@ const EditRecipeModal = ({
                       value={ing.cantidad}
                       onChange={(e) => {
                         const newSelectedIngredients = [...selectedIngredients];
-                        newSelectedIngredients[index].cantidad = Number(
-                          e.target.value
-                        );
+                        newSelectedIngredients[index].cantidad = Number(e.target.value);
                         setSelectedIngredients(newSelectedIngredients);
                       }}
                     />
                     <IconButton
                       onClick={() => {
-                        const newSelectedIngredients = selectedIngredients.filter(
-                          (_, i) => i !== index
-                        );
+                        const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
                         setSelectedIngredients(newSelectedIngredients);
                       }}
                     >
