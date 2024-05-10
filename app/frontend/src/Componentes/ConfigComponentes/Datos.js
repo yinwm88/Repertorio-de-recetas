@@ -1,17 +1,20 @@
-import{ React, useState} from "react";
-import {Typography, Button, FormControl, OutlinedInput, InputAdornment, FormHelperText} from '@mui/material';
+import{ React, useState, Fragment, useRef} from "react";
+import {Tooltip,MenuItem ,Dialog, DialogActions, DialogContent, DialogTitle, IconButton,Typography, Button, FormControl, OutlinedInput, InputAdornment, } from '@mui/material';
 import { useAuth } from "../../AuthContext";
 import KeyIcon from '@mui/icons-material/Key';
 import Container from '@mui/material/Container';
-import SaveIcon from '@mui/icons-material/Save';
 import Alergias from './Alergias';
-
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InfoIcon from '@mui/icons-material/Info';
+import Contraseña from './CambiarContraseña';
+import SaveIcon from '@mui/icons-material/Save';
 
 const Datos = () => {
 
     const [formData, setFormData] = useState({
         peso: '',
         estatura: '',
+        actividad:'',
         Tiene_Alergia: 'no',
         ingredientes: []
     });
@@ -20,6 +23,8 @@ const Datos = () => {
 
     const [peso, setPeso] = useState('');
     const [estatura, setEstatura] = useState('');
+    const [actividad, setActividad] = useState('');
+
 
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -113,7 +118,28 @@ const Datos = () => {
         }));
     };
 
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+
     
+    const handleMouseEnter = () => {
+        setTooltipOpen(true);
+    };
+    
+    const handleMouseLeave = () => {
+        setTooltipOpen(false);
+    };
+
+    const [openDialog, setOpenDialog] = useState(false);
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+
     return (
         <Container sx={{marginTop:'30px', height: '100vh'}} fixed>
             <div>
@@ -123,9 +149,7 @@ const Datos = () => {
                 <Typography sx={{marginTop:'40px', marginLeft:'10px'}}  variant="h5" gutterBottom>
                     Correo: {currentUser || 'No disponible'}
                 </Typography>
-                <Button sx={{width:'220px', height:'50', marginTop:'10px', marginLeft:'10px', backgroundColor:'#27728A'}} variant="contained" startIcon={<KeyIcon />}>
-                        Cambiar contraseña
-                </Button>
+                <Contraseña/>
                 
                     <div>
 
@@ -168,6 +192,79 @@ const Datos = () => {
                                     }}
                                     />
                             </FormControl>
+                            <div>
+                                <FormControl sx={{width:'230px', m: 1, height: 'calc(50% - 12px)'}}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <Typography sx={{marginLeft:'10px'}} variant="h6" gutterBottom  >
+                                            Actividad Fisica                                
+                                        </Typography>
+                                        <Fragment>
+                                            <Tooltip
+                                                title="Info"
+                                                placement="left"
+                                                arrow
+                                                open={tooltipOpen}
+                                                onClose={handleMouseLeave}
+                                                sx={{width:'20px', marginLeft:'20px'}}
+                                                >
+                                                <IconButton
+                                                onMouseEnter={handleMouseEnter}
+                                                onMouseLeave={handleMouseLeave}
+                                                onClick={handleOpenDialog}
+                                                >
+                                                <InfoIcon/>
+                                                </IconButton>
+                                            </Tooltip> 
+                                            <Dialog
+                                                open={openDialog}
+                                                onClose={handleCloseDialog}
+                                                aria-labelledby="dialog-title"
+                                                aria-describedby="dialog-description"
+                                                sx={{ borderRadius: '55px' }}
+                                            >
+                                                <DialogTitle sx={{fontSize:'30px', fontWeight:'bold'}}id="dialog-title" color='white'>Información  </DialogTitle>
+                                                <DialogContent>
+                                                    <p id="dialog-description"> Para considerar la actividad física como</p>
+                                                    <h4>Alta</h4>
+                                                    <p id="dialog-description"> Generalmente se recomienda realizar ejercicio al menos cinco veces a la semana, con una duración de al menos 30 minutos por sesión.Esto significa que deberías estar realizando actividades que elevan tu ritmo cardíaco y te hacen sudar durante la mayoría de esos días.</p>
+                                                    <h4>Moderada</h4>
+                                                    <p id="dialog-description"> Generalmente se recomienda realizar ejercicio al menos tres o cuatro veces a la semana, con una duración de al menos 30 minutos por sesión. Esto implica realizar actividades que elevan el ritmo cardíaco y causan una ligera sudoración durante la mayoría de esos días. </p>
+                                                    <h4>Baja</h4>
+                                                    <p id="dialog-description"> Generalmente se recomienda realizar ejercicio al menos una o dos veces a la semana, con una duración de al menos 30 minutos por sesión. Este nivel de actividad física puede incluir actividades suaves como caminar, estiramientos ligeros o yoga.</p>
+
+                                                </DialogContent>
+                                                <DialogActions>
+                                                    <Button  variant="contained"  sx={{ color: 'white', '&:hover': {backgroundColor: '#25ACD7', },marginRight:'20px', marginBottom:'20px'}} onClick={handleCloseDialog} >
+                                                        Cerrar
+                                                    </Button>
+                                                </DialogActions>
+                                            </Dialog>
+                                        </Fragment>
+                                    </div>
+
+                                    <Select
+                                        labelId="demo-simple-select-autowidth-label"
+                                        id="demo-simple-select-autowidth"
+                                        onChange={(e) => setActividad(e.target.value)}
+                                        autoWidth
+                                        label="Actividad"
+                                    >
+                                    <MenuItem value={actividad}>Alta</MenuItem>
+                                    endAdornment={<InputAdornment position="end">5-7 veces por semana</InputAdornment>}
+
+                                    <MenuItem value={actividad}>Moderada</MenuItem>
+                                    endAdornment={<InputAdornment position="end">3-4 veces por semana</InputAdornment>}
+
+                                    <MenuItem value={actividad}>Baja</MenuItem>
+                                    endAdornment={<InputAdornment position="end">1-2 veces por semana</InputAdornment>}
+
+                                    <MenuItem value={actividad}>Nada</MenuItem>
+                                    endAdornment={<InputAdornment position="end">0 veces por semana</InputAdornment>}
+
+                                    </Select>
+                                    
+                                </FormControl>
+                            </div>
                         </Container>
 
                         <Typography sx={{marginTop:'30px', marginLeft:'10px'}}  variant="h5" gutterBottom>
@@ -179,7 +276,7 @@ const Datos = () => {
                     </div>
                     <div >
                         <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}>
-                        Guardar 
+                            Guardar 
                         </Button>
                     </div>
             </div>
