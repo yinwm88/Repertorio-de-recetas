@@ -3,11 +3,11 @@ import {Tooltip,MenuItem ,Dialog, DialogActions, DialogContent, DialogTitle, Ico
 import { useAuth } from "../../AuthContext";
 import KeyIcon from '@mui/icons-material/Key';
 import Container from '@mui/material/Container';
-import SaveIcon from '@mui/icons-material/Save';
 import Alergias from './Alergias';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InfoIcon from '@mui/icons-material/Info';
-
+import Contraseña from './CambiarContraseña';
+import SaveIcon from '@mui/icons-material/Save';
 
 const Datos = () => {
 
@@ -149,9 +149,7 @@ const Datos = () => {
                 <Typography sx={{marginTop:'40px', marginLeft:'10px'}}  variant="h5" gutterBottom>
                     Correo: {currentUser || 'No disponible'}
                 </Typography>
-                <Button sx={{width:'220px', height:'50', marginTop:'10px', marginLeft:'10px', backgroundColor:'#27728A'}} variant="contained" startIcon={<KeyIcon />}>
-                        Cambiar contraseña
-                </Button>
+                <Contraseña/>
                 
                     <div>
 
@@ -236,7 +234,7 @@ const Datos = () => {
 
                                                 </DialogContent>
                                                 <DialogActions>
-                                                    <Button sx={{backgroundColor: '#27728A', color: 'white', '&:hover': {backgroundColor: '#25ACD7', },marginRight:'20px', marginBottom:'20px'}} onClick={handleCloseDialog} >
+                                                    <Button  variant="contained"  sx={{ color: 'white', '&:hover': {backgroundColor: '#25ACD7', },marginRight:'20px', marginBottom:'20px'}} onClick={handleCloseDialog} >
                                                         Cerrar
                                                     </Button>
                                                 </DialogActions>
