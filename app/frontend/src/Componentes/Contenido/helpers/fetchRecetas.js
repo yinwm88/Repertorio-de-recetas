@@ -7,10 +7,11 @@ export const fetchImageForRecipe = async (recipeName) => {
   const bingApiKey = 'be025fdd15c34d56b262ce684b1184c1'; // reemplaza con tu clave
 
   const urls = [
-    `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food 4k')}`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
-    `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' dish 4k')}&count=1`
+    `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' dish food 4k')}&count=1`,
+    `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
+
   ];
 
   for (const url of urls) {
@@ -133,18 +134,16 @@ export const fetchUserRecipes = async (currentUser, getToken, setUserRecipes) =>
     const data = await response.json();
     if (!Array.isArray(data.recetas)) throw new Error('Invalid data format');
 
-    
-
     const userRecipesDetails = await Promise.all(
       data.recetas.map(async (receta) => {
-        if (!receta.idReceta) return null;
-        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idReceta}`, {
+        if (!receta.idreceta) return null;
+        const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${receta.idreceta}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
 
         if (!responseReceta.ok) {
-          console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idReceta}`);
+          console.log(`HTTP error! Status: ${responseReceta.status} ${receta.idreceta}`);
           return null;
         }
 
@@ -154,7 +153,7 @@ export const fetchUserRecipes = async (currentUser, getToken, setUserRecipes) =>
         const imageUrl = await fetchImageForRecipe(dataReceta.nombre);
 
         return {
-          id: receta.idReceta,
+          id: receta.idreceta,
           ...dataReceta,
           imageUrl,
         };
@@ -167,6 +166,7 @@ export const fetchUserRecipes = async (currentUser, getToken, setUserRecipes) =>
     setUserRecipes([]);
   }
 };
+
 
 
 export const fetchFavoriteRecipes = async (currentUser, getToken, setFavoriteRecipes) => {
