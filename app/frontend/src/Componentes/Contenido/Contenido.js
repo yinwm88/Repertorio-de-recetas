@@ -79,6 +79,7 @@ function Contenido() {
               link={`/receta/${recipe.id}`}
               recipeDetails={recipe}
               markedFavorite={recipe.porcentaje === undefined ? true : false}
+              editable={activeTab === 1}
             />
           )
       )}

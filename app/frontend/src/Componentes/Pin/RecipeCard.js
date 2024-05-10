@@ -1,11 +1,10 @@
-import React from "react";
-import { IconButton } from "@mui/material";
+import React, { useState } from "react";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import "./RecipeCard.css";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Heart from "react-animated-heart";
-
+import "./RecipeCard.css";
 
 const RecipeCard = ({
     imgSrc,
@@ -14,12 +13,37 @@ const RecipeCard = ({
     onToggleFavorite,
     onEditClick,
     onClick,
-    porcentaje
+    porcentaje,
+    editable
 }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenuOpen = (event) => {
+        event.stopPropagation();
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleDelete = (event) => {
+        event.stopPropagation();
+        console.log("Delete action triggered");
+        handleMenuClose();
+    };
+
+    const handleEdit = (event) => {
+        event.stopPropagation();
+        onEditClick(event);
+        handleMenuClose();
+    };
+
     return (
         porcentaje > 0 ?
             <div className="recipe-card" style={{ display: "flex", position: "relative" }} onClick={onClick}>
-                <IconButton
+                {editable?<IconButton
                     className="editIcon"
                     style={{
                         position: "absolute",
@@ -28,13 +52,29 @@ const RecipeCard = ({
                         backgroundColor: "white",
                         zIndex: 10
                     }}
-                    onClick={onEditClick}
+                    onClick={handleMenuOpen}
                 >
-                    <EditIcon />
-                </IconButton>
+                    <MoreVertIcon />
+                </IconButton>:null  }
+                
+
+                 <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleMenuClose}
+                    onClick={(event) => event.stopPropagation()} // Evita que el menú cierre el contenedor principal
+                >
+                    <MenuItem onClick={handleEdit}>
+                        <EditIcon /> Edit
+                    </MenuItem>
+                    <MenuItem onClick={handleDelete}>
+                        <DeleteIcon /> Delete
+                    </MenuItem>
+                </Menu>
+
 
                 <div className="progressBar" style={{
-                    width: porcentaje,
+                    width: `${porcentaje}%`,
                     zIndex: 1,
                     background: 'rgb(252, 176, 69)',
                     backgroundImage: 'linear-gradient(90deg, rgb(252, 176, 69) 0%, rgb(252, 118, 118) 100%)',
@@ -47,10 +87,7 @@ const RecipeCard = ({
                     <div className="nombreReceta">
                         {name.length > 25 ? name.charAt(0).toUpperCase() + name.slice(1, 30) + '...' : name}
                     </div>
-                    <Heart isClick={favorita} onClick={onToggleFavorite} />
-                    {/* <IconButton className="fav" onClick={onToggleFavorite}>
-                        {favorita ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-                    </IconButton> */}
+                    <Heart isClick={favorita} onClick={(event) => { event.stopPropagation(); onToggleFavorite(event); }} />
                 </div>
             </div>
             : null

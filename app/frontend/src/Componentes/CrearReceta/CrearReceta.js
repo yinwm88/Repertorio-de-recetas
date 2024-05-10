@@ -60,7 +60,7 @@ const CrearReceta = ({isOpen,onClose}) => {
     formBody.push(`nombre=${encodeURIComponent(nombre)}`);
     formBody.push(`tiempo=${encodeURIComponent(tiempo)}`);
     formBody.push(`proceso=${encodeURIComponent(proceso)}`);
-    formBody.push(`utensilios=[{"utensilio":1}]`);
+    formBody.push(`utensilios=[{"idUtensilio":1}]`);
 
     // Añadir ingredientes a formBody.
     selectedIngredients.forEach((ingrediente, index) => {
@@ -69,7 +69,9 @@ const CrearReceta = ({isOpen,onClose}) => {
     });
 
     // Añadir correo del usuario a formBody.
-    formBody.push(`usuario[correo]=${encodeURIComponent(currentUser || '')}`);
+    // formBody.push(`usuario[correo]=${encodeURIComponent(currentUser || '')}`);
+
+    console.log('Enviando', formBody.join("&"))
 
     try {
       const response = await fetch('http://localhost:3001/receta/crearReceta', {

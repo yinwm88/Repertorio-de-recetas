@@ -13,7 +13,7 @@ import RecipeCard from "./Pin/RecipeCard";
 
 import { useAuth } from "../AuthContext";
 
-function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcentaje, markedFavorite }) {
+function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcentaje, markedFavorite, editable }) {
 
 
 
@@ -137,6 +137,7 @@ function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcent
                 onEditClick={handleOpenEditModal}
                 onClick={!openEditModal ? handleOpenDialog : null}
                 porcentaje={porcentaje}
+                editable={editable}
             />
 
             <RecipeDetailsDialog

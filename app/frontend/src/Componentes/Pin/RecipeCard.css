@@ -6,15 +6,21 @@
     visibility: visible;
 }
 
-.progressBar {
-    width: 100%;
-    height: 20px;
-    background-color: #f3f3f3;
-    border-radius: 10px;
-    margin: 10px 10px;
-    z-index: 10;
+.editIcon {
     position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(121, 121, 121, 0.208);
+    z-index: 10;
 }
+
+.progressBar {
+    z-index: 1;
+    background: rgb(252, 176, 69);
+    background-image: linear-gradient(90deg, rgb(252, 176, 69) 0%, rgb(252, 118, 118) 100%);
+    box-shadow: -1px 0px 15px #767676;
+}
+
 
 .progressBarBack {
     width: 100%;
