@@ -4,27 +4,23 @@ export const fetchImageForRecipe = async (recipeName) => {
   const pexelsApiKey = 'sY5tEwT4E7thugNrTx8eoLbu2YLlBri6ZtsQy5Fq1ULDLaewybrFuvDg';
   const pixabayApiKey = '43641615-297e61c4d9af146e80502ee5b';
   const flickrApiKey = '901aeda7df55b720f817e24c8de7455e';
-
-  // const urls = [
-  //   `https://api.unsplash.com/search/photos?query=${encodeURIComponent(recipeName)}&client_id=${unsplashApiKey}`,
-  //   `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1&tags=comida,food`,
-  //   `https://api.pexels.com/v1/search?query=${encodeURIComponent('food ' + recipeName)}&per_page=1`,
-  //   `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
-  // ];
+  const bingApiKey = 'be025fdd15c34d56b262ce684b1184c1'; // reemplaza con tu clave
 
   const urls = [
-
     `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrApiKey}&text=${encodeURIComponent(recipeName)}&format=json&nojsoncallback=1`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent(recipeName + ' food')}`,
     `https://pixabay.com/api/?key=${pixabayApiKey}&q=${encodeURIComponent('food ' + recipeName)}`,
-    
-
+    `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(recipeName + ' food')}&count=1`
   ];
 
   for (const url of urls) {
     try {
       const response = await fetch(url, {
-        headers: url.includes('pexels') ? { Authorization: pexelsApiKey } : {},
+        headers: url.includes('pexels')
+          ? { Authorization: pexelsApiKey }
+          : url.includes('bing')
+          ? { 'Ocp-Apim-Subscription-Key': bingApiKey }
+          : {},
       });
       const data = await response.json();
       let imageUrl = '';
@@ -38,6 +34,8 @@ export const fetchImageForRecipe = async (recipeName) => {
       } else if (url.includes('flickr') && data.photos.photo.length > 0) {
         const photo = data.photos.photo[0];
         imageUrl = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}_w.jpg`;
+      } else if (url.includes('bing') && data.value.length > 0) {
+        imageUrl = data.value[0].thumbnailUrl;
       }
 
       if (imageUrl) return imageUrl;
@@ -48,6 +46,7 @@ export const fetchImageForRecipe = async (recipeName) => {
 
   return 'https://via.placeholder.com/150';
 };
+
 
 // const google_images = require("free-google-images");
 
