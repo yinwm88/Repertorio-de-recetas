@@ -49,13 +49,29 @@ export const AuthProvider = ({ children }) => {
     return userEmail ? userEmail : null;
   };
 
+
+  const changePassword = async (currentPassword, newPassword) => {
+    try {
+      // Lógica para cambiar la contraseña aquí (por ejemplo, solicitud HTTP al servidor)
+      // Simulación de cambio de contraseña con una espera de 1 segundo
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Contraseña cambiada exitosamente');
+    } catch (error) {
+      console.error('Error al cambiar la contraseña:', error.message);
+      alert('Error al cambiar la contraseña. Por favor, inténtalo de nuevo más tarde.');
+      throw error;
+    }
+  };
+
+
   const value = {
     currentUser,
     login,
     logout,
     isTokenStored,
     getToken,
-    getUserDataFromCookies
+    getUserDataFromCookies,
+    changePassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

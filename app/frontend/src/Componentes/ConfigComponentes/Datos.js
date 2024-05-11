@@ -1,5 +1,5 @@
 import{ React, useState, Fragment, useRef} from "react";
-import {Tooltip,MenuItem ,Dialog, DialogActions, DialogContent, DialogTitle, IconButton,Typography, Button, FormControl, OutlinedInput, InputAdornment, } from '@mui/material';
+import {Tooltip,MenuItem, Alert, AlertTitle,RadioGroup, Radio, FormControlLabel,Dialog, DialogActions, DialogContent, DialogTitle, IconButton,Typography, Button, FormControl, OutlinedInput, InputAdornment, } from '@mui/material';
 import { useAuth } from "../../AuthContext";
 import KeyIcon from '@mui/icons-material/Key';
 import Container from '@mui/material/Container';
@@ -15,7 +15,7 @@ const Datos = () => {
         peso: '',
         estatura: '',
         actividad:'',
-        Tiene_Alergia: 'no',
+        Tiene_Alergia:'no' ,
         ingredientes: []
     });
 
@@ -25,10 +25,11 @@ const Datos = () => {
     const [estatura, setEstatura] = useState('');
     const [actividad, setActividad] = useState('');
 
-
     const [searchText, setSearchText] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [selectedIngredients, setSelectedIngredients] = useState([]);
+
+
 
     const fetchIngredients = async (text) => {
         if (!text.trim()) {
@@ -67,9 +68,11 @@ const Datos = () => {
         selectedIngredients.forEach((ingrediente, index) => {
             formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);  
         });
+
+
     
         try {
-            const response = await fetch('ruta/para/enviar/datos/del/usuario', {
+            const response = await fetch('http://localhost:30001/ruta/para/enviar/datos/del/usuario', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -114,9 +117,11 @@ const Datos = () => {
             [name]: value,
           // Si el usuario selecciona "No" después de haber seleccionado "Sí",
           // borramos el valor en "Ingredientes_Alergia"
-            ingredientes: name === 'Tiene_Alergia' && value === 'no' ? [] : prevFormData.ingredientes,
+            ingredientes: formData.Tiene_Alergia=='no' ? [] : prevFormData.ingredientes,
         }));
     };
+
+
 
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -154,7 +159,7 @@ const Datos = () => {
                     <div>
 
                         <Typography sx={{marginTop:'50px', marginLeft:'10px'}}  variant="h5" gutterBottom>
-                                Sobre Ti:
+                                Sobre Ti *
                         </Typography> 
                         <Container sx={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between' }}>
                             
@@ -165,6 +170,7 @@ const Datos = () => {
                                 <OutlinedInput
                                     id="peso"
                                     name="peso"
+                                    required
                                     type="number"
                                     value={peso}
                                     onChange={(e) => setPeso(e.target.value)}
@@ -173,7 +179,8 @@ const Datos = () => {
                                     inputProps={{
                                         'aria-label': 'peso',
                                     }}
-                                    />
+                                    
+                                />
                             </FormControl>
                             <FormControl sx={{ m: 1, height: 'calc(50% - 12px)' }} variant="outlined">
                                 <Typography  variant="h6" gutterBottom  >
@@ -245,24 +252,33 @@ const Datos = () => {
                                     <Select
                                         labelId="demo-simple-select-autowidth-label"
                                         id="demo-simple-select-autowidth"
+                                        value={actividad}
+                                        label="Actividad"
                                         onChange={(e) => setActividad(e.target.value)}
                                         autoWidth
-                                        label="Actividad"
                                     >
-                                    <MenuItem value={actividad}>Alta</MenuItem>
-                                    endAdornment={<InputAdornment position="end">5-7 veces por semana</InputAdornment>}
+                                        <MenuItem value={'Alta'}>
+                                            Alta
+                                        </MenuItem>
+                                        endAdornment={<InputAdornment position="end">5-7 veces por semana</InputAdornment>}
 
-                                    <MenuItem value={actividad}>Moderada</MenuItem>
-                                    endAdornment={<InputAdornment position="end">3-4 veces por semana</InputAdornment>}
+                                        <MenuItem value={'Moderada'}>
+                                            Moderada
+                                            </MenuItem>
+                                        endAdornment={<InputAdornment position="end">3-4 veces por semana</InputAdornment>}
+                                        
+                                        <MenuItem value={'Baja'}>
+                                            Baja
+                                        </MenuItem>
+                                        endAdornment={<InputAdornment position="end">1-2 veces por semana</InputAdornment>}
 
-                                    <MenuItem value={actividad}>Baja</MenuItem>
-                                    endAdornment={<InputAdornment position="end">1-2 veces por semana</InputAdornment>}
-
-                                    <MenuItem value={actividad}>Nada</MenuItem>
-                                    endAdornment={<InputAdornment position="end">0 veces por semana</InputAdornment>}
+                                        <MenuItem value={'Nada'}>
+                                            Nada
+                                        </MenuItem>
+                                        endAdornment={<InputAdornment position="end">0 veces por semana</InputAdornment>}
 
                                     </Select>
-                                    
+                                
                                 </FormControl>
                             </div>
                         </Container>
@@ -274,8 +290,16 @@ const Datos = () => {
                                 <Alergias value1={formData.Tiene_Alergia} handleAlergiaChange={handleAlergiaChange} searchText={searchText} setSearchText={setSearchText} fetchIngredients={fetchIngredients} setSelectedIngredients={setSelectedIngredients} setSearchResults={setSearchResults} searchResults={searchResults} selectedIngredients={selectedIngredients} />
                         </Container>        
                     </div>
+
+
                     <div >
-                        <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}>
+                        { formData.Tiene_Alergia === 'no' && selectedIngredients.length !== 0 && (
+                            <Alert severity="warning">
+                                <AlertTitle>Advertencia</AlertTitle>
+                                Asegurate de no tener ingredientes seleccionados si no tienes alergia.
+                            </Alert>
+                        )}
+                        <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'no' && selectedIngredients.length != 0) || (formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>
                             Guardar 
                         </Button>
                     </div>

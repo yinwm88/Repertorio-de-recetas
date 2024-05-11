@@ -4,11 +4,11 @@ import KeyIcon from '@mui/icons-material/Key';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/VisibilityOff';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useAuth } from '../../AuthContext';
 
 
 const CambiarContraseña = () => {
     const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -16,41 +16,34 @@ const CambiarContraseña = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    
-
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [error, setError] = useState('');
-
-
     const [showPassword, setShowPassword] = React.useState(false);
-
+    
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-
+    
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const { changePassword } = useAuth();
+    
     const handleChangePassword = async (e) => {
         e.preventDefault();
-
-        // Verificar que las contraseñas nuevas coincidan
         if (newPassword !== confirmNewPassword) {
-            setError('Las contraseñas nuevas no coinciden');
+            alert('Las contraseñas nuevas no coinciden');
             return;
         }
-
-        // Aquí puedes enviar una solicitud al backend para cambiar la contraseña
         try {
-            // Código para enviar la solicitud al backend y procesar el cambio de contraseña
-            setError('');
+            await changePassword(currentPassword, newPassword);
+            alert('Contraseña cambiada exitosamente');
             setCurrentPassword('');
             setNewPassword('');
             setConfirmNewPassword('');
-            console.log('Contraseña cambiada exitosamente');
         } catch (error) {
-            setError('Error al cambiar la contraseña. Por favor, inténtalo de nuevo más tarde.');
+            alert(error.message || 'Error al cambiar la contraseña');
         }
     };
 
