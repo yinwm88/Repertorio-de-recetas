@@ -1,7 +1,6 @@
 import{ React, useState, Fragment, useRef} from "react";
 import {Tooltip,MenuItem, Alert, AlertTitle,RadioGroup, Radio, FormControlLabel,Dialog, DialogActions, DialogContent, DialogTitle, IconButton,Typography, Button, FormControl, OutlinedInput, InputAdornment, } from '@mui/material';
 import { useAuth } from "../../AuthContext";
-import KeyIcon from '@mui/icons-material/Key';
 import Container from '@mui/material/Container';
 import Alergias from './Alergias';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
