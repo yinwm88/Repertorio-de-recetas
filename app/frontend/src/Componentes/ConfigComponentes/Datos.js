@@ -294,9 +294,9 @@ const Datos = () => {
 
                     <div >
                         { formData.Tiene_Alergia === 'no' && selectedIngredients.length !== 0 && (
-                            <Alert severity="error">
+                            <Alert sx={{marginTop:'15px'}} severity="error">
                                 <AlertTitle>Error</AlertTitle>
-                                Asegurate de no tener ingredientes seleccionados si no tienes alergia.
+                                Asegurate de haber eliminado los ingredientes seleccionados anteriormente si no tienes alergia.
                             </Alert>
                         )}
                         <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'no' && selectedIngredients.length != 0) || (formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>

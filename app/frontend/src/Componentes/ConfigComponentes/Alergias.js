@@ -57,7 +57,7 @@ const Alergias= ({value1,handleAlergiaChange,searchText, setSearchText, fetchIng
                   const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
                   setSelectedIngredients(newSelectedIngredients);
                 }}>
-                  <DeleteIcon />
+                  <DeleteIcon sx={{marginRight:'250px'}}/>
                 </IconButton>
               </ListItem>
             ))}
