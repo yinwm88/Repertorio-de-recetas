@@ -294,8 +294,8 @@ const Datos = () => {
 
                     <div >
                         { formData.Tiene_Alergia === 'no' && selectedIngredients.length !== 0 && (
-                            <Alert severity="warning">
-                                <AlertTitle>Advertencia</AlertTitle>
+                            <Alert severity="error">
+                                <AlertTitle>Error</AlertTitle>
                                 Asegurate de no tener ingredientes seleccionados si no tienes alergia.
                             </Alert>
                         )}
