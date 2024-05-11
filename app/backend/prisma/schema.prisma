@@ -61,7 +61,7 @@ model poseer {
   electrodomestico electrodomestico @relation(fields: [idelectro], references: [idelectro], onDelete: Cascade, map: "fkposeerelect")
   usuario          usuario          @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkposeerusua")
 
-  @@unique([idelectro, correo], name: "poseerID", map: "uniqueposeer")
+  @@unique([correo, idelectro], name: "poseerID", map: "uniqueposeer")
 }
 
 model preferir {
@@ -77,7 +77,7 @@ model preferir {
 model receta {
   idreceta              Int                     @id(map: "pkreceta") @default(autoincrement())
   correo                String?                 @db.VarChar(70)
-  imagen                String?                 @db.VarChar(60)
+  imagen                String?                 @db.VarChar(200)
   nombre                String                  @db.VarChar(50)
   tiempo                Int?
   proceso               String
