@@ -146,7 +146,7 @@ const Datos = () => {
 
 
     return (
-        <Container sx={{marginTop:'30px', height: '100vh'}} fixed>
+        <Container sx={{ height: '100vh'}} fixed>
             <div>
                 <Typography style={{ fontWeight: "bold" }} color="primary" variant="h3" gutterBottom>
                     Tus Datos
@@ -299,9 +299,11 @@ const Datos = () => {
                                 Asegurate de haber eliminado los ingredientes seleccionados anteriormente si no tienes alergia.
                             </Alert>
                         )}
-                        <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'no' && selectedIngredients.length != 0) || (formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>
-                            Guardar 
-                        </Button>
+                        <Container>
+                            <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'no' && selectedIngredients.length != 0) || (formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>
+                                Guardar 
+                            </Button>
+                        </Container>
                     </div>
             </div>
         </Container>
