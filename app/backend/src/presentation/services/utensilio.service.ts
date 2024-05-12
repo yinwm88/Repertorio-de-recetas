@@ -1,10 +1,40 @@
-import { error } from "console";
 import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado } from "../../domain";
+
+interface Utensilio {
+    idelectro: number,
+    nombre: string,
+    icono: string | null,
+    activo?: boolean
+}
+
+interface UtensilioActivo {
+    electrodomestico: Utensilio
+}
 
 export class UtensilioService {
 
     constructor() {}
+
+    private crearListaUtensilios( utensiliosUsuario: UtensilioActivo[], utensilios: Utensilio[] ): Utensilio[] {
+        let listaUtensilios: Utensilio[]= [];
+        let idUtensiliosActivos: number[] = [0]  
+        if ( utensiliosUsuario.length > 0) {
+            utensiliosUsuario.map( utensilios => {
+                utensilios.electrodomestico.activo = true;
+                listaUtensilios.push( utensilios.electrodomestico );
+                idUtensiliosActivos.push( utensilios.electrodomestico.idelectro )
+            });
+        }
+        utensilios.forEach( utensilio => {
+            if ( !idUtensiliosActivos.includes(utensilio.idelectro) ) {
+                utensilio.activo = false;
+                listaUtensilios.push( utensilio );
+            }
+        });
+
+        return listaUtensilios;
+    }
 
     async datosUtensilio(idUtensilio : number){
 
@@ -116,18 +146,34 @@ export class UtensilioService {
         }
     }
     
-    async obtenerUtensilios() {
+    async obtenerUtensilios( usuario: EntidadUsuario ) {
         try {
+            const utensiliosUsuario = await prisma.poseer.findMany({
+                select:{                    
+                    electrodomestico: {
+                        select: {
+                            idelectro: true,
+                            nombre: true,
+                            icono: true
+                        }
+                    },
+                },
+                where: {
+                    correo: usuario.correo
+                }
+            });
+            
             const utensilios = await prisma.electrodomestico.findMany({
-                select:{
+                select: {
                     idelectro: true,
                     nombre: true,
                     icono: true
                 }
             });
+            const listaUtensilios: Utensilio[] = this.crearListaUtensilios( utensiliosUsuario, utensilios );
             
             return {
-                utensilios: utensilios
+                utensilios: listaUtensilios
             }
         } catch (error) {
             
