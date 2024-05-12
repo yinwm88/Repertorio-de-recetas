@@ -237,7 +237,8 @@ export class RecetaService {
                     nombre: datosReceta.nombre,
                     tiempo: datosReceta.tiempo,
                     proceso: datosReceta.proceso,
-                    correo: usuario.correo
+                    correo: usuario.correo,
+                    imagen: datosReceta.imagen,
                 }    
             }); 
 
@@ -307,7 +308,8 @@ export class RecetaService {
                     tiempo: datosReceta.tiempo,
                     proceso: datosReceta.proceso,
                     correo: usuario.correo,
-                    padre: datosReceta.idReceta
+                    padre: datosReceta.idReceta,
+                    imagen: datosReceta.imagen
                 }    
             }); 
 
@@ -388,7 +390,8 @@ export class RecetaService {
                 data: {
                     nombre: datosReceta.nombre,
                     tiempo: datosReceta.tiempo,
-                    proceso: datosReceta.proceso
+                    proceso: datosReceta.proceso,
+                    imagen: datosReceta.imagen
                 }    
             });
             console.log(recetaActualizada)

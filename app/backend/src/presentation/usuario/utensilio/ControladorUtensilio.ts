@@ -44,7 +44,7 @@ export class controladorUtensilio {
     }
     
     public obtenerUtensilios = ( req: Request, res: Response) => {
-        this.utensilioService.obtenerUtensilios()
+        this.utensilioService.obtenerUtensilios( req.body.usuario )
         .then( utensilio => res.status(200).json( utensilio ))
         .catch( error => this.manejarError( error, res ));
     }

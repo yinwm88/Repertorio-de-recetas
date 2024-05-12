@@ -48,7 +48,7 @@ alter table Electrodomestico add constraint pkElectro primary key(idElectro);
 create table Receta ( 
 	idReceta serial,
 	correo Varchar(70),
-	imagen Varchar(60),
+	imagen Varchar(200),
 	nombre varchar(50),
 	tiempo int,
 	proceso text,
@@ -91,7 +91,7 @@ create table Poseer (
 alter table Poseer alter column idElectro set not null;
 alter table Poseer alter column correo set not null;
 
-alter table Poseer add constraint uniquePoseer  unique(idElectro,correo);
+alter table Poseer add constraint uniquePoseer  unique(correo, idElectro);
 alter table Poseer add constraint fkPoseerUsua foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
 alter table Poseer add constraint fkPoseerElect foreign key(idElectro) references Electrodomestico(idElectro)
