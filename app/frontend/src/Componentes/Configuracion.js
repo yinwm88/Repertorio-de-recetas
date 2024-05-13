@@ -141,7 +141,7 @@ export default function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Datos', 'Utensilios', 'Estadisticas', 'Volver'].map((text, index) => (
+          {['Datos', 'Estadisticas', 'Volver'].map((text, index) => (
             <ListItem key={text} disablePadding style={{ display: 'block' }}>
               <ListItemButton
                 onClick={() => handleListItemClick(text)}
@@ -158,7 +158,7 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <BlenderIcon /> : index === 2 ? <LeaderboardRoundedIcon /> : <Link to="/contenido">
+                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ?  <LeaderboardRoundedIcon /> : <Link to="/contenido">
                     <IconButton color="inherit" aria-label="Volver">
                       <KeyboardReturnRoundedIcon />
                     </IconButton>
@@ -180,11 +180,13 @@ export default function MiniDrawer() {
             <Datos />
           </Typography>
         )}
+        {/**
         {drawerContent === 'Utensilios' && (
           <Typography paragraph>
             Contenido para Utensilios
           </Typography>
         )}
+      */}
         {drawerContent === 'Estadisticas' && (
           <Typography paragraph>
             Contenido para Estadisticas
