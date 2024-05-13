@@ -43,7 +43,7 @@ const RecipeCard = ({
     return (
         porcentaje > 0 ?
             <div className="recipe-card" style={{ display: "flex", position: "relative" }} onClick={onClick}>
-                {editable?<IconButton
+                {editable ? <IconButton
                     className="editIcon"
                     style={{
                         position: "absolute",
@@ -55,10 +55,10 @@ const RecipeCard = ({
                     onClick={handleMenuOpen}
                 >
                     <MoreVertIcon />
-                </IconButton>:null  }
-                
+                </IconButton> : null}
 
-                 <Menu
+
+                <Menu
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleMenuClose}

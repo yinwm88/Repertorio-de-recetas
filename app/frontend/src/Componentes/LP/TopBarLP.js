@@ -69,7 +69,7 @@ function TopBar({ isDarkMode, handleThemeChange }) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt={currentUser.displayName} src={currentUser.photoURL} />
+              <Avatar alt={currentUser} src={currentUser} />
             </IconButton>
             <Menu
               anchorEl={anchorEl}
@@ -85,11 +85,11 @@ function TopBar({ isDarkMode, handleThemeChange }) {
               }}
             >
               <MenuItem disabled>
-                <Typography variant="subtitle1">{currentUser.displayName}</Typography>
+                <Typography variant="subtitle1">{currentUser}</Typography>
               </MenuItem>
-              <MenuItem disabled>
-                <Typography variant="body2">{currentUser.email}</Typography>
-              </MenuItem>
+              {/* <MenuItem disabled>
+                <Typography variant="body2">{currentUser}</Typography>
+              </MenuItem> */}
               <Divider />
               <MenuItem component={Link} to="/settings" onClick={handleProfileMenuClose}>
                 <ListItemIcon>

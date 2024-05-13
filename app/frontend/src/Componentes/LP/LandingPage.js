@@ -15,14 +15,24 @@ const LandingPage = ({isDarkMode,handleThemeChange}) => {
 
   useEffect(() => {
     if (!currentUser) {
-      const user = getUserDataFromCookies();
-      if (user) {
-        // console.log('Usuario encontrado', user);
-        
-        navigate('/contenido');
-      } 
+        const user = getUserDataFromCookies();
+        if (user) {
+            const tokenCreationTime = localStorage.getItem('tokenCreationTime');
+            if (tokenCreationTime) {
+                const currentTime = new Date().getTime();
+                const tokenAge = currentTime - parseInt(tokenCreationTime, 10);
+                if (tokenAge < 2 * 3600 * 1000) {
+                    console.log('Usuario encontrado y token válido', user);
+                    navigate('/contenido');
+                } else {
+                    console.log('Token expirado');
+                }
+            } else {
+                console.log('No se encontró timestamp del token');
+            }
+        } 
     }
-  }, [currentUser, getUserDataFromCookies, login, navigate]);
+}, [currentUser, navigate]);
 
   return (
     <>

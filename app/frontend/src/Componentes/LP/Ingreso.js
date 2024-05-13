@@ -32,7 +32,6 @@ const Ingreso = () => {
     };
 
 
-
     const handleLogin = async () => {
         try {
             const response = await fetch('http://localhost:3001/join/ingresar', {
@@ -41,31 +40,29 @@ const Ingreso = () => {
                 body: JSON.stringify({ correo: userData.username, contrasena: userData.contrasena })
             });
             const data = await response.json();
-
-
+    
             if (response.ok) {
-                login(userData.username, data.token);
+                login(userData.username, data.token); // Llamada actual a login
+                localStorage.setItem('tokenCreationTime', new Date().getTime().toString()); // Guardamos el timestamp en el local storage
                 console.log('Datos de usuario:', userData.username, data.token);
                 navigate('/contenido');
-
-
             } else {
                 MySwal.fire({
                     title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> {data.error}</Typography>,
                     icon: 'error',
-                })
-
+                });
             }
         } catch (error) {
             console.error('Error:', error);
             MySwal.fire({
                 title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}>{error.message}</Typography>,
                 icon: 'error',
-            })
-
+            });
         }
         setOpen(false);
     };
+    
+
 
     const handleRegister = async () => {
         setIsLoading(true);
