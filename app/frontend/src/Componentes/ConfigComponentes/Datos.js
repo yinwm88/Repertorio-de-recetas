@@ -63,34 +63,14 @@ const Datos = () => {
 
     const handleSubmit = async () => {
 
-<<<<<<< Updated upstream
-        // Añadir campos del formulario a formBody.
-        formBody.push(`peso=${encodeURIComponent(peso)}`);
-        formBody.push(`estatura=${encodeURIComponent(estatura)}`);
-        // Añadir ingredientes a formBody.
-        selectedIngredients.forEach((ingrediente, index) => {
-            formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);  
-        });
-    
-        try {
-            const response = await fetch('ruta/para/enviar/datos/del/usuario', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                    'Authorization': `Bearer ${getToken()}`,
-                },
-                body: formBody.join("&"),
-                token: getToken(),
-=======
+
         if(formData.Tiene_Alergia === 'no' && selectedIngredients.length !== 0 ) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
                 text: 'Asegurate de haber eliminado los ingredientes seleccionados anteriormente si no tienes alergia.',
             })
-        }else{
-
-                
+        }else{   
             const formBody = [];
 
             // Añadir campos del formulario a formBody.
@@ -99,7 +79,6 @@ const Datos = () => {
             // Añadir ingredientes a formBody.
             selectedIngredients.forEach((ingrediente, index) => {
                 formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);  
->>>>>>> Stashed changes
             });
 
             
