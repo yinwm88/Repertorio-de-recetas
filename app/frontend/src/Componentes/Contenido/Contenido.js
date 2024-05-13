@@ -9,6 +9,7 @@ import TabPanel from './TabPanel';
 import { fetchRecetas, fetchUserRecipes, fetchFavoriteRecipes } from './helpers/fetchRecetas';
 import { markAsFavorite } from './helpers/markAsFavorite';
 
+import { CircularProgress } from '@mui/material';
 
 
 
@@ -31,16 +32,41 @@ function Contenido() {
   const handleCloseAgregarReceta = () => setIsAgregarRecetaOpen(false);
   const handleTabChange = (event, newValue) => setActiveTab(newValue);
 
+  const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
+  const [isLoadingUserRecipes, setIsLoadingUserRecipes] = useState(false);
+  const [isLoadingFavoriteRecipes, setIsLoadingFavoriteRecipes] = useState(false);
+
+
   const triggerUpdate = () => setLastUpdate(Date.now());
 
   useEffect(() => {
-    fetchRecetas(currentUser, getToken, setRecipes);
+    setIsLoadingRecipes(true);
+    fetchRecetas(currentUser, getToken, (data) => {
+      setRecipes(data);
+      setIsLoadingRecipes(false);
+    });
   }, [lastUpdate, currentUser]);
 
   useEffect(() => {
-    if (activeTab === 1) fetchUserRecipes(currentUser, getToken, setUserRecipes);
-    if (activeTab === 2) fetchFavoriteRecipes(currentUser, getToken, setFavoriteRecipes);
+    if (activeTab === 1) {
+      setIsLoadingUserRecipes(true);
+      fetchUserRecipes(currentUser, getToken, (data) => {
+        setUserRecipes(data);
+        setIsLoadingUserRecipes(false);
+      });
+    }
   }, [activeTab, currentUser]);
+
+  useEffect(() => {
+    if (activeTab === 2) {
+      setIsLoadingFavoriteRecipes(true);
+      fetchFavoriteRecipes(currentUser, getToken, (data) => {
+        setFavoriteRecipes(data);
+        setIsLoadingFavoriteRecipes(false);
+      });
+    }
+  }, [activeTab, currentUser]);
+
 
   useEffect(() => {
     console.log('FRecetas:', favoriteRecipes);
@@ -82,7 +108,7 @@ function Contenido() {
               recipeDetails={recipe}
               markedFavorite={recipe.porcentaje === undefined ? true : false}
               editable={activeTab === 1}
-              triggerUpdate={triggerUpdate} 
+              triggerUpdate={triggerUpdate}
             />
           )
       )}
@@ -93,7 +119,7 @@ function Contenido() {
 
   return (
     <Container maxWidth={false} className='mainContainer'>
-      <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} triggerUpdate={triggerUpdate}/>
+      <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} triggerUpdate={triggerUpdate} />
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
@@ -112,7 +138,7 @@ function Contenido() {
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
                 <h1>Recetas</h1>
-                {renderPins(recipes)}
+                {isLoadingRecipes ? <CircularProgress /> : renderPins(recipes)}
               </Container>
             </div>
           </TabPanel>
@@ -125,7 +151,7 @@ function Contenido() {
                   Crear Nueva Receta
                 </Button>
                 <div style={{ height: '20px' }}></div>
-                {renderPins(userRecipes)}
+                {isLoadingUserRecipes ? <CircularProgress /> : renderPins(userRecipes)}
               </Container>
             </div>
           </TabPanel>
@@ -134,10 +160,11 @@ function Contenido() {
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
                 <h1>Recetas Favoritas</h1>
-                {renderPins(favoriteRecipes)}
+                {isLoadingFavoriteRecipes ? <CircularProgress /> : renderPins(favoriteRecipes)}
               </Container>
             </div>
           </TabPanel>
+
         </Grid>
       </Grid>
     </Container>
