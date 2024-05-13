@@ -69,7 +69,7 @@ function TopBar({ isDarkMode, handleThemeChange }) {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar alt={currentUser} src={currentUser} />
+              <Avatar alt={currentUser} src={currentUser} sx={{ bgcolor: "#ff8c90" }}/>
             </IconButton>
             <Menu
               anchorEl={anchorEl}

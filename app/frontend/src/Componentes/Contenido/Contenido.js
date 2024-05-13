@@ -80,15 +80,19 @@ function Contenido() {
     console.log('Recetas:', recipes);
   }, [recipes]);
 
+
+
+  const [tiposFiltro, setTiposFiltro] = useState([]);
+
   const filtrarRecetas = (recetas) =>
-    recetas
-      .filter(
-        (receta) =>
-          receta.tiempo >= filtroTiempo[0] &&
-          receta.tiempo <= filtroTiempo[1] &&
-          receta.nombre.toLowerCase().includes(searchText.toLowerCase())
-      )
-      .sort((a, b) => b.porcentaje - a.porcentaje);
+    recetas.filter(
+      (receta) =>
+        (receta.tiempo >= filtroTiempo[0] && receta.tiempo <= filtroTiempo[1]) &&
+        receta.nombre.toLowerCase().includes(searchText.toLowerCase()) &&
+        (tiposFiltro.length === 0 || receta.tipos.some(tipo => tiposFiltro.includes(tipo.tipo)))
+    ).sort((a, b) => b.porcentaje - a.porcentaje);
+
+
 
   const renderPins = (recetas) => (
     <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={2.5}>
@@ -123,7 +127,13 @@ function Contenido() {
 
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
-          <FiltroRecetas onSearchChange={setSearchText} onTimeChange={setFiltroTiempo} />
+          <FiltroRecetas
+            onSearchChange={setSearchText}
+            onTimeChange={setFiltroTiempo}
+            onTipoChange={setTiposFiltro}
+            recipes={recipes}
+          />
+
           <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
         </Grid>
 
