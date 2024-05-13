@@ -128,15 +128,10 @@ const Datos = () => {
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
-<<<<<<< Updated upstream
           // Si el usuario selecciona "No" después de haber seleccionado "Sí",
           // borramos el valor en "Ingredientes_Alergia"
             ingredientes: name === 'Tiene_Alergia' && value === 'no' ? [] : prevFormData.ingredientes,
-=======
-            // Si el usuario selecciona "No" después de haber seleccionado "Sí",
-            // borramos el valor en "Ingredientes_Alergia"
-            ingredientes: formData.Tiene_Alergia=='no' ? [] : prevFormData.ingredientes,
->>>>>>> Stashed changes
+
         }));
     };
 
@@ -267,26 +262,36 @@ const Datos = () => {
                                     <Select
                                         labelId="demo-simple-select-autowidth-label"
                                         id="demo-simple-select-autowidth"
+                                        value={actividad}
+                                        label="Actividad"
                                         onChange={(e) => setActividad(e.target.value)}
                                         autoWidth
-                                        label="Actividad"
                                     >
-                                    <MenuItem value={actividad}>Alta</MenuItem>
-                                    endAdornment={<InputAdornment position="end">5-7 veces por semana</InputAdornment>}
+                                        <MenuItem value={'Alta'}>
+                                            Alta
+                                        </MenuItem>
+                                        endAdornment={<InputAdornment position="end">5-7 veces por semana</InputAdornment>}
 
-                                    <MenuItem value={actividad}>Moderada</MenuItem>
-                                    endAdornment={<InputAdornment position="end">3-4 veces por semana</InputAdornment>}
+                                        <MenuItem value={'Moderada'}>
+                                            Moderada
+                                            </MenuItem>
+                                        endAdornment={<InputAdornment position="end">3-4 veces por semana</InputAdornment>}
+                                        
+                                        <MenuItem value={'Baja'}>
+                                            Baja
+                                        </MenuItem>
+                                        endAdornment={<InputAdornment position="end">1-2 veces por semana</InputAdornment>}
 
-                                    <MenuItem value={actividad}>Baja</MenuItem>
-                                    endAdornment={<InputAdornment position="end">1-2 veces por semana</InputAdornment>}
-
-                                    <MenuItem value={actividad}>Nada</MenuItem>
-                                    endAdornment={<InputAdornment position="end">0 veces por semana</InputAdornment>}
+                                        <MenuItem value={'Nada'}>
+                                            Nada
+                                        </MenuItem>
+                                        endAdornment={<InputAdornment position="end">0 veces por semana</InputAdornment>}
 
                                     </Select>
-                                    
+                                
                                 </FormControl>
                             </div>
+
                         </Container>
 
                         <Typography sx={{marginTop:'30px', marginLeft:'10px'}}  variant="h5" gutterBottom>
@@ -297,18 +302,12 @@ const Datos = () => {
                         </Container>        
                     </div>
                     <div >
-<<<<<<< Updated upstream
-                        <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}>
-                            Guardar 
-                        </Button>
-=======
                         
                         <Container>
                             <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>
                                 Guardar 
                             </Button>
                         </Container>
->>>>>>> Stashed changes
                     </div>
             </div>
         </Container>
