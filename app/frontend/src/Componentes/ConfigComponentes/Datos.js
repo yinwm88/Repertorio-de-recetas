@@ -7,6 +7,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InfoIcon from '@mui/icons-material/Info';
 import Contraseña from './CambiarContraseña';
 import SaveIcon from '@mui/icons-material/Save';
+import Swal from 'sweetalert2';
+
 
 const Datos = () => {
 
@@ -36,6 +38,8 @@ const Datos = () => {
             return;
         }
     
+        
+
         try {
             const response = await fetch(`http://localhost:3001/ingrediente/buscar`, {
                 method: 'POST',
@@ -58,65 +62,75 @@ const Datos = () => {
     };
 
     const handleSubmit = async () => {
-        const formBody = [];
 
-        // Añadir campos del formulario a formBody.
-        formBody.push(`peso=${encodeURIComponent(peso)}`);
-        formBody.push(`estatura=${encodeURIComponent(estatura)}`);
-        // Añadir ingredientes a formBody.
-        selectedIngredients.forEach((ingrediente, index) => {
-            formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);  
-        });
+        if(formData.Tiene_Alergia === 'no' && selectedIngredients.length !== 0 ) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Asegurate de haber eliminado los ingredientes seleccionados anteriormente si no tienes alergia.',
+            })
+        }else{   
+            const formBody = [];
 
-
-    
-        try {
-            const response = await fetch('http://localhost:30001/ruta/para/enviar/datos/del/usuario', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                    'Authorization': `Bearer ${getToken()}`,
-                },
-                body: formBody.join("&"),
-                token: getToken(),
+            // Añadir campos del formulario a formBody.
+            formBody.push(`peso=${encodeURIComponent(peso)}`);
+            formBody.push(`estatura=${encodeURIComponent(estatura)}`);
+            // Añadir ingredientes a formBody.
+            selectedIngredients.forEach((ingrediente, index) => {
+                formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);  
             });
-    
-            let data;
+
+            
             try {
-                data = await response.json();
-            } catch (error) {
-                // Si la respuesta no es JSON, manejar el error o establecer un mensaje predeterminado
-                console.error('No se recibió un JSON válido:');
+                const response = await fetch('http://localhost:30001/ruta/para/enviar/datos/del/usuario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                        'Authorization': `Bearer ${getToken()}`,
+                    },
+                    body: formBody.join("&"),
+                    token: getToken(),
+                });
+                
+                let data;
+                try {
+                    data = await response.json();
+                } catch (error) {
+                    // Si la respuesta no es JSON, manejar el error o establecer un mensaje predeterminado
+                    console.error('No se recibió un JSON válido:');
+                }
+        
+                if (response.ok) {
+                    // Si el código de estado indica éxito
+                    alert(data.message || '¡Se han registrado tus datos!');
+                    // Aquí podrías redireccionar al usuario o resetear los estados del formulario
+                    setEstatura('');
+                    setPeso('');
+                    setSelectedIngredients([]);
+                    console.log('Datos de receta agregada', data)
+                } else {
+                    // Si el servidor respondió con un error
+                    alert(data.message || 'Hubo un problema al registrar tus datos. Por favor, intenta nuevamente.');
+                }
+    
             }
-    
-            if (response.ok) {
-                // Si el código de estado indica éxito
-                alert(data.message || '¡Se han registrado tus datos!');
-                // Aquí podrías redireccionar al usuario o resetear los estados del formulario
-                setEstatura('');
-                setPeso('');
-                setSelectedIngredients([]);
-                console.log('Datos de receta agregada', data)
-            } else {
-                // Si el servidor respondió con un error
-                alert(data.message || 'Hubo un problema al registrar tus datos. Por favor, intenta nuevamente.');
+            
+            catch (error) {
+                    alert('Hubo un error al registrar datos. Por favor, inténtalo nuevamente más tarde.');
             }
-    
-        }
-    
-        catch (error) {
-            alert('Hubo un error al registrar datos. Por favor, inténtalo nuevamente más tarde.');
         }
     };
 
     const handleAlergiaChange = (e) => {
         const { name, value } = e.target;
+        
         setFormData((prevFormData) => ({
             ...prevFormData,
             [name]: value,
           // Si el usuario selecciona "No" después de haber seleccionado "Sí",
           // borramos el valor en "Ingredientes_Alergia"
             ingredientes: formData.Tiene_Alergia=='no' ? [] : prevFormData.ingredientes,
+
         }));
     };
 
@@ -280,6 +294,7 @@ const Datos = () => {
                                 
                                 </FormControl>
                             </div>
+
                         </Container>
 
                         <Typography sx={{marginTop:'30px', marginLeft:'10px'}}  variant="h5" gutterBottom>
@@ -292,14 +307,10 @@ const Datos = () => {
 
 
                     <div >
-                        { formData.Tiene_Alergia === 'no' && selectedIngredients.length !== 0 && (
-                            <Alert sx={{marginTop:'15px'}} severity="error">
-                                <AlertTitle>Error</AlertTitle>
-                                Asegurate de haber eliminado los ingredientes seleccionados anteriormente si no tienes alergia.
-                            </Alert>
-                        )}
+
+                        
                         <Container>
-                            <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'no' && selectedIngredients.length != 0) || (formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>
+                            <Button onClick={handleSubmit} sx={{marginLeft:'700px',marginTop:'30px'}} variant="contained" endIcon={<SaveIcon />}  disabled={(formData.Tiene_Alergia === 'si' && selectedIngredients.length === 0)|| !peso || !estatura|| !actividad}>
                                 Guardar 
                             </Button>
                         </Container>

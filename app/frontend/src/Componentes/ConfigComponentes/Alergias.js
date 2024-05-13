@@ -53,11 +53,12 @@ const Alergias= ({value1,handleAlergiaChange,searchText, setSearchText, fetchIng
             {selectedIngredients.map((ing, index) => (
               <ListItem key={index} style={{ display: 'flex', alignItems: 'center' }}>
                 <ListItemText primary={`${ing.nombre}`} />
-                <IconButton onClick={() => {
+
+                <IconButton sx={{marginRight:'430px', width:'45px'}}onClick={() => {
                   const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
                   setSelectedIngredients(newSelectedIngredients);
                 }}>
-                  <DeleteIcon sx={{marginRight:'250px'}}/>
+                  <DeleteIcon />
                 </IconButton>
               </ListItem>
             ))}
