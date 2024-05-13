@@ -93,7 +93,7 @@ function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) 
                   label={tipo}
                   onClick={() => handleTipoClick(tipo)}
                   color={tiposSeleccionados.includes(tipo) ? 'primary' : 'default'}
-                  style={{ "margin-top": 10 }}
+                  style={{ "marginTop": 10 }}
                 />
               ))}
             </Stack>
@@ -108,7 +108,7 @@ function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) 
             onChange={handleTiempoChange}
             valueLabelDisplay="auto"
             min={0}
-            max={120}
+            max={250}
           />
         </Box>
       </Collapse>
