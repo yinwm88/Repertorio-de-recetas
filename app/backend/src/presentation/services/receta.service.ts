@@ -41,8 +41,6 @@ export class RecetaService {
             });
             for (let index = 0; index < idLista.length; index++) {
                 
-                if (alergiasLista.some(ingrediente => idLista[index] === ingrediente)) continue;
-                
                 const ingredientesReceta = await prisma.haberingrediente.findMany({
                     where: { idreceta: idLista[index] },
                     select: {
@@ -50,11 +48,12 @@ export class RecetaService {
                             cantidad : true
                     }
                 });
+                if (alergiasLista.some(ingrediente => ingredientesReceta.map(ingredienteReceta => ingredienteReceta.idingrediente).includes(ingrediente))) continue;
                 const utensiliosReceta = await prisma.necesitar.findMany({
                     where: { idreceta: idLista[index] },
                     select: { idelectro: true },
                 });
-    
+                
                 const utensiliosRecetaLista = utensiliosReceta.map(utensilio => utensilio.idelectro)
                 const utensiliosFaltantes = utensiliosRecetaLista.filter( utensilio => utensiliosLista.indexOf(utensilio) == -1)
                 let ingredientesUsuarioTotal = 0;
