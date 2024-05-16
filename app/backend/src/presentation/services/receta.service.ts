@@ -16,6 +16,12 @@ export class RecetaService {
 
             const resultado = [];
 
+            const alergias = await prisma.seralergico.findMany({
+                where : { correo : correo},
+                select : { idingrediente : true }
+            });
+            const alergiasLista = alergias.map(ingrediente => ingrediente.idingrediente)
+
             const idRecetas = await prisma.receta.findMany({
                 select: { idreceta: true }
             });
@@ -25,8 +31,7 @@ export class RecetaService {
                 where : { correo : correo},
                 select : { idelectro : true }
             });
-            const utensiliosLista = utensiliosUsuario.map(utensilio => utensilio.idelectro)
-    
+            const utensiliosLista = utensiliosUsuario.map(utensilio => utensilio.idelectro);
             const ingredientesUsuario = await prisma.teneringrediente.findMany({
                 where: { correo },
                 select: { 
@@ -34,8 +39,10 @@ export class RecetaService {
                         cantidad: true 
                         },
             });
-    
             for (let index = 0; index < idLista.length; index++) {
+                
+                if (alergiasLista.some(ingrediente => idLista[index] === ingrediente)) continue;
+                
                 const ingredientesReceta = await prisma.haberingrediente.findMany({
                     where: { idreceta: idLista[index] },
                     select: {
@@ -43,7 +50,6 @@ export class RecetaService {
                             cantidad : true
                     }
                 });
-    
                 const utensiliosReceta = await prisma.necesitar.findMany({
                     where: { idreceta: idLista[index] },
                     select: { idelectro: true },
