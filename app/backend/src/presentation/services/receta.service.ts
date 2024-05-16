@@ -620,7 +620,6 @@ export class RecetaService {
             });
     
             const fecha = new Date()
-            console.log(fecha)
             const recetaCocinada = await prisma.cocinar.create({
                 data : {
                     idreceta : idReceta,
@@ -642,12 +641,17 @@ export class RecetaService {
         });
         if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
 
-        const recetas = await prisma.cocinar.findMany({
-            where : {
-                correo : correo
-            }
-        });
-
-        return recetas;
+        try{
+            const recetas = await prisma.cocinar.findMany({
+                where : {
+                    correo : correo
+                }
+            });
+    
+            return recetas;
+        }catch(error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+        
     }
 } 
