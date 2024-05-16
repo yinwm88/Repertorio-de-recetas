@@ -613,8 +613,16 @@ export class RecetaService {
                 }
             });
         });
-        return ingredientesReceta
 
-
+        const fecha = new Date()
+        const recetaCocinada = await prisma.cocinar.create({
+            data : {
+                idreceta : idReceta,
+                correo : correo,
+                calorias : calorias,
+                fecha : fecha
+            }
+        });
+        return recetaCocinada;
     }
-}
+} 

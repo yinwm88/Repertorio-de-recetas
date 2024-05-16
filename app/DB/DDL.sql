@@ -215,7 +215,6 @@ alter table cocinar alter column correo set not null;
 alter table cocinar alter column idReceta set not null;
 alter table cocinar alter column calorias set not null;
 alter table cocinar alter column fecha set not null;
-alter table cocinar add constraint fecha check(( fecha >= current_date ));
 alter table cocinar add constraint fkCocinarCorreo foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;
 alter table cocinar add constraint fkCocinarIdReceta foreign key(idReceta) references Receta(idReceta)

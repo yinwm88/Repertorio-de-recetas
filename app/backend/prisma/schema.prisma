@@ -84,7 +84,7 @@ model receta {
   likes                 Int?                    @default(0)
   padre                 Int?
   caracteristicasreceta caracteristicasreceta[]
-  cocinar               cocinar[]               @ignore
+  cocinar               cocinar[]
   haberingrediente      haberingrediente[]
   necesitar             necesitar[]
   preferir              preferir[]
@@ -136,7 +136,7 @@ model usuario {
   contrasena       String             @db.VarChar(200)
   salt             String?            @db.VarChar(200)
   verificado       Boolean?           @default(false)
-  cocinar          cocinar[]          @ignore
+  cocinar          cocinar[]
   poseer           poseer[]
   preferir         preferir[]
   receta           receta[]
@@ -150,11 +150,11 @@ model cocinar {
   correo   String   @db.VarChar(70)
   idreceta Int      @default(autoincrement())
   calorias Int
-  fecha    DateTime @db.Date
+  fecha    DateTime @db.Timestamp(6)
   usuario  usuario  @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcocinarcorreo")
   receta   receta   @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkcocinaridreceta")
 
-  @@ignore
+  @@unique([correo, fecha, idreceta], name: "cocinar", map: "uniqueCocinar")
 }
 
 enum caracteristicas {
