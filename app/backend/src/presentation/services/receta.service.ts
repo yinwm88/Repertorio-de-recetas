@@ -645,6 +645,11 @@ export class RecetaService {
             const recetas = await prisma.cocinar.findMany({
                 where : {
                     correo : correo
+                },
+                select : {
+                    idreceta : true,
+                    calorias : true,
+                    fecha : true
                 }
             });
     
