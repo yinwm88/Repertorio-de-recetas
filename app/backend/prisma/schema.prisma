@@ -84,6 +84,7 @@ model receta {
   likes                 Int?                    @default(0)
   padre                 Int?
   caracteristicasreceta caracteristicasreceta[]
+  cocinar               cocinar[]               @ignore
   haberingrediente      haberingrediente[]
   necesitar             necesitar[]
   preferir              preferir[]
@@ -135,11 +136,25 @@ model usuario {
   contrasena       String             @db.VarChar(200)
   salt             String?            @db.VarChar(200)
   verificado       Boolean?           @default(false)
+  cocinar          cocinar[]          @ignore
   poseer           poseer[]
   preferir         preferir[]
   receta           receta[]
   seralergico      seralergico[]
   teneringrediente teneringrediente[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cocinar {
+  correo   String   @db.VarChar(70)
+  idreceta Int      @default(autoincrement())
+  calorias Int
+  fecha    DateTime @db.Date
+  usuario  usuario  @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcocinarcorreo")
+  receta   receta   @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkcocinaridreceta")
+
+  @@ignore
 }
 
 enum caracteristicas {
