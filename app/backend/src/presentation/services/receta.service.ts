@@ -5,6 +5,44 @@ export class RecetaService {
 
     constructor(){};
 
+
+    private async alergias(correo:string){
+        const alergias = await prisma.seralergico.findMany({
+            where : { correo : correo},
+            select : { idingrediente : true }
+        });
+        const alergiasLista = alergias.map(ingrediente => ingrediente.idingrediente);
+        return alergiasLista;
+    }
+
+    private async utensilios(correo:string){
+        const utensiliosUsuario = await prisma.poseer.findMany({
+            where : { correo : correo},
+            select : { idelectro : true }
+        });
+        const utensiliosLista = utensiliosUsuario.map(utensilio => utensilio.idelectro);
+        return utensiliosLista;
+    }
+    
+    private async idRecetas(){
+        const idRecetas = await prisma.receta.findMany({
+            select: { idreceta: true }
+        });
+        const idLista = idRecetas.map(receta => receta.idreceta);
+        return idLista;
+    }
+
+    private async ingrdientes(correo:string){
+        const ingredientesUsuario = await prisma.teneringrediente.findMany({
+            where: { correo },
+            select: { 
+                    idingrediente: true,
+                    cantidad: true 
+                    },
+        });
+        return ingredientesUsuario;
+    }
+
     async generarRecetas(correo : string) {
         const correoExiste = await prisma.usuario.findFirst({
             where : { correo: correo }
@@ -15,30 +53,11 @@ export class RecetaService {
         try {
 
             const resultado = [];
+            const alergiasLista = await this.alergias(correo);
+            const idLista = await this.idRecetas();
+            const utensiliosLista = await this.utensilios(correo);
+            const ingredientesUsuario = await this.ingrdientes(correo);
 
-            const alergias = await prisma.seralergico.findMany({
-                where : { correo : correo},
-                select : { idingrediente : true }
-            });
-            const alergiasLista = alergias.map(ingrediente => ingrediente.idingrediente)
-
-            const idRecetas = await prisma.receta.findMany({
-                select: { idreceta: true }
-            });
-            const idLista = idRecetas.map(receta => receta.idreceta);
-    
-            const utensiliosUsuario = await prisma.poseer.findMany({
-                where : { correo : correo},
-                select : { idelectro : true }
-            });
-            const utensiliosLista = utensiliosUsuario.map(utensilio => utensilio.idelectro);
-            const ingredientesUsuario = await prisma.teneringrediente.findMany({
-                where: { correo },
-                select: { 
-                        idingrediente: true,
-                        cantidad: true 
-                        },
-            });
             for (let index = 0; index < idLista.length; index++) {
                 
                 const ingredientesReceta = await prisma.haberingrediente.findMany({
@@ -48,12 +67,13 @@ export class RecetaService {
                             cantidad : true
                     }
                 });
+
                 if (alergiasLista.some(ingrediente => ingredientesReceta.map(ingredienteReceta => ingredienteReceta.idingrediente).includes(ingrediente))) continue;
                 const utensiliosReceta = await prisma.necesitar.findMany({
                     where: { idreceta: idLista[index] },
                     select: { idelectro: true },
                 });
-                
+
                 const utensiliosRecetaLista = utensiliosReceta.map(utensilio => utensilio.idelectro)
                 const utensiliosFaltantes = utensiliosRecetaLista.filter( utensilio => utensiliosLista.indexOf(utensilio) == -1)
                 let ingredientesUsuarioTotal = 0;
@@ -82,7 +102,6 @@ export class RecetaService {
                     ingredientes : ingredientesYcantidades,
                     utensiliosFaltantes : utensiliosFaltantes
                 }
-
                 resultado.push(receta)
             }
             return { recetas : resultado }
