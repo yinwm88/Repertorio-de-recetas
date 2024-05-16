@@ -89,19 +89,20 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Pimienta de c
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('Panceta ahumada', 'gr', true, 400);
 
 
-insert into Electrodomestico (nombre) values ('Refrigerador');
-insert into Electrodomestico (nombre) values ('Horno');
-insert into Electrodomestico (nombre) values ('Licuadora');
-insert into Electrodomestico (nombre) values ('Microondas');
-insert into Electrodomestico (nombre) values ('Estufa');
-insert into Electrodomestico (nombre) values ('Batidora');
-insert into Electrodomestico (nombre, sustituto) values ('Freidora', 5);
-insert into Electrodomestico (nombre, sustituto) values ('Freidora de aire', 5);
-insert into Electrodomestico (nombre) values ('Tostador');
-insert into Electrodomestico (nombre) values ('Batidor');
-insert into Electrodomestico (nombre, sustituto) values ('Parrilla', 5);
-insert into Electrodomestico (nombre) values ('Mortero');
-
+insert into Electrodomestico (nombre, icono) values ('Refrigerador','snowflake');
+insert into Electrodomestico (nombre, icono) values ('Horno', 'jar');
+insert into Electrodomestico (nombre, icono) values ('Licuadora', 'blender');
+insert into Electrodomestico (nombre, icono) values ('Microondas','mattress-pillow');
+insert into Electrodomestico (nombre, icono) values ('Estufa', 'fire-burner');
+insert into Electrodomestico (nombre, icono) values ('Batidora','oil-can');
+insert into Electrodomestico (nombre, sustituto, icono) values ('Freidora', 5, 'dumpster');
+insert into Electrodomestico (nombre, sustituto, icono) values ('Freidora de aire', 5, 'jug-detergent');
+insert into Electrodomestico (nombre, icono) values ('Tostador', 'box-tissue');
+insert into Electrodomestico (nombre, icono) values ('Batidor', 'screwdriver');
+insert into Electrodomestico (nombre, sustituto, icono) values ('Parrilla', 5, 'dumpster-fire');
+insert into Electrodomestico (nombre, icono) values ('Mortero','mortar-pestle');
+insert into Electrodomestico (nombre, icono) values ('Molcajete','mortar-pestle');
+insert into Electrodomestico (nombre, icono) values ('Sartén','neuter');
 
 insert into Receta(nombre, tiempo, proceso) values ('Burrito', 55, 'Corta el pimiento, el jitomate y la cebolla en dados y saltea. Agrega la carne. Sazona y cocina hasta que se dore o esté completamente cocido. Calienta la tortilla y coloca una pequeña capa de queso y el relleno de carne que has preparado en el paso enterior en la mitad inferior de la tortilla. Envuelve doblando la parte inferior sobre el relleno, doblando los lados hacia adentro y luego enrollando. Fríe usando tu método preferido como freidora de aire, si eliges esta tendrás que dejarlo dentro unos 10 minutos; si lo harás con sarten, usa solo un chorrito de aceite y voltea hacia los lados hasta que veas un color dorado en la tortilla. Agrega la crema agria encima. Puedes servir con salsa y queso rallado.');
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 1, 85);
@@ -347,13 +348,3 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 72, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 88, 2);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 89, 150);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 28, 35);
-
-
-
-
-
-
-
-
-
-
