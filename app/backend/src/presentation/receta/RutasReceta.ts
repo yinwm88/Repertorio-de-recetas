@@ -22,6 +22,7 @@ export class RutasReceta{
         router.put('/editarReceta', [ JoinMiddleware.validarJwt ], controlador.editarReceta );
         router.delete('/borrarReceta', [JoinMiddleware.validarJwt ], controlador.borrarRecetaUsuario );
         router.post('/crearLista',controlador.crearListaCompras );
+        router.post('/cocinar', controlador.cocinar );
         return router;
     }
 }

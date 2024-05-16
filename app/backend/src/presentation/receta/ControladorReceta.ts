@@ -145,4 +145,20 @@ export class ControladorRecetas{
         .then( lista => res.status(201).json( lista ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public cocinar = (req: Request, res: Response) => {
+        const { correo, idReceta, calorias } = req.body;
+        if (!idReceta) {
+            return res.status(400).json({error: 'Falta el ID de la receta'});
+        }
+        if (!correo) {
+            return res.status(400).json({error: 'Falta el correo'});
+        }
+        if (!calorias) {
+            return res.status(400).json({error: 'Faltan las calorias'});
+        }
+        this.recetaService.cocinar( correo, idReceta, calorias )
+        .then( cocinar => res.status(201).json( cocinar ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }

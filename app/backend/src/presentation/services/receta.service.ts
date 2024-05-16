@@ -1,3 +1,4 @@
+import { ALL } from "dns";
 import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta, IngredienteUsuario } from "../../domain";
 
@@ -534,7 +535,6 @@ export class RecetaService {
         }
     }
 
-    //TODO: Implementar esta cosa
     async crearListaCompra(correo: string, idReceta : number){
         const usuarioExiste = await prisma.usuario.findFirst({
             where : {correo : correo}
@@ -579,4 +579,42 @@ export class RecetaService {
 
         return {ingredientesFaltantes}
     }   
+
+    async cocinar(correo:string, idReceta:number, calorias:number){
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {correo : correo}
+        });
+
+        const recetaExiste = await prisma.receta.findFirst({
+            where : {idreceta : idReceta }
+        });
+        if(!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        if(!recetaExiste) throw ErrorCustomizado.badRequest( 'La receta no existe' );
+        if(calorias < 0) throw ErrorCustomizado.badRequest( 'Las calorías no pueden ser negativas' );
+        
+        const ingredientesReceta = await prisma.haberingrediente.findMany({
+            where : { idreceta : idReceta },
+            select : {
+                idingrediente : true,
+                cantidad : true
+            }
+        });
+
+        ingredientesReceta.forEach(async ingrediente => {
+            const ingredienteActualizado = await prisma.teneringrediente.updateMany({
+                where : {
+                    correo : correo,
+                    idingrediente : ingrediente.idingrediente
+                },
+                data : {
+                    cantidad : {
+                        decrement : ingrediente.cantidad
+                    }
+                }
+            });
+        });
+        return ingredientesReceta
+
+
+    }
 }
