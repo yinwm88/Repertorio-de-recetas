@@ -177,7 +177,6 @@ const Datos = () => {
 
         try {
             await changePassword(currentPassword, newPassword);
-            alert('Contraseña cambiada exitosamente');
             setCurrentPassword('');
             setNewPassword('');
             setConfirmNewPassword('');
