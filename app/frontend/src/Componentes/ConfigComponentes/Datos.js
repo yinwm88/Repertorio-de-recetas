@@ -5,7 +5,6 @@ import Container from '@mui/material/Container';
 import Alergias from './Alergias';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InfoIcon from '@mui/icons-material/Info';
-import Contraseña from './CambiarContraseña';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import SaveIcon from '@mui/icons-material/Save';
