@@ -87,11 +87,7 @@ export default function CambiarContraseña() {
 
     return (
         <div>
-            <Box sx={{ marginTop: '20px' }}>
-                <Button variant="contained" startIcon={<KeyIcon />} onClick={handleClickOpen}>
-                    Cambiar contraseña
-                </Button>
-            </Box>
+    
 
             <Dialog open={open} onClose={handleClose}>
                 <Container>

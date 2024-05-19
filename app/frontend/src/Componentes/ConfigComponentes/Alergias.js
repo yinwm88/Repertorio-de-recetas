@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 const Alergias= ({value1,handleAlergiaChange,searchText, setSearchText, fetchIngredients, setSelectedIngredients, setSearchResults, searchResults, selectedIngredients}) => (
   <Container>
-    <FormControl component="fieldset" fullWidth required variant="outlined">
+    <FormControl component="fieldset" fullWidth  variant="outlined">
       <RadioGroup
         aria-label="tiene-alergia"
         name="Tiene_Alergia"
