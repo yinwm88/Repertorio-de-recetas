@@ -207,94 +207,94 @@ const Datos = () => {
                 <Typography sx={{ marginTop: '40px', marginLeft: '10px' }} variant="h5" gutterBottom>
                     Correo: {currentUser || 'No disponible'}
                 </Typography>
+
                 <Box sx={{ marginTop: '20px' }}>
                     <Button variant="contained" startIcon={<KeyIcon />} onClick={handleOpenPasswordDialog}>
                         Cambiar contraseña
                     </Button>
                 </Box>
-
                 <Dialog open={openPasswordDialog} onClose={handleClosePasswordDialog}>
-                <Container>
-                    <DialogTitle sx={{ fontSize: '25px' }}>Cambiar Contraseña</DialogTitle>
-                    <DialogContent>
-                        <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
-                            <InputLabel htmlFor="current-password">Contraseña actual</InputLabel>
-                            <OutlinedInput
-                                id="current-password"
-                                type={showPassword1 ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword1}
-                                            onMouseDown={handleMouseDownPassword1}
-                                            edge="end"
-                                        >
-                                            {showPassword1 ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                value={currentPassword}
-                                onChange={(e) => setCurrentPassword(e.target.value)}
-                                required
-                                label="Contraseña actual"
-                            />
-                        </FormControl>
-                        <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
-                            <InputLabel htmlFor="new-password">Nueva contraseña</InputLabel>
-                            <OutlinedInput
-                                id="new-password"
-                                type={showPassword2 ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword2}
-                                            onMouseDown={handleMouseDownPassword2}
-                                            edge="end"
-                                        >
-                                            {showPassword2 ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
-                                label="Nueva contraseña"
-                            />
-                        </FormControl>
-                        <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
-                            <InputLabel htmlFor="confirm-new-password">Confirmar nueva contraseña</InputLabel>
-                            <OutlinedInput
-                                id="confirm-new-password"
-                                type={showPassword3 ? 'text' : 'password'}
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword3}
-                                            onMouseDown={handleMouseDownPassword3}
-                                            edge="end"
-                                        >
-                                            {showPassword3 ? <VisibilityOff /> : <Visibility />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                value={confirmNewPassword}
-                                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                                required
-                                label="Confirmar nueva contraseña"
-                            />
-                        </FormControl>
-                    </DialogContent>
-                </Container>
+                    <Container>
+                        <DialogTitle sx={{ fontSize: '25px' }}>Cambiar Contraseña</DialogTitle>
+                        <DialogContent>
+                            <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
+                                <InputLabel htmlFor="current-password">Contraseña actual</InputLabel>
+                                <OutlinedInput
+                                    id="current-password"
+                                    type={showPassword1 ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword1}
+                                                onMouseDown={handleMouseDownPassword1}
+                                                edge="end"
+                                            >
+                                                {showPassword1 ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                    required
+                                    label="Contraseña actual"
+                                />
+                            </FormControl>
+                            <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
+                                <InputLabel htmlFor="new-password">Nueva contraseña</InputLabel>
+                                <OutlinedInput
+                                    id="new-password"
+                                    type={showPassword2 ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword2}
+                                                onMouseDown={handleMouseDownPassword2}
+                                                edge="end"
+                                            >
+                                                {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    required
+                                    label="Nueva contraseña"
+                                />
+                            </FormControl>
+                            <FormControl sx={{ m: 1, width: '45ch' }} variant="outlined">
+                                <InputLabel htmlFor="confirm-new-password">Confirmar nueva contraseña</InputLabel>
+                                <OutlinedInput
+                                    id="confirm-new-password"
+                                    type={showPassword3 ? 'text' : 'password'}
+                                    endAdornment={
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword3}
+                                                onMouseDown={handleMouseDownPassword3}
+                                                edge="end"
+                                            >
+                                                {showPassword3 ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    }
+                                    value={confirmNewPassword}
+                                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                    required
+                                    label="Confirmar nueva contraseña"
+                                />
+                            </FormControl>
+                        </DialogContent>
+                    </Container>
 
-                <DialogActions>
-                    <Box sx={{ marginRight: '240px' }}>
-                        <Button onClick={handleClosePasswordDialog }>Cancelar</Button>
-                        <Button onClick={handleChangePassword}>Guardar</Button>
-                    </Box>
-                </DialogActions>
+                    <DialogActions>
+                        <Box sx={{ marginRight: '240px' }}>
+                            <Button onClick={handleClosePasswordDialog }>Cancelar</Button>
+                            <Button onClick={handleChangePassword}>Guardar</Button>
+                        </Box>
+                    </DialogActions>
                 </Dialog>
 
                 <div>
@@ -337,6 +337,8 @@ const Datos = () => {
                                 }}
                             />
                         </FormControl>
+
+
                         <div>
                             <FormControl sx={{ width: '230px', m: 1, height: 'calc(50% - 12px)' }}>
                                 <div style={{ display: 'flex', alignItems: 'center' }}>
