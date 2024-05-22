@@ -61,18 +61,19 @@ export class UtensilioService {
         const utensilioAgregado = await prisma.poseer.findUnique({
             where: {
                 poseerID: {
-                    idelectro: idUtensilio,
-                    correo: usuario.correo
+                    correo: usuario.correo,
+                    idelectro: idUtensilio
                 }
             }
-        })
+        });
         if ( !!utensilioAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio ya esta agregado' );
+        console.log( `Informacion: ${utensilioAgregado}` )
 
         try {            
             await prisma.poseer.create({
                 data: {
-                    usuario: { connect: {correo: usuario.correo }},
-                    electrodomestico: { connect: {idelectro: idUtensilio }}
+                    correo: usuario.correo,
+                    idelectro: utensilioExiste.idelectro
                 }
             });
             return {
@@ -93,19 +94,20 @@ export class UtensilioService {
         const utensilioNoAgregado = await prisma.poseer.findUnique({
             where: {
                 poseerID:{
-                    idelectro: idUtensilio,
-                    correo: usuario.correo
+                    correo: usuario.correo,
+                    idelectro: utensilioExiste.idelectro
                 }
             }
         })
         if ( !utensilioNoAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio no ha sido agregado' );
+        console.log( `Informacion: ${utensilioNoAgregado}` )
 
         try {            
             const utensilio = await prisma.poseer.delete({
                 where:{
                     poseerID:{
-                        idelectro: idUtensilio,
-                        correo: usuario.correo
+                        correo: usuario.correo,
+                        idelectro: utensilioExiste.idelectro
                     }
                 }
             });
