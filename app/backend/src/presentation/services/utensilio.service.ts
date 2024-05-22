@@ -17,7 +17,7 @@ export class UtensilioService {
     constructor() {}
 
     private crearListaUtensilios( utensiliosUsuario: UtensilioActivo[], utensilios: Utensilio[] ): Utensilio[] {
-        let listaUtensilios: Utensilio[]= [];
+        let listaUtensilios: Utensilio[] = [];
         let idUtensiliosActivos: number[] = [0]  
         if ( utensiliosUsuario.length > 0) {
             utensiliosUsuario.map( utensilios => {
@@ -66,8 +66,7 @@ export class UtensilioService {
                 }
             }
         })
-        console.log(utensilioAgregado)
-        if ( utensilioAgregado !== null || utensilioAgregado !== undefined ) throw ErrorCustomizado.badRequest( 'El utensilio ya esta agregado' );
+        if ( !!utensilioAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio ya esta agregado' );
 
         try {            
             await prisma.poseer.create({
@@ -99,7 +98,7 @@ export class UtensilioService {
                 }
             }
         })
-        if ( utensilioNoAgregado === null || utensilioNoAgregado === undefined  ) throw ErrorCustomizado.badRequest( 'El utensilio no ha sido agregado' );
+        if ( !utensilioNoAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio no ha sido agregado' );
 
         try {            
             const utensilio = await prisma.poseer.delete({

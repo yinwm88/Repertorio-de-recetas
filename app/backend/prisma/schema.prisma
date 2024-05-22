@@ -154,7 +154,7 @@ model cocinar {
   usuario  usuario  @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcocinarcorreo")
   receta   receta   @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkcocinaridreceta")
 
-  @@ignore
+  @@unique([correo, fecha], map: "uniquecocinar")
 }
 
 enum caracteristicas {
