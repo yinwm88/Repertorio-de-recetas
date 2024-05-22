@@ -23,6 +23,11 @@ import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
 import { Link } from 'react-router-dom';
 import Datos from './ConfigComponentes/Datos';
+import FoodChart from './ConfigComponentes/FoodChart';
+import chart from 'chart.js/auto';
+import CaloriesChart from './ConfigComponentes/CaloriesChart';
+
+
 
 const drawerWidth = 240;
 
@@ -188,9 +193,10 @@ export default function MiniDrawer() {
         )}
       */}
         {drawerContent === 'Estadisticas' && (
-          <Typography paragraph>
-            Contenido para Estadisticas
-          </Typography>
+          <Container>
+            <FoodChart/>
+            <CaloriesChart/>
+          </Container>
         )}
 
       </Box>

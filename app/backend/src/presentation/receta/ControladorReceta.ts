@@ -161,4 +161,14 @@ export class ControladorRecetas{
         .then( cocinar => res.status(201).json( cocinar ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public obtenerRecetasCocinadas = (req: Request, res: Response) => {
+        const { correo } = req.body;
+        if (!correo) {
+            return res.status(400).json({error:'Falta el correo del usuario'});
+        }
+        this.recetaService.obtenerRecetasCocinadas( correo )
+        .then( cocinar => res.status(201).json( cocinar ))
+        .catch( error => this.manejarError( error, res ));
+    }
 }
