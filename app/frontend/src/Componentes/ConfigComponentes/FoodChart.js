@@ -41,11 +41,11 @@ export default function FoodChart() {
     }, []);
 
     return (
-        <Container sx={{width:'700px'}}>
+        <Container sx={{ marginTop:'50px',width:'700px'}}>
             <Typography  variant="h1">
                 Balance de comida
             </Typography>
-            <canvas ref={chartRef} style={{ width: "300px", height: "200px", marginTop:"40px" }} />
+            <canvas ref={chartRef} style={{ width: "300px", height: "200px", marginTop:"50px" }} />
         </Container>
         
     );

@@ -194,8 +194,8 @@ export default function MiniDrawer() {
       */}
         {drawerContent === 'Estadisticas' && (
           <Container>
-            <FoodChart/>
             <CaloriesChart/>
+            <FoodChart/>
           </Container>
         )}
 

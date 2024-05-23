@@ -10,6 +10,7 @@ import {
   Typography,
   Chip,
   Grid,
+  Container,
   Box,
   Tabs,
   Tab,
@@ -33,6 +34,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./RecipeDetailsDialog.css";
+import CookedRecipe from "./CookedRecipe";
 
 const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails }) => {
   const [tabValue, setTabValue] = useState(0);
@@ -41,6 +43,9 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
   const [checkedIngredients, setCheckedIngredients] = useState({});
   const [utensilioDetails, setUtensilioDetails] = useState([]);
   const [stepStartIndex, setStepStartIndex] = useState(0);
+  const [showCocinado, setShowCocinado] = useState(false);
+
+
 
   const pasos = (recipeDetails?.proceso?.split(".") || []).filter((paso) => paso.trim() !== "");
   const ingredientes = recipeDetails?.ingredientes || [];
@@ -97,14 +102,18 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
   };
 
   const handleProgress = () => {
-    if (currentStep < pasos.length - 1) {
+    if (currentStep <  pasos.length - 1) 
       setCurrentStep(currentStep + 1);
-    }
+      if(currentStep + 1 === pasos.length - 1)
+        setShowCocinado(true);
   };
+
 
   const handleRegress = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+      setShowCocinado(false);
+
     }
   };
 
@@ -151,9 +160,11 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullScreen>
       <DialogContent className="dialog-content">
+
         <div className="image-container">
           <img src={imgSrc} alt={`Detalle de ${name}`} style={{ width: "100%" }} />
         </div>
+
         <div className="details-container">
           <h2>{name}</h2>
           <Tabs value={tabValue} onChange={handleTabChange}>
@@ -182,6 +193,7 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
                   </Box>
                 </Box>
               </Grid>
+
               <Grid item xs={12}>
                 <Box>
                   <Typography variant="h6">Ingredientes</Typography>
@@ -240,11 +252,15 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
                 </Slide>
               ))}
             </Timeline>
-            
+            {showCocinado && (
+
+                <CookedRecipe/>
+       
+            )}
           </Box>
         </div>
       </DialogContent>
-      <DialogActions style={dialogActionsStyle}>
+      <DialogActions sx={{height:'70px'}}style={dialogActionsStyle}>
         <Button onClick={handleClose} variant="secondary">
           Cerrar
         </Button>
