@@ -3,7 +3,42 @@ import { Grid, Paper, IconButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { Masonry } from '@mui/lab';
+
+import {
+  faSnowflake,
+  faJar,
+  faBlender,
+  faMattressPillow,
+  faFireBurner,
+  faOilCan,
+  faDumpster,
+  faJugDetergent,
+  faBoxTissue,
+  faScrewdriver,
+  faDumpsterFire,
+  faMortarPestle,
+  faNeuter,
+} from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../AuthContext';
+
+library.add(
+  faSnowflake,
+  faJar,
+  faBlender,
+  faMattressPillow,
+  faFireBurner,
+  faOilCan,
+  faDumpster,
+  faJugDetergent,
+  faBoxTissue,
+  faScrewdriver,
+  faDumpsterFire,
+  faMortarPestle,
+  faNeuter,
+);
 
 const UtensilioCard = styled(Paper)(({ theme, active }) => ({
   padding: theme.spacing(2),
@@ -39,15 +74,13 @@ function UtensiliosList() {
         },
       });
       const data = await response.json();
-      // console.log(`RESPONSE ${getToken()}`)
-      console.log('DATA',data.utensilios)
       if (response.ok) {
         setUtensilios(data.utensilios);
       } else {
         throw new Error('Failed to fetch utensilios');
       }
     } catch (error) {
-      console.error('Error:');
+      console.error('Error:', error);
     }
   };
 
@@ -74,19 +107,21 @@ function UtensiliosList() {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Masonry columns={3} spacing={2}>
       {utensilios.map((utensilio) => (
-        <Grid item xs={4} key={utensilio.idelectro} onClick={() => toggleUtensilio(utensilio)}>
+        <div key={utensilio.idelectro} onClick={() => toggleUtensilio(utensilio)}>
           <UtensilioCard active={utensilio.activo}>
-            <Typography variant="h6">{utensilio.nombre}</Typography>
-            <IconButton color={utensilio.activo ? "success" : "default"}>
+            <Typography variant="h9">{utensilio.nombre}</Typography>
+            <FontAwesomeIcon icon={utensilio.icono} size="2x" color={utensilio.activo ? "green" : undefined} />
+            {/* <IconButton color={utensilio.activo ? "success" : "default"}>
               {utensilio.activo ? <ToggleOnIcon /> : <ToggleOffIcon />}
-            </IconButton>
+            </IconButton> */}
           </UtensilioCard>
-        </Grid>
+        </div>
       ))}
-    </Grid>
+    </Masonry>
   );
+
 }
 
 export default UtensiliosList;
