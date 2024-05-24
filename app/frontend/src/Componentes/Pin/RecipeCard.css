@@ -1,5 +1,56 @@
-.recipe-card .editIcon {
-    visibility: hidden;
+@keyframes shine-gold {
+    0% {
+        clip-path: inset(0% 100% 0% 0%);
+    }
+    25% {
+        clip-path: inset(0% 0% 0% 0%);
+    }
+    50% {
+        clip-path: inset(0% 0% 0% 100%);
+    }
+    75% {
+        clip-path: inset(0% 100% 0% 0%);
+    }
+    100% {
+        clip-path: inset(0% 100% 0% 0%);
+    }
+}
+
+.shine-gold {
+    position: relative;
+    display: inline-block;
+    border: 3px solid rgba(255, 217, 0, 0.587);
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+}
+
+.shine-gold::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100.1%;
+    height: 100%;
+    border: 5px solid rgba(255, 217, 0, 0.587);
+    box-sizing: border-box;
+    clip-path: inset(0% 100% 0% 0%);
+    animation: shine-gold 10s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    filter: blur(4px); /* Ajusta el valor del blur según sea necesario */
+}
+
+
+.recipe-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.recipe-card.shine {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 1);
 }
 
 .recipe-card:hover .editIcon {
@@ -12,49 +63,39 @@
     left: 10px;
     background-color: rgba(121, 121, 121, 0.208);
     z-index: 10;
+    visibility: visible;
+}
+
+.progressBarContainer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
 }
 
 .progressBar {
-    z-index: 1;
-    background: rgb(252, 176, 69);
-    background-image: linear-gradient(90deg, rgb(252, 176, 69) 0%, rgb(252, 118, 118) 100%);
-    box-shadow: -1px 0px 15px #767676;
+    width: 100%;
 }
 
-
-.progressBarBack {
-    width: 100%;
-    height: 100%;
-    background-color: #f3f3f3;
-    border-radius: 10px;
-
+.progressChip {
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    transform: translateX(-50%);
+    pointer-events: auto;
 }
 
 .pin {
     border-radius: 16px;
-    margin: 5px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     box-shadow: 10px 10px 20px rgba(132, 132, 132, 0.5);
     position: relative;
 }
-
-
-.edit {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    background-color: rgba(161, 245, 5, 0.9);
-    transition: opacity 0.3s ease;
-    border-radius: 30px;
-}
-
-.edit:hover {
-    opacity: 0.7;
-}
-
 
 .pin .mainPic {
     width: 100%;
@@ -78,13 +119,6 @@
 .pin:hover .contenido {
     bottom: 0;
     transition: bottom 0.3s;
-    ;
-}
-
-.pin:hover .edit {
-    bottom: 0;
-    transition: bottom 0.3s;
-    ;
 }
 
 .pin .fav {
@@ -99,8 +133,6 @@
     font-size: 15px;
     margin: 20px;
 }
-
-
 
 .pin.small {
     grid-row-end: span 26;

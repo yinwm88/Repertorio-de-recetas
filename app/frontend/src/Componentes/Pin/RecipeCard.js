@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, LinearProgress, Box, Chip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -40,57 +40,81 @@ const RecipeCard = ({
         handleMenuClose();
     };
 
+    // Función para determinar el color del chip basado en el porcentaje
+    const getChipColor = (percentage) => {
+        const red = Math.floor(255 - 1.28 * percentage);
+        const green = Math.floor(128 + 1.28 * percentage);
+        return `rgb(${red}, ${green}, 128, 0.4)`;
+    };
+
+    // Nueva función para determinar el color de la tipografía del chip basado en el porcentaje
+    const getChipTextColor = (percentage) => {
+        const red = Math.floor(255 - 1.5 * percentage);
+        const green = Math.floor(100 + 1.5 * percentage);
+        const blue = Math.floor(100 + 0.5 * percentage);
+        return `rgb(${red}, ${green}, ${blue})`;
+    };
+
     return (
-        porcentaje > 0 ?
-            <div className="recipe-card" style={{ display: "flex", position: "relative" }} onClick={onClick}>
-                {editable ? <IconButton
-                    className="editIcon"
-                    style={{
+        <div className={`recipe-card ${porcentaje >= 100 ? 'shine-gold' : ''}`} onClick={onClick}>
+            {editable ? (
+                <IconButton
+                    sx={{
                         position: "absolute",
-                        top: "10px",
-                        left: "10px",
-                        backgroundColor: "white",
-                        zIndex: 10
+                        top: "5%",
+                        right: "10px",
+                        backgroundColor: "#ffffff38",
+                        '&:hover': {
+                            backgroundColor: "white",
+                        }
                     }}
                     onClick={handleMenuOpen}
                 >
                     <MoreVertIcon />
-                </IconButton> : null}
+                </IconButton>
+            ) : null}
 
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleMenuClose}
+                onClick={(event) => event.stopPropagation()} // Evita que el menú cierre el contenedor principal
+            >
+                <MenuItem onClick={handleEdit}>
+                    <EditIcon /> Edit
+                </MenuItem>
+                <MenuItem onClick={handleDelete}>
+                    <DeleteIcon /> Delete
+                </MenuItem>
+            </Menu>
 
-                <Menu
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleMenuClose}
-                    onClick={(event) => event.stopPropagation()} // Evita que el menú cierre el contenedor principal
-                >
-                    <MenuItem onClick={handleEdit}>
-                        <EditIcon /> Edit
-                    </MenuItem>
-                    <MenuItem onClick={handleDelete}>
-                        <DeleteIcon /> Delete
-                    </MenuItem>
-                </Menu>
-
-
-                <div className="progressBar" style={{
-                    width: `${porcentaje}%`,
-                    zIndex: 1,
-                    background: 'rgb(252, 176, 69)',
-                    backgroundImage: 'linear-gradient(90deg, rgb(252, 176, 69) 0%, rgb(252, 118, 118) 100%)',
-                    boxShadow: '-1px 0px 15px #767676',
-                }}></div>
-                <div className="progressBarBack"></div>
-
-                <img className="mainPic" src={imgSrc} alt={name} />
-                <div className="contenido">
-                    <div className="nombreReceta">
-                        {name.length > 25 ? name.charAt(0).toUpperCase() + name.slice(1, 30) + '...' : name}
-                    </div>
-                    <Heart isClick={favorita} onClick={(event) => { event.stopPropagation(); onToggleFavorite(event); }} />
+            <Box className="progressBarContainer">
+                <LinearProgress
+                    variant="determinate"
+                    value={porcentaje}
+                    className="progressBar"
+                    sx={{ height: 10 }} // Ajusta la altura aquí
+                />
+            </Box>
+            <Chip
+                label={`${parseInt(porcentaje)}%`}
+                className="progressChip"
+                style={{
+                    color: getChipTextColor(porcentaje), // Usa la nueva función aquí
+                    backgroundColor: getChipColor(porcentaje),
+                    fontSize: '15px',
+                    padding: '5px',
+                    backdropFilter: 'blur(5px)',
+                }}
+            />
+            <img className="mainPic" src={imgSrc} alt={name} />
+            <div className="contenido">
+                <div className="nombreReceta">
+                    {name.length > 25 ? name.charAt(0).toUpperCase() + name.slice(1, 30) + '...' : name}
                 </div>
+                <Heart isClick={favorita} onClick={(event) => { event.stopPropagation(); onToggleFavorite(event); }} />
             </div>
-            : null
+        </div>
     );
 };
 
