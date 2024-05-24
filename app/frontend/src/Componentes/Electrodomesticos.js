@@ -32,20 +32,22 @@ function UtensiliosList() {
   const obtenerUtensilios = async () => {
     try {
       const response = await fetch('http://localhost:3001/usuario/utensilio/', {
-        method: 'GET',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${getToken()}`
         },
       });
       const data = await response.json();
+      // console.log(`RESPONSE ${getToken()}`)
+      console.log('DATA',data.utensilios)
       if (response.ok) {
         setUtensilios(data.utensilios);
       } else {
         throw new Error('Failed to fetch utensilios');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:');
     }
   };
 
