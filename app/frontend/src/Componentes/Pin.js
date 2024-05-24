@@ -140,14 +140,15 @@ function Pin({ id, pinSize, imgSrc, name, onMarkFavorite, recipeDetails, porcent
           porcentaje={porcentaje}
           editable={editable}
         />
-  
-        <RecipeDetailsDialog
+          <RecipeDetailsDialog
           open={openDialog}
           handleClose={handleCloseDialog}
           name={name}
           imgSrc={imgSrc}
           recipeDetails={recipeDetails}
-        />
+          idRecipe={id}
+          />
+
   
         <EditRecipeModal
           open={openEditModal}

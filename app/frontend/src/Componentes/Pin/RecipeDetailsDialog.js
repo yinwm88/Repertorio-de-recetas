@@ -36,7 +36,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./RecipeDetailsDialog.css";
 import CookedRecipe from "./CookedRecipe";
 
-const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails }) => {
+const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, idRecipe }) => {
   const [tabValue, setTabValue] = useState(0);
   const [currentStep, setCurrentStep] = useState(0);
   const [ingredientDetails, setIngredientDetails] = useState([]);
@@ -105,7 +105,7 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
     if (currentStep <  pasos.length - 1) 
       setCurrentStep(currentStep + 1);
       if(currentStep + 1 === pasos.length - 1)
-        setShowCocinado(true);
+          setShowCocinado(true);
   };
 
 
@@ -113,7 +113,6 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
       setShowCocinado(false);
-
     }
   };
 
@@ -253,9 +252,7 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails })
               ))}
             </Timeline>
             {showCocinado && (
-
-                <CookedRecipe/>
-       
+                <CookedRecipe idRecipe={idRecipe}/>
             )}
           </Box>
         </div>

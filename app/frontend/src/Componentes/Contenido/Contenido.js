@@ -101,15 +101,15 @@ function Contenido() {
           recipe.id &&
           ('porcentaje' in recipe ? recipe.porcentaje > 0 : true) && (
             <Pin
-              id={recipe.id}
-              onMarkFavorite={() => markAsFavorite(recipe.id, currentUser)}
               key={recipe.id}
-              porcentaje={recipe.porcentaje || 1}
+              link={`/receta/${recipe.id}`}
+              id={recipe.id}
               pinSize={recipe.pinSize || "medium"}
               imgSrc={recipe.imageUrl}
               name={recipe.nombre}
-              link={`/receta/${recipe.id}`}
+              onMarkFavorite={() => markAsFavorite(recipe.id, currentUser)}
               recipeDetails={recipe}
+              porcentaje={recipe.porcentaje || 1}
               markedFavorite={recipe.porcentaje === undefined ? true : false}
               editable={activeTab === 1}
               triggerUpdate={triggerUpdate}
