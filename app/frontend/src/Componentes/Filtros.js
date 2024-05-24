@@ -7,7 +7,7 @@ function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) 
   const [busqueda, setBusqueda] = useState('');
   const [tiposCocina, setTiposCocina] = useState([]);
   const [tiposSeleccionados, setTiposSeleccionados] = useState([]);
-  const [rangoTiempo, setRangoTiempo] = useState([0, 250]); // Por ejemplo, 0 a 120 minutos
+  const [rangoTiempo, setRangoTiempo] = useState([0, 250]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
 
   function completarAcentos(nombre) {
@@ -25,14 +25,17 @@ function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) 
     return nombre;
   }
 
-
   // Extraer tipos de cocina de las recetas
   useEffect(() => {
     const tiposUnicos = new Set();
     if (!recipes) return;
     recipes.forEach(receta => {
       if (receta.tipos && receta.tipos.length > 0) {
-        receta.tipos.forEach(tipo => tiposUnicos.add(completarAcentos(tipo.tipo)));
+        receta.tipos.forEach(tipo => {
+          if (receta.porcentaje > 0) {
+            tiposUnicos.add(tipo.tipo);
+          }
+        });
       }
     });
     setTiposCocina([...tiposUnicos]);
@@ -51,7 +54,6 @@ function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) 
     setTiposSeleccionados(newChecked);
     onTipoChange(newChecked);  // Notificar al componente padre
   };
-
 
   const handleTiempoChange = (event, newValue) => {
     setRangoTiempo(newValue);
@@ -90,10 +92,10 @@ function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) 
               {tiposCocina.map((tipo) => (
                 <Chip
                   key={tipo}
-                  label={tipo}
+                  label={completarAcentos(tipo)}
                   onClick={() => handleTipoClick(tipo)}
                   color={tiposSeleccionados.includes(tipo) ? 'primary' : 'default'}
-                  style={{ "marginTop": 10 }}
+                  style={{ marginTop: 10 }}
                 />
               ))}
             </Stack>
