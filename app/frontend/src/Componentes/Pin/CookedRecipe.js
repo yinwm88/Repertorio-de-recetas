@@ -64,9 +64,6 @@ function CookedRecipeButton({ idRecipe }) {
     }, [idRecipe]);   
 
     useEffect(() => {
-        console.log('Ingredientes Receta:', JSON.stringify(ingredientesReceta, null, 2));
-        console.log('Ingredientes Usuario:', JSON.stringify(ingredientesUsuario, null, 2));
-        
         if (ingredientesReceta.length && ingredientesUsuario.length) {
             const tieneTodos = ingredientesReceta.every(ingredienteReceta => {
                 const ingredienteUsuario = ingredientesUsuario.find(ing => ing.idingrediente === ingredienteReceta.idingrediente);
