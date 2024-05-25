@@ -73,9 +73,58 @@ function CookedRecipeButton({ idRecipe }) {
         }
     }, [ingredientesReceta, ingredientesUsuario]);
 
+
+    const [caloriasReceta, setCaloriasReceta] = useState(0);
+
+     // Cálculo de Calorías
+    useEffect(() => {
+        const fetchCaloriasIngredientes = async () => {
+            try {
+                let totalCalorias = 0;
+
+                for (const ingrediente of ingredientesReceta) {
+                    const responseIngrediente = await fetch(`http://localhost:3001/ingrediente/datos`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: ingrediente.idingrediente }),
+                    });
+
+                    if (!responseIngrediente.ok) {
+                        console.log(`HTTP error! Status: ${responseIngrediente.status} ${ingrediente.idingrediente}`);
+                        continue;
+                    }   
+
+                    const dataIngrediente = await responseIngrediente.json();
+                    console.log('Ingrediente:', JSON.stringify(dataIngrediente, null, 2));
+
+                    const caloriaIngrediente = Number(dataIngrediente.calorias);
+                    const cantidadUsada = Number(ingrediente.cantidad);
+
+                    if (!isNaN(caloriaIngrediente) && !isNaN(cantidadUsada)) {
+                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) /1;
+                        totalCalorias += caloriasTotalesIngrediente;
+                    } else {
+                        console.error("Datos inválidos para el cálculo de calorías", { caloriaIngrediente, cantidadUsada });
+                    }
+                    
+                }
+                setCaloriasReceta(totalCalorias);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        if (ingredientesReceta.length > 0) {
+            fetchCaloriasIngredientes();
+        }
+    }, [ingredientesReceta]);
+
+
     const handleChangeCookedValue = () => {
         setCooked(!cooked);
-        // lógica para eliminar los ingredientes de la receta y obtener las calorías
+        console.log(`Calorías totales de la receta: ${caloriasReceta}`);
+        //fetchCocinar();
+        // eliminar la cantidad de ingredientes del usuario que ocupe la receta  -> editar la cantidad de cada ingrediente del usuario 
     };
 
     return (
