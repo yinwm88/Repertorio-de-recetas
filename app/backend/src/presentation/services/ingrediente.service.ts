@@ -109,6 +109,14 @@ export class IngredienteService {
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
+        const ingredienteAgregado = await prisma.teneringrediente.findFirst({
+            where: {    
+                correo: usuario.correo,
+                idingrediente: idIngrediente
+            }
+        });
+        if ( !ingredienteAgregado ) throw ErrorCustomizado.badRequest( 'El ingrediente no esta agregado' );
+
         try {
             const ingrediente = await prisma.teneringrediente.delete({
                 where: {    
