@@ -81,7 +81,7 @@ function CookedRecipeButton({ idRecipe }) {
     const [caloriasReceta, setCaloriasReceta] = useState(0);
 
      // Cálculo de Calorías
-    useEffect(() => {
+     useEffect(() => {
         const fetchCaloriasIngredientes = async () => {
             try {
                 let totalCalorias = 0;
@@ -124,12 +124,33 @@ function CookedRecipeButton({ idRecipe }) {
     }, [ingredientesReceta]);
 
 
+
+    // indicar al back que se cocino una receta
+    const sendCaloriasRecetaCocinada = async () =>{
+        if(caloriasReceta===0)return;
+        try{
+            const response = await fetch('http://localhost:3001/receta/cocinar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idReceta:idRecipe, correo:currentUser, calorias:caloriasReceta }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('No se pudo enviar las calorias totales de la receta');
+                }
+
+                const data = await response.json();
+            } catch (error) {
+                console.error(error);
+            }
+    }
+
+
     const handleChangeCookedValue = () => {
         setCooked(true);
         setEnableCooked(false);
-        
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
-        //fetchCocinar();
+        sendCaloriasRecetaCocinada();
         // eliminar la cantidad de ingredientes del usuario que ocupe la receta  -> editar la cantidad de cada ingrediente del usuario 
     };
 
