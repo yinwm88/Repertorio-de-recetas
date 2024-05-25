@@ -42,6 +42,8 @@ services:
             - ./DB/DDL.sql:/docker-entrypoint-initdb.d/01_DDL.sql
             - ./DB/DML.sql:/docker-entrypoint-initdb.d/02_DML.sql
             - ./DB/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+            - postgres_data:/var/lib/postgresql/data
+
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=mypassword
@@ -50,3 +52,6 @@ services:
             - ./backend/.env    
         ports:
             - "5432:5432"
+
+volumes:  
+    postgres_data:

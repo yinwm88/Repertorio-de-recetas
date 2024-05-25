@@ -81,7 +81,7 @@ function CookedRecipeButton({ idRecipe }) {
     const [caloriasReceta, setCaloriasReceta] = useState(0);
 
      // Cálculo de Calorías
-     useEffect(() => {
+    useEffect(() => {
         const fetchCaloriasIngredientes = async () => {
             try {
                 let totalCalorias = 0;
@@ -99,7 +99,6 @@ function CookedRecipeButton({ idRecipe }) {
                     }   
 
                     const dataIngrediente = await responseIngrediente.json();
-                    console.log('Ingrediente:', JSON.stringify(dataIngrediente, null, 2));
 
                     const caloriaIngrediente = Number(dataIngrediente.calorias);
                     const cantidadUsada = Number(ingrediente.cantidad);
@@ -124,8 +123,38 @@ function CookedRecipeButton({ idRecipe }) {
     }, [ingredientesReceta]);
 
 
+    //Eliminar ingredientes usados
+    const actualizarCantidadIngrediente = async (ingredienteUsuario, ingredienteReceta) => {
+        for (const receta of ingredienteReceta) {
+            const ingredienteUsuarioCorrespondiente = ingredienteUsuario.find(u => u.idingrediente === receta.idingrediente);
+            if (ingredienteUsuarioCorrespondiente) {
+                const cantidadRestante = ingredienteUsuarioCorrespondiente.cantidad - receta.cantidad;
+                console.log('ingreCantUsuario:', ingredienteUsuarioCorrespondiente.cantidad );
+                console.log('ingreCantReceta:', receta.cantidad );
+                console.log('cantRestante:', cantidadRestante  );
 
-    // indicar al back que se cocino una receta
+                const response = await fetch('http://localhost:3001/ingrediente/editar', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente, 
+                        unidad: ingredienteUsuarioCorrespondiente.unidad, 
+                        cantidad: cantidadRestante, 
+                        usuario: { correo: currentUser }
+                    }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('No se pudo actualizar la cantidad de los ingredientes');
+                }
+    
+                const data = await response.json();
+            }
+        }
+    };
+    
+
+    // indicar que se cocino una receta
     const sendCaloriasRecetaCocinada = async () =>{
         if(caloriasReceta===0)return;
         try{
@@ -146,13 +175,17 @@ function CookedRecipeButton({ idRecipe }) {
     }
 
 
+
+
     const handleChangeCookedValue = () => {
         setCooked(true);
         setEnableCooked(false);
+        console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
+        console.log('ingreReceta:', JSON.stringify(ingredientesReceta, null, 2));
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
         sendCaloriasRecetaCocinada();
-        // eliminar la cantidad de ingredientes del usuario que ocupe la receta  -> editar la cantidad de cada ingrediente del usuario 
-    };
+        actualizarCantidadIngrediente (ingredientesUsuario, ingredientesReceta)
+    };  
 
     return (
         <div>
