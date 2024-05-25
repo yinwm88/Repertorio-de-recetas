@@ -97,10 +97,10 @@ export class IngredienteService {
         }
     }
                 
-    async eliminarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {
+    async eliminarIngrediente( idIngrediente: number, usuario: EntidadUsuario ) {
         
         const ingredienteExiste = await prisma.ingrediente.findFirst({
-            where: { idingrediente: manipularIngredienteDto.idIngrediente }
+            where: { idingrediente: idIngrediente }
         });
         if ( !ingredienteExiste ) throw ErrorCustomizado.badRequest( 'Ingrediente no existe' );
         
@@ -114,12 +114,12 @@ export class IngredienteService {
                 where: {    
                     tenerId:{
                         correo: usuario.correo,
-                        idingrediente: manipularIngredienteDto.idIngrediente
+                        idingrediente: idIngrediente
                     }
                 }
             });
             return {
-                idingrediente:ingrediente.idingrediente,
+                idingrediente: ingrediente.idingrediente,
                 correo:ingrediente.correo,
                 cantidad: ingrediente.cantidad,
                 fechaAgrego: ingrediente.fecha,
