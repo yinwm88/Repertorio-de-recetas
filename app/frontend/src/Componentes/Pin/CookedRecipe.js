@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
 import DiningOutlinedIcon from '@mui/icons-material/DiningOutlined';
 import { useAuth } from '../../AuthContext';
 
@@ -8,6 +9,7 @@ function CookedRecipeButton({ idRecipe }) {
     const { currentUser } = useAuth();
 
     const [enableCooked, setEnableCooked] = useState(false);
+    const [disableCooked, setDisableCooked] = useState(false);
     const [cooked, setCooked] = useState(false);
 
     const [ingredientesReceta, setIngredientesReceta] = useState([]);
@@ -70,6 +72,8 @@ function CookedRecipeButton({ idRecipe }) {
                 return ingredienteUsuario && Number(ingredienteUsuario.cantidad) >= Number(ingredienteReceta.cantidad);
             });
             setEnableCooked(tieneTodos);
+            setDisableCooked(!tieneTodos);
+
         }
     }, [ingredientesReceta, ingredientesUsuario]);
 
@@ -121,7 +125,9 @@ function CookedRecipeButton({ idRecipe }) {
 
 
     const handleChangeCookedValue = () => {
-        setCooked(!cooked);
+        setCooked(true);
+        setEnableCooked(false);
+        
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
         //fetchCocinar();
         // eliminar la cantidad de ingredientes del usuario que ocupe la receta  -> editar la cantidad de cada ingrediente del usuario 
@@ -138,7 +144,7 @@ function CookedRecipeButton({ idRecipe }) {
                             marginLeft: '470px',
                             width: '125px',
                             height: '125px',
-                            backgroundColor: cooked ? 'rgba(249, 84, 99 , 1)' : 'rgba(247, 247, 247 , 0.6)',
+                            backgroundColor: 'rgba(247, 247, 247 , 0.6)',
                             boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
                             borderRadius: '90px',
                             transition: 'background-color 0.3s, transform 0.3s',
@@ -147,6 +153,9 @@ function CookedRecipeButton({ idRecipe }) {
                                 backgroundColor: 'rgba(249, 84, 99 , 0.5)',
                                 transform: 'scale(1.1)',
                             },
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
                         }}
                         aria-label="cooked recipe"
                     >
@@ -154,7 +163,7 @@ function CookedRecipeButton({ idRecipe }) {
                     </IconButton>
                 </Tooltip>
             )}
-            {!enableCooked && (
+            {disableCooked&& (
                 <IconButton
                     disabled
                     sx={{
@@ -162,20 +171,32 @@ function CookedRecipeButton({ idRecipe }) {
                         marginLeft: '470px',
                         width: '125px',
                         height: '125px',
-                        backgroundColor: cooked ? 'rgba(249, 84, 99 , 1)' : 'rgba(247, 247, 247 , 0.6)',
                         boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
                         borderRadius: '90px',
-                        transition: 'background-color 0.3s, transform 0.3s',
-                        transform: cooked ? 'scale(0.5.1)' : 'scale(1)',
-                        '&:hover': {
-                            backgroundColor: 'rgba(249, 84, 99 , 0.5)',
-                            transform: 'scale(1.1)',
-                        },
                     }}
                     aria-label="cooked recipe"
                 >
                     <DiningOutlinedIcon sx={{ fontSize: 80 }} />
                 </IconButton>
+            )}
+            {!enableCooked && !disableCooked && (
+                <Box
+                    sx={{
+                        marginTop: '10px',
+                        marginLeft: '470px',
+                        width: '125px',
+                        height: '125px',
+                        backgroundColor:  'rgba(249, 84, 99 , 1)',
+                        boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
+                        borderRadius: '90px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}
+                    aria-label="cooked recipe"
+                >
+                    <DiningOutlinedIcon sx={{ fontSize: 80 }} />
+                </Box>
             )}
         </div>
     );
