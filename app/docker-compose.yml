@@ -1,57 +1,58 @@
+version: '3.8'
+
 services:
-    backend:
-      build:
-        context: ./backend
-        dockerfile: Dockerfile
-      ports:
-        - "3001:3001"
-      environment:
-        - POSTGRES_USER=postgres
-        - PGUSER=postgres
-        - POSTGRES_PASSWORD=mypassword
-        - POSTGRES_PORT=5432
-        - POSTGRES_DB=RECETAS
-      depends_on:
-        - postgres
-      develop:
-        watch:
-          - action: sync
-            path: ./backend/src/
-            target: /app/src/
-            ignore:
-              - node_modules/
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - POSTGRES_USER=postgres
+      - PGUSER=postgres
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=RECETAS
+    depends_on:
+      - postgres
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src/
+          target: /app/src/
+          ignore:
+            - node_modules/
 
-    frontend:
-      build:
-        context: ./frontend
-        dockerfile: Dockerfile
-      ports:
-        - "3000:3000"
-      develop:
-        watch:
-          - action: sync
-            path: ./frontend/src/
-            target: /app/src/
-            ignore:
-              - node_modules/
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src/
+          target: /app/src/
+          ignore:
+            - node_modules/
 
-    postgres:
-        build: ./DB
-        image: postgres:latest
-        volumes: 
-            - ./DB/DDL.sql:/docker-entrypoint-initdb.d/01_DDL.sql
-            - ./DB/DML.sql:/docker-entrypoint-initdb.d/02_DML.sql
-            - ./DB/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
-            - postgres_data:/var/lib/postgresql/data
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=RECETAS
+    env_file:
+      - ./backend/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./DB/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./DB/DDL.sql:/docker-entrypoint-initdb.d/01_DDL.sql
+      - ./DB/DML.sql:/docker-entrypoint-initdb.d/02_DML.sql
+    ports:
+      - "5432:5432"
 
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=mypassword
-            - POSTGRES_DB=RECETAS
-        env_file:
-            - ./backend/.env    
-        ports:
-            - "5432:5432"
-
-volumes:  
-    postgres_data:
+volumes:
+  postgres_data:
+    external: false
