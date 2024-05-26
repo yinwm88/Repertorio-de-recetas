@@ -224,7 +224,8 @@ export class RecetaService {
                 likes : receta?.likes,
                 ingredientes : ingredientes,
                 utensilios : utensilios,
-                variaciones: variaciones
+                variaciones: variaciones,
+                imagen : receta.imagen
             }
         }catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
