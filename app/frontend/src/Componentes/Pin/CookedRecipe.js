@@ -122,38 +122,40 @@ function CookedRecipeButton({ idRecipe }) {
         }
     }, [ingredientesReceta]);
 
-
-    //Eliminar ingredientes usados
-    const actualizarCantidadIngrediente = async (ingredienteUsuario, ingredienteReceta) => {
-        for (const receta of ingredienteReceta) {
-            const ingredienteUsuarioCorrespondiente = ingredienteUsuario.find(u => u.idingrediente === receta.idingrediente);
-            if (ingredienteUsuarioCorrespondiente) {
-                const cantidadRestante = ingredienteUsuarioCorrespondiente.cantidad - receta.cantidad;
-                console.log('ingreCantUsuario:', ingredienteUsuarioCorrespondiente.cantidad );
-                console.log('ingreCantReceta:', receta.cantidad );
-                console.log('cantRestante:', cantidadRestante  );
-
-                const response = await fetch('http://localhost:3001/ingrediente/editar', {
-                    method: 'PATCH',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente, 
-                        unidad: ingredienteUsuarioCorrespondiente.unidad, 
-                        cantidad: cantidadRestante, 
-                        usuario: { correo: currentUser }
-                    }),
-                });
-    
-                if (!response.ok) {
-                    throw new Error('No se pudo actualizar la cantidad de los ingredientes');
+/** 
+//Eliminar ingredientes usados
+const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesReceta) => {
+        try {
+            for (const receta of ingredientesReceta) {
+                const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
+                if (ingredienteUsuarioCorrespondiente) {
+                    const cantidadRestante = ingredienteUsuarioCorrespondiente.cantidad - receta.cantidad;
+                    
+                    const response = await fetch('http://localhost:3001/ingrediente/editar', {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente,
+                            unidad: ingredienteUsuarioCorrespondiente.unidad,
+                            cantidad: cantidadRestante,
+                            usuario: { correo: currentUser }
+                        }),
+                    });
+                    console.log('nueva cantidad:', cantidadRestante);
+                    
+                    if (!response.ok) {
+                        throw new Error('No se pudo actualizar la cantidad de los ingredientes');
+                    }
                 }
-    
-                const data = await response.json();
             }
+        } catch (error) {
+            console.error(error);
+            alert('Error updating ingredients: ' + error.message);
         }
     };
+*/ 
     
-
+    
     // indicar que se cocino una receta
     const sendCaloriasRecetaCocinada = async () =>{
         if(caloriasReceta===0)return;
@@ -184,7 +186,9 @@ function CookedRecipeButton({ idRecipe }) {
         console.log('ingreReceta:', JSON.stringify(ingredientesReceta, null, 2));
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
         sendCaloriasRecetaCocinada();
-        actualizarCantidadIngrediente (ingredientesUsuario, ingredientesReceta)
+        console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
+
+        //actualizarCantidadIngrediente (ingredientesUsuario, ingredientesReceta)
     };  
 
     return (
