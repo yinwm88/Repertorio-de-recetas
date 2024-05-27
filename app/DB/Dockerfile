@@ -7,7 +7,12 @@ ENV POSTGRES_PASSWORD=mypassword
 # Exponer el puerto por defecto de PostgreSQL
 EXPOSE 5432
 
+# Copiar los archivos DDL.sql y DML.sql al directorio de inicialización
+#COPY ./DDL.sql /docker-entrypoint-initdb.d/01_DDL.sql
+#COPY ./DML.sql /docker-entrypoint-initdb.d/02_DML.sql
 
-# Success. You can now start the database server using:
-# postgres-1  | 
-# postgres-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+# Copy the initialization script
+COPY ./DB/init-db.sh /docker-entrypoint-initdb.d/init-db.sh
+
+# Set executable permissions for the script
+RUN chmod +x /docker-entrypoint-initdb.d/init-db.sh

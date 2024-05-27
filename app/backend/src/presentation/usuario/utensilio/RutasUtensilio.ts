@@ -10,10 +10,11 @@ export class RutasUtensilio {
         const utensilioService: UtensilioService = new UtensilioService();
         const controlador:controladorUtensilio = new controladorUtensilio( utensilioService );
 
-        router.get('/', controlador.obtenerUtensilios );
-        router.put('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
+        router.post('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
         router.delete('/:idUtensilio', [ JoinMiddleware.validarJwt ], controlador.desactivarUtensilio );
         router.post('/buscar', controlador.buscarUtensilio );
+        router.post('/datos', controlador.datosUtensilio)   
+        router.post('/', [ JoinMiddleware.validarJwt ], controlador.obtenerUtensilios )   
 
         return router;
     }

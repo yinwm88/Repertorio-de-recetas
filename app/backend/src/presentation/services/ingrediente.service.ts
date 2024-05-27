@@ -86,10 +86,6 @@ export class IngredienteService {
                         startsWith: `${ingrediente}`,
                         mode: 'insensitive'
                     }
-                },
-                select:{
-                    nombre: true,
-                    idingrediente: true
                 }
             });
             if (ingredientes.length === 0 ) {
@@ -101,10 +97,10 @@ export class IngredienteService {
         }
     }
                 
-    async eliminarIngrediente(manipularIngredienteDto: ManipularIngredienteDto, usuario: EntidadUsuario) {
+    async eliminarIngrediente( idIngrediente: number, usuario: EntidadUsuario ) {
         
         const ingredienteExiste = await prisma.ingrediente.findFirst({
-            where: { idingrediente: manipularIngredienteDto.idIngrediente }
+            where: { idingrediente: idIngrediente }
         });
         if ( !ingredienteExiste ) throw ErrorCustomizado.badRequest( 'Ingrediente no existe' );
         
@@ -113,17 +109,25 @@ export class IngredienteService {
         });
         if ( !usuarioExiste ) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
         
+        const ingredienteAgregado = await prisma.teneringrediente.findFirst({
+            where: {    
+                correo: usuario.correo,
+                idingrediente: idIngrediente
+            }
+        });
+        if ( !ingredienteAgregado ) throw ErrorCustomizado.badRequest( 'El ingrediente no esta agregado' );
+
         try {
             const ingrediente = await prisma.teneringrediente.delete({
                 where: {    
                     tenerId:{
                         correo: usuario.correo,
-                        idingrediente: manipularIngredienteDto.idIngrediente
+                        idingrediente: idIngrediente
                     }
                 }
             });
             return {
-                idingrediente:ingrediente.idingrediente,
+                idingrediente: ingrediente.idingrediente,
                 correo:ingrediente.correo,
                 cantidad: ingrediente.cantidad,
                 fechaAgrego: ingrediente.fecha,
@@ -166,6 +170,26 @@ export class IngredienteService {
                 fechacaducidad: ingrediente.fechacaducidad
             } 
         } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async getDatosIngrediente(id : number){
+        const ingredienteExiste = await prisma.ingrediente.findFirst({
+            where : { idingrediente : id}
+        });
+        if (!ingredienteExiste) throw ErrorCustomizado.badRequest( 'El ingrediente no existe' );
+        try {
+            const ingrediente = await prisma.ingrediente.findFirst({
+                where : { idingrediente : id},
+                select : { 
+                    nombre : true,
+                    unidad : true,
+                    calorias : true
+                 }
+            });
+            return ingrediente;
+        } catch(error){
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }

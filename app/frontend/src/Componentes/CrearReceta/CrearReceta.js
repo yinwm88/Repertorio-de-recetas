@@ -1,28 +1,47 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,  } from '@mui/material';
+import {
+  Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../../AuthContext';
-import AnimatedTypingText from './AnimatedTypingText';
+import Swal from 'sweetalert2';
+import AddIcon from '@mui/icons-material/Add';
 
-const CrearReceta = ({isOpen,onClose}) => {
+const CrearReceta = ({ isOpen, onClose, triggerUpdate }) => {
   const [formData, setFormData] = useState({
     nombre: '',
     tiempo: '',
-    proceso: '',
-    ingredientes: ''
+    proceso: [],
+    ingredientes: [],
   });
+  const [nuevoPaso, setNuevoPaso] = useState('');
+
+  const handleAddStep = () => {
+    if (nuevoPaso.trim() !== '') {
+      setFormData((prevState) => ({
+        ...prevState,
+        proceso: [...prevState.proceso, nuevoPaso],
+      }));
+      setNuevoPaso('');
+    }
+  };
+
+  const handleStepChange = (e) => {
+    setNuevoPaso(e.target.value);
+  };
+
+  const handleRemoveStep = (index) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      proceso: prevState.proceso.filter((_, i) => i !== index),
+    }));
+  };
+
   const [error, setError] = useState(null);
-
-  const [nombre, setNombre] = useState('');
-  const [tiempo, setTiempo] = useState('');
-  const [proceso, setProceso] = useState('');
-  const [ingredientes, setIngredientes] = useState('');
-
   const [searchText, setSearchText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
-
   const { currentUser, getToken } = useAuth();
+
   const fetchIngredients = async (text) => {
     if (!text.trim()) {
       setSearchResults([]);
@@ -37,11 +56,7 @@ const CrearReceta = ({isOpen,onClose}) => {
       });
       const data = await response.json();
       if (response.ok) {
-        if (Array.isArray(data.ingredientes)) {
-          setSearchResults(data.ingredientes);
-        } else {
-          setSearchResults([]);
-        }
+        setSearchResults(data.ingredientes || []);
       } else {
         console.error('Error buscando ingredientes:', data.message);
         setError(data.message || 'Error al buscar ingredientes');
@@ -52,23 +67,17 @@ const CrearReceta = ({isOpen,onClose}) => {
     }
   };
 
-
   const handleSubmit = async () => {
-    const formBody = [];
+    const formBody = new URLSearchParams();
+    formBody.append('nombre', formData.nombre);
+    formBody.append('tiempo', formData.tiempo);
+    formBody.append('proceso', formData.proceso.join('. '));  // Aquí se concatenan los pasos
+    formBody.append('utensilios[0][idUtensilio]', '10');
 
-    // Añadir campos del formulario a formBody.
-    formBody.push(`nombre=${encodeURIComponent(nombre)}`);
-    formBody.push(`tiempo=${encodeURIComponent(tiempo)}`);
-    formBody.push(`proceso=${encodeURIComponent(proceso)}`);
-
-    // Añadir ingredientes a formBody.
-    selectedIngredients.forEach((ingrediente, index) => {
-      formBody.push(`ingredientes[${index}][idIngrediente]=${encodeURIComponent(ingrediente.idingrediente)}`);
-      formBody.push(`ingredientes[${index}][cantidad]=${encodeURIComponent(ingrediente.cantidad)}`);
+    formData.ingredientes.forEach((ingrediente, index) => {
+      formBody.append(`ingredientes[${index}][idIngrediente]`, ingrediente.idingrediente);
+      formBody.append(`ingredientes[${index}][cantidad]`, ingrediente.cantidad);
     });
-
-    // Añadir correo del usuario a formBody.
-    formBody.push(`usuario[correo]=${encodeURIComponent(currentUser || '')}`);
 
     try {
       const response = await fetch('http://localhost:3001/receta/crearReceta', {
@@ -77,162 +86,174 @@ const CrearReceta = ({isOpen,onClose}) => {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
           'Authorization': `Bearer ${getToken()}`,
         },
-        body: formBody.join("&"),
-        token: getToken(),
+        body: formBody.toString(),
       });
 
-      let data;
-      try {
-        data = await response.json();
-      } catch (error) {
-        // Si la respuesta no es JSON, manejar el error o establecer un mensaje predeterminado
-        console.error('No se recibió un JSON válido:', error);
-      }
+      const data = await response.json();
 
       if (response.ok) {
-        // Si el código de estado indica éxito
-        alert(data.message || '¡Tu receta ahora forma parte de la comunidad!');
-        // Aquí podrías redireccionar al usuario o resetear los estados del formulario
-        setNombre('');
-        setTiempo('');
-        setProceso('');
-        setSelectedIngredients([]);
-        console.log('Datos de receta agregada', data)
+        Swal.fire({
+          title: 'Receta creada exitosamente',
+          icon: 'success',
+        });
+        onClose();
+        triggerUpdate();
+        setFormData({ nombre: '', tiempo: '', proceso: [], ingredientes: [] });
       } else {
-        // Si el servidor respondió con un error
         alert(data.message || 'Hubo un problema al crear la receta. Por favor, intenta nuevamente.');
       }
-
-    }
-
-    catch (error) {
-      console.error('Error al crear la receta:\n', error);
+    } catch (error) {
+      console.error('Error al crear la receta:', error);
       alert('Hubo un error al crear la receta. Por favor, inténtalo nuevamente más tarde.');
     }
   };
 
-  const clickButton = () => {
-    console.log(getToken())
-  }
+
+  const handleIngredientAdd = (ingrediente) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ingredientes: [...prevState.ingredientes, { ...ingrediente, cantidad: 1 }],
+    }));
+    setSearchResults([]);
+    setSearchText('');
+  };
+
+  const handleIngredientRemove = (index) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ingredientes: prevState.ingredientes.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleIngredientChange = (index, cantidad) => {
+    setFormData((prevState) => {
+      const updatedIngredientes = [...prevState.ingredientes];
+      updatedIngredientes[index].cantidad = cantidad;
+      return { ...prevState, ingredientes: updatedIngredientes };
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
-      <div style={{
-        padding: '30px',
-        borderRadius: '10px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: '1000px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-      }}>
-        <h1>Crear Nueva Receta</h1>
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    <Dialog open={isOpen} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle>Crear Nueva Receta</DialogTitle>
+      <DialogContent>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: '1000px',
+            mx: 'auto',
+          }}
+        >
           <TextField
             id="nombre"
             name="nombre"
             label="Nombre de la receta"
             variant="outlined"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
+            value={formData.nombre}
+            onChange={handleChange}
             required
             fullWidth
             margin="normal"
-            sx={{ flex: '3', marginRight: '10px' }}
           />
           <TextField
             id="tiempo"
             name="tiempo"
-            label="Tiempo(minutos)"
+            label="Tiempo (minutos)"
             type="number"
             variant="outlined"
-            value={tiempo}
-            onChange={(e) => setTiempo(e.target.value)}
+            value={formData.tiempo}
+            onChange={handleChange}
             required
             fullWidth
             margin="normal"
-            sx={{ flex: '0.7' }}
           />
-        </div>
-
-
-        <TextField
-          id="proceso"
-          name="proceso"
-          label="Proceso de preparación"
-          multiline
-          rows={4}
-          variant="outlined"
-          value={proceso}
-          onChange={(e) => setProceso(e.target.value)}
-          required
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          id="searchIngredient"
-          label="Buscar ingrediente"
-          type="text"
-          fullWidth
-          variant="outlined"
-          value={searchText}
-          onChange={(e) => {
-            const text = e.target.value;
-            setSearchText(text);
-            fetchIngredients(text);
-          }}
-          margin="normal"
-        />
-
-        <List>
-          {searchResults.map((ingrediente) => (
-            <ListItem
-              key={ingrediente.idingrediente}
-              button
-              onClick={() => {
-                setSelectedIngredients([...selectedIngredients, { ...ingrediente, cantidad: 1, unidad: ingrediente.unidad }]);
-                setSearchResults([]);
-                setSearchText('');
+          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+            <TextField
+              id="nuevoPaso"
+              label="Agregar paso"
+              variant="outlined"
+              value={nuevoPaso}
+              onChange={handleStepChange}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleAddStep();
+                }
               }}
-            >
-              <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
-            </ListItem>
-          ))}
-        </List>
+              fullWidth
+              sx={{ flexGrow: 1 }}
+            />
+            <IconButton onClick={handleAddStep} color="primary" sx={{ ml: 2, flexShrink: 0 }}>
+              <AddIcon />
+            </IconButton>
+          </Box>
+          <List>
+            {formData.proceso.map((paso, index) => (
+              <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                <ListItemText primary={`Paso ${index + 1}: ${paso}`} />
+                <IconButton onClick={() => handleRemoveStep(index)}>
+                  <DeleteIcon />
+                </IconButton>
+              </ListItem>
+            ))}
+          </List>
 
-        <List>
-          {selectedIngredients.map((ing, index) => (
-            <ListItem key={index} style={{ display: 'flex', alignItems: 'center' }}>
-              <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
-              <TextField
-                type="number"
-                value={ing.cantidad}
-                onChange={(e) => {
-                  const newSelectedIngredients = [...selectedIngredients];
-                  newSelectedIngredients[index].cantidad = Number(e.target.value);
-                  setSelectedIngredients(newSelectedIngredients);
-                }}
-              />
-              <IconButton onClick={() => {
-                const newSelectedIngredients = selectedIngredients.filter((_, i) => i !== index);
-                setSelectedIngredients(newSelectedIngredients);
-              }}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItem>
-          ))}
-        </List>
 
-        <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!nombre || !tiempo || !proceso || selectedIngredients.length === 0}>
+
+          <TextField
+            id="searchIngredient"
+            label="Buscar ingrediente"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={searchText}
+            onChange={(e) => {
+              const text = e.target.value;
+              setSearchText(text);
+              fetchIngredients(text);
+            }}
+            margin="normal"
+          />
+          <List>
+            {searchResults && searchResults.map((ingrediente) => (
+              <ListItem key={ingrediente.idingrediente} button onClick={() => handleIngredientAdd(ingrediente)}>
+                <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
+              </ListItem>
+            ))}
+          </List>
+          <List>
+            {formData.ingredientes.map((ing, index) => (
+              <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
+                <TextField
+                  type="number"
+                  value={ing.cantidad}
+                  onChange={(e) => handleIngredientChange(index, Number(e.target.value))}
+                  sx={{ width: '70px', mr: 2 }}
+                />
+                <IconButton onClick={() => handleIngredientRemove(index)}>
+                  <DeleteIcon />
+                </IconButton>
+              </ListItem>
+            ))}
+          </List>
+          {error && <Typography color="error">{error}</Typography>}
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="secondary">Cancelar</Button>
+        <Button onClick={handleSubmit} variant="contained" color="primary" disabled={!formData.nombre || !formData.tiempo || !formData.proceso || formData.ingredientes.length === 0}>
           Crear Receta
         </Button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      </div>
-
-
+      </DialogActions>
     </Dialog>
   );
 };

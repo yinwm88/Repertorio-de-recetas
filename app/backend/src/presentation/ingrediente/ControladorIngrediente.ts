@@ -39,11 +39,10 @@ export class ControladorIngrediente {
     
     
     public eliminarIngrediente = ( req:Request, res: Response ) => {
-        const [error, manipularIngredienteDto ] = ManipularIngredienteDto.crearInstancia( req.body );
-        if (error) {
-            return res.status(400).json({error: error});
-        }
-        this.ingredienteService.eliminarIngrediente(manipularIngredienteDto!, req.body.usuario)
+        const idIngrediente: number = +req.params.id;
+        if ( idIngrediente <= 0) res.status(400).json({error: 'El id debe de ser uno valido'});
+
+        this.ingredienteService.eliminarIngrediente( idIngrediente, req.body.usuario )
             .then( ingrediente => res.status(200).json( ingrediente ))
             .catch( error => this.manejarError( error, res ));
     }   
@@ -58,4 +57,16 @@ export class ControladorIngrediente {
         .then( ingredientes => res.status(200).json( ingredientes ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public datosIngrediente = ( req:Request, res:Response ) => {
+        const { id } = req.body;
+        if (!id) {
+            return res.status(400).json({error:'Hace falta el id'});
+        }
+
+        this.ingredienteService.getDatosIngrediente( req.body.id )
+        .then( ingrediente => res.status(200).json( ingrediente ))
+        .catch( error => this.manejarError( error, res ));
+    }
+
 }

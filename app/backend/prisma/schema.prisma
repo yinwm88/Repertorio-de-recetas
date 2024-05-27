@@ -20,6 +20,7 @@ model electrodomestico {
   idelectro Int         @id(map: "pkelectro") @default(autoincrement())
   nombre    String      @unique(map: "nombreelectro") @db.VarChar(50)
   sustituto Int?
+  icono     String?     @db.VarChar(60)
   necesitar necesitar[]
   poseer    poseer[]
 }
@@ -60,7 +61,7 @@ model poseer {
   electrodomestico electrodomestico @relation(fields: [idelectro], references: [idelectro], onDelete: Cascade, map: "fkposeerelect")
   usuario          usuario          @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkposeerusua")
 
-  @@unique([idelectro, correo], name: "poseerID", map: "uniqueposeer")
+  @@unique([correo, idelectro], name: "poseerID", map: "uniqueposeer")
 }
 
 model preferir {
@@ -76,13 +77,14 @@ model preferir {
 model receta {
   idreceta              Int                     @id(map: "pkreceta") @default(autoincrement())
   correo                String?                 @db.VarChar(70)
-  imagen                String?                 @db.VarChar(60)
+  imagen                String?                 @db.VarChar(200)
   nombre                String                  @db.VarChar(50)
   tiempo                Int?
   proceso               String
   likes                 Int?                    @default(0)
   padre                 Int?
   caracteristicasreceta caracteristicasreceta[]
+  cocinar               cocinar[]
   haberingrediente      haberingrediente[]
   necesitar             necesitar[]
   preferir              preferir[]
@@ -133,12 +135,26 @@ model usuario {
   objetivo         objetivos?
   contrasena       String             @db.VarChar(200)
   salt             String?            @db.VarChar(200)
-  verificado       Boolean?
+  verificado       Boolean?           @default(false)
+  cocinar          cocinar[]
   poseer           poseer[]
   preferir         preferir[]
   receta           receta[]
   seralergico      seralergico[]
   teneringrediente teneringrediente[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model cocinar {
+  correo   String   @db.VarChar(70)
+  idreceta Int      @default(autoincrement())
+  calorias Int
+  fecha    DateTime @db.Timestamp(6)
+  usuario  usuario  @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcocinarcorreo")
+  receta   receta   @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkcocinaridreceta")
+
+  @@unique([correo, fecha, idreceta], name: "cocinar", map: "uniqueCocinar")
 }
 
 enum caracteristicas {

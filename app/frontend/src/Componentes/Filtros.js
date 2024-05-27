@@ -1,35 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Chip, Slider, Typography, Stack, Button, Collapse } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 
-const tags = ['Mexicana', 'Italiana', 'Vegana', 'Sin gluten'];
-const dietas = ['Vegetariano', 'Keto', 'Paleo', 'Vegano'];
-
-function FiltroRecetas({ onSearchChange, onTimeChange }) {
+function FiltroRecetas({ onSearchChange, onTimeChange, recipes, onTipoChange }) {
   const [busqueda, setBusqueda] = useState('');
-  const [tagsSeleccionados, setTagsSeleccionados] = useState([]);
-  const [dietaSeleccionada, setDietaSeleccionada] = useState('');
-  const [rangoTiempo, setRangoTiempo] = useState([0, 120]); // Por ejemplo, 0 a 120 minutos
+  const [tiposCocina, setTiposCocina] = useState([]);
+  const [tiposSeleccionados, setTiposSeleccionados] = useState([]);
+  const [rangoTiempo, setRangoTiempo] = useState([0, 250]);
   const [mostrarFiltros, setMostrarFiltros] = useState(false);
 
-  
+  function completarAcentos(nombre) {
+    const acentosIncompletos = {
+      "Espa_ola": "Española",
+      "Mediterr_nea": "Mediterránea",
+      "rabe": "Árabe",
+      "R_pida": "Rápida"
+    };
 
-  const handleTagClick = (tag) => {
-    const currentIndex = tagsSeleccionados.indexOf(tag);
-    const newChecked = [...tagsSeleccionados];
+    if (acentosIncompletos[nombre]) {
+      return acentosIncompletos[nombre];
+    }
+
+    return nombre;
+  }
+
+  // Extraer tipos de cocina de las recetas
+  useEffect(() => {
+    const tiposUnicos = new Set();
+    if (!recipes) return;
+    recipes.forEach(receta => {
+      if (receta.tipos && receta.tipos.length > 0) {
+        receta.tipos.forEach(tipo => {
+          if (receta.porcentaje > 0) {
+            tiposUnicos.add(tipo.tipo);
+          }
+        });
+      }
+    });
+    setTiposCocina([...tiposUnicos]);
+  }, [recipes]);
+
+  const handleTipoClick = (tipo) => {
+    const currentIndex = tiposSeleccionados.indexOf(tipo);
+    const newChecked = [...tiposSeleccionados];
 
     if (currentIndex === -1) {
-      newChecked.push(tag);
+      newChecked.push(tipo);
     } else {
       newChecked.splice(currentIndex, 1);
     }
 
-    setTagsSeleccionados(newChecked);
-  };
-
-  const handleDietaClick = (dieta) => {
-    setDietaSeleccionada(dietaSeleccionada === dieta ? '' : dieta);
+    setTiposSeleccionados(newChecked);
+    onTipoChange(newChecked);  // Notificar al componente padre
   };
 
   const handleTiempoChange = (event, newValue) => {
@@ -42,7 +65,7 @@ function FiltroRecetas({ onSearchChange, onTimeChange }) {
   };
 
   return (
-    <Box sx={{ p: 2,marginTop:3 }}>
+    <Box sx={{ p: 2 }}>
       <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 2 }}>
         <TextField
           fullWidth
@@ -63,30 +86,22 @@ function FiltroRecetas({ onSearchChange, onTimeChange }) {
       </Stack>
       <Collapse in={mostrarFiltros}>
         <Box sx={{ mb: 2 }}>
-          <Typography variant="h6">Cocina</Typography>
-          <Stack direction="row" spacing={1}>
-            {tags.map((tag) => (
-              <Chip
-                key={tag}
-                label={tag}
-                onClick={() => handleTagClick(tag)}
-                color={tagsSeleccionados.includes(tag) ? 'primary' : 'default'}
-              />
-            ))}
-          </Stack>
-        </Box>
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h6">Tipo de dieta</Typography>
-          <Stack direction="row" spacing={1}>
-            {dietas.map((dieta) => (
-              <Chip
-                key={dieta}
-                label={dieta}
-                onClick={() => handleDietaClick(dieta)}
-                color={dietaSeleccionada === dieta ? 'primary' : 'default'}
-              />
-            ))}
-          </Stack>
+          <Typography variant="h6">Tipo de cocina</Typography>
+          {tiposCocina.length > 0 ? (
+            <Stack direction="row" spacing={1} style={{ overflowX: 'auto', flexWrap: 'wrap' }}>
+              {tiposCocina.map((tipo) => (
+                <Chip
+                  key={tipo}
+                  label={completarAcentos(tipo)}
+                  onClick={() => handleTipoClick(tipo)}
+                  color={tiposSeleccionados.includes(tipo) ? 'primary' : 'default'}
+                  style={{ marginTop: 10 }}
+                />
+              ))}
+            </Stack>
+          ) : (
+            <Typography color="text.secondary">No hay tipos de cocina disponibles.</Typography>
+          )}
         </Box>
         <Box sx={{ mb: 2 }}>
           <Typography variant="h6">Rango de tiempo (minutos)</Typography>
@@ -95,7 +110,7 @@ function FiltroRecetas({ onSearchChange, onTimeChange }) {
             onChange={handleTiempoChange}
             valueLabelDisplay="auto"
             min={0}
-            max={120} // Ajusta el máximo según las recetas
+            max={250}
           />
         </Box>
       </Collapse>

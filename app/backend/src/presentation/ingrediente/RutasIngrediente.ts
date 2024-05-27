@@ -12,9 +12,9 @@ export class RutasIngrediente {
 
         router.post('/agregar', controlador.agregarIngrediente ); 
         router.post('/buscar', controlador.buscarIngrediente );
-        router.post('/eliminar/:id', controlador.eliminarIngrediente );
-        router.patch('/:id', controlador.editarIngrediente );
-        
+        router.delete('/:id', controlador.eliminarIngrediente );
+        router.patch('/editar', controlador.editarIngrediente );
+        router.post('/datos', controlador.datosIngrediente)
         return router;
     }
 }

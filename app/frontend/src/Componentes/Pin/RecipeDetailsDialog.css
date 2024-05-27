@@ -35,3 +35,24 @@
   filter: none;
   opacity: 1;
 }
+.dialog-content {
+  padding: 16px;
+}
+
+.image-container {
+  margin-bottom: 16px;
+}
+
+.details-container h2 {
+  margin-bottom: 16px;
+}
+
+.paso.visible {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.paso.blurry {
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
