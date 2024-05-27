@@ -219,7 +219,6 @@ function CookedRecipeButton({ idRecipe }) {
                     aria-label="cooked recipe"
                     >
                     <DiningOutlinedIcon sx={{ fontSize: 80 }} />
-                    Hola
                 </IconButton>
             )}
             {!enableCooked && !disableCooked && (
