@@ -11,11 +11,10 @@ function CookedRecipeButton({ idRecipe }) {
     const [enableCooked, setEnableCooked] = useState(false);
     const [disableCooked, setDisableCooked] = useState(false);
     const [cooked, setCooked] = useState(false);
-
     const [ingredientesReceta, setIngredientesReceta] = useState([]);
     const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
-    
-    // Ingredientes Usuario
+    const [caloriasReceta, setCaloriasReceta] = useState(0);
+
     useEffect(() => {
         const fetchIngredientesUsuario = async () => {
             try {
@@ -38,7 +37,6 @@ function CookedRecipeButton({ idRecipe }) {
         fetchIngredientesUsuario();
     }, [currentUser]);
 
-    // Ingredientes Receta
     useEffect(() => {
         const fetchIngredientesReceta = async () => {
             if (!idRecipe) {
@@ -73,14 +71,9 @@ function CookedRecipeButton({ idRecipe }) {
             });
             setEnableCooked(tieneTodos);
             setDisableCooked(!tieneTodos);
-
         }
     }, [ingredientesReceta, ingredientesUsuario]);
 
-
-    const [caloriasReceta, setCaloriasReceta] = useState(0);
-
-     // Cálculo de Calorías
     useEffect(() => {
         const fetchCaloriasIngredientes = async () => {
             try {
@@ -104,12 +97,11 @@ function CookedRecipeButton({ idRecipe }) {
                     const cantidadUsada = Number(ingrediente.cantidad);
 
                     if (!isNaN(caloriaIngrediente) && !isNaN(cantidadUsada)) {
-                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) /1;
+                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) / 1;
                         totalCalorias += caloriasTotalesIngrediente;
                     } else {
                         console.error("Datos inválidos para el cálculo de calorías", { caloriaIngrediente, cantidadUsada });
                     }
-                    
                 }
                 setCaloriasReceta(totalCalorias);
             } catch (error) {
@@ -122,74 +114,66 @@ function CookedRecipeButton({ idRecipe }) {
         }
     }, [ingredientesReceta]);
 
-/** 
-//Eliminar ingredientes usados
-const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesReceta) => {
-        try {
-            for (const receta of ingredientesReceta) {
-                const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
-                if (ingredienteUsuarioCorrespondiente) {
-                    const cantidadRestante = ingredienteUsuarioCorrespondiente.cantidad - receta.cantidad;
-                    
+    const obtenerCantidadIngrediente = (ingredienteUsuarioCorrespondienteCantidad, recetaCantidad) => {
+        return ingredienteUsuarioCorrespondienteCantidad - recetaCantidad;
+    };
+
+    const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesReceta) => {
+        for (const receta of ingredientesReceta) {
+            const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
+            if (ingredienteUsuarioCorrespondiente) {
+                const cantidadRestante = obtenerCantidadIngrediente(ingredienteUsuarioCorrespondiente.cantidad, receta.cantidad);
+
+                try {
                     const response = await fetch('http://localhost:3001/ingrediente/editar', {
                         method: 'PATCH',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente,
+                            cantidad: parseInt(cantidadRestante),
                             unidad: ingredienteUsuarioCorrespondiente.unidad,
-                            cantidad: cantidadRestante,
                             usuario: { correo: currentUser }
                         }),
                     });
-                    console.log('nueva cantidad:', cantidadRestante);
-                    
                     if (!response.ok) {
                         throw new Error('No se pudo actualizar la cantidad de los ingredientes');
                     }
+                } catch (error) {
+                    console.error(error);
+                    alert('Error updating ingredients: ' + error.message);
                 }
             }
-        } catch (error) {
-            console.error(error);
-            alert('Error updating ingredients: ' + error.message);
         }
     };
-*/ 
-    
-    
-    // indicar que se cocino una receta
-    const sendCaloriasRecetaCocinada = async () =>{
-        if(caloriasReceta===0)return;
-        try{
+
+    const sendCaloriasRecetaCocinada = async () => {
+        if (caloriasReceta === 0) return;
+        try {
             const response = await fetch('http://localhost:3001/receta/cocinar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ idReceta:idRecipe, correo:currentUser, calorias:caloriasReceta }),
-                });
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idReceta: idRecipe, correo: currentUser, calorias: caloriasReceta }),
+            });
 
-                if (!response.ok) {
-                    throw new Error('No se pudo enviar las calorias totales de la receta');
-                }
-
-                const data = await response.json();
-            } catch (error) {
-                console.error(error);
+            if (!response.ok) {
+                throw new Error('No se pudo enviar las calorias totales de la receta');
             }
-    }
 
+            const data = await response.json();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-
-
-    const handleChangeCookedValue = () => {
+    const handleChangeCookedValue = async () => {
         setCooked(true);
         setEnableCooked(false);
         console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
         console.log('ingreReceta:', JSON.stringify(ingredientesReceta, null, 2));
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
-        sendCaloriasRecetaCocinada();
-        console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
-
-        //actualizarCantidadIngrediente (ingredientesUsuario, ingredientesReceta)
-    };  
+        await sendCaloriasRecetaCocinada();
+        await actualizarCantidadIngrediente(ingredientesUsuario, ingredientesReceta);
+    };
 
     return (
         <div>
@@ -221,9 +205,9 @@ const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesRe
                     </IconButton>
                 </Tooltip>
             )}
-            {disableCooked&& (
+            {disableCooked && (
                 <IconButton
-                    disabled
+                disabled
                     sx={{
                         marginTop: '10px',
                         marginLeft: '470px',
@@ -233,8 +217,9 @@ const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesRe
                         borderRadius: '90px',
                     }}
                     aria-label="cooked recipe"
-                >
+                    >
                     <DiningOutlinedIcon sx={{ fontSize: 80 }} />
+                    Hola
                 </IconButton>
             )}
             {!enableCooked && !disableCooked && (
@@ -244,7 +229,7 @@ const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesRe
                         marginLeft: '470px',
                         width: '125px',
                         height: '125px',
-                        backgroundColor:  'rgba(249, 84, 99 , 1)',
+                        backgroundColor: 'rgba(249, 84, 99 , 1)',
                         boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
                         borderRadius: '90px',
                         display: 'flex',

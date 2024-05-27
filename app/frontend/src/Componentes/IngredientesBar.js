@@ -78,6 +78,7 @@ function CustomList({ lastUpdate, setLastUpdate }) {
     setEditingIngredient(ingrediente);
     setEditingQuantity(ingrediente.cantidad);
   };
+  
   const confirmDelete = async (ingrediente) => {
     try {
       const response = await fetch(`http://localhost:3001/ingrediente/editar`, {
