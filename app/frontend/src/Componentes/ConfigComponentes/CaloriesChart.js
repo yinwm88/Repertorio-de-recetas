@@ -34,9 +34,11 @@ export default function CaloriesChart() {
     }, []); 
 
     const labels = dataCalories.map(entry => {
+        const daysOfWeek = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
         const date = new Date(entry.fecha);
-        return date.toLocaleDateString('es-ES', { weekday: 'long' });
+        return daysOfWeek[date.getDay()];
     });
+    
 
     const chartData = {
         labels: labels,
