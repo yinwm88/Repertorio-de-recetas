@@ -48,7 +48,7 @@ alter table Electrodomestico add constraint pkElectro primary key(idElectro);
 create table Receta ( 
 	idReceta serial,
 	correo Varchar(70),
-	imagen Varchar(200),
+	imagen Varchar(300),
 	nombre varchar(50),
 	tiempo int,
 	proceso text,

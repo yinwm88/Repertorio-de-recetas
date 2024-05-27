@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, IconButton, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import ToggleOnIcon from '@mui/icons-material/ToggleOn';
-import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { Masonry } from '@mui/lab';
@@ -43,8 +41,9 @@ library.add(
 const UtensilioCard = styled(Paper)(({ theme, active }) => ({
   padding: theme.spacing(2),
   color: theme.palette.text.secondary,
-  backgroundColor: active ? theme.palette.success.light : theme.palette.grey[200],
+  backgroundColor: active ? 'lightgreen' : theme.palette.grey[200],
   border: active ? `2px solid ${theme.palette.success.main}` : 'none',
+  color: active ? theme.palette.success.main : theme.palette.text.secondary,
   cursor: 'pointer',
   display: 'flex',
   flexDirection: 'column',
@@ -75,7 +74,8 @@ function UtensiliosList() {
       });
       const data = await response.json();
       if (response.ok) {
-        setUtensilios(data.utensilios);
+        const utensiliosOrdenados = data.utensilios.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        setUtensilios(utensiliosOrdenados);
       } else {
         throw new Error('Failed to fetch utensilios');
       }
@@ -113,15 +113,11 @@ function UtensiliosList() {
           <UtensilioCard active={utensilio.activo}>
             <Typography variant="h9">{utensilio.nombre}</Typography>
             <FontAwesomeIcon icon={utensilio.icono} size="2x" color={utensilio.activo ? "green" : undefined} />
-            {/* <IconButton color={utensilio.activo ? "success" : "default"}>
-              {utensilio.activo ? <ToggleOnIcon /> : <ToggleOffIcon />}
-            </IconButton> */}
           </UtensilioCard>
         </div>
       ))}
     </Masonry>
   );
-
 }
 
 export default UtensiliosList;

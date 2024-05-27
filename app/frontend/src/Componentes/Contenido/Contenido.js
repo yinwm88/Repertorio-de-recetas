@@ -105,7 +105,7 @@ function Contenido() {
               link={`/receta/${recipe.id}`}
               id={recipe.id}
               pinSize={recipe.pinSize || "medium"}
-              imgSrc={recipe.imageUrl}
+              imgSrc={recipe.imagen ? recipe.imagen : recipe.imageUrl}
               name={recipe.nombre}
               onMarkFavorite={() => markAsFavorite(recipe.id, currentUser)}
               recipeDetails={recipe}

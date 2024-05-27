@@ -102,10 +102,10 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
   };
 
   const handleProgress = () => {
-    if (currentStep <  pasos.length - 1) 
+    if (currentStep < pasos.length - 1)
       setCurrentStep(currentStep + 1);
-      if(currentStep + 1 === pasos.length - 1)
-          setShowCocinado(true);
+    if (currentStep + 1 === pasos.length - 1)
+      setShowCocinado(true);
   };
 
 
@@ -142,7 +142,7 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
   const dialogActionsStyle = {
     background: `linear-gradient(to right, #ebb0b9 ${progressPercentage}%, #ffffff ${progressPercentage}%)`,
     display: "flex",
-    
+
     padding: "8px 16px",
     transition: "0.5s ease-out",
   };
@@ -202,8 +202,8 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
                       return (
                         <Chip
                           key={index}
-                          label={`${ingrediente.nombre} (${ingrediente.unidad}), ${ingrediente.calorias} cal`}
-                          icon={isChecked ? <CheckIcon /> : null}
+                          label={`${ingrediente.nombre} (${ingrediente.unidad}), ${ingrediente.calorias} `}
+                          icon={isChecked ? <CheckIcon style={{ color: "white" }} /> : null}
                           onClick={() => handleIngredientCheck(index)}
                           style={{ backgroundColor: isChecked ? "green" : "orange", color: "white" }}
                         />
@@ -252,12 +252,12 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
               ))}
             </Timeline>
             {showCocinado && (
-                <CookedRecipe idRecipe={idRecipe}/>
+              <CookedRecipe idRecipe={idRecipe} />
             )}
           </Box>
         </div>
       </DialogContent>
-      <DialogActions sx={{height:'70px'}}style={dialogActionsStyle}>
+      <DialogActions sx={{ height: '70px' }} style={dialogActionsStyle}>
         <Button onClick={handleClose} variant="secondary">
           Cerrar
         </Button>
