@@ -1,4 +1,3 @@
-import { ALL } from "dns";
 import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta, IngredienteUsuario } from "../../domain";
 
@@ -419,7 +418,6 @@ export class RecetaService {
                     imagen: datosReceta.imagen
                 }    
             });
-            console.log(recetaActualizada)
             await prisma.haberingrediente.deleteMany({
                 where: {
                     idreceta: recetaActualizada.idreceta
