@@ -92,12 +92,17 @@ function CookedRecipeButton({ idRecipe }) {
                     }   
 
                     const dataIngrediente = await responseIngrediente.json();
-
+                    const unidadIngrediente = dataIngrediente.unidad;
                     const caloriaIngrediente = Number(dataIngrediente.calorias);
                     const cantidadUsada = Number(ingrediente.cantidad);
-
+                    let unidad = 0;
                     if (!isNaN(caloriaIngrediente) && !isNaN(cantidadUsada)) {
-                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) / 1;
+                        if (unidadIngrediente === 'mjo' || unidadIngrediente === 'pz') {
+                            unidad = 1;
+                        } else {
+                            unidad = 100;
+                        }
+                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) / unidad;
                         totalCalorias += caloriasTotalesIngrediente;
                     } else {
                         console.error("Datos inválidos para el cálculo de calorías", { caloriaIngrediente, cantidadUsada });
@@ -135,12 +140,14 @@ function CookedRecipeButton({ idRecipe }) {
                             usuario: { correo: currentUser }
                         }),
                     });
+
                     if (!response.ok) {
-                        throw new Error('No se pudo actualizar la cantidad de los ingredientes');
+                        const errorData = await response.json();
+                        throw new Error(`Error: ${errorData.message}`);
                     }
                 } catch (error) {
-                    console.error(error);
-                    alert('Error updating ingredients: ' + error.message);
+                    console.error('Error al actualizar la cantidad de los ingredientes:', error);
+                    alert('Error al actualizar la cantidad de los ingredientes: ' + error.message);
                 }
             }
         }
@@ -156,20 +163,21 @@ function CookedRecipeButton({ idRecipe }) {
             });
 
             if (!response.ok) {
-                throw new Error('No se pudo enviar las calorias totales de la receta');
+                const errorData = await response.json();
+                throw new Error(`Error: ${errorData.message}`);
             }
 
             const data = await response.json();
         } catch (error) {
-            console.error(error);
+            console.error('Error al enviar las calorías totales de la receta:', error);
         }
     };
 
     const handleChangeCookedValue = async () => {
         setCooked(true);
         setEnableCooked(false);
-        console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
-        console.log('ingreReceta:', JSON.stringify(ingredientesReceta, null, 2));
+        console.log('Ingredientes Usuario:', JSON.stringify(ingredientesUsuario, null, 2));
+        console.log('Ingredientes Receta:', JSON.stringify(ingredientesReceta, null, 2));
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
         await sendCaloriasRecetaCocinada();
         await actualizarCantidadIngrediente(ingredientesUsuario, ingredientesReceta);
