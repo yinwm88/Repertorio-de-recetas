@@ -15,63 +15,63 @@ function CookedRecipeButton({ idRecipe }) {
     const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
     const [caloriasReceta, setCaloriasReceta] = useState(0);
 
-    useEffect(() => {
-        const fetchIngredientesUsuario = async () => {
-            try {
-                const response = await fetch('http://localhost:3001/ingredientesUsuario', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo: currentUser }),
-                });
+    const fetchIngredientesUsuario = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/ingredientesUsuario', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo: currentUser }),
+            });
 
-                if (!response.ok) {
-                    throw new Error('No se pudo cargar los ingredientes del usuario');
-                }
-
-                const data = await response.json();
-                setIngredientesUsuario(data.ingredientes);
-            } catch (error) {
-                console.error(error);
+            if (!response.ok) {
+                throw new Error('No se pudo cargar los ingredientes del usuario');
             }
-        };
+
+            const data = await response.json();
+            setIngredientesUsuario(data.ingredientes);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
         fetchIngredientesUsuario();
     }, [currentUser]);
 
-    useEffect(() => {
-        const fetchIngredientesReceta = async () => {
-            if (!idRecipe) {
-                console.error("idRecipe es undefined");
+    const fetchIngredientesReceta = async () => {
+        if (!idRecipe) {
+            console.error("idRecipe es undefined");
+            return;
+        }
+        
+        try {
+            const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${idRecipe}`, {
+                method: 'GET',
+            }); 
+    
+            if (!responseReceta.ok) {
+                console.log(`HTTP error! Status: ${responseReceta.status} ${idRecipe}`);
                 return;
             }
-            
-            try {
-                const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${idRecipe}`, {
-                    method: 'GET',
-                }); 
-        
-                if (!responseReceta.ok) {
-                    console.log(`HTTP error! Status: ${responseReceta.status} ${idRecipe}`);
-                    return;
-                }
-        
-                const dataReceta = await responseReceta.json();
-                setIngredientesReceta(dataReceta.ingredientes);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+    
+            const dataReceta = await responseReceta.json();
+            setIngredientesReceta(dataReceta.ingredientes);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
         fetchIngredientesReceta();
     }, [idRecipe]);   
 
     useEffect(() => {
-        if (ingredientesReceta.length && ingredientesUsuario.length) {
             const tieneTodos = ingredientesReceta.every(ingredienteReceta => {
                 const ingredienteUsuario = ingredientesUsuario.find(ing => ing.idingrediente === ingredienteReceta.idingrediente);
                 return ingredienteUsuario && Number(ingredienteUsuario.cantidad) >= Number(ingredienteReceta.cantidad);
             });
             setEnableCooked(tieneTodos);
             setDisableCooked(!tieneTodos);
-        }
     }, [ingredientesReceta, ingredientesUsuario]);
 
     useEffect(() => {
@@ -123,18 +123,40 @@ function CookedRecipeButton({ idRecipe }) {
         return ingredienteUsuarioCorrespondienteCantidad - recetaCantidad;
     };
 
+    const eliminacionIngrediente = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3001/ingrediente/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuario: { correo: currentUser } }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('No se pudo eliminar el ingrediente del usuario');
+            }
+    
+            const data = await response.json();
+            fetchIngredientesUsuario();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+
     const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesReceta) => {
         for (const receta of ingredientesReceta) {
             const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
             if (ingredienteUsuarioCorrespondiente) {
                 const cantidadRestante = obtenerCantidadIngrediente(ingredienteUsuarioCorrespondiente.cantidad, receta.cantidad);
-
-                try {
-                    const response = await fetch('http://localhost:3001/ingrediente/editar', {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente,
+                if(cantidadRestante===0){
+                    eliminacionIngrediente(ingredienteUsuarioCorrespondiente.idingrediente);
+                }else{
+                    try {
+                        const response = await fetch('http://localhost:3001/ingrediente/editar', {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente,
                             cantidad: parseInt(cantidadRestante),
                             unidad: ingredienteUsuarioCorrespondiente.unidad,
                             usuario: { correo: currentUser }
@@ -145,12 +167,14 @@ function CookedRecipeButton({ idRecipe }) {
                         const errorData = await response.json();
                         throw new Error(`Error: ${errorData.message}`);
                     }
-                } catch (error) {
-                    console.error('Error al actualizar la cantidad de los ingredientes:', error);
-                    alert('Error al actualizar la cantidad de los ingredientes: ' + error.message);
+                    } catch (error) {
+                        console.error('Error al actualizar la cantidad de los ingredientes:', error);
+                        alert('Error al actualizar la cantidad de los ingredientes: ' + error.message);
+                    }
                 }
             }
         }
+        fetchIngredientesUsuario();
     };
 
     const sendCaloriasRecetaCocinada = async () => {
