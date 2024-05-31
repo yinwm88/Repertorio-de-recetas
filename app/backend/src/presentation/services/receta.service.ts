@@ -303,7 +303,7 @@ export class RecetaService {
     }
 
     async crearVariacionReceta( informacionReceta: EditarReceta ) {
-        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
+        const { datosReceta, usuario, ingredientes, utensilios, imagen } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -335,7 +335,7 @@ export class RecetaService {
                     proceso: datosReceta.proceso,
                     correo: usuario.correo,
                     padre: datosReceta.idReceta,
-                    imagen: datosReceta.imagen
+                    imagen: imagen
                 }    
             }); 
 
