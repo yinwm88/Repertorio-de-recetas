@@ -1,8 +1,10 @@
 #!/bin/bash
-set -e
 
-# Ejecuta los archivos DDL.sql y DML.sql
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-    \i /docker-entrypoint-initdb.d/01_DDL.sql
-    \i /docker-entrypoint-initdb.d/02_DML.sql
-EOSQL
+# Wait for PostgreSQL service to be ready (optional, if necessary)
+# Add appropriate logic here to wait for PostgreSQL service to be ready
+
+# Execute DDL script
+psql -U postgres -d RECETAS -a -f /docker-entrypoint-initdb.d/DDL.sql
+
+# Execute DML script
+psql -U postgres -d RECETAS -a -f /docker-entrypoint-initdb.d/DML.sql

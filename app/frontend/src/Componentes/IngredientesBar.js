@@ -80,8 +80,8 @@ function CustomList({ lastUpdate, setLastUpdate }) {
   };
   const confirmDelete = async (ingrediente) => {
     try {
-      const response = await fetch(`http://localhost:3001/ingrediente/eliminar/${ingrediente.idingrediente}`, {
-        method: 'POST',
+      const response = await fetch(`http://localhost:3001/ingrediente/editar`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           idIngrediente: ingrediente.idingrediente,

@@ -197,8 +197,8 @@ alter table tenerIngrediente alter column correo set not null;
 alter table tenerIngrediente alter column idIngrediente set not null;
 alter table tenerIngrediente alter column cantidad set not null;
 
-alter table tenerIngrediente add constraint IngredienteCantidad check( cantidad > 0);
-alter table tenerIngrediente add constraint fechaAgredado2 check(( fecha >= current_date ));
+-- alter table tenerIngrediente add constraint IngredienteCantidad check( cantidad > 0);
+-- alter table tenerIngrediente add constraint fechaAgredado2 check(( fecha >= current_date ));
 alter table tenerIngrediente add constraint uniqueTenerIngrediente unique(correo,idIngrediente);
 alter table tenerIngrediente add constraint fkTenerIngrediente1 foreign key(correo) references Usuario(correo)
 on update cascade on delete cascade;

@@ -194,8 +194,10 @@ export default function MiniDrawer() {
       */}
         {drawerContent === 'Estadisticas' && (
           <Container>
+            <Typography style={{marginBottom:'50px', fontWeight: "bold" }} color="primary" variant="h3" gutterBottom>
+                    Estadisticas
+                </Typography>
             <CaloriesChart/>
-            <FoodChart/>
           </Container>
         )}
 
