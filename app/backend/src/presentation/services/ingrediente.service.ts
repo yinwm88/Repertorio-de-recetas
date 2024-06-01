@@ -222,17 +222,57 @@ export class IngredienteService {
             }
         });
         if (!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        try {
+            const lista = await prisma.compraringrediente.findMany({
+                where : {
+                    correo : correo
+                },
+                select : {
+                    idingrediente : true,
+                    cantidad : true
+                }
+            });
+            return lista;
+            
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }  
+    }
 
-        const lista = await prisma.compraringrediente.findMany({
+    async comprarIngredienteFaltante(correo : string, idingrediente : number){
+        const usuarioExiste = await prisma.usuario.findFirst({
             where : {
                 correo : correo
-            },
-            select : {
-                idingrediente : true,
-                cantidad : true
             }
         });
+        if (!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        const ingredienteExiste = await prisma.ingrediente.findFirst({
+            where : {
+                idingrediente : idingrediente
+            }
+        });
+        if (!ingredienteExiste) throw ErrorCustomizado.badRequest( 'El ingrediente no existe' );
 
-        return lista;
+        const noTieneIngrediente = await prisma.compraringrediente.findFirst({
+            where : {
+                correo : correo,
+                idingrediente : idingrediente
+            }
+        });
+        if(!noTieneIngrediente) throw ErrorCustomizado.badRequest( 'El ingrediente no está en la lista de compras' );
+
+        try {
+            const ingredienteComprado = await prisma.compraringrediente.deleteMany({
+                where : {
+                    correo : correo,
+                    idingrediente : idingrediente
+                }
+            });
+            return "Ingrediente eliminado"
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
     }
 }

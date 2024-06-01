@@ -87,4 +87,14 @@ export class ControladorIngrediente {
         .then( ingredientes => res.status(200).json( ingredientes ))
         .catch( error => this.manejarError( error, res ))
     }
+
+    public comprarIngrediente = ( req:Request, res: Response ) => {
+        const { idingrediente, correo } = req.body;
+        if ( idingrediente <= 0) res.status(400).json({error: 'El id debe de ser uno valido'});
+        if (!correo) return res.status(400).json({error:'Hace falta el correo'});
+
+        this.ingredienteService.comprarIngredienteFaltante( correo, idingrediente )
+        .then( ingrediente => res.status(200).json( ingrediente ))
+        .catch( error => this.manejarError( error, res ));
+    }  
 }
