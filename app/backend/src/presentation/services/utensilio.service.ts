@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado } from "../../domain";
+import { CrearUntensilioDto, EntidadUsuario, ErrorCustomizado } from "../../domain";
 
 interface Utensilio {
     idelectro: number,
@@ -67,7 +67,6 @@ export class UtensilioService {
             }
         });
         if ( !!utensilioAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio ya esta agregado' );
-        console.log( `Informacion: ${utensilioAgregado}` )
 
         try {            
             await prisma.poseer.create({
@@ -100,7 +99,6 @@ export class UtensilioService {
             }
         })
         if ( !utensilioNoAgregado ) throw ErrorCustomizado.badRequest( 'El utensilio no ha sido agregado' );
-        console.log( `Informacion: ${utensilioNoAgregado}` )
 
         try {            
             const utensilio = await prisma.poseer.delete({
@@ -176,6 +174,23 @@ export class UtensilioService {
             return {
                 utensilios: listaUtensilios
             }
+        } catch (error) {
+            
+        }
+    }
+
+    async crearUtensilio( utensilio: CrearUntensilioDto ) {
+        const utensilioExiste = prisma.electrodomestico.findUnique({
+            where: { nombre: utensilio.nombre }
+        })
+        if( !!utensilioExiste ) throw ErrorCustomizado.badRequest( 'Utensilio ya existe' );
+        try {
+            await prisma.electrodomestico.create({
+                data: {
+                    nombre: utensilio.nombre,
+                    icono: utensilio.icono      
+                }
+            });
         } catch (error) {
             
         }

@@ -9,3 +9,4 @@ export * from './recetas/Receta.dto';
 export * from './recetas/RecetaIngredientes.dto';
 export * from './recetas/RecetaUtensilios.dto';
 export * from './recetas/EditarReceta.dto';
+export * from './utensilios/Crearutensilio.dto';
