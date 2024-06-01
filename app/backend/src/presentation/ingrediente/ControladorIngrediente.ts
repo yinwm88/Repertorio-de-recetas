@@ -77,4 +77,14 @@ export class ControladorIngrediente {
         .catch( error => this.manejarError( error, res ))
     }
 
+    public listaCompras = (req : Request, res : Response) => {
+        const { correo } = req.body;
+        if (!correo) {
+            return res.status(400).json({error:'Hace falta el correo'});
+        }
+
+        this.ingredienteService.listaDeCompras( correo )
+        .then( ingredientes => res.status(200).json( ingredientes ))
+        .catch( error => this.manejarError( error, res ))
+    }
 }

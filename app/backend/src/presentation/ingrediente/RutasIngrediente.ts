@@ -16,6 +16,7 @@ export class RutasIngrediente {
         router.patch('/editar', controlador.editarIngrediente );
         router.post('/datos', controlador.datosIngrediente );
         router.post('/crear', controlador.crearIngrediente );
+        router.post('/listaCompras', controlador.listaCompras)
 
         return router;
     }

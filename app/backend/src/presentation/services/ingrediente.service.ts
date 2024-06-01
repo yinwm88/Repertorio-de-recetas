@@ -186,7 +186,7 @@ export class IngredienteService {
                     nombre : true,
                     unidad : true,
                     calorias : true
-                 }
+                }
             });
             return ingrediente;
         } catch(error){
@@ -212,5 +212,27 @@ export class IngredienteService {
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
+    }
+
+    async listaDeCompras(correo : string){
+
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {
+                correo : correo
+            }
+        });
+        if (!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+
+        const lista = await prisma.compraringrediente.findMany({
+            where : {
+                correo : correo
+            },
+            select : {
+                idingrediente : true,
+                cantidad : true
+            }
+        });
+
+        return lista;
     }
 }
