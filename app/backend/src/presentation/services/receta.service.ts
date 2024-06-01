@@ -570,7 +570,6 @@ export class RecetaService {
             const ingredientesFaltantes = [];
     
             for (const ingredienteReceta of ingredientesReceta) {
-                console.log(ingredienteReceta)
                 const ingredienteUsuario = ingredientesUsuario.find(ingredienteUsuario => ingredienteUsuario.idingrediente === ingredienteReceta.idingrediente);
 
                 if (!ingredienteUsuario) {
