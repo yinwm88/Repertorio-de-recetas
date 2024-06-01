@@ -570,24 +570,60 @@ export class RecetaService {
             const ingredientesFaltantes = [];
     
             for (const ingredienteReceta of ingredientesReceta) {
+                console.log(ingredienteReceta)
                 const ingredienteUsuario = ingredientesUsuario.find(ingredienteUsuario => ingredienteUsuario.idingrediente === ingredienteReceta.idingrediente);
+
                 if (!ingredienteUsuario) {
                     ingredientesFaltantes.push({
                         idingrediente: ingredienteReceta.idingrediente,
                         cantidad: ingredienteReceta.cantidad
                     });
-                } else if (Number(ingredienteUsuario.cantidad) < ingredienteReceta.cantidad) {
+                    continue;
+                } 
+
+                if (Number(ingredienteUsuario.cantidad) < ingredienteReceta.cantidad) {
                     ingredientesFaltantes.push({
                         idingrediente: ingredienteReceta.idingrediente,
                         cantidad: ingredienteReceta.cantidad - Number(ingredienteUsuario.cantidad)
                     });
                 }
             }
-            return {ingredientesFaltantes}
+
+            ingredientesFaltantes.forEach(async ingrediente => {
+
+                const ingredienteExiste = await prisma.compraringrediente.findFirst({
+                    where : {
+                        correo : correo,
+                        idingrediente : ingrediente.idingrediente
+                    }
+                });
+
+                if (ingredienteExiste){
+                    await prisma.compraringrediente.updateMany({
+                        where : {
+                            correo : correo,
+                            idingrediente : ingrediente.idingrediente
+                        },
+                        data : {
+                            cantidad : {
+                                increment : ingrediente.cantidad
+                            }
+                        }
+                    });
+                } else {
+                    await prisma.compraringrediente.create({
+                    data : {
+                        correo : correo,
+                        idingrediente : ingrediente.idingrediente,
+                        cantidad : ingrediente.cantidad
+                        }
+                    });
+                }
+            });
+            return "Lista de compra creada";
         } catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-        
     }   
     
     verificarIngrediente( ingredientesReceta: InformacionIngrediente[] , ingredientesUsuario: InformacionIngrediente[] ): InformacionIngrediente[] {

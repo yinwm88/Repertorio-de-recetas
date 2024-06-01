@@ -205,6 +205,22 @@ on update cascade on delete cascade;
 alter table tenerIngrediente add constraint fkTenerIngrediente2 foreign key(idIngrediente) references Ingrediente(idIngrediente)
 on update cascade on delete cascade;
 
+create table comprarIngrediente(
+	correo varchar(70),
+	idIngrediente int,
+	cantidad numeric(10,2),
+);
+
+alter table comprarIngrediente alter column correo set not null;
+alter table comprarIngrediente alter column idIngrediente set not null;
+alter table comprarIngrediente alter column cantidad set not null;
+alter table comprarIngrediente add constraint uniqueComprarIngrediente unique(correo,idIngrediente);
+alter table comprarIngrediente add constraint fkComprarIngrediente1 foreign key(correo) references Usuario(correo)
+on update cascade on delete cascade;
+alter table comprarIngrediente add constraint fkComprarIngrediente2 foreign key(idIngrediente) references Ingrediente(idIngrediente)
+on update cascade on delete cascade;
+
+
 create table cocinar(
 	correo varchar(70),
 	idReceta serial,
