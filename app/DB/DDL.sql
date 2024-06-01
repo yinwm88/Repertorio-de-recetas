@@ -1,7 +1,6 @@
 DROP SCHEMA IF EXISTS public CASCADE;
 CREATE SCHEMA public;
 
-
 create type objetivos as enum ('bajar de peso', 'mantener peso', 'subir de peso', 'no comer');  
 create table Usuario (
 	correo Varchar(70),	
@@ -208,9 +207,8 @@ on update cascade on delete cascade;
 create table comprarIngrediente(
 	correo varchar(70),
 	idIngrediente int,
-	cantidad numeric(10,2),
+	cantidad numeric(10,2)
 );
-
 alter table comprarIngrediente alter column correo set not null;
 alter table comprarIngrediente alter column idIngrediente set not null;
 alter table comprarIngrediente alter column cantidad set not null;

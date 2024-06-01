@@ -195,4 +195,18 @@ export class UtensilioService {
             
         }
     }
+
+    async obtenerIconos( ) {
+        const iconos = await prisma.electrodomestico.findMany({
+            where: {},
+            distinct: ['icono'],
+            select:{
+                icono: true
+            }
+        })
+
+        return {
+            iconos: iconos
+        }
+    }
 }

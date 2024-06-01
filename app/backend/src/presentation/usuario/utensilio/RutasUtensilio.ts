@@ -16,6 +16,7 @@ export class RutasUtensilio {
         router.post('/datos', controlador.datosUtensilio); 
         router.post('/', [ JoinMiddleware.validarJwt ], controlador.obtenerUtensilios );   
         router.post('/crear', controlador.crearUtensilio );
+        router.get('/iconos', controlador.obtenerIconos );
 
         return router;
     }

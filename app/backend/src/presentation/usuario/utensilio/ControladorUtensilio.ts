@@ -66,4 +66,11 @@ export class controladorUtensilio {
         .then( utensilio => res.status(200).json( utensilio ))
         .catch( error => this.manejarError( error, res ))
     }
+
+    public obtenerIconos = ( req: Request, res: Response) => {
+        this.utensilioService.obtenerIconos( )
+        .then( iconos => res.status(200).json( iconos ))
+        .catch( error => this.manejarError( error, res ))
+    }
+
 }
