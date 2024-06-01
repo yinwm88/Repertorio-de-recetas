@@ -39,6 +39,7 @@ export class ControladorIngrediente {
     
     public eliminarIngrediente = ( req:Request, res: Response ) => {
         const idIngrediente: number = +req.params.id;
+        if ( !idIngrediente ) res.status(400).json({error: 'Falta el id ingrediente'});
         if ( idIngrediente <= 0) res.status(400).json({error: 'El id debe de ser uno valido'});
 
         this.ingredienteService.eliminarIngrediente( idIngrediente, req.body.usuario )
