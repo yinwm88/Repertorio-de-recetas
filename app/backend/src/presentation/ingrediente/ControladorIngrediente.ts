@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
+import { CrearIngredienteDto, ErrorCustomizado, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 import { IngredienteService } from "../services/ingrediente.service";
-import { error } from "console";
 
 export class ControladorIngrediente {
     
@@ -67,6 +66,15 @@ export class ControladorIngrediente {
         this.ingredienteService.getDatosIngrediente( req.body.id )
         .then( ingrediente => res.status(200).json( ingrediente ))
         .catch( error => this.manejarError( error, res ));
+    }
+
+    public crearIngrediente = ( req:Request, res:Response ) => {
+        const [ error, informacionIngrediente ] = CrearIngredienteDto.crearInstancia( req.body );
+        if ( error ) return res.status(400).json({error: error});
+
+        this.ingredienteService.crearIngrediente( informacionIngrediente! )
+        .then( ingrediente => res.status(200).json( ingrediente ))
+        .catch( error => this.manejarError( error, res ))
     }
 
 }

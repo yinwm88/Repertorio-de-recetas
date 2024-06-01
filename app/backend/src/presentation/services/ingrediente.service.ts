@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, IngredienteUsuario, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
+import { CrearIngredienteDto, EntidadUsuario, ErrorCustomizado, IngredienteUsuario, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 
 
 export class IngredienteService {
@@ -190,6 +190,26 @@ export class IngredienteService {
             });
             return ingrediente;
         } catch(error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async crearIngrediente( informacionIngrediente:CrearIngredienteDto ) {
+        try {
+            const ingredienteCreado = await prisma.ingrediente.create({
+                data:{
+                    nombre: informacionIngrediente.nombre,
+                    calorias: informacionIngrediente.calorias,
+                    unidad: informacionIngrediente.unidad,
+                    caduca: informacionIngrediente.caduca
+                }
+            })
+
+            return {
+                ingrediente: true
+            }
+            
+        } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
