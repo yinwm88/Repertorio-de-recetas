@@ -237,9 +237,9 @@ function CookedRecipeButton({ idRecipe }) {
                     </IconButton>
                 </Tooltip>
             )}
-            {disableCooked && (
+            {!enableCooked && (
                 <IconButton
-                disabled
+                
                     sx={{
                         marginTop: '10px',
                         marginLeft: '470px',

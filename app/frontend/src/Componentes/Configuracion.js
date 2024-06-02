@@ -18,16 +18,11 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-import BlenderIcon from '@mui/icons-material/Blender';
 import LeaderboardRoundedIcon from '@mui/icons-material/LeaderboardRounded';
 import KeyboardReturnRoundedIcon from '@mui/icons-material/KeyboardReturnRounded';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Datos from './ConfigComponentes/Datos';
-import FoodChart from './ConfigComponentes/FoodChart';
-import chart from 'chart.js/auto';
 import CaloriesChart from './ConfigComponentes/CaloriesChart';
-
-
 
 const drawerWidth = 240;
 
@@ -98,8 +93,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  //Cambiar el cntenido del drawer
-  const [drawerContent, setDrawerContent] = useState("Inicio");
+  const [drawerContent, setDrawerContent] = useState("Datos");
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,7 +105,11 @@ export default function MiniDrawer() {
   };
 
   const handleListItemClick = (text) => {
-    setDrawerContent(text);
+    if (text === 'Volver') {
+      navigate('/contenido');
+    } else {
+      setDrawerContent(text);
+    }
   };
 
   return (
@@ -131,22 +130,22 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography sx={{marginLeft:'50px'}} variant="h6" noWrap component="div">
-            Configuracion
+            Configuración
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-        <Typography color="primary" sx={{marginLeft:'15px',marginTop:'25px', marginBottom:'25px'}}variant="h1">
+          <Typography color="primary" sx={{marginLeft:'15px',marginTop:'25px', marginBottom:'25px'}}variant="h1">
             Kitchenify
-        </Typography>    
+          </Typography>    
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          {['Datos', 'Estadisticas', 'Volver'].map((text, index) => (
+          {['Datos', 'Estadísticas', 'Volver'].map((text, index) => (
             <ListItem key={text} disablePadding style={{ display: 'block' }}>
               <ListItemButton
                 onClick={() => handleListItemClick(text)}
@@ -163,20 +162,14 @@ export default function MiniDrawer() {
                     justifyContent: 'center',
                   }}
                 >
-                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ?  <LeaderboardRoundedIcon /> : <Link to="/contenido">
-                    <IconButton color="inherit" aria-label="Volver">
-                      <KeyboardReturnRoundedIcon />
-                    </IconButton>
-                  </Link>}
+                  {index === 0 ? <AssignmentIndIcon /> : index === 1 ? <LeaderboardRoundedIcon /> : <KeyboardReturnRoundedIcon />}
                 </ListItemIcon>
                 <ListItemText primary={text} style={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
-
         </List>
         <Divider />
-
       </Drawer>
       <Box component="main" style={{ flexGrow: 1, padding: 20 }}>
         <DrawerHeader />
@@ -185,24 +178,15 @@ export default function MiniDrawer() {
             <Datos />
           </Typography>
         )}
-        {/**
-        {drawerContent === 'Utensilios' && (
-          <Typography paragraph>
-            Contenido para Utensilios
-          </Typography>
-        )}
-      */}
-        {drawerContent === 'Estadisticas' && (
+        {drawerContent === 'Estadísticas' && (
           <Container>
             <Typography style={{marginBottom:'50px', fontWeight: "bold" }} color="primary" variant="h3" gutterBottom>
-                    Estadisticas
-                </Typography>
-            <CaloriesChart/>
+              Estadísticas
+            </Typography>
+            <CaloriesChart />
           </Container>
         )}
-
       </Box>
-
     </Container>
   );
 }
