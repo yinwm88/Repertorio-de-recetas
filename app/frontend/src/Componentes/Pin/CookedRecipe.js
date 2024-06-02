@@ -11,76 +11,69 @@ function CookedRecipeButton({ idRecipe }) {
     const [enableCooked, setEnableCooked] = useState(false);
     const [disableCooked, setDisableCooked] = useState(false);
     const [cooked, setCooked] = useState(false);
-
     const [ingredientesReceta, setIngredientesReceta] = useState([]);
     const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
-    
-    // Ingredientes Usuario
-    useEffect(() => {
-        const fetchIngredientesUsuario = async () => {
-            try {
-                const response = await fetch('http://localhost:3001/ingredientesUsuario', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ correo: currentUser }),
-                });
+    const [caloriasReceta, setCaloriasReceta] = useState(0);
 
-                if (!response.ok) {
-                    throw new Error('No se pudo cargar los ingredientes del usuario');
-                }
+    const fetchIngredientesUsuario = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/ingredientesUsuario', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ correo: currentUser }),
+            });
 
-                const data = await response.json();
-                setIngredientesUsuario(data.ingredientes);
-            } catch (error) {
-                console.error(error);
+            if (!response.ok) {
+                throw new Error('No se pudo cargar los ingredientes del usuario');
             }
-        };
+
+            const data = await response.json();
+            setIngredientesUsuario(data.ingredientes);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
         fetchIngredientesUsuario();
     }, [currentUser]);
 
-    // Ingredientes Receta
-    useEffect(() => {
-        const fetchIngredientesReceta = async () => {
-            if (!idRecipe) {
-                console.error("idRecipe es undefined");
+    const fetchIngredientesReceta = async () => {
+        if (!idRecipe) {
+            console.error("idRecipe es undefined");
+            return;
+        }
+        
+        try {
+            const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${idRecipe}`, {
+                method: 'GET',
+            }); 
+    
+            if (!responseReceta.ok) {
+                console.log(`HTTP error! Status: ${responseReceta.status} ${idRecipe}`);
                 return;
             }
-            
-            try {
-                const responseReceta = await fetch(`http://localhost:3001/receta/datosReceta/${idRecipe}`, {
-                    method: 'GET',
-                }); 
-        
-                if (!responseReceta.ok) {
-                    console.log(`HTTP error! Status: ${responseReceta.status} ${idRecipe}`);
-                    return;
-                }
-        
-                const dataReceta = await responseReceta.json();
-                setIngredientesReceta(dataReceta.ingredientes);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+    
+            const dataReceta = await responseReceta.json();
+            setIngredientesReceta(dataReceta.ingredientes);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
         fetchIngredientesReceta();
     }, [idRecipe]);   
 
     useEffect(() => {
-        if (ingredientesReceta.length && ingredientesUsuario.length) {
             const tieneTodos = ingredientesReceta.every(ingredienteReceta => {
                 const ingredienteUsuario = ingredientesUsuario.find(ing => ing.idingrediente === ingredienteReceta.idingrediente);
                 return ingredienteUsuario && Number(ingredienteUsuario.cantidad) >= Number(ingredienteReceta.cantidad);
             });
             setEnableCooked(tieneTodos);
             setDisableCooked(!tieneTodos);
-
-        }
     }, [ingredientesReceta, ingredientesUsuario]);
 
-
-    const [caloriasReceta, setCaloriasReceta] = useState(0);
-
-     // Cálculo de Calorías
     useEffect(() => {
         const fetchCaloriasIngredientes = async () => {
             try {
@@ -99,17 +92,21 @@ function CookedRecipeButton({ idRecipe }) {
                     }   
 
                     const dataIngrediente = await responseIngrediente.json();
-
+                    const unidadIngrediente = dataIngrediente.unidad;
                     const caloriaIngrediente = Number(dataIngrediente.calorias);
                     const cantidadUsada = Number(ingrediente.cantidad);
-
+                    let unidad = 0;
                     if (!isNaN(caloriaIngrediente) && !isNaN(cantidadUsada)) {
-                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) /1;
+                        if (unidadIngrediente === 'mjo' || unidadIngrediente === 'pz') {
+                            unidad = 1;
+                        } else {
+                            unidad = 100;
+                        }
+                        const caloriasTotalesIngrediente = (cantidadUsada * caloriaIngrediente) / unidad;
                         totalCalorias += caloriasTotalesIngrediente;
                     } else {
                         console.error("Datos inválidos para el cálculo de calorías", { caloriaIngrediente, cantidadUsada });
                     }
-                    
                 }
                 setCaloriasReceta(totalCalorias);
             } catch (error) {
@@ -122,74 +119,93 @@ function CookedRecipeButton({ idRecipe }) {
         }
     }, [ingredientesReceta]);
 
-/** 
-//Eliminar ingredientes usados
-const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesReceta) => {
+    const obtenerCantidadIngrediente = (ingredienteUsuarioCorrespondienteCantidad, recetaCantidad) => {
+        return ingredienteUsuarioCorrespondienteCantidad - recetaCantidad;
+    };
+
+    const eliminacionIngrediente = async (id) => {
         try {
-            for (const receta of ingredientesReceta) {
-                const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
-                if (ingredienteUsuarioCorrespondiente) {
-                    const cantidadRestante = ingredienteUsuarioCorrespondiente.cantidad - receta.cantidad;
-                    
-                    const response = await fetch('http://localhost:3001/ingrediente/editar', {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente,
+            const response = await fetch(`http://localhost:3001/ingrediente/${id}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuario: { correo: currentUser } }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('No se pudo eliminar el ingrediente del usuario');
+            }
+    
+            const data = await response.json();
+            fetchIngredientesUsuario();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
+
+    const actualizarCantidadIngrediente = async (ingredientesUsuario, ingredientesReceta) => {
+        for (const receta of ingredientesReceta) {
+            const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
+            if (ingredienteUsuarioCorrespondiente) {
+                const cantidadRestante = obtenerCantidadIngrediente(ingredienteUsuarioCorrespondiente.cantidad, receta.cantidad);
+                if(cantidadRestante === 0){
+                    eliminacionIngrediente(ingredienteUsuarioCorrespondiente.idingrediente);
+                }else{
+                    try {
+                        const response = await fetch('http://localhost:3001/ingrediente/editar', {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                idIngrediente: ingredienteUsuarioCorrespondiente.idingrediente,
+                            cantidad: parseInt(cantidadRestante),
                             unidad: ingredienteUsuarioCorrespondiente.unidad,
-                            cantidad: cantidadRestante,
                             usuario: { correo: currentUser }
                         }),
                     });
-                    console.log('nueva cantidad:', cantidadRestante);
-                    
+
                     if (!response.ok) {
-                        throw new Error('No se pudo actualizar la cantidad de los ingredientes');
+                        const errorData = await response.json();
+                        throw new Error(`Error: ${errorData.message}`);
+                    }
+                    } catch (error) {
+                        console.error('Error al actualizar la cantidad de los ingredientes:', error);
+                        alert('Error al actualizar la cantidad de los ingredientes: ' + error.message);
                     }
                 }
             }
+        }
+        fetchIngredientesUsuario();
+    };
+
+    const sendCaloriasRecetaCocinada = async () => {
+        if (caloriasReceta === 0) return;
+        try {
+            const response = await fetch('http://localhost:3001/receta/cocinar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idReceta: idRecipe, correo: currentUser, calorias: caloriasReceta }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Error: ${errorData.message}`);
+            }
+
+            const data = await response.json();
         } catch (error) {
-            console.error(error);
-            alert('Error updating ingredients: ' + error.message);
+            console.error('Error al enviar las calorías totales de la receta:', error);
         }
     };
-*/ 
-    
-    
-    // indicar que se cocino una receta
-    const sendCaloriasRecetaCocinada = async () =>{
-        if(caloriasReceta===0)return;
-        try{
-            const response = await fetch('http://localhost:3001/receta/cocinar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ idReceta:idRecipe, correo:currentUser, calorias:caloriasReceta }),
-                });
 
-                if (!response.ok) {
-                    throw new Error('No se pudo enviar las calorias totales de la receta');
-                }
-
-                const data = await response.json();
-            } catch (error) {
-                console.error(error);
-            }
-    }
-
-
-
-
-    const handleChangeCookedValue = () => {
+    const handleChangeCookedValue = async () => {
         setCooked(true);
         setEnableCooked(false);
-        console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
-        console.log('ingreReceta:', JSON.stringify(ingredientesReceta, null, 2));
+        console.log('Ingredientes Usuario:', JSON.stringify(ingredientesUsuario, null, 2));
+        console.log('Ingredientes Receta:', JSON.stringify(ingredientesReceta, null, 2));
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
-        sendCaloriasRecetaCocinada();
-        console.log('ingreUsuario:', JSON.stringify(ingredientesUsuario, null, 2));
-
-        //actualizarCantidadIngrediente (ingredientesUsuario, ingredientesReceta)
-    };  
+        await sendCaloriasRecetaCocinada();
+        await actualizarCantidadIngrediente(ingredientesUsuario, ingredientesReceta);
+    };
 
     return (
         <div>
