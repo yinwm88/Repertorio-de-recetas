@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -38,6 +38,40 @@ const EditRecipeModal = ({
   setEditOption,
   setSearchResults
 }) => {
+  const [updatedIngredients, setUpdatedIngredients] = useState([]);
+
+  useEffect(() => {
+    const fetchIngredientData = async (id) => {
+      const response = await fetch(`http://localhost:3001/ingrediente/datos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      });
+      const data = await response.json();
+      return data;
+    };
+
+    const updateSelectedIngredients = async () => {
+      const updatedIngredientsData = await Promise.all(
+        selectedIngredients.map(async (ingredient) => {
+          const data = await fetchIngredientData(ingredient.idingrediente);
+          return { ...ingredient, nombre: data.nombre, unidad: data.unidad };
+        })
+      );
+      setUpdatedIngredients(updatedIngredientsData);
+    };
+
+    if (selectedIngredients.length) {
+      updateSelectedIngredients();
+    }
+  }, [selectedIngredients]);
+
+  useEffect(() => {
+    setSelectedIngredients(updatedIngredients);
+  }, [updatedIngredients, setSelectedIngredients]);
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
       <DialogTitle style={{ textAlign: "center" }}>

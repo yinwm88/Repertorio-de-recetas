@@ -40,7 +40,7 @@ const Ingreso = () => {
                 body: JSON.stringify({ correo: userData.username, contrasena: userData.contrasena })
             });
             const data = await response.json();
-    
+
             if (response.ok) {
                 login(userData.username, data.token); // Llamada actual a login
                 localStorage.setItem('tokenCreationTime', new Date().getTime().toString()); // Guardamos el timestamp en el local storage
@@ -61,7 +61,7 @@ const Ingreso = () => {
         }
         setOpen(false);
     };
-    
+
 
 
     const handleRegister = async () => {
@@ -86,7 +86,7 @@ const Ingreso = () => {
             if (response.ok) {
 
                 MySwal.fire({
-                    title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> Registro exitoso</Typography>,
+                    title: <Typography variant="h6" style={{ fontFamily: 'Poppins' }}> Registro completado con éxito. Por favor, verifica tu correo electrónico para finalizar el proceso de verificación.</Typography>,
                     icon: 'success',
                 })
                 setMostrarRegistro(false);

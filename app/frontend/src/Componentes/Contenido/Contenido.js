@@ -8,17 +8,12 @@ import Pin from '../Pin';
 import TabPanel from './TabPanel';
 import { fetchRecetas, fetchUserRecipes, fetchFavoriteRecipes } from './helpers/fetchRecetas';
 import { markAsFavorite } from './helpers/markAsFavorite';
-
 import { CircularProgress } from '@mui/material';
-
-
-
 import { useAuth } from '../../AuthContext';
 import './Contenido.css';
 
 function Contenido() {
   const { currentUser, getToken } = useAuth();
-
   const [recipes, setRecipes] = useState([]);
   const [userRecipes, setUserRecipes] = useState([]);
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -27,15 +22,19 @@ function Contenido() {
   const [activeTab, setActiveTab] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [filtroTiempo, setFiltroTiempo] = useState([0, 120]);
+  const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
+  const [isLoadingUserRecipes, setIsLoadingUserRecipes] = useState(false);
+  const [isLoadingFavoriteRecipes, setIsLoadingFavoriteRecipes] = useState(false);
+  const [utensiliosSeleccionados, setUtensiliosSeleccionados] = useState([]);
+  const [tiposFiltro, setTiposFiltro] = useState([]);
 
   const handleOpenAgregarReceta = () => setIsAgregarRecetaOpen(true);
   const handleCloseAgregarReceta = () => setIsAgregarRecetaOpen(false);
   const handleTabChange = (event, newValue) => setActiveTab(newValue);
 
-  const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
-  const [isLoadingUserRecipes, setIsLoadingUserRecipes] = useState(false);
-  const [isLoadingFavoriteRecipes, setIsLoadingFavoriteRecipes] = useState(false);
-
+  const handleUtensiliosSeleccionadosChange = (utensilios) => {
+    setUtensiliosSeleccionados(utensilios);
+  };
 
   const triggerUpdate = () => setLastUpdate(Date.now());
 
@@ -67,7 +66,6 @@ function Contenido() {
     }
   }, [activeTab, currentUser]);
 
-
   useEffect(() => {
     console.log('FRecetas:', favoriteRecipes);
   }, [favoriteRecipes]);
@@ -80,19 +78,23 @@ function Contenido() {
     console.log('Recetas:', recipes);
   }, [recipes]);
 
+  useEffect(() => {
+    console.log('Utensilios Seleccionados:', utensiliosSeleccionados);
+  }, [utensiliosSeleccionados]);
 
+  const filtrarRecetas = (recetas) => {
+    if (utensiliosSeleccionados.every(u => !u.activo)) {
+      return [];
+    }
 
-  const [tiposFiltro, setTiposFiltro] = useState([]);
-
-  const filtrarRecetas = (recetas) =>
-    recetas.filter(
+    return recetas.filter(
       (receta) =>
         (receta.tiempo >= filtroTiempo[0] && receta.tiempo <= filtroTiempo[1]) &&
         receta.nombre.toLowerCase().includes(searchText.toLowerCase()) &&
-        (tiposFiltro.length === 0 || receta.tipos.some(tipo => tiposFiltro.includes(tipo.tipo)))
+        (tiposFiltro.length === 0 || receta.tipos.some(tipo => tiposFiltro.includes(tipo.tipo))) &&
+        (utensiliosSeleccionados.length === 0 || receta.utensilios.some(utensilio => utensiliosSeleccionados.some(u => u.idelectro === utensilio.idelectro && u.activo)))
     ).sort((a, b) => b.porcentaje - a.porcentaje);
-
-
+  };
 
   const renderPins = (recetas) => (
     <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={2.5}>
@@ -117,14 +119,11 @@ function Contenido() {
           )
       )}
     </Masonry>
-
   );
-
 
   return (
     <Container maxWidth={false} className='mainContainer'>
       <CrearReceta isOpen={isAgregarRecetaOpen} onClose={handleCloseAgregarReceta} triggerUpdate={triggerUpdate} />
-
       <Grid container spacing={4}>
         <Grid item sm={12} md={4}>
           <FiltroRecetas
@@ -133,17 +132,14 @@ function Contenido() {
             onTipoChange={setTiposFiltro}
             recipes={recipes}
           />
-
-          <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} />
+          <IngredientesBar lastUpdate={lastUpdate} setLastUpdate={setLastUpdate} handleUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
         </Grid>
-
         <Grid item sm={12} md={8}>
           <Tabs value={activeTab} onChange={handleTabChange} aria-label="Recetas Tabs">
             <Tab label="Recetas" />
             <Tab label="Mis recetas" />
             <Tab label="Recetas Favoritas" />
           </Tabs>
-
           <TabPanel value={activeTab} index={0}>
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
@@ -152,7 +148,6 @@ function Contenido() {
               </Container>
             </div>
           </TabPanel>
-
           <TabPanel value={activeTab} index={1}>
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
@@ -165,7 +160,6 @@ function Contenido() {
               </Container>
             </div>
           </TabPanel>
-
           <TabPanel value={activeTab} index={2}>
             <div className="scrollable-container">
               <Container maxWidth={false} className='contenido' style={{ height: '100vh' }}>
@@ -174,7 +168,6 @@ function Contenido() {
               </Container>
             </div>
           </TabPanel>
-
         </Grid>
       </Grid>
     </Container>

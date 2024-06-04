@@ -35,9 +35,15 @@ const StyledFab = styled(Fab)({
   margin: '0 auto',
 });
 
-function CustomList({ lastUpdate, setLastUpdate }) {
+function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosChange }) {
 
-
+  const [newIngredientData, setNewIngredientData] = useState({
+    nombre: "",
+    calorias: 0,
+    caduca: false,
+    unidad: "",
+  });
+  const [isCreating, setIsCreating] = useState(false);
 
   const { currentUser } = useAuth();
   const [tabIndex, setTabIndex] = useState(0);
@@ -285,6 +291,38 @@ function CustomList({ lastUpdate, setLastUpdate }) {
     }
   };
 
+  const handleCreateItem = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/ingrediente/crear`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: newIngredientData.nombre,
+          calorias: newIngredientData.calorias,
+          caduca: newIngredientData.caduca,
+          unidad: newIngredientData.unidad,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo crear el ingrediente');
+      }
+
+      // Recargar la lista de ingredientes del usuario tras la creación exitosa
+      setLastUpdate(Date.now());
+      fetchIngredientesUsuario();
+      setIsCreating(false);
+      Swal.fire({
+        text: 'Ingrediente creado exitosamente!',
+        icon: 'success',
+      });
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -369,6 +407,7 @@ function CustomList({ lastUpdate, setLastUpdate }) {
                 </StyledFab>
 
 
+
                 <Dialog open={open} onClose={handleClose}>
                   <DialogTitle>Añadir ingrediente 🍎</DialogTitle>
                   <DialogContent>
@@ -431,6 +470,11 @@ function CustomList({ lastUpdate, setLastUpdate }) {
                         />
                       </>
                     )}
+
+                    <DialogContentText>
+                      Si no encuentras el ingrediente que buscas, puedes crear uno nuevo.
+                    </DialogContentText><br />
+                    <Button onClick={() => {setIsCreating(true)}}>Crear ingrediente nuevo</Button>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
@@ -438,6 +482,55 @@ function CustomList({ lastUpdate, setLastUpdate }) {
                   </DialogActions>
                 </Dialog>
 
+                <Dialog open={isCreating} onClose={() => setIsCreating(false)}>
+                  <DialogTitle>Crear ingrediente nuevo</DialogTitle>
+                  <DialogContent>
+                    <TextField
+                      margin="dense"
+                      id="nombre"
+                      label="Nombre"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      value={newIngredientData.nombre}
+                      onChange={(e) => setNewIngredientData({ ...newIngredientData, nombre: e.target.value })}
+                    />
+                    <TextField
+                      margin="dense"
+                      id="calorias"
+                      label="Calorías"
+                      type="number"
+                      fullWidth
+                      variant="standard"
+                      value={newIngredientData.calorias}
+                      onChange={(e) => setNewIngredientData({ ...newIngredientData, calorias: parseInt(e.target.value) })}
+                    />
+                    <TextField
+                      margin="dense"
+                      id="unidad"
+                      label="Unidad de medida"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      value={newIngredientData.unidad}
+                      onChange={(e) => setNewIngredientData({ ...newIngredientData, unidad: e.target.value })}
+                    />
+                    <TextField
+                      margin="dense"
+                      id="caduca"
+                      label="Caduca"
+                      type="checkbox"
+                      fullWidth
+                      variant="standard"
+                      checked={newIngredientData.caduca}
+                      onChange={(e) => setNewIngredientData({ ...newIngredientData, caduca: e.target.checked })}
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setIsCreating(false)}>Cancelar</Button>
+                    <Button onClick={handleCreateItem}>Crear</Button>
+                  </DialogActions>
+                </Dialog>
               </React.Fragment>
             </Box>
           )}
@@ -447,7 +540,7 @@ function CustomList({ lastUpdate, setLastUpdate }) {
               <h2>
                 Mis utensilios
               </h2>
-              <UtensiliosList/>
+              <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
             </Box>
           )}
         </Paper>
