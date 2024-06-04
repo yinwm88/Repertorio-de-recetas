@@ -13,8 +13,10 @@ export class RutasUtensilio {
         router.post('/:idUtensilio/activar', [ JoinMiddleware.validarJwt ], controlador.activarUtensilio );
         router.delete('/:idUtensilio', [ JoinMiddleware.validarJwt ], controlador.desactivarUtensilio );
         router.post('/buscar', controlador.buscarUtensilio );
-        router.post('/datos', controlador.datosUtensilio)   
-        router.post('/', [ JoinMiddleware.validarJwt ], controlador.obtenerUtensilios )   
+        router.post('/datos', controlador.datosUtensilio); 
+        router.post('/', [ JoinMiddleware.validarJwt ], controlador.obtenerUtensilios );   
+        router.post('/crear', controlador.crearUtensilio );
+        router.get('/iconos', controlador.obtenerIconos );
 
         return router;
     }

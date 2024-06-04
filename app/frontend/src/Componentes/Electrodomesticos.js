@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Paper, Typography } from '@mui/material';
+import { Paper, List, ListItem, ListItemText, ListItemIcon, Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { Masonry } from '@mui/lab';
-
 import {
   faSnowflake,
   faJar,
@@ -38,30 +36,39 @@ library.add(
   faNeuter,
 );
 
-const UtensilioCard = styled(Paper)(({ theme, active }) => ({
+const UtensilioItem = styled(Paper)(({ theme, active }) => ({
   padding: theme.spacing(2),
   color: theme.palette.text.secondary,
   backgroundColor: active ? 'lightgreen' : theme.palette.grey[200],
   border: active ? `2px solid ${theme.palette.success.main}` : 'none',
-  color: active ? theme.palette.success.main : theme.palette.text.secondary,
   cursor: 'pointer',
   display: 'flex',
-  flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  width: '100%',
   transition: 'transform 0.3s ease',
   '&:hover': {
     transform: 'scale(1.05)',
   }
 }));
 
-function UtensiliosList() {
+function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
   const { currentUser, getToken } = useAuth();
   const [utensilios, setUtensilios] = useState([]);
+  const [activarTodos, setActivarTodos] = useState(false);
 
   useEffect(() => {
-    obtenerUtensilios();
+    const fetchUtensilios = async () => {
+      const nuevosUtensilios = await obtenerUtensilios();
+      setUtensilios(nuevosUtensilios);
+      const utensiliosActivos = nuevosUtensilios.filter(u => u.activo);
+      onUtensiliosSeleccionadosChange(utensiliosActivos);
+    };
+    fetchUtensilios();
   }, []);
+
+  useEffect(() => {
+    console.log('Utensilios:', utensilios);
+  }, [utensilios]);
 
   const obtenerUtensilios = async () => {
     try {
@@ -74,13 +81,13 @@ function UtensiliosList() {
       });
       const data = await response.json();
       if (response.ok) {
-        const utensiliosOrdenados = data.utensilios.sort((a, b) => a.nombre.localeCompare(b.nombre));
-        setUtensilios(utensiliosOrdenados);
+        return data.utensilios.sort((a, b) => a.nombre.localeCompare(b.nombre));
       } else {
         throw new Error('Failed to fetch utensilios');
       }
     } catch (error) {
       console.error('Error:', error);
+      return [];
     }
   };
 
@@ -97,7 +104,11 @@ function UtensiliosList() {
       });
       const data = await response.json();
       if (response.ok) {
-        obtenerUtensilios();  // Refrescar la lista
+        // Actualizar los utensilios y utensilios seleccionados después de la operación
+        const nuevosUtensilios = await obtenerUtensilios();
+        setUtensilios(nuevosUtensilios);
+        const utensiliosActualizados = nuevosUtensilios.filter(u => u.activo);
+        onUtensiliosSeleccionadosChange(utensiliosActualizados);
       } else {
         console.error('Error:', data.error);
       }
@@ -106,17 +117,50 @@ function UtensiliosList() {
     }
   };
 
+  const activarTodosUtensilios = async () => {
+    setActivarTodos(true);
+    await Promise.all(utensilios.map(async (utensilio) => {
+      if (!utensilio.activo) {
+        await toggleUtensilio(utensilio);
+      }
+    }));
+    setActivarTodos(false);
+  };
+
   return (
-    <Masonry columns={3} spacing={2}>
-      {utensilios.map((utensilio) => (
-        <div key={utensilio.idelectro} onClick={() => toggleUtensilio(utensilio)}>
-          <UtensilioCard active={utensilio.activo}>
-            <Typography variant="h9">{utensilio.nombre}</Typography>
-            <FontAwesomeIcon icon={utensilio.icono} size="2x" color={utensilio.activo ? "green" : undefined} />
-          </UtensilioCard>
-        </div>
-      ))}
-    </Masonry>
+    <>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between', // Asegura que los elementos tengan espacio entre ellos
+          flexDirection: 'row',
+          width: '95%', // Asegura que el contenedor ocupe todo el ancho disponible
+          marginBottom:'10px'
+        }}
+      >
+        <h2>
+            Mis utensilios
+        </h2>
+        <Button variant="contained" onClick={activarTodosUtensilios} disabled={activarTodos}>
+          {activarTodos ? 'Activando todos los utensilios...' : 'Activar todos'}
+        </Button>
+      </Box>
+      <List style={{ maxHeight: 'calc(10 * 64px)', overflowY: 'auto' }}>
+        {utensilios.map((utensilio, index) => {
+          return (
+            <ListItem key={utensilio.idelectro} onClick={() => toggleUtensilio(utensilio)}>
+              <UtensilioItem active={utensilio.activo}>
+                <ListItemIcon>
+                  <FontAwesomeIcon icon={utensilio.icono} size="2x" color={utensilio.activo ? "green" : undefined} />
+                </ListItemIcon>
+                <ListItemText primary={utensilio.nombre} />
+              </UtensilioItem>
+            </ListItem>
+          );
+        })}
+      </List>
+    </>
   );
 }
 

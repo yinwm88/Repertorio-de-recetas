@@ -36,14 +36,15 @@ model haberingrediente {
 }
 
 model ingrediente {
-  idingrediente    Int                @id(map: "pkingrediente") @default(autoincrement())
-  nombre           String             @db.VarChar(50)
-  unidad           String             @db.VarChar(5)
-  caduca           Boolean
-  calorias         Int
-  haberingrediente haberingrediente[]
-  seralergico      seralergico[]
-  teneringrediente teneringrediente[]
+  idingrediente      Int                  @id(map: "pkingrediente") @default(autoincrement())
+  nombre             String               @db.VarChar(50)
+  unidad             String               @db.VarChar(5)
+  caduca             Boolean
+  calorias           Int
+  compraringrediente compraringrediente[]
+  haberingrediente   haberingrediente[]
+  seralergico        seralergico[]
+  teneringrediente   teneringrediente[]
 }
 
 model necesitar {
@@ -77,14 +78,14 @@ model preferir {
 model receta {
   idreceta              Int                     @id(map: "pkreceta") @default(autoincrement())
   correo                String?                 @db.VarChar(70)
-  imagen                String?                 @db.VarChar(200)
+  imagen                String?                 @db.VarChar(300)
   nombre                String                  @db.VarChar(50)
   tiempo                Int?
   proceso               String
   likes                 Int?                    @default(0)
   padre                 Int?
   caracteristicasreceta caracteristicasreceta[]
-  cocinar               cocinar[]
+  cocinar               cocinar[]               
   haberingrediente      haberingrediente[]
   necesitar             necesitar[]
   preferir              preferir[]
@@ -126,22 +127,23 @@ model tiporeceta {
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model usuario {
-  correo           String             @id(map: "pkusuario") @db.VarChar(70)
-  nombre           String             @db.VarChar(50)
-  apellido         String             @db.VarChar(50)
-  peso             Decimal?           @db.Decimal(5, 2)
-  talla            Decimal?           @db.Decimal(5, 2)
-  actividad        String?
-  objetivo         objetivos?
-  contrasena       String             @db.VarChar(200)
-  salt             String?            @db.VarChar(200)
-  verificado       Boolean?           @default(false)
-  cocinar          cocinar[]
-  poseer           poseer[]
-  preferir         preferir[]
-  receta           receta[]
-  seralergico      seralergico[]
-  teneringrediente teneringrediente[]
+  correo             String               @id(map: "pkusuario") @db.VarChar(70)
+  nombre             String               @db.VarChar(50)
+  apellido           String               @db.VarChar(50)
+  peso               Decimal?             @db.Decimal(5, 2)
+  talla              Decimal?             @db.Decimal(5, 2)
+  actividad          String?
+  objetivo           objetivos?
+  contrasena         String               @db.VarChar(200)
+  salt               String?              @db.VarChar(200)
+  verificado         Boolean?             @default(false)
+  cocinar            cocinar[]            
+  compraringrediente compraringrediente[]
+  poseer             poseer[]
+  preferir           preferir[]
+  receta             receta[]
+  seralergico        seralergico[]
+  teneringrediente   teneringrediente[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -150,11 +152,21 @@ model cocinar {
   correo   String   @db.VarChar(70)
   idreceta Int      @default(autoincrement())
   calorias Int
-  fecha    DateTime @db.Timestamp(6)
+  fecha    DateTime @db.Date
   usuario  usuario  @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcocinarcorreo")
   receta   receta   @relation(fields: [idreceta], references: [idreceta], onDelete: Cascade, map: "fkcocinaridreceta")
 
   @@unique([correo, fecha, idreceta], name: "cocinar", map: "uniqueCocinar")
+}
+
+model compraringrediente {
+  correo        String      @db.VarChar(70)
+  idingrediente Int
+  cantidad      Decimal     @db.Decimal(10, 2)
+  usuario       usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcompraringrediente1")
+  ingrediente   ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkcompraringrediente2")
+
+  @@unique([correo, idingrediente], map: "uniquecompraringrediente")
 }
 
 enum caracteristicas {

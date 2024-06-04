@@ -1,5 +1,12 @@
+import { Decimal } from "@prisma/client/runtime/library";
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta, IngredienteUsuario } from "../../domain";
+import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta, IngredienteUsuario, IngredienteReceta } from "../../domain";
+
+interface InformacionIngrediente {
+    idingrediente: number;
+    cantidad: Decimal | number;
+    elimina?: boolean;
+}
 
 export class RecetaService {
 
@@ -32,7 +39,7 @@ export class RecetaService {
         return idLista;
     }
 
-    private async ingrdientes(correo:string){
+    private async ingrdientes(correo:string) {
         const ingredientesUsuario = await prisma.teneringrediente.findMany({
             where: { correo },
             select: { 
@@ -302,7 +309,7 @@ export class RecetaService {
     }
 
     async crearVariacionReceta( informacionReceta: EditarReceta ) {
-        const { datosReceta, usuario, ingredientes, utensilios } = informacionReceta;
+        const { datosReceta, usuario, ingredientes, utensilios, imagen } = informacionReceta;
         const usuarioExiste = await prisma.usuario.findUnique( {
             where: { correo: usuario.correo }
         });
@@ -334,7 +341,7 @@ export class RecetaService {
                     proceso: datosReceta.proceso,
                     correo: usuario.correo,
                     padre: datosReceta.idReceta,
-                    imagen: datosReceta.imagen
+                    imagen: imagen
                 }    
             }); 
 
@@ -564,24 +571,75 @@ export class RecetaService {
     
             for (const ingredienteReceta of ingredientesReceta) {
                 const ingredienteUsuario = ingredientesUsuario.find(ingredienteUsuario => ingredienteUsuario.idingrediente === ingredienteReceta.idingrediente);
+
                 if (!ingredienteUsuario) {
                     ingredientesFaltantes.push({
                         idingrediente: ingredienteReceta.idingrediente,
                         cantidad: ingredienteReceta.cantidad
                     });
-                } else if (Number(ingredienteUsuario.cantidad) < ingredienteReceta.cantidad) {
+                    continue;
+                } 
+
+                if (Number(ingredienteUsuario.cantidad) < ingredienteReceta.cantidad) {
                     ingredientesFaltantes.push({
                         idingrediente: ingredienteReceta.idingrediente,
                         cantidad: ingredienteReceta.cantidad - Number(ingredienteUsuario.cantidad)
                     });
                 }
             }
-            return {ingredientesFaltantes}
+
+            ingredientesFaltantes.forEach(async ingrediente => {
+
+                const ingredienteExiste = await prisma.compraringrediente.findFirst({
+                    where : {
+                        correo : correo,
+                        idingrediente : ingrediente.idingrediente
+                    }
+                });
+
+                if (ingredienteExiste){
+                    await prisma.compraringrediente.updateMany({
+                        where : {
+                            correo : correo,
+                            idingrediente : ingrediente.idingrediente
+                        },
+                        data : {
+                            cantidad : {
+                                increment : ingrediente.cantidad
+                            }
+                        }
+                    });
+                } else {
+                    await prisma.compraringrediente.create({
+                    data : {
+                        correo : correo,
+                        idingrediente : ingrediente.idingrediente,
+                        cantidad : ingrediente.cantidad
+                        }
+                    });
+                }
+            });
+            return "Lista de compra creada";
         } catch (error){
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
-        
     }   
+    
+    verificarIngrediente( ingredientesReceta: InformacionIngrediente[] , ingredientesUsuario: InformacionIngrediente[] ): InformacionIngrediente[] {
+        for (let i = 0; i < ingredientesReceta.length; i++) {
+            for (let j = 0; j < ingredientesUsuario.length; j++) {
+                if ( ingredientesReceta[i].idingrediente === ingredientesUsuario[j].idingrediente ) {
+                    ingredientesUsuario[j].elimina = false;
+                    if ( Number(ingredientesReceta[i].cantidad) === Number(ingredientesUsuario[j].cantidad) ) {
+                        ingredientesUsuario[j].elimina = true;
+                    }
+                    ingredientesUsuario[j].cantidad = Number(ingredientesUsuario[j].cantidad) - Number(ingredientesReceta[i].cantidad);
+                }
+            }
+        }
+        return ingredientesUsuario;
+    }
+    
 
     async cocinar(correo:string, idReceta:number, calorias:number){
         const usuarioExiste = await prisma.usuario.findFirst({
@@ -596,26 +654,38 @@ export class RecetaService {
         if(calorias < 0) throw ErrorCustomizado.badRequest( 'Las calorías no pueden ser negativas' );
         
         try{
-            const ingredientesReceta = await prisma.haberingrediente.findMany({
+            const ingredientesReceta: InformacionIngrediente[] = await prisma.haberingrediente.findMany({
                 where : { idreceta : idReceta },
                 select : {
                     idingrediente : true,
                     cantidad : true
                 }
             });
-    
-            ingredientesReceta.forEach(async ingrediente => {
-                const ingredienteActualizado = await prisma.teneringrediente.updateMany({
-                    where : {
-                        correo : correo,
-                        idingrediente : ingrediente.idingrediente
-                    },
-                    data : {
-                        cantidad : {
-                            decrement : ingrediente.cantidad
+            const ingredientesUsuario = await this.ingrdientes( correo );
+            const ingredientes = this.verificarIngrediente( ingredientesReceta, ingredientesUsuario );
+            ingredientes.map(async ingrediente => {
+                if ( ingrediente.elimina ) {
+                    await prisma.teneringrediente.delete({
+                        where:{                            
+                            tenerId: {
+                                correo : correo,
+                                idingrediente : ingrediente.idingrediente
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    await prisma.teneringrediente.update({
+                        where: {
+                            tenerId: {
+                                correo : correo,
+                                idingrediente : ingrediente.idingrediente
+                            }
+                        },
+                        data : {
+                            cantidad : ingrediente.cantidad
+                        }
+                    });
+                }
             });
     
             const fecha = new Date()

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado } from "../../../domain";
+import { CrearUntensilioDto, ErrorCustomizado } from "../../../domain";
 import { UtensilioService } from "../../services";
 
 export class controladorUtensilio {
@@ -57,4 +57,20 @@ export class controladorUtensilio {
         .then( utensilio => res.status(200).json( utensilio ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public  crearUtensilio = ( req: Request, res: Response ) => {
+        const [ error, informacionUtensilio ] = CrearUntensilioDto.crearInstancia( req.body );       
+        if ( error ) return res.status(400).json({error: error});
+
+        this.utensilioService.crearUtensilio( informacionUtensilio! )
+        .then( utensilio => res.status(200).json( utensilio ))
+        .catch( error => this.manejarError( error, res ))
+    }
+
+    public obtenerIconos = ( req: Request, res: Response) => {
+        this.utensilioService.obtenerIconos( )
+        .then( iconos => res.status(200).json( iconos ))
+        .catch( error => this.manejarError( error, res ))
+    }
+
 }
