@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
 import DinnerDiningRoundedIcon from '@mui/icons-material/DinnerDiningRounded';
@@ -210,47 +213,56 @@ function CookedRecipeButton({ idRecipe, style }) {
     return (
         <Box style={style}>
             {enableCooked && (
-        <Tooltip title="Marcar la receta como cocinada" placement="top">
-            <IconButton
-                onClick={handleChangeCookedValue}
-                size="large"
-                disabled={buttonDisabled}
-                sx={{  
-                    boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
-                    borderRadius: '90px',
-                    transition: 'transform 0.2s ease-in-out, background-color 0.2s ease-in-out',
-                    '&:hover': {
-                        backgroundColor: 'rgba(249, 84, 99 , 0.6)',
-                        transform: 'scale(1.1)',
-                    },
-                    '&:disabled': {
-                        backgroundColor: 'rgba(249, 84, 99 , 1)',
-                        cursor: 'not-allowed',
-                    },
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}
-                aria-label="cooked recipe"
-            >
-                <DinnerDiningRoundedIcon sx={{fontSize:60}}/>
-            </IconButton>
-        </Tooltip>
-    )}
-            {!enableCooked && (
-                <IconButton
-                    disabled 
-                    size="large"
-                    aria-label="cooked recipe"
-                    sx={{  
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
+                <Tooltip title="Marcar la receta como cocinada" placement="bottom">
+                {!buttonDisabled ? (
+                    <IconButton
+                        onClick={handleChangeCookedValue}
+                        size="large"
+                        disabled={buttonDisabled}
+                        sx={{  
+                            boxShadow: '0 1px 1px rgba(0, 0, 0, 0.7)',
+                            borderRadius: '90px',
+                            transition: 'transform 0.2s ease-in-out, background-color 0.2s ease-in-out',
+                            '&:hover': {
+                                backgroundColor: 'rgba(249, 84, 99 , 0.6)',
+                                transform: 'scale(1.1)',
+                            },
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}
+                        aria-label="cooked recipe"
                     >
-                    <DinnerDiningRoundedIcon sx={{fontSize:60}} />
-                </IconButton>
-            )}
+                        <DinnerDiningRoundedIcon sx={{fontSize:60}}/>
+                    </IconButton>
+                ) : (
+                    <IconButton
+                        component="label"
+                        size="large"
+                        disabled={buttonDisabled}
+                        sx={{  
+                            '&:disabled': {
+                                backgroundColor: 'rgba(249, 84, 99 , 1)',
+                                cursor: 'not-allowed',
+                            },
+                            cursor: 'not-allowed',
+                            borderRadius:'100px',  
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'column', // Asegura que los elementos se apilen verticalmente
+                        }}
+                        tabIndex={-1}
+                    >
+                        <DinnerDiningRoundedIcon sx={{ color: 'rgba(249, 84, 99 , 1)', fontSize: 60 }} />
+                        <Typography sx={{ color: 'rgba(249, 84, 99 , 1)', fontSize: 15 }}> {/* Ajusta el tamaño del texto */}
+                            Receta Cocinada
+                        </Typography>
+                    </IconButton>    
+                )}
+            </Tooltip>
+            
+        )}
         </Box>
     );
 }

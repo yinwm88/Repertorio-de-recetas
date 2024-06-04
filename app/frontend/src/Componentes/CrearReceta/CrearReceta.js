@@ -196,7 +196,7 @@ const CrearReceta = ({ isOpen, onClose, triggerUpdate }) => {
             </IconButton>
           </Box>
           <List>
-            {formData.proceso.map((paso, index) => (
+            {formData.proceso && Array.isArray(formData.proceso) && formData.proceso.map((paso, index) => (
               <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                 <ListItemText primary={`Paso ${index + 1}: ${paso}`} />
                 <IconButton onClick={() => handleRemoveStep(index)}>
@@ -223,14 +223,14 @@ const CrearReceta = ({ isOpen, onClose, triggerUpdate }) => {
             margin="normal"
           />
           <List>
-            {searchResults && searchResults.map((ingrediente) => (
+            {searchResults && Array.isArray(searchResults) && searchResults.map((ingrediente) => (
               <ListItem key={ingrediente.idingrediente} button onClick={() => handleIngredientAdd(ingrediente)}>
                 <ListItemText primary={`${ingrediente.nombre} (${ingrediente.unidad})`} />
               </ListItem>
             ))}
           </List>
           <List>
-            {formData.ingredientes.map((ing, index) => (
+            {formData.ingredientes && Array.isArray(formData.ingredientes) && formData.ingredientes.map((ing, index) => (
               <ListItem key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                 <ListItemText primary={`${ing.nombre} (${ing.cantidad} ${ing.unidad})`} />
                 <TextField

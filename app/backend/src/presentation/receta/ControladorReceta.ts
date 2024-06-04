@@ -29,19 +29,20 @@ export class ControladorRecetas{
         .catch( error => this.manejarError( error, res ));
     }    
 
-    public crearReceta = ( req:Request, res: Response ) => {
+
+    public crearReceta = async ( req:Request, res: Response ) => {
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
         if ( error ) return res.status(400).json({error:error});
         const [errorIngredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( crearRecetaDto!.ingredientes );
         if ( errorIngredientes ) return res.status(400).json({ error:errorIngredientes});
         const [errorUtensilios, recetaUtensiliosDto] = RecetaUtensiliosDto.crearInstancia( crearRecetaDto!.utensilios );
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
-        
         const informacionReceta:CrearReceta = {
             datosReceta: crearRecetaDto!,
             usuario:  req.body.usuario,
             ingredientes: recetaIngredientesDto!,
-            utensilios: recetaUtensiliosDto!
+            utensilios: recetaUtensiliosDto!,
+            imagen: crearRecetaDto?.imagen || '',
         } 
         this.recetaService.crearReceta( informacionReceta )
         .then( datos => res.status(200).json( datos ))
@@ -60,7 +61,8 @@ export class ControladorRecetas{
             datosReceta: editarRecetaDto!,
             usuario:  req.body.usuario,
             ingredientes: recetaIngredientesDto!,
-            utensilios: recetaUtensiliosDto!
+            utensilios: recetaUtensiliosDto!,
+            imagen: req.body.imagen
         } 
         this.recetaService.editarReceta( informacionReceta )
         .then( datos => res.status(200).json( datos ))
@@ -107,7 +109,8 @@ export class ControladorRecetas{
             datosReceta: variacionReceta!,
             usuario:  req.body.usuario,
             ingredientes: recetaIngredientesDto!,
-            utensilios: recetaUtensiliosDto!
+            utensilios: recetaUtensiliosDto!,
+            imagen: req.body.imagen
         } 
         this.recetaService.crearVariacionReceta( informacionReceta )
         .then( datos => res.status(200).json( datos ))
