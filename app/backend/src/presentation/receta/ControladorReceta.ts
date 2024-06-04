@@ -48,17 +48,17 @@ export class ControladorRecetas{
 
 
     public crearReceta = async ( req:Request, res: Response ) => {
-        req.body.ingredientes = JSON.parse(req.body.ingredientes)
-        req.body.utensilios = JSON.parse(req.body.utensilios)
-        if (!req.files || Object.keys(req.files).length === 0) {
-            return res.status(400).json({ error: "No se subio una imagen" });
-        }
+        // req.body.ingredientes = JSON.parse(req.body.ingredientes)
+        // req.body.utensilios = JSON.parse(req.body.utensilios)
+        // if (!req.files || Object.keys(req.files).length === 0) {
+        //     return res.status(400).json({ error: "No se subio una imagen" });
+        // }
 
-        const imagen = req.files.imagen as expressFileUpload.UploadedFile;
+        // const imagen = req.files.imagen as expressFileUpload.UploadedFile;
 
-        if (!imagen) {
-        return res.status(400).json({ error: "No se recibio una imagen" });
-        }
+        // if (!imagen) {
+        // return res.status(400).json({ error: "No se recibio una imagen" });
+        // }
     
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
         if ( error ) return res.status(400).json({error:error});
@@ -68,20 +68,21 @@ export class ControladorRecetas{
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
 
         
-        const storage = getStorage();
-        const imagenRef = ref(storage, imagen.name);
-        const metadata = {
-            contentType: 'image/jpeg',
-        };      
+        // const storage = getStorage();
+        // const imagenRef = ref(storage, imagen.name);
+        // const metadata = {
+        //     contentType: 'image/jpeg',
+        // };      
        try {           
-            uploadBytes(imagenRef, imagen.data, metadata);            
+            // uploadBytes(imagenRef, imagen.data, metadata);            
 
             const informacionReceta:CrearReceta = {
                 datosReceta: crearRecetaDto!,
                 usuario:  req.body.usuario,
                 ingredientes: recetaIngredientesDto!,
                 utensilios: recetaUtensiliosDto!,
-                imagen: `https://firebasestorage.googleapis.com/v0/b/${imagenRef.bucket}/o/${encodeURIComponent(imagenRef.fullPath)}?alt=media`,
+                // imagen: `https://firebasestorage.googleapis.com/v0/b/${imagenRef.bucket}/o/${encodeURIComponent(imagenRef.fullPath)}?alt=media`,
+                imagen: ``,
             } 
             this.recetaService.crearReceta( informacionReceta )
             .then( datos => res.status(200).json( datos ))
