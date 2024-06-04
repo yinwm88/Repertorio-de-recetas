@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, List, ListItem, ListItemText, ListItemIcon, Button, Box } from '@mui/material';
+import { Paper, List, ListItem, ListItemText, ListItemIcon, Button } from '@mui/material';
+import { Box, CssBaseline, Typography, IconButton, Fab, ListItemButton, ListItemAvatar, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -18,6 +19,7 @@ import {
   faMortarPestle,
   faNeuter,
 } from '@fortawesome/free-solid-svg-icons';
+import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from '../AuthContext';
 
 library.add(
@@ -35,6 +37,12 @@ library.add(
   faMortarPestle,
   faNeuter,
 );
+
+const StyledFab = styled(Fab)({
+  position: 'relative',
+  zIndex: 1,
+  margin: '0 auto',
+});
 
 const UtensilioItem = styled(Paper)(({ theme, active }) => ({
   padding: theme.spacing(2),
@@ -55,6 +63,7 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
   const { currentUser, getToken } = useAuth();
   const [utensilios, setUtensilios] = useState([]);
   const [activarTodos, setActivarTodos] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchUtensilios = async () => {
@@ -127,15 +136,23 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
     setActivarTodos(false);
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between', // Asegura que los elementos tengan espacio entre ellos
+          justifyContent: 'space-between',
           flexDirection: 'row',
-          width: '95%', // Asegura que el contenedor ocupe todo el ancho disponible
+          width: '95%', 
           marginBottom:'10px'
         }}
       >
@@ -146,6 +163,7 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
           {activarTodos ? 'Activando todos los utensilios...' : 'Activar todos'}
         </Button>
       </Box>
+
       <List style={{ maxHeight: 'calc(10 * 64px)', overflowY: 'auto' }}>
         {utensilios.map((utensilio, index) => {
           return (
@@ -160,6 +178,39 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
           );
         })}
       </List>
+
+
+
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          mt: 2,
+        }}
+      >
+        <StyledFab color="primary" aria-label="add" onClick={handleClickOpen}>
+          <AddIcon />
+        </StyledFab>
+      </Box>
+
+
+
+
+      <Dialog open={open} onClose={handleClose}>
+                  <DialogTitle>Añadir ingrediente 🍎</DialogTitle>
+                  <DialogContent>
+                    
+                    <DialogContentText>
+                      Si no encuentras un ingrediente, puedes crear uno nuevo.
+                    </DialogContentText><br />
+                    <Button>Crear ingrediente nuevo</Button>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button >Cancelar</Button>
+                    <Button >Añadir</Button>
+                  </DialogActions>
+      </Dialog>
+
     </>
   );
 }

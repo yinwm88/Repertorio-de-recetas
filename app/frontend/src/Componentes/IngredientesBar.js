@@ -29,9 +29,6 @@ const itemIcons = {
 const StyledFab = styled(Fab)({
   position: 'relative',
   zIndex: 1,
-  top: 20,
-  left: 0,
-  right: 0,
   margin: '0 auto',
 });
 
@@ -403,10 +400,17 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
 
 
 
-                <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ top: 40 }}>
-                  <AddIcon />
-                </StyledFab>
-
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    mt: 2,
+                  }}
+                >
+                  <StyledFab color="primary" aria-label="add" onClick={handleClickOpen}>
+                    <AddIcon />
+                  </StyledFab>
+                </Box>
 
 
                 <Dialog open={open} onClose={handleClose}>
@@ -473,7 +477,7 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
                     )}
 
                     <DialogContentText>
-                      Si no encuentras el ingrediente que buscas, puedes crear uno nuevo.
+                      Si no encuentras un ingrediente, puedes crear uno nuevo.
                     </DialogContentText><br />
                     <Button onClick={() => {setIsCreating(true)}}>Crear ingrediente nuevo</Button>
                   </DialogContent>
@@ -532,13 +536,13 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
                     <Button onClick={handleCreateItem}>Crear</Button>
                   </DialogActions>
                 </Dialog>
+
               </React.Fragment>
             </Box>
           )}
 
           {tabIndex === 1 && (
             <Box sx={{ p: 2 }}>
-              
               <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
             </Box>
           )}

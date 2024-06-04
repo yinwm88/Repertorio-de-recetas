@@ -54,6 +54,9 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
   const iconList = [FastfoodIcon, RestaurantIcon, KitchenIcon, DinnerDiningIcon];
   const stepsToShow = 3; // Número de pasos a mostrar a la vez
 
+
+  
+
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
