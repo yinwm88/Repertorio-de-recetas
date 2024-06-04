@@ -538,12 +538,20 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
 
           {tabIndex === 1 && (
             <Box sx={{ p: 2 }}>
+              
+              <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
+            </Box>
+          )}
+          {/** 
+          {tabIndex === 2 && (
+            <Box sx={{ p: 2 }}>
               <h2>
-                Mis utensilios
+                Lista Generada
               </h2>
               <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
             </Box>
           )}
+          */}
         </Paper>
       </React.Fragment>
 

@@ -35,6 +35,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./RecipeDetailsDialog.css";
 import CookedRecipe from "./CookedRecipe";
+import Lista from "./Lista";
 
 const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, idRecipe }) => {
   const [tabValue, setTabValue] = useState(0);
@@ -44,8 +45,6 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
   const [utensilioDetails, setUtensilioDetails] = useState([]);
   const [stepStartIndex, setStepStartIndex] = useState(0);
   const [showCocinado, setShowCocinado] = useState(false);
-
-
 
   const pasos = (recipeDetails?.proceso?.split(".") || []).filter((paso) => paso.trim() !== "");
   const ingredientes = recipeDetails?.ingredientes || [];
@@ -195,7 +194,22 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
 
               <Grid item xs={12}>
                 <Box>
-                  <Typography variant="h6">Ingredientes</Typography>
+                <Box 
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between', // Asegura que los elementos tengan espacio entre ellos
+                        flexDirection: 'row',
+                        width: '10%', // Asegura que el contenedor ocupe todo el ancho disponible
+                        marginBottom:'10px'
+                      }}
+                >
+                    <Typography variant="h6">Ingredientes</Typography>
+                    <Box sx={{ marginLeft: '20px' }}> {/* Ajusta el margen según sea necesario */}
+                        <Lista/>
+                    </Box>
+                </Box>
+
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {ingredientDetails.map((ingrediente, index) => {
                       const isChecked = checkedIngredients[index] || false;

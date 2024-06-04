@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, List, ListItem, ListItemText, ListItemIcon, Button } from '@mui/material';
+import { Paper, List, ListItem, ListItemText, ListItemIcon, Button, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -129,9 +129,23 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
 
   return (
     <>
-      <Button variant="contained" onClick={activarTodosUtensilios} disabled={activarTodos}>
-        {activarTodos ? 'Activando todos los utensilios...' : 'Activar todos los utensilios'}
-      </Button>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between', // Asegura que los elementos tengan espacio entre ellos
+          flexDirection: 'row',
+          width: '95%', // Asegura que el contenedor ocupe todo el ancho disponible
+          marginBottom:'10px'
+        }}
+      >
+        <h2>
+            Mis utensilios
+        </h2>
+        <Button variant="contained" onClick={activarTodosUtensilios} disabled={activarTodos}>
+          {activarTodos ? 'Activando todos los utensilios...' : 'Activar todos'}
+        </Button>
+      </Box>
       <List style={{ maxHeight: 'calc(10 * 64px)', overflowY: 'auto' }}>
         {utensilios.map((utensilio, index) => {
           return (
