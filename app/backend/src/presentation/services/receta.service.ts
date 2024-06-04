@@ -1,6 +1,7 @@
 import { Decimal } from "@prisma/client/runtime/library";
 import { prisma } from "../../data/postgres";
 import { EntidadUsuario, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, CrearRecetaDto, EditarRecetaDto, RecetaUtensiliosDto, CrearReceta, EditarReceta, IngredienteUsuario, IngredienteReceta } from "../../domain";
+import { FireBase } from "../../config/FireBase";
 
 interface InformacionIngrediente {
     idingrediente: number;
@@ -727,5 +728,27 @@ export class RecetaService {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
         
+    }
+
+    async subirImagen( imagen:any, idReceta: number ) {
+        const recetaExiste = await prisma.receta.findUnique({
+            where: { idreceta: idReceta }
+        })
+        if( !recetaExiste ) throw ErrorCustomizado.badRequest( 'La receta no existe' );
+        const fb = new FireBase();
+        const url = await fb.subirImagen( imagen );
+        try {
+            const receta = await prisma.receta.update({
+                where: { idreceta: recetaExiste.idreceta },
+                data: {
+                    imagen: url
+                }
+            })
+            return {
+                urlImagen: receta.imagen
+            }
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
     }
 } 

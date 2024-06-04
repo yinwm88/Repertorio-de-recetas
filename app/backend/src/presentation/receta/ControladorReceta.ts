@@ -174,4 +174,13 @@ export class ControladorRecetas{
         .then( cocinar => res.status(201).json( cocinar ))
         .catch( error => this.manejarError( error, res ));
     }
+
+    public subirImagenReceta = (req: Request, res: Response) => {
+        const idReceta: number = +req.params.id;
+        if( Number(idReceta) < 0 ) res.status(400).json({error: 'El id no es valido'});
+        const imagen = req.file?.buffer;
+        this.recetaService.subirImagen( imagen, idReceta )
+        .then( imagen => res.status(200).json( imagen ) )
+        .catch( error => this.manejarError( error, res ));
+    }
 }
