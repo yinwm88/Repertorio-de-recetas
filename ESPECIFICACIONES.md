@@ -102,17 +102,20 @@ Refrigerador, estufa, horno, licuadora
 #### Relacional:
 ![Relacional](/Diagramas/Relacional.png)
 
-#### UML:
-![UML](/Diagramas/UML.jpg)
+### Casos de uso:
+
+![Caso1](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso1.drawio.png)
+![Caso2](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso2.drawio.png)
+![Caso3](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso3.drawio.png)
+![Caso4](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso4.drawio.png)
+![Caso5](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso5.drawio.png)
+![Caso6](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso6.drawio.png)
+![Caso7](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso7.drawio.png)
+
 
 </div>  
 
-<div>
 ### Mockups
-
-</div>
-#### Filtar recetas:
-![Repertorio de recetas](/Wireframe/WF-VistaSeparada/WF-Filtrar.png)
 
 #### Kitchenify:
 ![Kitchenify](/Mockup/Kitchenify.png)
