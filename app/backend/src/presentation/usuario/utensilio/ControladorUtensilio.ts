@@ -58,7 +58,7 @@ export class controladorUtensilio {
         .catch( error => this.manejarError( error, res ));
     }
 
-    public crearUtensilio = ( req: Request, res: Response ) => {
+    public  crearUtensilio = ( req: Request, res: Response ) => {
         const [ error, informacionUtensilio ] = CrearUntensilioDto.crearInstancia( req.body );       
         if ( error ) return res.status(400).json({error: error});
 
