@@ -1,23 +1,6 @@
 import { Request, Response } from "express";
-import expressFileUpload from 'express-fileupload';
-import firebase from 'firebase/compat/app';
-import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { CrearReceta, CrearRecetaDto, EditarReceta, EditarRecetaDto, ErrorCustomizado, RecetaDto, RecetaIngredientesDto, RecetaUtensiliosDto } from "../../domain";
 import { RecetaService } from "../services/receta.service";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyANcpENUNjxjkpxNJNeoe4n8tl-x124IWU",
-    authDomain: "cookmaster-add3b.firebaseapp.com",
-    databaseURL: "https://cookmaster-add3b-default-rtdb.firebaseio.com",
-    projectId: "cookmaster-add3b",
-    storageBucket: "cookmaster-add3b.appspot.com",
-    messagingSenderId: "703136688698",
-    appId: "1:703136688698:web:7ae455192b9214f6846303",
-    measurementId: "G-WHZBTSE5QL"
-  };
-
-firebase.initializeApp(firebaseConfig);
-
 
 export class ControladorRecetas{
 
@@ -48,49 +31,22 @@ export class ControladorRecetas{
 
 
     public crearReceta = async ( req:Request, res: Response ) => {
-        // req.body.ingredientes = JSON.parse(req.body.ingredientes)
-        // req.body.utensilios = JSON.parse(req.body.utensilios)
-        // if (!req.files || Object.keys(req.files).length === 0) {
-        //     return res.status(400).json({ error: "No se subio una imagen" });
-        // }
-
-        // const imagen = req.files.imagen as expressFileUpload.UploadedFile;
-
-        // if (!imagen) {
-        // return res.status(400).json({ error: "No se recibio una imagen" });
-        // }
-    
         const [error, crearRecetaDto] = CrearRecetaDto.crearInstancia( req.body );
         if ( error ) return res.status(400).json({error:error});
         const [errorIngredientes, recetaIngredientesDto] = RecetaIngredientesDto.crearInstancia( crearRecetaDto!.ingredientes );
         if ( errorIngredientes ) return res.status(400).json({ error:errorIngredientes});
         const [errorUtensilios, recetaUtensiliosDto] = RecetaUtensiliosDto.crearInstancia( crearRecetaDto!.utensilios );
         if ( errorUtensilios ) return res.status(400).json({error:errorUtensilios});
-
-        
-        // const storage = getStorage();
-        // const imagenRef = ref(storage, imagen.name);
-        // const metadata = {
-        //     contentType: 'image/jpeg',
-        // };      
-       try {           
-            // uploadBytes(imagenRef, imagen.data, metadata);            
-
-            const informacionReceta:CrearReceta = {
-                datosReceta: crearRecetaDto!,
-                usuario:  req.body.usuario,
-                ingredientes: recetaIngredientesDto!,
-                utensilios: recetaUtensiliosDto!,
-                // imagen: `https://firebasestorage.googleapis.com/v0/b/${imagenRef.bucket}/o/${encodeURIComponent(imagenRef.fullPath)}?alt=media`,
-                imagen: ``,
-            } 
-            this.recetaService.crearReceta( informacionReceta )
-            .then( datos => res.status(200).json( datos ))
-            .catch( error => this.manejarError( error, res ));
-        }catch(error){
-            console.error('Error uploading image:', error);
-            res.status(500).json({ error: 'Error uploading image' });
-        }
+        const informacionReceta:CrearReceta = {
+            datosReceta: crearRecetaDto!,
+            usuario:  req.body.usuario,
+            ingredientes: recetaIngredientesDto!,
+            utensilios: recetaUtensiliosDto!,
+            imagen: crearRecetaDto?.imagen || '',
+        } 
+        this.recetaService.crearReceta( informacionReceta )
+        .then( datos => res.status(200).json( datos ))
+        .catch( error => this.manejarError( error, res ));
     }
     
     public editarReceta = ( req:Request, res: Response ) => {
