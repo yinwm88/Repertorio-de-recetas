@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { RecetaService } from '../services/receta.service';
 import { ControladorRecetas } from './ControladorReceta';
 import { JoinMiddleware } from '../middlewares/join.middleware';
+import expressFileUpload from 'express-fileupload';
 
 export class RutasReceta{
 

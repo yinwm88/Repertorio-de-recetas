@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import { ErrorCustomizado, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
+import { CrearIngredienteDto, ErrorCustomizado, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 import { IngredienteService } from "../services/ingrediente.service";
-import { error } from "console";
 
 export class ControladorIngrediente {
     
@@ -40,6 +39,7 @@ export class ControladorIngrediente {
     
     public eliminarIngrediente = ( req:Request, res: Response ) => {
         const idIngrediente: number = +req.params.id;
+        if ( !idIngrediente ) res.status(400).json({error: 'Falta el id ingrediente'});
         if ( idIngrediente <= 0) res.status(400).json({error: 'El id debe de ser uno valido'});
 
         this.ingredienteService.eliminarIngrediente( idIngrediente, req.body.usuario )
@@ -69,4 +69,33 @@ export class ControladorIngrediente {
         .catch( error => this.manejarError( error, res ));
     }
 
+    public crearIngrediente = ( req:Request, res:Response ) => {
+        const [ error, informacionIngrediente ] = CrearIngredienteDto.crearInstancia( req.body );
+        if ( error ) return res.status(400).json({error: error});
+
+        this.ingredienteService.crearIngrediente( informacionIngrediente! )
+        .then( ingrediente => res.status(200).json( ingrediente ))
+        .catch( error => this.manejarError( error, res ))
+    }
+
+    public listaCompras = (req : Request, res : Response) => {
+        const { correo } = req.body;
+        if (!correo) {
+            return res.status(400).json({error:'Hace falta el correo'});
+        }
+
+        this.ingredienteService.listaDeCompras( correo )
+        .then( ingredientes => res.status(200).json( ingredientes ))
+        .catch( error => this.manejarError( error, res ))
+    }
+
+    public comprarIngrediente = ( req:Request, res: Response ) => {
+        const { idingrediente, correo } = req.body;
+        if ( idingrediente <= 0) res.status(400).json({error: 'El id debe de ser uno valido'});
+        if (!correo) return res.status(400).json({error:'Hace falta el correo'});
+
+        this.ingredienteService.comprarIngredienteFaltante( correo, idingrediente )
+        .then( ingrediente => res.status(200).json( ingrediente ))
+        .catch( error => this.manejarError( error, res ));
+    }  
 }

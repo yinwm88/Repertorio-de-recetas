@@ -1,5 +1,5 @@
 import { prisma } from "../../data/postgres";
-import { EntidadUsuario, ErrorCustomizado, IngredienteUsuario, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
+import { CrearIngredienteDto, EntidadUsuario, ErrorCustomizado, IngredienteUsuario, IngredientesRecetasDto, ManipularIngredienteDto } from "../../domain";
 
 
 export class IngredienteService {
@@ -186,10 +186,92 @@ export class IngredienteService {
                     nombre : true,
                     unidad : true,
                     calorias : true
-                 }
+                }
             });
             return ingrediente;
         } catch(error){
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async crearIngrediente( informacionIngrediente:CrearIngredienteDto ) {
+        try {
+            const ingredienteCreado = await prisma.ingrediente.create({
+                data:{
+                    nombre: informacionIngrediente.nombre,
+                    calorias: informacionIngrediente.calorias,
+                    unidad: informacionIngrediente.unidad,
+                    caduca: informacionIngrediente.caduca
+                }
+            })
+
+            return {
+                ingrediente: true
+            }
+            
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }
+    }
+
+    async listaDeCompras(correo : string){
+
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {
+                correo : correo
+            }
+        });
+        if (!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        try {
+            const lista = await prisma.compraringrediente.findMany({
+                where : {
+                    correo : correo
+                },
+                select : {
+                    idingrediente : true,
+                    cantidad : true
+                }
+            });
+            return lista;
+            
+        } catch (error) {
+            throw ErrorCustomizado.internalServer( `${ error }` );
+        }  
+    }
+
+    async comprarIngredienteFaltante(correo : string, idingrediente : number){
+        const usuarioExiste = await prisma.usuario.findFirst({
+            where : {
+                correo : correo
+            }
+        });
+        if (!usuarioExiste) throw ErrorCustomizado.badRequest( 'El usuario no existe' );
+        
+        const ingredienteExiste = await prisma.ingrediente.findFirst({
+            where : {
+                idingrediente : idingrediente
+            }
+        });
+        if (!ingredienteExiste) throw ErrorCustomizado.badRequest( 'El ingrediente no existe' );
+
+        const noTieneIngrediente = await prisma.compraringrediente.findFirst({
+            where : {
+                correo : correo,
+                idingrediente : idingrediente
+            }
+        });
+        if(!noTieneIngrediente) throw ErrorCustomizado.badRequest( 'El ingrediente no está en la lista de compras' );
+
+        try {
+            const ingredienteComprado = await prisma.compraringrediente.deleteMany({
+                where : {
+                    correo : correo,
+                    idingrediente : idingrediente
+                }
+            });
+            return "Ingrediente eliminado"
+        } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }

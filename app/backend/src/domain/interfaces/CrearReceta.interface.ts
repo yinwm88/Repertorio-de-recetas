@@ -5,5 +5,6 @@ export interface CrearReceta {
     datosReceta: CrearRecetaDto,
     usuario: EntidadUsuario,
     ingredientes: RecetaIngredientesDto,
-    utensilios: RecetaUtensiliosDto
+    utensilios: RecetaUtensiliosDto,
+    imagen: string,
 }

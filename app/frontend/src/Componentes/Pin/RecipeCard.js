@@ -14,7 +14,8 @@ const RecipeCard = ({
     onEditClick,
     onClick,
     porcentaje,
-    editable
+    editable,
+    handleDeleteRecipe
 }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -30,7 +31,7 @@ const RecipeCard = ({
 
     const handleDelete = (event) => {
         event.stopPropagation();
-        console.log("Delete action triggered");
+        handleDeleteRecipe(event);
         handleMenuClose();
     };
 
@@ -40,18 +41,24 @@ const RecipeCard = ({
         handleMenuClose();
     };
 
-    // Función para determinar el color del chip basado en el porcentaje
     const getChipColor = (percentage) => {
-        const red = Math.floor(255 - 1.28 * percentage);
-        const green = Math.floor(128 + 1.28 * percentage);
-        return `rgb(${red}, ${green}, 128, 0.4)`;
-    };
+        const red = Math.floor(255 - 0.8 * percentage);
+        const green = Math.floor(180 + 0.8 * percentage);
+        const blue = Math.floor(200 + 0.4 * percentage);
+        return `rgb(${red}, ${green}, ${blue}, 0.7)`;
+      };
 
-    // Nueva función para determinar el color de la tipografía del chip basado en el porcentaje
     const getChipTextColor = (percentage) => {
-        const red = Math.floor(255 - 1.5 * percentage);
-        const green = Math.floor(100 + 1.5 * percentage);
-        const blue = Math.floor(100 + 0.5 * percentage);
+        const getColorComponent = (percentage, isActive) => {
+            const range = isActive ? [0, 100] : [0, 200]; // Nuevo rango para los valores activos
+            const value = Math.floor(range[1] * (1 - percentage / 100));
+            return value;
+        };
+
+        const red = getColorComponent(percentage, false);
+        const green = getColorComponent(percentage, true);
+        const blue = getColorComponent(percentage, false);
+
         return `rgb(${red}, ${green}, ${blue})`;
     };
 
@@ -78,7 +85,7 @@ const RecipeCard = ({
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleMenuClose}
-                onClick={(event) => event.stopPropagation()} // Evita que el menú cierre el contenedor principal
+                onClick={(event) => event.stopPropagation()} 
             >
                 <MenuItem onClick={handleEdit}>
                     <EditIcon /> Edit
@@ -93,14 +100,14 @@ const RecipeCard = ({
                     variant="determinate"
                     value={porcentaje}
                     className="progressBar"
-                    sx={{ height: 10 }} // Ajusta la altura aquí
+                    sx={{ height: 10 }}
                 />
             </Box>
             <Chip
                 label={`${parseInt(porcentaje)}%`}
                 className="progressChip"
                 style={{
-                    color: getChipTextColor(porcentaje), // Usa la nueva función aquí
+                    color: getChipTextColor(porcentaje),
                     backgroundColor: getChipColor(porcentaje),
                     fontSize: '15px',
                     padding: '5px',

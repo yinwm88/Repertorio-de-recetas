@@ -5,5 +5,6 @@ export interface EditarReceta {
     datosReceta: EditarRecetaDto,
     usuario: EntidadUsuario,
     ingredientes: RecetaIngredientesDto,
-    utensilios: RecetaUtensiliosDto
+    utensilios: RecetaUtensiliosDto,
+    imagen: string,
 }
