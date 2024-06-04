@@ -104,13 +104,13 @@ Refrigerador, estufa, horno, licuadora
 
 ### Casos de uso:
 
-![Caso1](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso1.drawio.png)
-![Caso2](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso2.drawio.png)
-![Caso3](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso3.drawio.png)
-![Caso4](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso4.drawio.png)
-![Caso5](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso5.drawio.png)
-![Caso6](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso6.drawio.png)
-![Caso7](Diagramas/Casos%20de%20Uso/Casos%20de%20Uso7.drawio.png)
+![Caso1](Diagramas/Casos/1.png)
+![Caso2](Diagramas/Casos/2.png)
+![Caso3](Diagramas/Casos/3.png)
+![Caso4](Diagramas/Casos/4.png)
+![Caso5](Diagramas/Casos/5.png)
+![Caso6](Diagramas/Casos/6.png)
+![Caso7](Diagramas/Casos/7.png)
 
 
 </div>  
