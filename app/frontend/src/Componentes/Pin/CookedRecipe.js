@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
 import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
-import DiningOutlinedIcon from '@mui/icons-material/DiningOutlined';
+import DinnerDiningRoundedIcon from '@mui/icons-material/DinnerDiningRounded';
 import { useAuth } from '../../AuthContext';
 
-function CookedRecipeButton({ idRecipe }) {
+function CookedRecipeButton({ idRecipe, style }) {
     const { currentUser } = useAuth();
 
     const [enableCooked, setEnableCooked] = useState(false);
-    const [disableCooked, setDisableCooked] = useState(false);
     const [cooked, setCooked] = useState(false);
     const [ingredientesReceta, setIngredientesReceta] = useState([]);
     const [ingredientesUsuario, setIngredientesUsuario] = useState([]);
     const [caloriasReceta, setCaloriasReceta] = useState(0);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
 
     const fetchIngredientesUsuario = async () => {
         try {
@@ -71,7 +74,6 @@ function CookedRecipeButton({ idRecipe }) {
                 return ingredienteUsuario && Number(ingredienteUsuario.cantidad) >= Number(ingredienteReceta.cantidad);
             });
             setEnableCooked(tieneTodos);
-            setDisableCooked(!tieneTodos);
     }, [ingredientesReceta, ingredientesUsuario]);
 
     useEffect(() => {
@@ -148,7 +150,7 @@ function CookedRecipeButton({ idRecipe }) {
             const ingredienteUsuarioCorrespondiente = ingredientesUsuario.find(u => u.idingrediente === receta.idingrediente);
             if (ingredienteUsuarioCorrespondiente) {
                 const cantidadRestante = obtenerCantidadIngrediente(ingredienteUsuarioCorrespondiente.cantidad, receta.cantidad);
-                if(cantidadRestante === 0){
+                if(cantidadRestante===0){
                     eliminacionIngrediente(ingredienteUsuarioCorrespondiente.idingrediente);
                 }else{
                     try {
@@ -200,6 +202,7 @@ function CookedRecipeButton({ idRecipe }) {
     const handleChangeCookedValue = async () => {
         setCooked(true);
         setEnableCooked(false);
+        setButtonDisabled(true);
         console.log('Ingredientes Usuario:', JSON.stringify(ingredientesUsuario, null, 2));
         console.log('Ingredientes Receta:', JSON.stringify(ingredientesReceta, null, 2));
         console.log(`Calorías totales de la receta: ${caloriasReceta}`);
@@ -208,23 +211,20 @@ function CookedRecipeButton({ idRecipe }) {
     };
 
     return (
-        <div>
+        <Box style={style}>
             {enableCooked && (
-                <Tooltip title="Marcar la receta como cocinada" placement="top">
+                <Tooltip title="Marcar la receta como cocinada" placement="bottom">
+                {!buttonDisabled ? (
                     <IconButton
                         onClick={handleChangeCookedValue}
-                        sx={{
-                            marginTop: '10px',
-                            marginLeft: '470px',
-                            width: '125px',
-                            height: '125px',
-                            backgroundColor: 'rgba(247, 247, 247 , 0.6)',
-                            boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
+                        size="large"
+                        disabled={buttonDisabled}
+                        sx={{  
+                            boxShadow: '0 1px 1px rgba(0, 0, 0, 0.7)',
                             borderRadius: '90px',
-                            transition: 'background-color 0.3s, transform 0.3s',
-                            transform: cooked ? 'scale(0.5.1)' : 'scale(1)',
+                            transition: 'transform 0.2s ease-in-out, background-color 0.2s ease-in-out',
                             '&:hover': {
-                                backgroundColor: 'rgba(249, 84, 99 , 0.5)',
+                                backgroundColor: 'rgba(249, 84, 99 , 0.6)',
                                 transform: 'scale(1.1)',
                             },
                             display: 'flex',
@@ -233,46 +233,51 @@ function CookedRecipeButton({ idRecipe }) {
                         }}
                         aria-label="cooked recipe"
                     >
-                        <DiningOutlinedIcon sx={{ fontSize: 80 }} />
+                        <DinnerDiningRoundedIcon sx={{fontSize:60}}/>
                     </IconButton>
-                </Tooltip>
-            )}
-            {disableCooked&& (
+                ) : (
+                    <IconButton
+                        component="label"
+                        size="large"
+                        disabled={buttonDisabled}
+                        sx={{  
+                            '&:disabled': {
+                                backgroundColor: 'rgba(249, 84, 99 , 1)',
+                                cursor: 'not-allowed',
+                            },
+                            cursor: 'not-allowed',
+                            borderRadius:'100px',  
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexDirection: 'column', // Asegura que los elementos se apilen verticalmente
+                        }}
+                        tabIndex={-1}
+                    >
+                        <DinnerDiningRoundedIcon sx={{ color: 'rgba(249, 84, 99 , 1)', fontSize: 60 }} />
+                        <Typography sx={{ color: 'rgba(249, 84, 99 , 1)', fontSize: 15 }}> {/* Ajusta el tamaño del texto */}
+                            Receta Cocinada
+                        </Typography>
+                    </IconButton>    
+                )}
+            </Tooltip>
+            
+        )}
+            {!enableCooked && (
                 <IconButton
-                    disabled
-                    sx={{
-                        marginTop: '10px',
-                        marginLeft: '470px',
-                        width: '125px',
-                        height: '125px',
-                        boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
-                        borderRadius: '90px',
-                    }}
+                    disabled 
+                    size="large"
                     aria-label="cooked recipe"
-                >
-                    <DiningOutlinedIcon sx={{ fontSize: 80 }} />
-                </IconButton>
-            )}
-            {!enableCooked && !disableCooked && (
-                <Box
-                    sx={{
-                        marginTop: '10px',
-                        marginLeft: '470px',
-                        width: '125px',
-                        height: '125px',
-                        backgroundColor:  'rgba(249, 84, 99 , 1)',
-                        boxShadow: '0 15px 25px rgba(0, 0, 0, 0.7)',
-                        borderRadius: '90px',
+                    sx={{  
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}
-                    aria-label="cooked recipe"
-                >
-                    <DiningOutlinedIcon sx={{ fontSize: 80 }} />
-                </Box>
+                    >
+                    <DinnerDiningRoundedIcon sx={{fontSize:60}} />
+                </IconButton>
             )}
-        </div>
+        </Box>
     );
 }
 
