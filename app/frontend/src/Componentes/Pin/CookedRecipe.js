@@ -263,20 +263,6 @@ function CookedRecipeButton({ idRecipe, style }) {
             </Tooltip>
             
         )}
-            {!enableCooked && (
-                <IconButton
-                    disabled 
-                    size="large"
-                    aria-label="cooked recipe"
-                    sx={{  
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}
-                    >
-                    <DinnerDiningRoundedIcon sx={{fontSize:60}} />
-                </IconButton>
-            )}
         </Box>
     );
 }
