@@ -252,7 +252,9 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
               ))}
             </Timeline>
             {showCocinado && (
-              <CookedRecipe idRecipe={idRecipe} />
+              <Box display="flex" justifyContent="center" mt={2}>
+                <CookedRecipe idRecipe={idRecipe} />
+              </Box>
             )}
           </Box>
         </div>
