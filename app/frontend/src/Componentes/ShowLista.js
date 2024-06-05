@@ -14,6 +14,7 @@ const ShowLista = () => {
     const [listaDatosMostrar, setListaDatosMostrar] = useState([]);
     const [error, setError] = useState(null);
     const [showLista, setShowLista] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(false); 
 
 
     const getDatosIngrediente = async (id) => {
@@ -57,11 +58,11 @@ const ShowLista = () => {
             }
     
             const data = await response.json();
-            console.log('lista que se genero :', data);
             setLista(data);
             if(data.length !== 0){
-                setShowLista(true);
-                listaTolistaDatos();
+                setShowLista(); 
+                setSelectedItemId(true);   
+                listaTolistaDatos();    
             }
         } catch (error) {
             setError('No se pudo obtener la lista');
@@ -147,8 +148,20 @@ const ShowLista = () => {
 
     return (
         <>
-            <h2>Lista de Compras</h2>
-            {showLista ? (
+            <div
+                style={{ display: 'flex', alignItems: 'center' }}>
+                    <h2 style={{ flex: 1 }}>Lista de Compras</h2>
+                    {selectedItemId && (
+                        <IconButton 
+                            aria-label="comprar" 
+                            sx={{ color: '#06A0D6' }}
+                            onClick={() => handleComprarIngrediente(lista[0].idingrediente)} 
+                            >
+                            <LocalGroceryStoreIcon />
+                        </IconButton>
+                    )}
+            </div>
+            {!showLista ? (
                 listaDatosMostrar.length > 0 ? (
                     <List>
                         {listaDatosMostrar.map((item, index) => (
@@ -156,23 +169,15 @@ const ShowLista = () => {
                                 <ListItemText 
                                     primary={`${item.nombre}: ${item.cantidad} ${item.unidad}`} 
                                 />
-                                <IconButton 
-                                    edge="end" 
-                                    aria-label="comprar" 
-                                    sx={{ color: '#06A0D6' }}
-                                    onClick={() => handleComprarIngrediente(item.idIngrediente)} 
-                                >
-                                    <LocalGroceryStoreIcon />
-                                </IconButton>
                             </ListItem>
                         ))}
                     </List>
                 ) : (
                     <Typography color="gray">Cargando...</Typography>
-                )
-            ) : (
-                <Typography color="gray">No se ha generado ninguna lista</Typography>
-            )}
+                    )
+                    ) : (
+                        <Typography color="gray">No se ha generado ninguna lista</Typography>
+                        )}
         </>
     );
 };
