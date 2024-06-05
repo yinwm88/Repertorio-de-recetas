@@ -175,7 +175,7 @@ export class UtensilioService {
                 utensilios: listaUtensilios
             }
         } catch (error) {
-            
+            throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
 
@@ -192,7 +192,7 @@ export class UtensilioService {
                 }
             });
         } catch (error) {
-            
+            throw ErrorCustomizado.internalServer( `${ error }` );
         }
     }
 
