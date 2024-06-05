@@ -24,9 +24,7 @@ const ShowLista = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}` 
                 },
-                body: JSON.stringify({
-                    id: id
-                }),
+                body: JSON.stringify({ id }),
             });
 
             if (!response.ok) {
@@ -50,62 +48,66 @@ const ShowLista = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    correo: currentUser
-                }),
+                body: JSON.stringify({ correo: currentUser }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('No se pudo obtener la lista');
             }
-
+    
             const data = await response.json();
-
             setLista(data);
             setShowLista(data.length !== 0);
-            console.log('lista:', data);
-            listaTolistaDatos(data);
-
+            console.log('Lista obtenida:', data);
         } catch (error) {
             setError('No se pudo obtener la lista');
             console.error(error);
         }
+        
     };
-
+    
     const listaTolistaDatos = async () => {
-        const listaDatos = await Promise.all(lista.map(async (item) => {
-            const datosIngrediente = await getDatosIngrediente(item.idingrediente);
-            return {
-                idIngrediente: item.idingrediente,
-                nombre: datosIngrediente.nombre,
-                cantidad: item.cantidad,
-                unidad: datosIngrediente.unidad
-            };
-        }));
-        setListaDatosMostrar(listaDatos);
+        if(lista.length === 0){
+            getListaGenerada();
+        }else{
+            try {
+                const listaDatos = await Promise.all(lista.map(async (item) => {
+                    const datosIngrediente = await getDatosIngrediente(item.idingrediente);
+                    return {
+                        idIngrediente: item.idingrediente,
+                        nombre: datosIngrediente.nombre,
+                        cantidad: item.cantidad,
+                        unidad: datosIngrediente.unidad
+                    };
+                }));
+                setListaDatosMostrar(listaDatos);
+                console.log('ListaDatosMostrar actualizada:', listaDatos);
+            } catch (error) {
+                console.error('Error al convertir lista a listaDatos:', error);
+            }
+        }
     };
-
+    
+    //obtenemos la lista que se genero siempre que showlista sea true
     useEffect(() => {
         getListaGenerada();
-    }, [currentUser, getToken]);
+    }, [showLista]);
 
+    //convertimos la lista a listaDatos simempre que lista se actualice 
     useEffect(() => {
         listaTolistaDatos();
     }, [lista]);
 
     const handleComprarIngrediente = async (id) => {
-        console.log('id del ingrediente a Comprar:', id);
-        console.log('currentUser:', currentUser);
-    
+        console.log('ID del ingrediente a comprar:', id);
+        console.log('CurrentUser:', currentUser);
+        console.log('listaDatos:', listaDatosMostrar);
         try {
             const token = await getToken();
-            const payload = {
-                id: 2,
-                correo: currentUser
-            };
+            const payload = { id, correo: currentUser };
             console.log('Payload:', JSON.stringify(payload));
-    
-            const response = await fetch('http://localhost:3001/ingrediente/comprarIngrediente', {
+
+            const response = await fetch('http://localhost:3001/ingrediente/comprar/ingrediente', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -113,23 +115,38 @@ const ShowLista = () => {
                 },
                 body: JSON.stringify(payload),
             });
-    
+
             if (response.ok) {
                 Swal.fire({
                     text: 'Ingrediente eliminado de la lista exitosamente!',
                     icon: 'success',
                 });
-                getListaGenerada();
+
+                // Actualizar lista eliminando el elemento comprado
+                setLista(prevLista =>
+                    prevLista.filter(item => item.idingrediente !== id)
+                );
+
+                // Actualizar listaDatosMostrar eliminando el elemento comprado
+                setListaDatosMostrar(prevListaDatosMostrar =>
+                    prevListaDatosMostrar.filter(item => item.idIngrediente !== id)
+                );
             } else {
-                const errorText = await response.text();
+                const errorText = await response.json();
                 console.error('Error response:', errorText);
-                throw new Error('No se pudo marcar como comprado el ingrediente');
+                Swal.fire({
+                    text: errorText.error || 'No se pudo marcar como comprado el ingrediente',
+                    icon: 'error',
+                });
             }
         } catch (error) {
             console.error(error);
+            Swal.fire({
+                text: 'Ocurrió un error al intentar comprar el ingrediente',
+                icon: 'error',
+            });
         }
     };
-    
 
     return (
         <>
