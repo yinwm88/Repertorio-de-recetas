@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, List, ListItem, ListItemText, ListItemIcon, Button } from '@mui/material';
-import { Box, CssBaseline, Typography, IconButton, Fab, ListItemButton, ListItemAvatar, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Paper, List, ListItem, ListItemText, ListItemIcon, Select, Button } from '@mui/material';
+import { Box, CssBaseline, Typography, MenuItem, IconButton, Fab, ListItemButton, ListItemAvatar, Avatar, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import Swal from 'sweetalert2'
 import {
   faSnowflake,
   faJar,
@@ -144,16 +145,78 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
     setOpen(false);
   };
 
+  const [iconos, setIconos] = useState([]);
+  const [newUtensilioData, setNewUtensilioData] = useState({
+    nombre: "",
+    icono: "", 
+  });
+
+  useEffect(() => {
+    const getIconos = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/usuario/utensilio/iconos`, {
+          method: 'GET',
+        });
+
+        if (!response.ok) {
+          throw new Error('No se pudo obtener los iconos');
+        }
+        
+        const data = await response.json();
+        console.log('Iconos:', JSON.stringify(data, null, 2)); 
+        setIconos(data.iconos);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getIconos();
+  }, []); 
+
+  const handleCreateItem = async () => {
+    try {
+      console.log("Datos del utensilio a enviar:", newUtensilioData); 
+      const response = await fetch(`http://localhost:3001/usuario/utensilio/crear`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          //nombre: "Machacador",
+          //icono: "" 
+          nombre: newUtensilioData.nombre,
+          icono: newUtensilioData.icono || null
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('No se pudo crear el utensilio');
+      }
+  
+
+      obtenerUtensilios();
+
+      handleClose();
+  
+      Swal.fire({
+        text: 'Utensilio creado exitosamente!',
+        icon: 'success',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
   return (
     <>
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          width: '95%', 
-          marginBottom:'10px'
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            width: '95%', 
+            marginBottom:'10px'
         }}
       >
         <h2>
@@ -179,8 +242,6 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
         })}
       </List>
 
-
-
       <Box
         sx={{
           display: 'flex',
@@ -193,21 +254,43 @@ function UtensiliosList({ onUtensiliosSeleccionadosChange }) {
         </StyledFab>
       </Box>
 
-
-
-
-      <Dialog open={open} onClose={handleClose}>
-                  <DialogTitle>Añadir ingrediente 🍎</DialogTitle>
-                  <DialogContent>
-                    
-                    <DialogContentText>
-                      Si no encuentras un ingrediente, puedes crear uno nuevo.
-                    </DialogContentText><br />
-                    <Button>Crear ingrediente nuevo</Button>
+            <Dialog open={open} onClose={handleClose}>
+                        <DialogTitle>Crear utensilio </DialogTitle>
+                      <DialogContent>
+                      <TextField
+                        margin="dense"
+                        id="nombre"
+                        label="Nombre del utensilio"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={newUtensilioData.nombre}
+                        onChange={(e) => setNewUtensilioData({ ...newUtensilioData, nombre: e.target.value })}
+                        sx={{ marginBottom: '16px' }}
+                      />
+                      <Typography sx={{ marginLeft: '5px', fontSize: '15px' }} gutterBottom>
+                        Elije un icono:
+                      </Typography>
+                      <Select
+                        labelId="select-icon-label"
+                        id="select-icon"
+                        label="Icono"
+                        value={newUtensilioData.icono}
+                        onChange={(e) => setNewUtensilioData({ ...newUtensilioData, icono: e.target.value })}
+                        fullWidth
+                        sx={{ marginBottom: '16px' }}
+                      >
+                        {iconos.map((icono, index) => (
+                          <MenuItem key={index} value={icono.icono}>
+                            <FontAwesomeIcon icon={icono.icono} />
+                            <span style={{ marginLeft: '18px' }}>{icono.icono}</span>
+                          </MenuItem>
+                        ))}
+                      </Select>
                   </DialogContent>
                   <DialogActions>
-                    <Button >Cancelar</Button>
-                    <Button >Añadir</Button>
+                    <Button onClick={handleClose} >Cancelar</Button>
+                    <Button onClick={handleCreateItem}>Agregar</Button>
                   </DialogActions>
       </Dialog>
 
