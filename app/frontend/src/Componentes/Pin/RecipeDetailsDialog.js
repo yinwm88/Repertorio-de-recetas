@@ -176,13 +176,13 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Box>
-                  <Typography variant="h6">Tiempo de preparación</Typography>
+                  <Typography  sx={{marginTop:'50px', marginBottom:'15px'}} variant="h6">Tiempo de preparación</Typography>
                   <Chip label={`${tiempo} minutos`} />
                 </Box>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Box>
-                  <Typography variant="h6">Utensilios</Typography>
+                  <Typography  sx={{marginTop:'50px', marginBottom:'15px'}} variant="h6">Utensilios</Typography>
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                     {utensilioDetails.map((utensilio, index) => (
                       <Chip
@@ -207,9 +207,9 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
                         marginBottom:'10px'
                       }}
                 >
-                    <Typography variant="h6">Ingredientes</Typography>
-                    <Box sx={{ marginLeft: '20px' }}> {/* Ajusta el margen según sea necesario */}
-                        <Lista/>
+                    <Typography sx={{marginTop:'40px',marginLeft: '5px', marginBottom:'15px'}} variant="h6">Ingredientes</Typography>
+                    <Box sx={{ marginTop:'30px',marginLeft: '15px' }}> 
+                        <Lista idReceta={{idRecipe}}/>
                     </Box>
                 </Box>
 
