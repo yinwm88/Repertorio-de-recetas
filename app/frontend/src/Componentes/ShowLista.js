@@ -15,6 +15,7 @@ const ShowLista = () => {
     const [error, setError] = useState(null);
     const [showLista, setShowLista] = useState(false);
 
+
     const getDatosIngrediente = async (id) => {
         try {
             const token = await getToken();
@@ -56,9 +57,12 @@ const ShowLista = () => {
             }
     
             const data = await response.json();
+            console.log('lista que se genero :', data);
             setLista(data);
-            setShowLista(data.length !== 0);
-            console.log('Lista obtenida:', data);
+            if(data.length !== 0){
+                setShowLista(true);
+                listaTolistaDatos();
+            }
         } catch (error) {
             setError('No se pudo obtener la lista');
             console.error(error);
@@ -67,9 +71,8 @@ const ShowLista = () => {
     };
     
     const listaTolistaDatos = async () => {
-        if(lista.length === 0){
-            getListaGenerada();
-        }else{
+        console.log('Como esta  lista antes de  sacar listaDatos:', lista);
+
             try {
                 const listaDatos = await Promise.all(lista.map(async (item) => {
                     const datosIngrediente = await getDatosIngrediente(item.idingrediente);
@@ -81,27 +84,25 @@ const ShowLista = () => {
                     };
                 }));
                 setListaDatosMostrar(listaDatos);
-                console.log('ListaDatosMostrar actualizada:', listaDatos);
             } catch (error) {
                 console.error('Error al convertir lista a listaDatos:', error);
             }
-        }
+    
     };
     
-    //obtenemos la lista que se genero siempre que showlista sea true
-    useEffect(() => {
-        getListaGenerada();
-    }, [showLista]);
+    
 
-    //convertimos la lista a listaDatos simempre que lista se actualice 
+    //tratamos de obteener una listaGenerada, una vez obtenida entonces 
     useEffect(() => {
-        listaTolistaDatos();
-    }, [lista]);
+            console.log('Como esta  lista despues de eliminars:', lista);
+            console.log('Como esta ListaDatosMostrar  despues de eliminars:', listaDatosMostrar);
+            getListaGenerada();
+    }, [!showLista]);
+
 
     const handleComprarIngrediente = async (id) => {
+        console.log('Como esta ListaDatosMostrar  antes de eliminar:', listaDatosMostrar);
         console.log('ID del ingrediente a comprar:', id);
-        console.log('CurrentUser:', currentUser);
-        console.log('listaDatos:', listaDatosMostrar);
         try {
             const token = await getToken();
             const payload = { id, correo: currentUser };
@@ -118,19 +119,15 @@ const ShowLista = () => {
 
             if (response.ok) {
                 Swal.fire({
-                    text: 'Ingrediente eliminado de la lista exitosamente!',
+                    text: 'La lista de compra se vacio exitosamente!',
                     icon: 'success',
                 });
-
-                // Actualizar lista eliminando el elemento comprado
-                setLista(prevLista =>
-                    prevLista.filter(item => item.idingrediente !== id)
-                );
 
                 // Actualizar listaDatosMostrar eliminando el elemento comprado
                 setListaDatosMostrar(prevListaDatosMostrar =>
                     prevListaDatosMostrar.filter(item => item.idIngrediente !== id)
                 );
+
             } else {
                 const errorText = await response.json();
                 console.error('Error response:', errorText);
