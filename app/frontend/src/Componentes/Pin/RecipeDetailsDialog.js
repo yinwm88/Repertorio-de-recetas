@@ -36,6 +36,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./RecipeDetailsDialog.css";
 import CookedRecipe from "./CookedRecipe";
 import Lista from "./Lista";
+import Swal from 'sweetalert2';
+
 
 const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, idRecipe }) => {
   const [tabValue, setTabValue] = useState(0);
@@ -158,6 +160,16 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
     updateStepStartIndex();
   }, [currentStep]);
 
+  const handleSuccess = () => {
+
+    handleClose(); 
+    Swal.fire({
+        text: 'Lista generada exitosamente!',
+        icon: 'success',
+    });
+};
+  
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullScreen>
       <DialogContent className="dialog-content">
@@ -208,8 +220,8 @@ const RecipeDetailsDialog = ({ open, handleClose, name, imgSrc, recipeDetails, i
                       }}
                 >
                     <Typography sx={{marginTop:'40px',marginLeft: '5px', marginBottom:'15px'}} variant="h6">Ingredientes</Typography>
-                    <Box sx={{ marginTop:'30px',marginLeft: '15px' }}> 
-                        <Lista idReceta={{idRecipe}}/>
+                    <Box sx={{ marginTop:'30px',marginLeft: '15px' }}>
+                      <Lista idReceta={{idRecipe}} onSuccess={handleSuccess } />
                     </Box>
                 </Box>
 

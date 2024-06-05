@@ -331,6 +331,7 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
           <Tabs value={tabIndex} onChange={handleTabChange} centered>
             <Tab label="Ingredientes" />
             <Tab label="Utensilios" />
+            <Tab label="Lista generada" />
           </Tabs>
 
           {tabIndex === 0 && (
@@ -546,16 +547,16 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
               <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
             </Box>
           )}
-          {/** 
+          
           {tabIndex === 2 && (
             <Box sx={{ p: 2 }}>
               <h2>
                 Lista Generada
               </h2>
-              <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
+              {/*<UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />*/}
             </Box>
           )}
-          */}
+          
         </Paper>
       </React.Fragment>
 
