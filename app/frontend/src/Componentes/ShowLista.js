@@ -15,7 +15,7 @@ const ShowLista = () => {
     const [selectedItemId, setSelectedItemId] = useState(false); 
 
 
-    const getListaGenerada = async () => {
+    const getDatosIngrediente = async (id) => {
         try {
             const token = await getToken(); 
             const response = await fetch('http://localhost:3001/ingrediente/listaCompras', {
@@ -36,15 +36,9 @@ const ShowLista = () => {
     
             const data = await response.json();
 
-
-            // Obtener los nombres y unidades de los ingredientes
-            const listaConNombres = await Promise.all(data.map(async (item) => {
-                const { nombre, unidad } = await getDatosIngrediente(item.idingrediente);
-                return { ...item, nombre, unidad };
-            }));
-            
-            setLista(listaConNombres);
-            setShowLista(listaConNombres.length !== 0);
+            setLista(data);
+            setShowLista(data.length !== 0);
+            console.log('Lista obtenida:', data);
         } catch (error) {
             setError('No se pudo obtener la lista');
             console.error(error);
@@ -52,12 +46,43 @@ const ShowLista = () => {
         
     };
 
-
+    
+    const listaTolistaDatos = async () => {
+        if(lista.length === 0){
+            getListaGenerada();
+        }else{
+            try {
+                const listaDatos = await Promise.all(lista.map(async (item) => {
+                    const datosIngrediente = await getDatosIngrediente(item.idingrediente);
+                    return {
+                        idIngrediente: item.idingrediente,
+                        nombre: datosIngrediente.nombre,
+                        cantidad: item.cantidad,
+                        unidad: datosIngrediente.unidad
+                    };
+                }));
+                setListaDatosMostrar(listaDatos);
+                console.log('ListaDatosMostrar actualizada:', listaDatos);
+            } catch (error) {
+                console.error('Error al convertir lista a listaDatos:', error);
+            }
+        }
+    };
+    
+    //obtenemos la lista que se genero siempre que showlista sea true
     useEffect(() => {
         getListaGenerada();
-    }, [currentUser, getToken, showLista]); // Added showLista as a dependency
+    }, [showLista]);
 
-    const getDatosIngrediente = async (idingrediente) => {
+    //convertimos la lista a listaDatos simempre que lista se actualice 
+    useEffect(() => {
+        listaTolistaDatos();
+    }, [lista]);
+
+    const handleComprarIngrediente = async (id) => {
+        console.log('ID del ingrediente a comprar:', id);
+        console.log('CurrentUser:', currentUser);
+        console.log('listaDatos:', listaDatosMostrar);
         try {
             const token = await getToken(); 
             const response = await fetch('http://localhost:3001/ingrediente/datos', {
@@ -72,8 +97,29 @@ const ShowLista = () => {
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error('No se pudo obtener los datos del ingrediente');
+
+            if (response.ok) {
+                Swal.fire({
+                    text: 'Ingrediente eliminado de la lista exitosamente!',
+                    icon: 'success',
+                });
+
+                // Actualizar lista eliminando el elemento comprado
+                setLista(prevLista =>
+                    prevLista.filter(item => item.idingrediente !== id)
+                );
+
+                // Actualizar listaDatosMostrar eliminando el elemento comprado
+                setListaDatosMostrar(prevListaDatosMostrar =>
+                    prevListaDatosMostrar.filter(item => item.idIngrediente !== id)
+                );
+            } else {
+                const errorText = await response.json();
+                console.error('Error response:', errorText);
+                Swal.fire({
+                    text: errorText.error || 'No se pudo marcar como comprado el ingrediente',
+                    icon: 'error',
+                });
             }
 
             const data = await response.json();
