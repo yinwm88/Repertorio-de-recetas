@@ -17,7 +17,7 @@ export class RutasIngrediente {
         router.post('/datos', controlador.datosIngrediente );
         router.post('/crear', controlador.crearIngrediente );
         router.post('/listaCompras', controlador.listaCompras)
-        router.delete('/comprar/ingrediente', controlador.comprarIngrediente)
+        router.delete('/comprarIngrediente', controlador.comprarIngrediente)
 
         return router;
     }
