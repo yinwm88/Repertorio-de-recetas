@@ -7,8 +7,8 @@ export class CrearUntensilioDto {
 
     static crearInstancia( objeto: { [key: string]: any }): [string?, CrearUntensilioDto?] {
         const { nombre, icono } = objeto;
-        if ( !nombre ) return ['Falta el nombre del ingrediente'];   
-        if ( !icono ) return ['Faltan las calorias del ingrediente'];   
+        if ( !nombre ) return ['Falta el nombre del utensilio'];   
+        if ( !icono ) return ['Faltan el icono del utensilio'];   
 
         return [, new CrearUntensilioDto( nombre, icono )];
     }

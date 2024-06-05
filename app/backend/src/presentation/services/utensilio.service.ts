@@ -180,17 +180,20 @@ export class UtensilioService {
     }
 
     async crearUtensilio( utensilio: CrearUntensilioDto ) {
-        const utensilioExiste = prisma.electrodomestico.findUnique({
+        const utensilioExiste = await prisma.electrodomestico.findUnique({
             where: { nombre: utensilio.nombre }
         })
         if( !!utensilioExiste ) throw ErrorCustomizado.badRequest( 'Utensilio ya existe' );
         try {
-            await prisma.electrodomestico.create({
+            const nuevoUtensilio =  await prisma.electrodomestico.create({
                 data: {
                     nombre: utensilio.nombre,
                     icono: utensilio.icono      
                 }
             });
+            return {
+                utensilio: nuevoUtensilio
+            }
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
