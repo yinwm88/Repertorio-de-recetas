@@ -442,7 +442,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('steak sauce',
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('hot pepper sauce', 'cdta', True, 6);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('celery salt', 'cdta', True, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('any lean, tough cut of meat (ex. round steak)', 'pz', True, 250);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('unprocessed animal fat of some kind (ex. beef suet, mutton fat)', 'pz', True, 100);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('unprocessed animal fat', 'pz', True, 100);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('shredded cheese of your choice', 'tza', True, 110);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('small amount of flour', 'handful', True, 28);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('beef bouillon', 'cdta', True, 10);
@@ -640,7 +640,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('tonkatsu sauc
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('sriacha', 'pz', False, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('katsuobushi (dried bonito flakes)', 'pz', False, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('nori (dried roasted seaweed)', 'pz', False, 0);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('baker's yeast', 'sachet', True, 20);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('bakers yeast', 'sachet', True, 20);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('sunflower oil', 'cdta', True, 40);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('red beans azuki', 'gr', True, 875);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('baking paper square 7x7cm', 'pz', True, 0);
@@ -655,7 +655,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('slices of bac
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('baked beans', 'gr', True, 155);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('slices of bread', 'slices', True, 130);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('large tomato', 'pz', True, 33);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('tony chachere's', 'generous sprinkle', True, 5);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('tony chacheres', 'generous sprinkle', True, 5);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('loaf of french bread', 'loaf', True, 200);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('tabasco', 'to taste', True, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('beer', 'glass', True, 235);
@@ -702,7 +702,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('sweet cinnamo
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('malt vinegar', 'cda', True, 42);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('cornflour', 'cda', True, 31);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('well-washed stone', 'pz', True, 0);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('pig's ear', 'pz', True, 100);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('pigs ear', 'pz', True, 100);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('chouriço negro', 'slices', True, 250);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('mixed meat chouriço', 'slices', True, 250);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('pork belly', 'gr', True, 580);
@@ -721,7 +721,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('herbes de pro
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('italian spaghetti', 'gr', True, 1200);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('salted capers', 'gr', True, 5);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('anchovies in oil', 'gr', True, 58);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('peeled tomatoes 'sugo'', 'gr', True, 160);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('peeled tomatoes', 'gr', True, 160);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('gaeta olives', 'gr', True, 115);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('chopped chillies', 'pz', True, 4);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('button or crimini mushrooms', 'gr', True, 66);
@@ -730,7 +730,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('mushroom or c
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('grated pecorino or parmesan cheese', 'gr', True, 431);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('tortillas', 'pz', True, 150);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('cheese (mozzarella, oaxaca, or montery jack)', 'quantity', True, 100);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('ingredients of choice (veggies, chicken, mushrooms, beans)', 'variable', False, 0);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('ingredients of choice', 'variable', False, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('chicken breast', 'gr', True, 800);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('fresh tomatoes', 'pz', True, 50);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('fresh spinach', 'gr', True, 70);
@@ -780,7 +780,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('pork roast', 
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('pancetta', 'gr', True, 500);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('long grain rice', 'kg', True, 1300);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('meat (lamb)', 'kg', True, 4000);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('spices (cardamom, paprika, coriander, cinnamon, cumin, turmeric)', 'gr', True, 0);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('turmeric', 'gr', True, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('clove (spice)', 'clove', True, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('belgian apple/pear syrup', 'cda', True, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('chorizo pork sausage', 'pz', True, 300);
@@ -813,7 +813,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('green hot pep
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('parsley flakes', 'cda', True, 1);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('prosciutto', 'to taste', True, 50);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('arugula', 'pz', True, 5);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('fresh ground rose pepper, green pepper, and black pepper', 'cda', True, 5);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('black pepper', 'cda', True, 5);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('ground turkey', 'pound', True, 640);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('coleslaw mix', 'bag', True, 100);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('small onion', 'pz', True, 20);
@@ -908,11 +908,11 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('alcohol', 'su
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('ingredient 1', 'tza', True, 300);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('ingredient 2', 'cda', True, 20);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('gouda cheese', 'pz', True, 101);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('champignon 'shrooms', 'pz', True, 5);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('champignon shrooms', 'pz', True, 5);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('worchestershire sauce', 'cda', True, 15);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('egg noodles', 'pound', True, 589);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('garbanzo beans (chickpeas)', 'can', True, 269);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('za'atar', 'cdta', True, 1);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('zaatar', 'cdta', True, 1);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('mayonnaise or aioli', 'cda', True, 90);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('savoury', 'cdta', True, 5);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('cod fillets', 'lbs', True, 189);
@@ -972,7 +972,7 @@ insert into Ingrediente(nombre, unidad, caduca, calorias) values ('hearty white 
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('bread slices', 'slices', True, 200);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('sugar-free ketchup', 'moderate amount', True, 20);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('brown sugar cubes', 'cubes', True, 50);
-insert into Ingrediente(nombre, unidad, caduca, calorias) values ('campbell's tomato soup', 'can', True, 200);
+insert into Ingrediente(nombre, unidad, caduca, calorias) values ('campbells tomato soup', 'can', True, 200);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('franks redhot sauce', 'to taste', True, 0);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('chopped garlic clove', 'large', True, 4);
 insert into Ingrediente(nombre, unidad, caduca, calorias) values ('chopped onion', 'tza', True, 16);
