@@ -91,6 +91,7 @@ export class ControladorIngrediente {
 
     public comprarIngrediente = ( req:Request, res: Response ) => {
         const { idingrediente, correo } = req.body;
+        if (!idingrediente) return res.status(400).json({error:'Hace falta el id del ingrediente'});
         if ( idingrediente <= 0) res.status(400).json({error: 'El id debe de ser uno valido'});
         if (!correo) return res.status(400).json({error:'Hace falta el correo'});
 

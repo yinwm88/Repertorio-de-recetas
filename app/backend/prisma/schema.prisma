@@ -166,7 +166,7 @@ model compraringrediente {
   usuario       usuario     @relation(fields: [correo], references: [correo], onDelete: Cascade, map: "fkcompraringrediente1")
   ingrediente   ingrediente @relation(fields: [idingrediente], references: [idingrediente], onDelete: Cascade, map: "fkcompraringrediente2")
 
-  @@unique([correo, idingrediente], map: "uniquecompraringrediente")
+  @@unique([correo, idingrediente], name: "comprarIngrediente", map: "uniquecompraringrediente")
 }
 
 enum caracteristicas {
