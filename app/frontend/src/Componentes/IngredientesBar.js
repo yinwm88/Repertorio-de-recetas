@@ -18,7 +18,7 @@ import Chip from '@mui/material/Chip';
 import KitchenIcon from '@mui/icons-material/Kitchen'; // Icono para utensilios
 import { Tab, Tabs } from '@mui/material';
 import UtensiliosList from './Electrodomesticos';
-
+import ShowLista from './ShowLista';
 
 const itemIcons = {
   shopping: <ShoppingCartIcon />,
@@ -322,6 +322,8 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
     }
   }
 
+  
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -331,7 +333,7 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
           <Tabs value={tabIndex} onChange={handleTabChange} centered>
             <Tab label="Ingredientes" />
             <Tab label="Utensilios" />
-            <Tab label="Lista generada" />
+            <Tab label="Lista" />
           </Tabs>
 
           {tabIndex === 0 && (
@@ -550,10 +552,7 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
           
           {tabIndex === 2 && (
             <Box sx={{ p: 2 }}>
-              <h2>
-                Lista Generada
-              </h2>
-              {/*<UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />*/}
+              <ShowLista/>
             </Box>
           )}
           

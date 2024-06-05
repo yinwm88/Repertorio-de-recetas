@@ -8,6 +8,7 @@ const Lista = ({ idReceta, onSuccess }) => {
     const { currentUser, getToken } = useAuth();
     const [id, setId] = useState(0);
 
+
     useEffect(() => {
         setId(idReceta.idRecipe);
     }, [idReceta]); 
