@@ -70,7 +70,7 @@ on update cascade on delete cascade;
 create table Ingrediente (
 	idIngrediente serial,
 	nombre Varchar(50),
-	unidad Varchar(5),
+	unidad Varchar(50),
 	caduca boolean,
 	calorias int
 );
