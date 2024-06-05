@@ -1,10 +1,20 @@
 
+enum UnidadMedida {
+    gramo = 'g',
+    kiloGramo = "kg",
+    onza = "oz",
+    litro = "l",
+    miliLitro = "mil",
+    taza = "taza",
+    cuchara = "chucharada"
+}
+
 export class ManipularIngredienteDto {
 
     private constructor(
         public readonly idIngrediente: number,
         public readonly cantidad: number,
-        public readonly unidad: string,
+        public readonly unidad: UnidadMedida,
     ) {}
 
     static crearInstancia( objeto: { [key: string]: any }): [string?, ManipularIngredienteDto?] {
