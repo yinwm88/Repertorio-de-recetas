@@ -94,22 +94,26 @@ const ShowLista = () => {
     }, [lista]);
 
     const handleComprarIngrediente = async (id) => {
-        console.log('idaComprar:',id);
-
+        console.log('id del ingrediente a Comprar:', id);
+        console.log('currentUser:', currentUser);
+    
         try {
             const token = await getToken();
+            const payload = {
+                id: 2,
+                correo: currentUser
+            };
+            console.log('Payload:', JSON.stringify(payload));
+    
             const response = await fetch('http://localhost:3001/ingrediente/comprarIngrediente', {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    id: id,
-                    correo: currentUser
-                }),
+                body: JSON.stringify(payload),
             });
-
+    
             if (response.ok) {
                 Swal.fire({
                     text: 'Ingrediente eliminado de la lista exitosamente!',
@@ -117,12 +121,15 @@ const ShowLista = () => {
                 });
                 getListaGenerada();
             } else {
+                const errorText = await response.text();
+                console.error('Error response:', errorText);
                 throw new Error('No se pudo marcar como comprado el ingrediente');
             }
         } catch (error) {
             console.error(error);
         }
     };
+    
 
     return (
         <>
