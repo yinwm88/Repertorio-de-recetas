@@ -1,40 +1,40 @@
 insert into Receta(nombre, tiempo, proceso) values ('Southern Biscuits', 52, 'Preheat oven to 425°F. In a bowl combine dry ingredients. Cube butter and add to dry ingredients. Mix butter with hands or fork until a cornmeal consistency is achieved. Add milk and mix until homogeneous. Roll biscuits out to approx. 3/4 of an inch thick. Use a mug, cup, or cookie cutter to cut out rounds of dough. Arrange rounds in a cast iron pan. Bake for 12 to 15 minutes. Remove from oven and eat hot. Will keep on counter or in a brisker.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 1, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 2, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 3, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 4, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 5, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 6, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 1, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 2, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 3, 110);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 4, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 5, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (1, 6, 90);
 insert into tipoReceta(idReceta, tipo) values (1, 'American');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Ginataang Kalabasa', 10, 'Remove the seeds from your squash, then peel it and chop it up into large cubes, then set aside.. Chop your onion and garlic and cook in an oiled stock pot until translucent.. Once your onions are translucent add both cans of coconut milk to the pot along with your cubes of squash. Let simmer until squash is soft.. When your squash is soft take a potato masher and mash about half of your squash leaving the rest of it as cubes.. Take off heat and serve over rice..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 7, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 8, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 9, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 10, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 7, 21);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 8, 44);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 9, 33);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (2, 10, 100);
 insert into tipoReceta(idReceta, tipo) values (2, 'Filipino');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Brown Sauce', 25, 'Chop and sauté the onions and put the aside for a while. Melt the butter on a pan and add the flour to it. Brown the flour on medium heat until the mixture is dark brown. Add the bouillon in small batches while stirring with a whisker. Let the sauce boil and thicken for few minutes. Add the onions and ground some pepper in the sauce. (optional) Add preferred meat to the sauce or use as is.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 9, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 11, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 12, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 13, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 14, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 9, 90);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 11, 230);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 12, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 13, 55);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (3, 14, 100);
 insert into necesitar(idReceta, idElectro) values (3, 10);
 insert into tipoReceta(idReceta, tipo) values (3, 'International');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Chimichanga', 120, 'Dice peppers, tomatoes, and onions and saute. Add in meat. Season and cook until browned or fully cooked through. Warm your tortilla and place small layer of yogurt, cheese, and filling on the bottom half of the tortilla. Wrap by folding bottom over filling, folding sides in, and then rolling.. Fry using your preferred method.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 15, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 9, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 16, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 17, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 18, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 19, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 20, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 21, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 15, 200);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 9, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 16, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 17, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 18, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 19, 90);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 20, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (4, 21, 7);
 insert into necesitar(idReceta, idElectro) values (4, 4);
 insert into necesitar(idReceta, idElectro) values (4, 2);
 insert into necesitar(idReceta, idElectro) values (4, 8);
@@ -42,281 +42,281 @@ insert into tipoReceta(idReceta, tipo) values (4, 'Mexican');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Tabouleh', 15, 'Soak the cracked wheat in the hot water until the water is absorbed, about 30 minutes.. Drain any excess water, if necessary, and squeeze dry.. Combine the salad ingredients (all but the oil, lemon juice, salt and pepper dressing ingredients) in a medium bowl.. Mix the dressing ingredients together and stir into the salad mix. Serve chilled or at room temperature..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 22, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 23, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 24, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 25, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 26, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 27, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 28, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 29, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 30, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 31, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 32, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 33, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 22, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 23, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 24, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 25, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 26, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 27, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 28, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 29, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 30, 15);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 31, 15);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 32, 90);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (5, 33, 40);
 insert into tipoReceta(idReceta, tipo) values (5, 'Mediterranean');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Greek Yogurt', 1000, 'bring the milk to 45°C (113°F). pour the yogurt into the milk. wisk well. bring the milk to 45°C (113°F) again. boil some water (about 100ml) and use it to wash the thermos from inside. let the water out and pour the milk into the thermos. leave the thermos in the oven(or in any other place without airflow) for 12h. pour the newly obtained yogurt into the cheesecloth.. hang the cheesecloth for 30 minutes to 4 hours, depending on the desired density. store in the fridge.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 34, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 35, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 34, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (6, 35, 200);
 insert into necesitar(idReceta, idElectro) values (6, 1);
 insert into necesitar(idReceta, idElectro) values (6, 2);
 insert into tipoReceta(idReceta, tipo) values (6, 'Greek');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Classic béchamel sauce', 100, 'Put your butter in your pot and let is slowly melt on medium to low heat.. Once the butter is fully melted add the flour and stir it in to make a roux.. Keep stirring your roux on medium low heat until it gets lightly golden brown and starts smelling a bit nutty.. Add about a glass of your whole milk and stir until combined, repeat this process until you have a thick sauce in your pan and new milk you add easily combines. Never stop stirring.. At this point you can add the rest of your milk, if you skip the previous step you will end up with lumps of roux that are hard to get out.. Lower your heat to low and keep stirring do not forget to get in the corners of the pot because your sauce will burn easily.. Once your sauce has the desired thickness give it a taste and add your salt and pepper until it is to your liking. A pinch of nutmeg, preferably freshly grated, will also go a long way..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 36, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 12, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 6, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 33, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 32, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 37, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 36, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 12, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 6, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 33, 80);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 32, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (7, 37, 5);
 insert into tipoReceta(idReceta, tipo) values (7, 'French');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Butter-based biscuit and cookies', 10, 'Prepare the dough. Let it sit. Cooking the dough.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 11, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 12, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 2, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 38, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 11, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 12, 80);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 2, 200);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (8, 38, 111);
 insert into necesitar(idReceta, idElectro) values (8, 2);
 insert into necesitar(idReceta, idElectro) values (8, 1);
 insert into tipoReceta(idReceta, tipo) values (8, 'Varies');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Shrimp and Chicken Jambalaya', 20, 'Preheat the oven to 350 degrees F. Mix together the seasoning mix (herbs, salt, pepper).. Mix together the Holy Trinity (onion, celery, bell pepper).. In a Cast Iron Durch Oven, melt the butter over medium heat, add the Andouille and cook until it starts to brown.. Add 1/2 of the Holy Trinity, cook until the vegetables are tender.. Add the diced tomatoes and cook for one minute. Add the tomato sauce and cook for another minute.. Add the rice and cook for 2 minutes, stirring constantly.. Add the stock, remaining Holy Trinity, seasoning mix, Worcestershire, and the garlic.. Taste the broth for seasoning, particularly salt.. Add the chicken, stir well and put the pot in the preheated oven. Bake uncovered for 25 minutes.. Stir in the raw shrimp, parsley, and green onions - place back into oven for another 10 minutes (or until the shrimp is cooked through)..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 39, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 40, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 4, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 41, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 42, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 43, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 14, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 36, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 44, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 45, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 46, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 47, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 48, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 49, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 50, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 51, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 52, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 53, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 54, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 55, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 56, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 26, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 39, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 40, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 4,  100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 41, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 42, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 43, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 14, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 36, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 44, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 45, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 46, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 47, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 48, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 49, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 50, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 51, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 52, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 53, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 54, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 55, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 56, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (9, 26, 100);
 insert into necesitar(idReceta, idElectro) values (9, 2);
 insert into tipoReceta(idReceta, tipo) values (9, 'Cajun');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Cream Cheese', 1740, 'Mix the yogurt, the milk, the cream, the salt, and the sugar into a bowl.. Heat the bowl to 80°C while stirring.. Once the temperature has been reached, add the citric acid and mix well.. Heat up to 90°C, then let it cool down until it reaches room temperature.. Pour the cheese into the cheesecloth and let the whey drip.. Store in the fridge..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 57, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 58, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 59, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 60, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 35, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 61, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 62, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 63, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 57, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 58, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 59, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 60, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 35, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 61, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 62, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (10, 63, 50);
 insert into necesitar(idReceta, idElectro) values (10, 5);
 insert into necesitar(idReceta, idElectro) values (10, 1);
 insert into tipoReceta(idReceta, tipo) values (10, 'Unspecified');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Marinated pork steaks', 62, 'Mix olive oil, soy sauce, honey and lime juice until you have an even marinade. Add pepper and crushed garlic.. Add the pork steaks to the marinade and leave in room temperature for 30 minutes or a bit longer.. Preheat your grill/frying pan. Add marinated steaks, grill for 2 minutes, flip, repeat until you have grilled them for 10 minutes total. Towards the last minutes pour the remaining marinade over the steaks.. Let the steaks rest for 10 minutes before serving..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 31, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 64, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 65, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 66, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 29, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 67, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 31, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 64, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 65, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 66, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 29, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (11, 67, 40);
 insert into necesitar(idReceta, idElectro) values (11, 11);
 insert into tipoReceta(idReceta, tipo) values (11, 'Unspecified');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Cacio e Pepe', 32, 'Cook your chosen amount of spaghetti 3-4 minutes under the time on the package according to the directions on the package or however you usually do it.. Meanwhile place the peppercorns on a cutting board and mash them with a pestle.. Place half of the peppercorns in a pan and toast them at medium heat.. Drain the pasta, place it in the pan and save the boiling water for later use.. Add the pasta with the pepper with 2 spoons of the water previously saved.. Prepare the Pecorino by putting half of it a bowl with a spoon of the pasta water you saved; continue mixing the cheese with the water until a cream is formed.. When the pasta is almost cooked, add the cream and mix (you can add more water if the pasta is too dry).. Serve on a plate with the Pecorino left before on top..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 68, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 69, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 70, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 68, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 69, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (12, 70, 60);
 insert into tipoReceta(idReceta, tipo) values (12, 'Italian');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Farcies tomatoes', 80, 'Heat the oven to 200C.. Slice the top to the tomatoes and place them in the oven tray.. Empty the tomatoes using a spoon and reserve the interior of the tomatoes in a bowl.. Mix the interior of the tomatoes with the rest of the ingredients.. Restuff the tomatoes.. Optionally add a thin layer of butter on top of the tomatoes.. Put the ''lid'' on the tomatoes.. Bake for 40 minutes in the oven.. Enjoy!.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 25, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 71, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 72, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 73, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 31, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 74, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 75, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 11, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 25, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 71, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 72, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 73, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 31, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 74, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 75, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (13, 11, 20);
 insert into necesitar(idReceta, idElectro) values (13, 2);
 insert into tipoReceta(idReceta, tipo) values (13, 'French');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Japanese Noodle Soup', 58, 'For the broth, add 700ml of chicken stock to a large boiling pot with the garlic, ginger, soy sauce, chinese five spice, chili, and 300ml of water.. Bring this to the boil, then turn the heat to low and simmer for around 5 mins.. Add a pinch of sugar and more soy sauce to taste. Fry the pork chops until cooked (My Sticky Pork Chops recipe works really well with this dish). Hard boil 4 eggs.. Cook the ramen noodles as per packet descriptions.. Strain the stock into another pan, then reheat.. Divide ramen between 4 bowls, then top with 1 sliced pork chop, 1/4 of the spinach (if applicable) sweetcorn, and one boiled egg (halved).. Divide the stock into the bowls, then sprinkle over sesame seeds, shredded nori and the spring onion..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 51, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 76, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 77, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 78, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 64, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 52, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 79, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 80, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 81, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 82, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 83, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 84, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 85, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 86, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 87, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 88, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 51, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 76, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 77, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 78, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 64, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 52, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 79, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 80, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 81, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 82, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 83, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 84, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 85, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 86, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 87, 3);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (14, 88, 100);
 insert into tipoReceta(idReceta, tipo) values (14, 'Japanese');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Smoked Turkey', 225, 'Mix garlic powder into the whipped butter.. Remove giblets and other materials from the turkey cavity.. Rinse the turkey and pat dry with a towel.. Liberally coat the turkey with the whipped butter mixture. Ensure the entire surface is coated.. Place turkey in a foil baking pan with mixed vegetables. If available, use a rack to elevate the turkey from the bottom of the pan.. Add chicken broth until it coats the bottom of the pan.. Cover the pan in foil.. Ignite the charcoal grill; arrange the coals for indirect cooking. Try to maintain a temperature of 300-400°F.. Place the turkey in pan on the grill and cook indirectly for 1 hour.. Remove the foil, and continue cooking over indirect heat.. Periodically (every 15-30 minutes) baste the turkey with its own juices. If the bottom of the pan is dry, add chicken broth and reduce heat.. Remove when the turkey reaches an internal temperature of 160°F in the breast.. Allow to rest for 10 minutes before carving..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 89, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 90, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 91, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 92, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 93, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 90, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 89, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 91, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 92, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (15, 93, 60);
 insert into necesitar(idReceta, idElectro) values (15, 11);
 insert into tipoReceta(idReceta, tipo) values (15, 'American');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Roasted chicken breast', 110, 'Fill a large bowl with enough water to submerge the chicken. Add salt to the water until it is fully saturated. Put the chicken under the water and let it sit for 20-40 minutes at room temperature.. Preheat the oven to 230°C / 450°F.. Remove the chicken from the water. Rinse it. Dry it. Put it in a roasting pan.. Brush the chicken with melted butter. For best results, brush all sides of the chicken breast.. Season with pepper and any optional seasoning. Season with salt last.. Insert the thermometer probe into the thickest part of the smallest breast.. Bake until the internal temperature reaches 68°C / 155°F.. Remove from the oven and immediately cover with foil leaving the probe inserted. Let the chicken sit for 10 minutes at room temperature.. Serve.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 94, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 11, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 95, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 94, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 11, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (16, 95, 30);
 insert into necesitar(idReceta, idElectro) values (16, 2);
 insert into tipoReceta(idReceta, tipo) values (16, 'Unspecified');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Perfect Potato Salad', 75, 'Place potatoes in a pot and just cover with water. Partially lid and bring to a boil. Reduce heat and simmer partially covered just until potatoes are tender.. Meanwhile in a large bowl, stir yogurt with mayonnaise, horseradish, salt, and pepper. Stir in radishes, celery, green onions, parsley, and dill until mixed.. Add warm potatoes and stir to combine. Refrigerate at least 1 hour before serving. Taste and adjust seasonings if desired..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 96, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 97, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 98, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 99, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 100, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 101, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 26, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 102, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 103, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 96, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 97, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 98, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 99, 7);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 100, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 101, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 26, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 102, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (17, 103, 10);
 insert into necesitar(idReceta, idElectro) values (17, 1);
 insert into tipoReceta(idReceta, tipo) values (17, 'american');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Hellfire Steak', 15, 'Rub a generous amount of salt all over the steak. Coat the entire steak with mustard powder. Pour Tabasco Sauce onto both sides of the steak, do not be afraid to put more on than you think you might otherwise be comfortable with the salt will cancel out a lot of the spice while grilling.. Grill over low heat until steak is cooked to your preference..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 104, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 4, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 105, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 106, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 104, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 4, 90);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 105, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (18, 106, 10);
 insert into necesitar(idReceta, idElectro) values (18, 11);
 insert into tipoReceta(idReceta, tipo) values (18, 'American');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Babas Feta Pasta', 30, 'Get a small deepish pan and heat it to low-medium temperature. Add a good amount of virgin olive oil and place one of the small onion pieces into the pan. Wait until it starts to sizzle and add the rest of the onion. Mix well and make sure the temperature is not too high as it can damage ingredients. Optional: You can sprinkle some sugar over the onion to make it sweeter. Then after a few minutes, when the onion has browned/softened, add in the garlic and wait 1-2 minutes, then you can turn off heat and put it to the side for later.. Get a medium-large sized deepish pan, heat with oil and then add in the olives, courgettes and mushrooms. Sprinkle salt every now and then to enhance taste. After a few minutes when they are soft and are around the same color, then add in the onion and garlic from the smaller pan.. Wait a couple minutes and then add the broccoli and tomato slices to the mix. Wait 2-3 more minutes and then get your rinsed feta and melt it in the pan (chop to speed up).. Start cooking the pasta.. When the feta has nearly finished melting, add in the stock to the mix. Turn the pan temperature down slightly and then let it bubble for 5 mins (add a timer). Make sure to add the cover to the pan to keep in the flavor.. After the 5 mins timer is up, add the overfilled tablespoon creme cheese to the main mix, stir, then re-add lid.. Wait 2-3 more minutes and then you can test the sauce if you want. If you feel there is some missing, add more mixed spice or herbs such as parsley to it.. Turn down the main mix again slightly and add the 1/3 Mug of Whole milk to the mix.. Strain and serve your pasta and cover with the sauce. Enjoy!.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 107, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 108, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 2, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 109, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 110, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 111, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 112, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 113, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 114, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 115, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 51, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 116, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 117, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 118, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 6, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 107, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 108, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 2, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 109, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 110, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 111, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 112, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 113, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 114, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 115, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 51, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 116, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 117, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 118, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (19, 6, 50);
 insert into tipoReceta(idReceta, tipo) values (19, 'Greek');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Spinach-Rice Casserole', 10, 'Saute onions and garlic with salt in butter. When onions are soft, add spinach. Cook 2 minutes.. Combine with all ingredients except sunflower seeds and paprika.. Spread into buttered casserole dish and sprinkle sunflower seeds and paprika on top.. Bake, covered, 35 minutes at 350F..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 119, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 83, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 9, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 29, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 11, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 38, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 34, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 120, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 121, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 122, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 33, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 123, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 37, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 39, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 124, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 119, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 83, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 9, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 11, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 29, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 38, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 34, 50);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 120, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 121, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 122, 5);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 33, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 123, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 37, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 39, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (20, 124, 10);
 insert into necesitar(idReceta, idElectro) values (20, 2);
 insert into tipoReceta(idReceta, tipo) values (20, 'Unspecified');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Mazurek', 170, 'Put flour and butter in a bowl.. Cut the butter into tiny pieces, mixing with the flour.. Add egg yolks, sugar, sour cream, and a pinch of salt.. Knead well and form into a ball. Wrap in plastic wrap and let chill in fridge for about an hour.. Roll out flat and place in large baking sheet on top of parchment paper.. Make little holes with fork in the dough.. Bake for 15-20 minutes in 200°C (395°F).. Let cool before spreading topping.. Decorate with nuts or other toppings..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 12, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 125, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 11, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 126, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 127, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 128, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 129, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 130, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 131, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 132, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 12, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 125, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 11, 100);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 127, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 126, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 128, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 129, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 130, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 131, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (21, 132, 30);
 insert into necesitar(idReceta, idElectro) values (21, 2);
 insert into necesitar(idReceta, idElectro) values (21, 1);
 insert into tipoReceta(idReceta, tipo) values (21, 'Polish');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Arroz Chaufa', 40, 'Cut the chicken into pieces and fry it. Do not forget the salt.. Cook scrambled eggs. Do not forget the salt.. Cook the rice. If it is yesterday is rice better, preferably without salt.. Cut the welsh onion and bell pepper into small squares.. Mix everything over low heat, adding soy sauce.. Optional: Add bacon, sesame oil.. If everything is salty, you can reduce it with just a teaspoon of sugar, especially if you cook the rice with salt..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 133, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 33, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 17, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 134, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 38, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 64, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 135, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 133, 35);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 33, 210);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 17, 20);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 134, 10);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 38, 45);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 64, 23);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (22, 135, 22);
 insert into tipoReceta(idReceta, tipo) values (22, 'Peruvian-Chinese');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Zarangollo', 31, 'Cut onion in julienne (a third or half of an onion ring). Cut the eggplant in slices or chunks that can fit in a teaspoon. Add oil to a pan until it barely covers the vegetables. Cook and stir in medium heat until they are tender, caramelized and translucent. Kick up the heat to give them a crispy touch, but not for long. (Optional) Turn off the heat and crack open an egg on top. (Optional) Let the residual heat cook the egg. If it breaks just scramble it, the recipe does nott call for anything fancy. You can serve the dish with that oil (provided it is not burnt) or keep it for cooking other stuff.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 136, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 137, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 31, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 138, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 136, 65);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 137, 23);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 31, 90);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (23, 138, 10);
 insert into tipoReceta(idReceta, tipo) values (23, 'Spanish');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Flammkuchen', 31, 'Start by flattening the dough using a bottle between two pieces of parchment paper. It should be 1-2 mm thick.. Place the flattened dough on baking tray and preheat oven.. Distribute the sour cream evenly over the dough.. Cut the onion and bacon into small pieces and distribute them evenly on top.. Bake in preheated oven for 10 minutes until slightly brown.. Season with salt and pepper..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 139, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 9, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 140, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 141, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 139, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 9, 30);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 140, 45);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (24, 141, 30);
 insert into necesitar(idReceta, idElectro) values (24, 2);
 insert into tipoReceta(idReceta, tipo) values (24, 'French');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Dried tomato and plum bread spread', 12, 'Put plums in hot water from kettle for a couple of minutes, in order to make them softer.. After that put plums (without the water) and rest of the ingredients into blender and mix it until you are satisfied.. If you want to make it more liquid you can add water from the plums..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 142, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 143, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 144, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 145, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 146, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 142, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 143, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 144, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 145, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (25, 146, 70);
 insert into necesitar(idReceta, idElectro) values (25, 3);
 insert into tipoReceta(idReceta, tipo) values (25, 'undefined');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Lemon and oregano chicken traybake', 60, 'Heat oven to 220C/200C with fan/gas 7. While oven is heating up cut the new potatoes into 0.5cm - 1cm slices and tip them into a roasting tray. Drizzle 1tbsp of olive oil on the sliced potatoes, season well and toss to ensure a good coating. Then put the roasting tray into the oven for 20 minutes, or however long until the potatoes start to crisp.. In a separate, temporary, tray place the chicken thighs and season them. Cut up the shallots into 1/8 parts, then the lemons into 1/4 wedges. Once this is done, take out the roasting tray and transfer the chicken, challots, lemon wedges and bacon lardons into it, with a final drizzle of 1tbsp of olive oil over the trays items. Cook for another 20 minutes.. Prepare the chicken stock and wine to take out the roasting tray for the last time before serving. Pour 200ml of chicken stock and 100ml of white wine over the trays contents and return it to the oven for a final 20 minutes of cooking..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 147, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 147, 20);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 148, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 149, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 149, 20);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 150, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 151, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 151, 20);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 31, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 152, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (26, 51, 0);
@@ -326,11 +326,11 @@ insert into tipoReceta(idReceta, tipo) values (26, 'Mediterranean');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Party Mimosa', 5, 'Stir together apricot nectar, pineapple juice, water, and orange juice concentrate in a large pitcher until combined. Pour in bottle of sparkling wine just before serving..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 154, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 154, 40);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 155, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 156, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 156, 40);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 157, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 158, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (27, 158, 40);
 insert into tipoReceta(idReceta, tipo) values (27, 'International');
 
 
@@ -387,12 +387,12 @@ insert into tipoReceta(idReceta, tipo) values (31, 'American');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('French mustard sauce porkchops', 54, 'Cut the shallots into small dices.. Cut the gherkins into long strips.. Sear the porkchops on high heat on cast iron or stainless steel pan until golden brown on each side, and cook them through on lower heat.. Once the porkchops are cooked, set them aside in a warm environment.. Sweat the shallots in the same pan.. Deglaze with white wine, let it reduce until there is about two teaspoons left.. Add the stock.. Add the gherkins.. Mix in the mustard.. Let the sauce reduce until it gets a coating consistency.. Mix in a knob a butter.. Put the chops back in, flip them to coat them in sauce, warm them up for 30 seconds..');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 181, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 150, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 182, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 153, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 183, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 184, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 181, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 150, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 182, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 153, 60);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 183, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 184, 60);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 11, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (32, 31, 0);
 insert into tipoReceta(idReceta, tipo) values (32, 'French');
@@ -474,11 +474,11 @@ insert into tipoReceta(idReceta, tipo) values (39, 'Italian');
 
 
 insert into Receta(nombre, tiempo, proceso) values ('Cinque Pi', 0, 'Start cooking the pasta. Mix the cream with the tomato paste and bring to a boil. Turn the heat down to medium and add as much grated parmigiano as you like. Let it cook on medium to low heat until the pasta is done. Add chopped parsley and pepper. You can either add the sauce to the pasta or serve separately. Serve with some additional parmigiano and a leaf of parsley.');
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 205, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 205, 340);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 206, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 207, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 207, 340);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 208, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 121, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (40, 121, 340);
 insert into necesitar(idReceta, idElectro) values (40, 5);
 insert into tipoReceta(idReceta, tipo) values (40, 'Italian');
 
@@ -486,12 +486,12 @@ insert into tipoReceta(idReceta, tipo) values (40, 'Italian');
 insert into Receta(nombre, tiempo, proceso) values ('Tofu and Cashew Chow Mein', 15, 'Loosen the precooked noodles by soaking in a bowl of hot water for 2-3 minutes, then drain and set aside.. Mix together the soy sauce, oyster sauce, sesame oil and 2 Tbsp water in a bowl.. Heat a wok or large frying pan over a high heat, add the oil and stir-fry the carrot and broccoli for 2 minutes.. Add the tofu and stir-fry for 4 minutes.. Add the garlic and ginger and stir-fry for a minute.. Stir through the noodles and then add the sauce mixture and cashews and mix until thoroughly combined and heated through..');
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 209, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 64, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 210, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 211, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 212, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 213, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 193, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 214, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 210, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 211, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 212, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 213, 70);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 193, 40);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 214, 70);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 29, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 215, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (41, 216, 0);
@@ -508,11 +508,11 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 219,
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 220, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 25, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 12, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 221, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 221, 80);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 222, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 223, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 223, 80);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 224, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 102, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 102, 80);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 225, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 31, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (42, 11, 0);
@@ -528,11 +528,11 @@ insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 33, 
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 227, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 228, 0);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 14, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 229, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 229, 45);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 230, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 231, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 231, 45);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 232, 0);
-insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 233, 0);
+insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 233, 45);
 insert into haberIngrediente(idReceta, idIngrediente, cantidad) values (43, 234, 0);
 insert into necesitar(idReceta, idElectro) values (43, 11);
 insert into necesitar(idReceta, idElectro) values (43, 1);
