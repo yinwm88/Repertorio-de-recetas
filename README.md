@@ -10,7 +10,7 @@
 copy "backend\.env.test" "backend\.env"
 ```
 
-3. En el directorio del `backend` corre (OPCIONAL)
+3. En el directorio del `backend` corre (EL DOCKER DEBERIA YA HACERLO)
    
    ```bash
    cd backend
