@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import { debounce } from 'lodash';
-import { Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { FormControl,InputLabel,Select,MenuItem, Box, CssBaseline, Typography, IconButton, Paper, Fab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
@@ -29,9 +29,6 @@ const itemIcons = {
 const StyledFab = styled(Fab)({
   position: 'relative',
   zIndex: 1,
-  top: 20,
-  left: 0,
-  right: 0,
   margin: '0 auto',
 });
 
@@ -84,7 +81,7 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
     setEditingIngredient(ingrediente);
     setEditingQuantity(ingrediente.cantidad);
   };
-  
+
   const confirmDelete = async (ingrediente) => {
     try {
       const response = await fetch(`http://localhost:3001/ingrediente/editar`, {
@@ -334,6 +331,7 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
           <Tabs value={tabIndex} onChange={handleTabChange} centered>
             <Tab label="Ingredientes" />
             <Tab label="Utensilios" />
+            <Tab label="Lista generada" />
           </Tabs>
 
           {tabIndex === 0 && (
@@ -403,10 +401,17 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
 
 
 
-                <StyledFab color="primary" aria-label="add" onClick={handleClickOpen} style={{ top: 40 }}>
-                  <AddIcon />
-                </StyledFab>
-
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    mt: 2,
+                  }}
+                >
+                  <StyledFab color="primary" aria-label="add" onClick={handleClickOpen}>
+                    <AddIcon />
+                  </StyledFab>
+                </Box>
 
 
                 <Dialog open={open} onClose={handleClose}>
@@ -473,9 +478,9 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
                     )}
 
                     <DialogContentText>
-                      Si no encuentras el ingrediente que buscas, puedes crear uno nuevo.
+                      Si no encuentras un ingrediente, puedes crear uno nuevo.
                     </DialogContentText><br />
-                    <Button onClick={() => {setIsCreating(true)}}>Crear ingrediente nuevo</Button>
+                    <Button onClick={() => { setIsCreating(true) }}>Crear ingrediente nuevo</Button>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleClose}>Cancelar</Button>
@@ -506,16 +511,20 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
                       value={newIngredientData.calorias}
                       onChange={(e) => setNewIngredientData({ ...newIngredientData, calorias: parseInt(e.target.value) })}
                     />
-                    <TextField
-                      margin="dense"
-                      id="unidad"
-                      label="Unidad de medida"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      value={newIngredientData.unidad}
-                      onChange={(e) => setNewIngredientData({ ...newIngredientData, unidad: e.target.value })}
-                    />
+                    <FormControl fullWidth margin="dense">
+                      <InputLabel>Unidad de medida</InputLabel>
+                      <Select
+                        id="unidad"
+                        value={newIngredientData.unidad}
+                        onChange={(e) => setNewIngredientData({ ...newIngredientData, unidad: e.target.value })}
+                        variant="standard"
+                      >
+                        <MenuItem value="pz">pz</MenuItem>
+                        <MenuItem value="gr">gr</MenuItem>
+                        <MenuItem value="ml">ml</MenuItem>
+                        <MenuItem value="mjo">mjo</MenuItem>
+                      </Select>
+                    </FormControl>
                     <TextField
                       margin="dense"
                       id="caduca"
@@ -532,26 +541,27 @@ function CustomList({ lastUpdate, setLastUpdate, handleUtensiliosSeleccionadosCh
                     <Button onClick={handleCreateItem}>Crear</Button>
                   </DialogActions>
                 </Dialog>
+
+
               </React.Fragment>
             </Box>
           )}
 
           {tabIndex === 1 && (
             <Box sx={{ p: 2 }}>
-              
               <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
             </Box>
           )}
-          {/** 
+
           {tabIndex === 2 && (
             <Box sx={{ p: 2 }}>
               <h2>
                 Lista Generada
               </h2>
-              <UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />
+              {/*<UtensiliosList onUtensiliosSeleccionadosChange={handleUtensiliosSeleccionadosChange} />*/}
             </Box>
           )}
-          */}
+
         </Paper>
       </React.Fragment>
 

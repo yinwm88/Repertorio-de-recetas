@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
-import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadString } from "firebase/storage";
 
+import {v4} from 'uuid';
 export class FireBase {
     public firebaseConfig = {
         apiKey: "AIzaSyANcpENUNjxjkpxNJNeoe4n8tl-x124IWU",
@@ -17,20 +18,12 @@ export class FireBase {
         firebase.initializeApp( this.firebaseConfig );
     }    
 
-    public subirImagen( imagen: string, nombre: string ) {
+    public  async subirImagen( imagen: any ) {
         const storage = getStorage();
-        const storageRef = ref( storage, `imagenes/${ nombre }`);
-        uploadString( storageRef, imagen, 'base64' )
-        .then( (snapshot) => {
-            console.log('Uploaded a blob or file!');
-          
-            getDownloadURL( storageRef ).then((url) => {
-              console.log('File available at', url);
-            }).catch((error) => {
-              console.error(error);
-            });
-        }).catch((error) => {
-            console.error(error);
-        });
+        const storageRef = ref( storage, `images/${ v4() }` );
+        await uploadBytes( storageRef, imagen );
+        const url = await getDownloadURL( storageRef );
+
+        return url;
     }
 }

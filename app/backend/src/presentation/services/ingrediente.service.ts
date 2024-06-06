@@ -264,13 +264,17 @@ export class IngredienteService {
         if(!noTieneIngrediente) throw ErrorCustomizado.badRequest( 'El ingrediente no está en la lista de compras' );
 
         try {
-            const ingredienteComprado = await prisma.compraringrediente.deleteMany({
+            const ingredienteComprado = await prisma.compraringrediente.delete({
                 where : {
-                    correo : correo,
-                    idingrediente : idingrediente
+                    comprarIngrediente: {
+                        correo : correo,
+                        idingrediente : idingrediente
+                    }
                 }
             });
-            return "Ingrediente eliminado"
+            return { 
+                ingrediente: "Ingrediente eliminado"
+            }
         } catch (error) {
             throw ErrorCustomizado.internalServer( `${ error }` );
         }
