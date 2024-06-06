@@ -25,7 +25,7 @@ copy "backend\.env.test" "backend\.env"
    ```
    o
     ```bash
-   docker compose up- d
+   docker compose up -d
    ```
    
 > Si haz detenido el docker compose watch, entonces para volverlo a correr debera ser en una nueva terminal
