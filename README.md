@@ -18,9 +18,14 @@ copy "backend\.env.test" "backend\.env"
    cd ..
    ```
    
-4. Corre el servidor 
+4. Corre el servidor en modo develop o levanta el servidor
    
    ```bash
    docker compose watch
    ```
+   o
+    ```bash
+   docker compose up- d
+   ```
+   
 > Si haz detenido el docker compose watch, entonces para volverlo a correr debera ser en una nueva terminal
